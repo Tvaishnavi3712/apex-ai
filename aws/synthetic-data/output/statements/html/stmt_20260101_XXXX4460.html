@@ -1,0 +1,535 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bank Statement - ****4460</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            color: #333;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 3px solid #1a365d;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .bank-info {
+            color: #1a365d;
+        }
+        .bank-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .statement-title {
+            font-size: 20px;
+            color: #1a365d;
+            text-align: right;
+        }
+        .account-info {
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .summary-box {
+            background-color: #e8f4f8;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #1a365d;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .summary-item {
+            text-align: center;
+        }
+        .summary-label {
+            font-size: 12px;
+            color: #666;
+        }
+        .summary-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        th {
+            background-color: #1a365d;
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+        }
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .debit {
+            color: #c53030;
+            text-align: right;
+        }
+        .credit {
+            color: #2f855a;
+            text-align: right;
+        }
+        .balance {
+            text-align: right;
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 11px;
+            color: #666;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="bank-info">
+            <div class="bank-name">Bank of America</div>
+            <div>Routing Number: 026009593</div>
+        </div>
+        <div class="statement-title">
+            ACCOUNT STATEMENT<br>
+            <span style="font-size: 14px;">
+                2026-01-01 to 2026-01-31
+            </span>
+        </div>
+    </div>
+
+    <div class="account-info">
+        <div>
+            <strong>Account Holder:</strong><br>
+            Adventure Works Ltd
+        </div>
+        <div>
+            <strong>Account Number:</strong><br>
+            ****4460
+        </div>
+        <div>
+            <strong>Account Type:</strong><br>
+            Business Checking
+        </div>
+    </div>
+
+    <div class="summary-box">
+        <h3 style="margin-top: 0;">Account Summary</h3>
+        <div class="summary-grid">
+            <div class="summary-item">
+                <div class="summary-label">Beginning Balance</div>
+                <div class="summary-value">$428,999.17</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Total Deposits</div>
+                <div class="summary-value" style="color: #2f855a;">+$289,757.03</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Total Withdrawals</div>
+                <div class="summary-value" style="color: #c53030;">-$315,540.42</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Total Fees</div>
+                <div class="summary-value" style="color: #c53030;">-$69.98</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Ending Balance</div>
+                <div class="summary-value">$403,145.80</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Transaction Count</div>
+                <div class="summary-value">39</div>
+            </div>
+        </div>
+    </div>
+
+    <h3>Transaction Detail</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Reference</th>
+                <th style="text-align: right;">Debit</th>
+                <th style="text-align: right;">Credit</th>
+                <th style="text-align: right;">Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        <tr>
+            <td>2026-01-01</td>
+            <td>ACH DEBIT - PAYROLL</td>
+            <td>REF860629587</td>
+            <td class="debit">$14,535.28</td>
+            <td class="credit"></td>
+            <td class="balance">$414,463.89</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-02</td>
+            <td>ACH DEPOSIT - CUSTOMER PAYMENT</td>
+            <td>REF415830831</td>
+            <td class="debit"></td>
+            <td class="credit">$16,661.66</td>
+            <td class="balance">$431,125.55</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-06</td>
+            <td>MONTHLY SERVICE FEE</td>
+            <td>REF739121794</td>
+            <td class="debit">$30.40</td>
+            <td class="credit"></td>
+            <td class="balance">$431,095.15</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-07</td>
+            <td>DEBIT CARD PURCHASE</td>
+            <td>REF189869424</td>
+            <td class="debit">$6,354.59</td>
+            <td class="credit"></td>
+            <td class="balance">$424,740.56</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-09</td>
+            <td>CHECK DEPOSIT</td>
+            <td>REF706480692</td>
+            <td class="debit"></td>
+            <td class="credit">$12,480.54</td>
+            <td class="balance">$437,221.10</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-09</td>
+            <td>MERCHANT SERVICES DEPOSIT</td>
+            <td>REF449200629</td>
+            <td class="debit"></td>
+            <td class="credit">$6,150.44</td>
+            <td class="balance">$443,371.54</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-09</td>
+            <td>ACH DEBIT - PAYROLL</td>
+            <td>REF902406693</td>
+            <td class="debit">$688.26</td>
+            <td class="credit"></td>
+            <td class="balance">$442,683.28</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-10</td>
+            <td>CHECK #9145</td>
+            <td>REF347576976</td>
+            <td class="debit">$21,722.46</td>
+            <td class="credit"></td>
+            <td class="balance">$420,960.82</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-10</td>
+            <td>WIRE TRANSFER OUT</td>
+            <td>REF227168422</td>
+            <td class="debit">$7,078.50</td>
+            <td class="credit"></td>
+            <td class="balance">$413,882.32</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-10</td>
+            <td>WIRE TRANSFER IN</td>
+            <td>REF177386721</td>
+            <td class="debit"></td>
+            <td class="credit">$38,357.82</td>
+            <td class="balance">$452,240.14</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-11</td>
+            <td>ACH DEBIT - UTILITY PAYMENT</td>
+            <td>REF675603336</td>
+            <td class="debit">$3,459.21</td>
+            <td class="credit"></td>
+            <td class="balance">$448,780.93</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-13</td>
+            <td>WIRE TRANSFER - VENDOR REFUND</td>
+            <td>REF583334311</td>
+            <td class="debit"></td>
+            <td class="credit">$39,135.18</td>
+            <td class="balance">$487,916.11</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-15</td>
+            <td>ACH DEBIT - UTILITY PAYMENT</td>
+            <td>REF954868029</td>
+            <td class="debit">$22,598.32</td>
+            <td class="credit"></td>
+            <td class="balance">$465,317.79</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-15</td>
+            <td>ACH DEBIT - INSURANCE PREMIUM</td>
+            <td>REF508132682</td>
+            <td class="debit">$23,369.64</td>
+            <td class="credit"></td>
+            <td class="balance">$441,948.15</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-15</td>
+            <td>ACH DEBIT - INSURANCE PREMIUM</td>
+            <td>REF133253082</td>
+            <td class="debit">$5,889.41</td>
+            <td class="credit"></td>
+            <td class="balance">$436,058.74</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-15</td>
+            <td>DEBIT CARD PURCHASE</td>
+            <td>REF909163170</td>
+            <td class="debit">$8,947.71</td>
+            <td class="credit"></td>
+            <td class="balance">$427,111.03</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-16</td>
+            <td>MERCHANT SERVICES DEPOSIT</td>
+            <td>REF626110698</td>
+            <td class="debit"></td>
+            <td class="credit">$34,637.68</td>
+            <td class="balance">$461,748.71</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-16</td>
+            <td>DEBIT CARD PURCHASE</td>
+            <td>REF110879677</td>
+            <td class="debit">$17,921.72</td>
+            <td class="credit"></td>
+            <td class="balance">$443,826.99</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-17</td>
+            <td>ACH DEBIT - PAYROLL</td>
+            <td>REF234059016</td>
+            <td class="debit">$15,147.52</td>
+            <td class="credit"></td>
+            <td class="balance">$428,679.47</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-17</td>
+            <td>ACH CREDIT - ACCOUNTS RECEIVABLE</td>
+            <td>REF476704569</td>
+            <td class="debit"></td>
+            <td class="credit">$28,489.10</td>
+            <td class="balance">$457,168.57</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-17</td>
+            <td>ACH DEPOSIT - CUSTOMER PAYMENT</td>
+            <td>REF584935399</td>
+            <td class="debit"></td>
+            <td class="credit">$10,877.63</td>
+            <td class="balance">$468,046.20</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-18</td>
+            <td>WIRE TRANSFER - VENDOR PAYMENT</td>
+            <td>REF620588484</td>
+            <td class="debit">$5,111.44</td>
+            <td class="credit"></td>
+            <td class="balance">$462,934.76</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-20</td>
+            <td>ACH DEBIT - INSURANCE PREMIUM</td>
+            <td>REF956075298</td>
+            <td class="debit">$23,706.29</td>
+            <td class="credit"></td>
+            <td class="balance">$439,228.47</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-22</td>
+            <td>WIRE TRANSFER OUT</td>
+            <td>REF193338804</td>
+            <td class="debit">$691.90</td>
+            <td class="credit"></td>
+            <td class="balance">$438,536.57</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-23</td>
+            <td>ACH CREDIT - ACCOUNTS RECEIVABLE</td>
+            <td>REF999599901</td>
+            <td class="debit"></td>
+            <td class="credit">$34,595.16</td>
+            <td class="balance">$473,131.73</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-23</td>
+            <td>ACH DEBIT - UTILITY PAYMENT</td>
+            <td>REF590737979</td>
+            <td class="debit">$20,268.54</td>
+            <td class="credit"></td>
+            <td class="balance">$452,863.19</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-24</td>
+            <td>ACH DEPOSIT - CUSTOMER PAYMENT</td>
+            <td>REF771208849</td>
+            <td class="debit"></td>
+            <td class="credit">$13,737.09</td>
+            <td class="balance">$466,600.28</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-26</td>
+            <td>CHECK DEPOSIT</td>
+            <td>REF936732789</td>
+            <td class="debit"></td>
+            <td class="credit">$19,735.88</td>
+            <td class="balance">$486,336.16</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-26</td>
+            <td>CHECK #3435</td>
+            <td>REF124732433</td>
+            <td class="debit">$13,717.26</td>
+            <td class="credit"></td>
+            <td class="balance">$472,618.90</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-26</td>
+            <td>ACH DEBIT - UTILITY PAYMENT</td>
+            <td>REF802846810</td>
+            <td class="debit">$10,122.12</td>
+            <td class="credit"></td>
+            <td class="balance">$462,496.78</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-26</td>
+            <td>ACH DEBIT - PAYROLL</td>
+            <td>REF408740482</td>
+            <td class="debit">$19,072.09</td>
+            <td class="credit"></td>
+            <td class="balance">$443,424.69</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-27</td>
+            <td>OVERDRAFT FEE</td>
+            <td>REF254598280</td>
+            <td class="debit">$39.58</td>
+            <td class="credit"></td>
+            <td class="balance">$443,385.11</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-29</td>
+            <td>DEBIT CARD PURCHASE</td>
+            <td>REF924921146</td>
+            <td class="debit">$1,170.15</td>
+            <td class="credit"></td>
+            <td class="balance">$442,214.96</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-29</td>
+            <td>CHECK #3126</td>
+            <td>REF707446462</td>
+            <td class="debit">$2,483.88</td>
+            <td class="credit"></td>
+            <td class="balance">$439,731.08</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-29</td>
+            <td>ACH DEBIT - INSURANCE PREMIUM</td>
+            <td>REF754103429</td>
+            <td class="debit">$17,685.03</td>
+            <td class="credit"></td>
+            <td class="balance">$422,046.05</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-29</td>
+            <td>ACH DEPOSIT - CUSTOMER PAYMENT</td>
+            <td>REF389018804</td>
+            <td class="debit"></td>
+            <td class="credit">$34,898.85</td>
+            <td class="balance">$456,944.90</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-30</td>
+            <td>ACH DEBIT - PAYROLL</td>
+            <td>REF916811982</td>
+            <td class="debit">$9,955.27</td>
+            <td class="credit"></td>
+            <td class="balance">$446,989.63</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-31</td>
+            <td>WIRE TRANSFER OUT</td>
+            <td>REF476028423</td>
+            <td class="debit">$22,044.59</td>
+            <td class="credit"></td>
+            <td class="balance">$424,945.04</td>
+        </tr>
+        
+        <tr>
+            <td>2026-01-31</td>
+            <td>ACH DEBIT - PAYROLL</td>
+            <td>REF338806947</td>
+            <td class="debit">$21,799.24</td>
+            <td class="credit"></td>
+            <td class="balance">$403,145.80</td>
+        </tr>
+        
+        </tbody>
+    </table>
+
+    <div class="footer">
+        This statement is provided for informational purposes. Please review all transactions and report any discrepancies within 60 days.
+        <br><br>
+        Bank of America | Member FDIC | Equal Housing Lender
+    </div>
+</body>
+</html>
+    

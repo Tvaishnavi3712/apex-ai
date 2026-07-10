@@ -1,0 +1,297 @@
+"""
+Document API endpoints
+Handle document upload and BDA processing
+"""
+
+from fastapi import APIRouter, HTTPException, status, UploadFile, File, Query
+from typing import List, Optional
+import uuid
+import json
+import boto3
+import base64
+import os
+from datetime import datetime
+
+from services.s3 import S3Service
+from services.dynamodb import DynamoDBService
+from models.blueprint import ClassificationResult
+from core.config import settings
+
+router = APIRouter()
+s3_incoming = S3Service(settings.S3_DOCUMENTS_INCOMING)
+s3_processed = S3Service(settings.S3_DOCUMENTS_PROCESSED)
+
+
+@router.post("/upload")
+async def upload_document(
+    file: UploadFile = File(...),
+    blueprint_id: Optional[str] = Query(None, description="Blueprint to use for processing"),
+    agent_id: Optional[str] = Query(None, description="Agent to process this document"),
+    metadata: Optional[dict] = None
+):
+    """Upload a document for processing"""
+    document_id = str(uuid.uuid4())
+    file_extension = file.filename.split(".")[-1] if "." in file.filename else ""
+    s3_key = f"{document_id}/{file.filename}"
+
+    # Upload to S3
+    content = await file.read()
+    await s3_incoming.upload_file(content, s3_key, {
+        "document_id": document_id,
+        "original_filename": file.filename,
+        "blueprint_id": blueprint_id or "",
+        "agent_id": agent_id or "",
+        "uploaded_at": datetime.utcnow().isoformat()
+    })
+
+    # If blueprint specified, trigger BDA processing via EventBridge
+    # The S3 event will trigger the processing pipeline
+
+    return {
+        "document_id": document_id,
+        "filename": file.filename,
+        "s3_key": s3_key,
+        "status": "uploaded",
+        "blueprint_id": blueprint_id,
+        "agent_id": agent_id,
+        "message": "Document uploaded. Processing will start automatically if blueprint/agent specified."
+    }
+
+
+@router.post("/upload-batch")
+async def upload_documents_batch(
+    files: List[UploadFile] = File(...),
+    blueprint_id: Optional[str] = Query(None),
+    agent_id: Optional[str] = Query(None)
+):
+    """Upload multiple documents for batch processing"""
+    results = []
+
+    for file in files:
+        result = await upload_document(file, blueprint_id, agent_id)
+        results.append(result)
+
+    return {
+        "uploaded_count": len(results),
+        "documents": results
+    }
+
+
+@router.get("/{document_id}")
+async def get_document_status(document_id: str):
+    """Get document processing status"""
+    # Check incoming bucket
+    incoming_files = await s3_incoming.list_files(prefix=f"{document_id}/")
+
+    # Check processed bucket
+    processed_files = await s3_processed.list_files(prefix=f"{document_id}/")
+
+    if not incoming_files and not processed_files:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Document {document_id} not found"
+        )
+
+    status = "uploaded"
+    if processed_files:
+        status = "processed"
+
+    return {
+        "document_id": document_id,
+        "status": status,
+        "incoming_files": incoming_files,
+        "processed_files": processed_files
+    }
+
+
+@router.get("/{document_id}/result")
+async def get_document_result(document_id: str):
+    """Get document processing result"""
+    # Look for result JSON in processed bucket
+    result_key = f"{document_id}/result.json"
+
+    try:
+        result = await s3_processed.get_json(result_key)
+        return {
+            "document_id": document_id,
+            "status": "completed",
+            "result": result
+        }
+    except Exception:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Result not found for document {document_id}. Processing may still be in progress."
+        )
+
+
+@router.delete("/{document_id}")
+async def delete_document(document_id: str):
+    """Delete a document and its results"""
+    # Delete from both buckets
+    await s3_incoming.delete_prefix(f"{document_id}/")
+    await s3_processed.delete_prefix(f"{document_id}/")
+
+    return {"status": "deleted", "document_id": document_id}
+
+
+@router.post("/{document_id}/reprocess")
+async def reprocess_document(
+    document_id: str,
+    blueprint_id: str = Query(..., description="Blueprint to use for reprocessing")
+):
+    """Reprocess a document with a different blueprint"""
+    # Check document exists
+    incoming_files = await s3_incoming.list_files(prefix=f"{document_id}/")
+    if not incoming_files:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Document {document_id} not found"
+        )
+
+    # TODO: Trigger BDA reprocessing
+
+    return {
+        "document_id": document_id,
+        "blueprint_id": blueprint_id,
+        "status": "reprocessing"
+    }
+
+
+@router.post("/classify", response_model=ClassificationResult)
+async def classify_document(
+    file: UploadFile = File(...),
+    industry_hint: Optional[str] = Query(None, description="Hint about expected industry"),
+    auto_extract: bool = Query(False, description="Automatically extract if confident match found")
+):
+    """
+    Classify a document using AI to determine document type and matching blueprint.
+
+    Uses Claude vision to analyze the document and match it to appropriate blueprints.
+    """
+    # Upload document to S3 for processing
+    document_id = str(uuid.uuid4())
+    s3_key = f"classify/{document_id}/{file.filename}"
+
+    content = await file.read()
+    await s3_incoming.upload_file(content, s3_key, {
+        "purpose": "classification",
+        "uploaded_at": datetime.utcnow().isoformat()
+    })
+
+    # Build S3 URI
+    bucket = settings.S3_DOCUMENTS_INCOMING
+    document_s3_uri = f"s3://{bucket}/{s3_key}"
+
+    try:
+        # Initialize Bedrock client
+        bedrock = boto3.client(
+            'bedrock-runtime',
+            region_name=os.environ.get('AWS_REGION', 'us-east-1')
+        )
+
+        # Convert to base64
+        document_base64 = base64.standard_b64encode(content).decode('utf-8')
+
+        # Determine media type
+        ext = file.filename.lower().split('.')[-1] if '.' in file.filename else 'pdf'
+        media_type_map = {
+            'pdf': 'application/pdf',
+            'png': 'image/png',
+            'jpg': 'image/jpeg',
+            'jpeg': 'image/jpeg'
+        }
+        media_type = media_type_map.get(ext, 'application/pdf')
+
+        # Get available blueprints
+        db_blueprints = DynamoDBService(settings.DYNAMODB_BLUEPRINTS)
+        filters = {"industry": industry_hint} if industry_hint else {}
+        blueprints = await db_blueprints.scan(filters=filters, limit=30)
+
+        # Build blueprint context for prompt
+        bp_context = "\n".join([
+            f"- {bp.get('blueprint_id')}: {bp.get('name', '')} ({bp.get('document_type', '')}) - {bp.get('description', '')[:80]}"
+            for bp in blueprints
+        ]) if blueprints else "No blueprints available"
+
+        # Build classification prompt
+        prompt = f"""Analyze this document and classify it.
+
+Available blueprints:
+{bp_context}
+
+Document types to consider: invoice, receipt, bank_statement, purchase_order, contract, resume, claim, bill_of_lading, packing_slip, quality_inspection, offer_letter, tax_form, medical_record, other
+
+Return a JSON response:
+{{
+    "document_type": "the detected type",
+    "blueprint_id": "matching blueprint ID if found",
+    "blueprint_name": "blueprint name",
+    "confidence": 0.95,
+    "reasoning": "Brief explanation"
+}}
+
+Only respond with JSON."""
+
+        # Call Claude
+        model_id = os.environ.get('BEDROCK_CLAUDE_MODEL_ID', 'anthropic.claude-opus-4-5-20251101-v1:0')
+
+        response = bedrock.invoke_model(
+            modelId=model_id,
+            body=json.dumps({
+                "anthropic_version": "bedrock-2023-05-31",
+                "max_tokens": 1024,
+                "messages": [{
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "image",
+                            "source": {
+                                "type": "base64",
+                                "media_type": media_type,
+                                "data": document_base64
+                            }
+                        },
+                        {"type": "text", "text": prompt}
+                    ]
+                }]
+            })
+        )
+
+        result = json.loads(response['body'].read())
+        response_text = result['content'][0]['text']
+
+        # Parse response
+        try:
+            # Handle markdown code blocks
+            text = response_text.strip()
+            if text.startswith('```'):
+                lines = text.split('\n')
+                text = '\n'.join(lines[1:-1])
+
+            classification = json.loads(text)
+        except json.JSONDecodeError:
+            classification = {
+                "document_type": "other",
+                "confidence": 0.3,
+                "reasoning": response_text[:200]
+            }
+
+        # Auto-extract if requested and confident
+        if auto_extract and classification.get('confidence', 0) >= 0.8 and classification.get('blueprint_id'):
+            # TODO: Trigger extraction with matched blueprint
+            pass
+
+        return ClassificationResult(
+            document_type=classification.get('document_type', 'other'),
+            blueprint_id=classification.get('blueprint_id'),
+            blueprint_name=classification.get('blueprint_name'),
+            confidence=float(classification.get('confidence', 0.5)),
+            reasoning=classification.get('reasoning'),
+            alternatives=classification.get('alternatives', [])
+        )
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Classification failed: {str(e)}"
+        )

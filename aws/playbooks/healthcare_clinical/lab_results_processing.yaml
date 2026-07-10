@@ -1,0 +1,97 @@
+# CBTS Apex AI Platform - Lab Results Processing Runbook
+name: lab_results_processing
+version: "1.0.0"
+description: "Automated lab results processing with critical value alerting"
+industry: healthcare_clinical
+category: clinical_operations
+
+intent: |
+  Process incoming lab results by extracting values, identifying critical
+  and abnormal results, routing alerts to providers, and updating patient
+  records for clinical decision support.
+
+output:
+  - name: processed_results
+    type: structured_data
+    schema:
+      accession_number: string
+      patient_mrn: string
+      results: array
+      critical_alerts: array
+  - name: clinical_alerts
+    type: notification
+    schema:
+      alert_type: string
+      provider: string
+      urgency: string
+
+context:
+  business_rules:
+    - "Critical values must be reported within 30 minutes"
+    - "Provider acknowledgment required for criticals"
+    - "Abnormal results flagged for review"
+    - "Results auto-filed to patient chart"
+
+  critical_value_rules:
+    potassium_high: 6.0
+    potassium_low: 2.5
+    glucose_high: 500
+    glucose_low: 40
+    hemoglobin_low: 7.0
+    platelet_low: 20000
+
+actions:
+  - name: lab_extract
+    action_id: healthcare_clinical.lab_extract
+    required: true
+  - name: critical_check
+    action_id: healthcare_clinical.critical_value_check
+    required: true
+  - name: provider_alert
+    action_id: core.send_notification
+    required: false
+  - name: chart_update
+    action_id: healthcare_clinical.chart_update
+    required: true
+
+recipe: |
+  ## Lab Results Processing Workflow
+
+  ### Step 1: Results Extraction
+  1. Use `lab_extract` to parse lab report
+  2. Identify patient by MRN/accession number
+  3. Extract all test results with values
+  4. Capture reference ranges and flags
+
+  ### Step 2: Critical Value Detection
+  1. Use `critical_check` against defined thresholds
+  2. Identify any critical (panic) values
+  3. Identify significantly abnormal values
+  4. Timestamp detection for turnaround tracking
+
+  ### Step 3: Alert Generation
+  For critical values:
+  1. Send immediate alert to ordering provider
+  2. Escalate if no acknowledgment in 15 minutes
+  3. Log all alert timestamps
+  4. Document read-back if telephonic
+
+  ### Step 4: Chart Integration
+  1. Use `chart_update` to file results
+  2. Flag abnormals in patient record
+  3. Link to relevant orders
+  4. Trigger any standing order protocols
+
+triggers:
+  - type: hl7
+    message_type: "ORU^R01"
+  - type: api
+    endpoint: /api/v1/lab-results
+
+worker:
+  queue: apex-lab-results-queue
+  concurrency: 50
+  timeout_seconds: 120
+
+metadata:
+  tags: [lab-results, critical-values, clinical, alerts]

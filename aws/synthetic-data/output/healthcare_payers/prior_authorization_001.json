@@ -1,0 +1,64 @@
+{
+  "_metadata": {
+    "blueprint": "apex-prior-auth-v1",
+    "document_type": "prior_authorization",
+    "extraction_date": "2024-01-12T09:15:00Z",
+    "confidence_score": 0.94,
+    "source_file": "prior_auth_request.pdf"
+  },
+  "auth_request_number": "PA-2024-789012",
+  "request_date": "01/08/2024",
+  "urgency": "Standard",
+  "patient_name": "Mary Elizabeth Johnson",
+  "patient_dob": "1958-07-22",
+  "member_id": "ABC987654321",
+  "group_number": "GRP-54321",
+  "requesting_provider": {
+    "name": "Dr. Robert Chen",
+    "npi": "1122334455",
+    "specialty": "Orthopedic Surgery",
+    "phone": "217-555-1234",
+    "fax": "217-555-1235"
+  },
+  "servicing_provider": {
+    "name": "Memorial Medical Center",
+    "npi": "9988776655",
+    "facility_type": "Hospital Outpatient"
+  },
+  "requested_service": {
+    "cpt_code": "27447",
+    "description": "Total knee arthroplasty",
+    "quantity": 1,
+    "start_date": "02/15/2024",
+    "end_date": "02/15/2024"
+  },
+  "diagnosis": {
+    "primary": {
+      "icd_code": "M17.11",
+      "description": "Primary osteoarthritis, right knee"
+    },
+    "secondary": [
+      {
+        "icd_code": "E11.9",
+        "description": "Type 2 diabetes mellitus without complications"
+      }
+    ]
+  },
+  "clinical_information": {
+    "symptoms_duration": "18 months",
+    "conservative_treatments": [
+      "Physical therapy - 12 weeks",
+      "NSAIDs - 6 months",
+      "Cortisone injections x3",
+      "Hyaluronic acid injection"
+    ],
+    "functional_limitations": "Unable to walk more than 1 block, difficulty with stairs, night pain affecting sleep",
+    "imaging": "X-ray shows severe joint space narrowing, bone-on-bone contact",
+    "bmi": 28.5
+  },
+  "supporting_documents": [
+    "X-ray report dated 12/15/2023",
+    "Physical therapy notes",
+    "Office visit notes 01/05/2024"
+  ]
+}

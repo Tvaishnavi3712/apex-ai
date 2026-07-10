@@ -1,0 +1,62 @@
+default_agent: apex_claims_bot
+agents:
+  apex_claims_bot:
+    name: apex_claims_bot
+    language: python
+    node_version: '20'
+    entrypoint: agent.py
+    deployment_type: container
+    runtime_type: null
+    platform: linux/arm64
+    container_runtime: none
+    source_path: /Users/babbu/Documents/CBTS/Accelerator/apex-ai-platform/aws/agentcore-agents/apex-claims-bot
+    aws:
+      execution_role: arn:aws:iam::457795063704:role/AmazonBedrockAgentCoreSDKRuntime-us-east-1-884134c711
+      execution_role_auto_create: false
+      account: '457795063704'
+      region: us-east-1
+      ecr_repository: 457795063704.dkr.ecr.us-east-1.amazonaws.com/apex-agentcore-agents
+      ecr_auto_create: false
+      s3_path: null
+      s3_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+        network_mode_config: null
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+      lifecycle_configuration:
+        idle_runtime_session_timeout: null
+        max_lifetime: null
+    bedrock_agentcore:
+      agent_id: apex_claims_bot-F03XDp4Lky
+      agent_arn: arn:aws:bedrock-agentcore:us-east-1:457795063704:runtime/apex_claims_bot-F03XDp4Lky
+      agent_session_id: null
+    codebuild:
+      project_name: bedrock-agentcore-apex_claims_bot-builder
+      execution_role: arn:aws:iam::457795063704:role/AmazonBedrockAgentCoreSDKCodeBuild-us-east-1-884134c711
+      source_bucket: bedrock-agentcore-codebuild-sources-457795063704-us-east-1
+    memory:
+      mode: STM_ONLY
+      memory_id: apex_claims_bot_mem-c4wt5iEkKI
+      memory_arn: arn:aws:bedrock-agentcore:us-east-1:457795063704:memory/apex_claims_bot_mem-c4wt5iEkKI
+      memory_name: apex_claims_bot_mem
+      event_expiry_days: 30
+      first_invoke_memory_check_done: true
+      was_created_by_toolkit: true
+    identity:
+      credential_providers: []
+      workload: null
+    aws_jwt:
+      enabled: false
+      audiences: []
+      signing_algorithm: ES384
+      issuer_url: null
+      duration_seconds: 300
+    authorizer_configuration: null
+    request_header_configuration: null
+    oauth_configuration: null
+    api_key_env_var_name: null
+    api_key_credential_provider_name: null
+    is_generated_by_agentcore_create: false

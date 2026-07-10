@@ -1,0 +1,127 @@
+{
+  "blueprintName": "apex-claims-processing-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Claims processing output schema for healthcare payer automation",
+  "industry": "healthcare_payers",
+  "documentType": "claims",
+  "processingType": "small_factory_chain",
+  "chainId": "claims_processing_chain",
+  "bdaSchema": {
+    "class": "ApexClaimsProcessing",
+    "description": "Claims processing chain output schema",
+    "definitions": {
+      "ELIGIBILITY_RESULT": {
+        "properties": {
+          "eligible": {"type": "boolean"},
+          "member_id": {"type": "string"},
+          "member_name": {"type": "string"},
+          "plan_name": {"type": "string"},
+          "effective_date": {"type": "string"},
+          "term_date": {"type": "string"},
+          "benefits": {"type": "object"},
+          "accumulators": {"type": "object"},
+          "network_status": {"type": "string"}
+        }
+      },
+      "ADJUDICATION_RESULT": {
+        "properties": {
+          "claim_id": {"type": "string"},
+          "status": {"type": "string", "enum": ["approved", "denied", "pended"]},
+          "allowed_amount": {"type": "number"},
+          "member_responsibility": {"type": "number"},
+          "plan_payment": {"type": "number"},
+          "line_results": {"type": "array"},
+          "denial_reasons": {"type": "array"},
+          "adjudication_date": {"type": "string"}
+        }
+      },
+      "MEDICAL_NECESSITY_RESULT": {
+        "properties": {
+          "medically_necessary": {"type": "boolean"},
+          "determination": {"type": "string", "enum": ["approved", "denied", "pend_for_review"]},
+          "confidence_score": {"type": "number"},
+          "criteria_met": {"type": "array"},
+          "criteria_not_met": {"type": "array"},
+          "missing_documentation": {"type": "array"},
+          "guideline_reference": {"type": "string"}
+        }
+      },
+      "FRAUD_DETECTION_RESULT": {
+        "properties": {
+          "fraud_score": {"type": "number"},
+          "risk_level": {"type": "string", "enum": ["low", "medium", "high", "critical"]},
+          "requires_review": {"type": "boolean"},
+          "indicators": {"type": "array"},
+          "recommendations": {"type": "array"}
+        }
+      },
+      "PAYMENT_RESULT": {
+        "properties": {
+          "claim_id": {"type": "string"},
+          "total_billed": {"type": "number"},
+          "total_allowed": {"type": "number"},
+          "total_plan_pay": {"type": "number"},
+          "total_member_pay": {"type": "number"},
+          "line_calculations": {"type": "array"},
+          "cost_sharing": {"type": "object"}
+        }
+      }
+    },
+    "properties": {
+      "job_id": {"type": "string"},
+      "claim_id": {"type": "string"},
+      "processing_status": {"type": "string", "enum": ["completed", "partial", "failed"]},
+      "processing_timestamp": {"type": "string"},
+
+      "eligibility_verify": {
+        "type": "object",
+        "$ref": "#/definitions/ELIGIBILITY_RESULT"
+      },
+
+      "claims_adjudication": {
+        "type": "object",
+        "$ref": "#/definitions/ADJUDICATION_RESULT"
+      },
+
+      "medical_necessity_check": {
+        "type": "object",
+        "$ref": "#/definitions/MEDICAL_NECESSITY_RESULT"
+      },
+
+      "fraud_detection": {
+        "type": "object",
+        "$ref": "#/definitions/FRAUD_DETECTION_RESULT"
+      },
+
+      "payment_calculate": {
+        "type": "object",
+        "$ref": "#/definitions/PAYMENT_RESULT"
+      },
+
+      "final_determination": {
+        "type": "object",
+        "properties": {
+          "status": {"type": "string"},
+          "total_plan_payment": {"type": "number"},
+          "total_member_responsibility": {"type": "number"},
+          "requires_manual_review": {"type": "boolean"},
+          "review_reasons": {"type": "array"}
+        }
+      }
+    }
+  },
+  "extractionRules": {
+    "confidenceThreshold": 0.85,
+    "processingTimeout": 180
+  },
+  "factoryChain": {
+    "chainId": "claims_processing_chain",
+    "factories": [
+      {"id": "eligibility_verify", "action": "eligibility_verify", "aiEnhanced": false},
+      {"id": "claims_adjudication", "action": "claims_adjudication", "aiEnhanced": false},
+      {"id": "medical_necessity_check", "action": "medical_necessity_check", "aiEnhanced": true},
+      {"id": "fraud_detection", "action": "fraud_detection", "aiEnhanced": true},
+      {"id": "payment_calculate", "action": "payment_calculate", "aiEnhanced": false}
+    ]
+  }
+}

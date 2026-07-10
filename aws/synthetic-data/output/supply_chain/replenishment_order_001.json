@@ -1,0 +1,86 @@
+{
+  "_metadata": {
+    "blueprint": "apex-replenishment-order-v1",
+    "document_type": "replenishment_order",
+    "extraction_date": "2024-01-22T09:30:00Z",
+    "confidence_score": 0.96,
+    "source_file": "replenishment_order.pdf"
+  },
+  "order_number": "RPL-2024-001234",
+  "order_date": "2024-01-22",
+  "order_type": "STOCK_REPLENISHMENT",
+  "priority": "STANDARD",
+  "status": "SUBMITTED",
+  "vendor": {
+    "id": "VEND-5678",
+    "name": "Premier Components Inc.",
+    "contact": "John Reynolds",
+    "email": "jreynolds@premiercomponents.com",
+    "phone": "+1-555-987-6543"
+  },
+  "ship_to": {
+    "location_id": "WH-001",
+    "name": "Central Distribution Center",
+    "address": "1000 Logistics Parkway",
+    "city": "Memphis",
+    "state": "TN",
+    "zip": "38118"
+  },
+  "line_items": [
+    {
+      "line": 1,
+      "sku": "SKU-12345",
+      "description": "Premium Widget Assembly",
+      "quantity": 2500,
+      "unit_of_measure": "EACH",
+      "unit_price": 45.00,
+      "extended_price": 112500.00,
+      "requested_date": "2024-02-05"
+    },
+    {
+      "line": 2,
+      "sku": "SKU-12346",
+      "description": "Standard Widget Assembly",
+      "quantity": 5000,
+      "unit_of_measure": "EACH",
+      "unit_price": 28.50,
+      "extended_price": 142500.00,
+      "requested_date": "2024-02-05"
+    },
+    {
+      "line": 3,
+      "sku": "SKU-12347",
+      "description": "Widget Fastener Kit",
+      "quantity": 10000,
+      "unit_of_measure": "EACH",
+      "unit_price": 3.25,
+      "extended_price": 32500.00,
+      "requested_date": "2024-02-05"
+    }
+  ],
+  "totals": {
+    "subtotal": 287500.00,
+    "freight": 1250.00,
+    "tax": 0.00,
+    "total": 288750.00
+  },
+  "shipping": {
+    "method": "LTL",
+    "carrier": "XPO Logistics",
+    "terms": "FOB Destination",
+    "incoterms": "DAP"
+  },
+  "payment_terms": "NET30",
+  "special_instructions": "Palletize by SKU. Include packing list with each pallet.",
+  "triggers": {
+    "triggered_by": "REORDER_POINT",
+    "current_stock": 1500,
+    "reorder_point": 2000,
+    "safety_stock": 1000
+  },
+  "approvals": {
+    "created_by": "Planning System",
+    "approved_by": "Supply Chain Manager",
+    "approval_date": "2024-01-22"
+  }
+}

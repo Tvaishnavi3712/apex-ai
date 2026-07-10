@@ -1,0 +1,249 @@
+# CBTS Apex AI Platform - Resume Screening Runbook
+# Natural Language Runbook for Talent Acquisition
+# Intent -> Output -> Context -> Recipe
+
+name: resume_screening
+version: "1.0.0"
+description: "Automated resume screening with job requirement matching and candidate scoring"
+industry: hr
+category: talent_acquisition
+
+# =============================================================================
+# INTENT - What the agent should accomplish
+# =============================================================================
+intent: |
+  Screen incoming resumes by extracting candidate information, matching against
+  job requirements, scoring candidates based on qualifications, and routing
+  qualified candidates to recruiters for further evaluation.
+
+# =============================================================================
+# OUTPUT - Expected deliverables from the runbook
+# =============================================================================
+output:
+  - name: candidate_profile
+    type: structured_data
+    description: "Extracted and enriched candidate profile"
+    schema:
+      contact_info: object
+      experience: array
+      education: array
+      skills: array
+      total_experience: number
+
+  - name: matching_score
+    type: scoring_result
+    description: "Job requirement match score"
+    schema:
+      overall_score: number
+      skill_match: number
+      experience_match: number
+      education_match: number
+      recommendation: string
+
+  - name: screening_decision
+    type: routing_decision
+    description: "Screening outcome and next steps"
+    schema:
+      status: string
+      assigned_recruiter: string
+      priority: string
+      notes: array
+
+# =============================================================================
+# CONTEXT - Business rules and domain knowledge
+# =============================================================================
+context:
+  business_rules:
+    - "Minimum score of 60% required for recruiter review"
+    - "Must meet minimum education requirements if specified"
+    - "Experience requirements can be flexible +/- 2 years"
+    - "All resumes must be processed within 24 hours"
+    - "Candidates with exact skill matches get priority"
+
+  scoring_weights:
+    required_skills: 0.35
+    preferred_skills: 0.15
+    experience_years: 0.25
+    education: 0.15
+    certifications: 0.10
+
+  score_thresholds:
+    excellent: 85
+    qualified: 70
+    marginal: 60
+    unqualified: 0
+
+  processing_rules:
+    max_resume_age_days: 90
+    duplicate_detection: true
+    auto_acknowledge: true
+
+# =============================================================================
+# DATA SOURCES - Where to retrieve information
+# =============================================================================
+data_sources:
+  - name: resume_document
+    type: s3_document
+    description: "Resume document (PDF, DOCX, or image)"
+    input_parameter: document_s3_uri
+
+  - name: job_requisitions
+    type: dynamodb
+    table: apex-job-requisitions
+    description: "Open job requisitions with requirements"
+
+  - name: candidate_database
+    type: dynamodb
+    table: apex-candidates
+    description: "Existing candidate records"
+
+  - name: skills_taxonomy
+    type: dynamodb
+    table: apex-skills-taxonomy
+    description: "Skills taxonomy for matching"
+
+# =============================================================================
+# ACTIONS - Available tools for the agent
+# =============================================================================
+actions:
+  - name: resume_extract
+    action_id: hr.resume_extract
+    description: "Extract structured data from resume using BDA"
+    required: true
+
+  - name: job_requirement_match
+    action_id: hr.job_requirement_match
+    description: "Match candidate against job requirements"
+    required: true
+
+  - name: candidate_lookup
+    action_id: hr.candidate_lookup
+    description: "Check for existing candidate records"
+    required: false
+
+  - name: skill_normalize
+    action_id: hr.skill_normalize
+    description: "Normalize skills against taxonomy"
+    required: false
+
+  - name: send_notification
+    action_id: core.send_notification
+    description: "Send notification to recruiter or candidate"
+    required: false
+
+  - name: create_work_item
+    action_id: core.create_work_item
+    description: "Create work item for recruiter review"
+    required: false
+
+# =============================================================================
+# RECIPE - Natural language instructions for the agent
+# =============================================================================
+recipe: |
+  ## Resume Screening Workflow
+
+  ### Step 1: Resume Extraction
+  When a new resume is received:
+  1. Use `resume_extract` to extract structured data from the resume
+  2. Validate extraction of: name, contact info, experience, education, skills
+  3. If extraction confidence below 80%, flag for manual review
+  4. Check for duplicate candidates using email and phone
+  5. Create or update candidate profile
+
+  ### Step 2: Skills Normalization
+  Process extracted skills:
+  1. Use `skill_normalize` to map skills to standard taxonomy
+  2. Identify technical skills vs soft skills
+  3. Determine skill proficiency levels if mentioned
+  4. Expand skill aliases (e.g., "JS" → "JavaScript")
+  5. Flag any skills not in taxonomy for review
+
+  ### Step 3: Candidate Lookup
+  Check for existing records:
+  1. Use `candidate_lookup` with email and phone
+  2. If existing candidate, check previous applications
+  3. Merge new information with existing profile
+  4. Track application history
+  5. Flag if candidate previously rejected for same role
+
+  ### Step 4: Job Matching
+  Match against open requisitions:
+  1. Retrieve relevant job requisitions based on skills/title
+  2. For each potential match, use `job_requirement_match`
+  3. Score against required skills (weighted 35%)
+  4. Score against preferred skills (weighted 15%)
+  5. Score experience match (weighted 25%)
+  6. Score education match (weighted 15%)
+  7. Score certifications (weighted 10%)
+  8. Calculate overall match score
+
+  ### Step 5: Screening Decision
+  Determine screening outcome:
+  1. Excellent (85%+): Priority review, fast-track to recruiter
+  2. Qualified (70-84%): Standard review queue
+  3. Marginal (60-69%): Review only if no better candidates
+  4. Unqualified (<60%): Auto-decline with feedback
+
+  ### Step 6: Routing & Notification
+  Complete processing:
+  1. For qualified candidates, create work item for recruiter
+  2. Assign to recruiter based on job requisition owner
+  3. Send acknowledgment to candidate if configured
+  4. For unqualified, store in talent pool for future
+  5. Log all decisions for compliance
+
+  ### Step 7: Reporting
+  Track metrics:
+  1. Update resume volume statistics
+  2. Track source effectiveness
+  3. Monitor time-to-screen
+  4. Calculate qualification rates by source
+  5. Flag bottlenecks
+
+# =============================================================================
+# TRIGGERS - How this runbook is activated
+# =============================================================================
+triggers:
+  - type: s3_event
+    bucket: apex-documents-incoming
+    prefix: resumes/
+    events: ["s3:ObjectCreated:*"]
+    description: "Triggered when resume uploaded to S3"
+
+  - type: api
+    endpoint: /api/v1/screen-resume
+    method: POST
+    description: "Manual resume submission"
+
+  - type: webhook
+    source: ats_integration
+    description: "Resumes from ATS integration"
+
+  - type: email
+    address: careers@company.com
+    description: "Resumes received via email"
+
+# =============================================================================
+# WORKER CONFIGURATION
+# =============================================================================
+worker:
+  queue: apex-resume-screening-queue
+  concurrency: 20
+  timeout_seconds: 180
+  retry_policy:
+    max_attempts: 3
+    backoff_multiplier: 2
+
+# =============================================================================
+# METADATA
+# =============================================================================
+metadata:
+  created_by: apex-platform
+  created_at: "2024-01-15"
+  last_updated: "2024-01-15"
+  tags:
+    - recruiting
+    - resume
+    - screening
+    - hr
+    - talent-acquisition

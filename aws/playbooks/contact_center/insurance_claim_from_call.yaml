@@ -1,0 +1,279 @@
+# CBTS Apex AI Platform - Insurance Claim from Call Playbook
+# Uses Small Factory chain for end-to-end call processing
+name: insurance_claim_from_call
+version: "1.0.0"
+description: "Process insurance claims from recorded customer calls using Small Factory pattern"
+industry: contact_center
+category: claims_processing
+
+intent: |
+  Process insurance claim calls by transcribing audio, extracting claim details,
+  analyzing sentiment, checking compliance, detecting fraud indicators, and
+  routing claims for appropriate handling - all using the Small Factory chain.
+
+output:
+  - name: claim_details
+    type: claim
+    schema:
+      claim_type: string
+      incident_date: string
+      damage_amount: number
+      completeness_score: number
+  - name: processing_decision
+    type: decision
+    schema:
+      decision: string
+      routing: string
+      fraud_score: number
+      priority_level: string
+  - name: call_summary
+    type: summary
+    schema:
+      summary: string
+      action_items: array
+      compliance_passed: boolean
+
+context:
+  business_rules:
+    - "Auto-approve claims with fraud score < 30 and completeness > 70%"
+    - "Route high-value claims (>$50,000) to senior adjuster"
+    - "Flag fraud score > 70 for SIU investigation"
+    - "Compliance violations require supervisor review"
+
+  claim_types:
+    - auto
+    - home
+    - health
+    - life
+
+  required_claim_fields:
+    - incident_date
+    - incident_type
+    - description
+
+  compliance_checklist:
+    - proper_greeting
+    - identity_verification
+    - empathy_shown
+    - accurate_information
+    - proper_closing
+    - no_prohibited_language
+
+  fraud_indicators:
+    - inconsistent_story
+    - excessive_damage_claims
+    - reluctant_to_provide_details
+    - recent_policy_change
+    - multiple_recent_claims
+
+# Small Factory chain reference
+factory_chain: insurance_claim_from_call
+
+# Factory-based actions (maps to Small Factory handlers)
+actions:
+  - name: transcribe
+    factory_id: transcribe_audio
+    required: true
+    config:
+      language: "en-US"
+      enable_diarization: true
+
+  - name: diarize
+    factory_id: diarize_speakers
+    required: true
+    depends_on: [transcribe]
+
+  - name: intent
+    factory_id: intent_classify
+    required: true
+    depends_on: [transcribe]
+
+  - name: sentiment
+    factory_id: sentiment_timeline
+    required: true
+    depends_on: [diarize]
+
+  - name: entities
+    factory_id: entity_extract
+    required: true
+    depends_on: [transcribe]
+
+  - name: claim
+    factory_id: claim_extract
+    required: true
+    depends_on: [entities, intent]
+
+  - name: compliance
+    factory_id: compliance_audit
+    required: true
+    depends_on: [diarize]
+
+  - name: fraud
+    factory_id: fraud_indicators
+    required: true
+    depends_on: [claim, sentiment]
+
+  - name: priority
+    factory_id: priority_calculate
+    required: true
+    depends_on: [sentiment, fraud, compliance]
+
+  - name: summary
+    factory_id: summary_generate
+    required: true
+    depends_on: [claim, sentiment, compliance]
+
+  - name: decision
+    factory_id: auto_decision
+    required: true
+    depends_on: [priority, fraud]
+
+  - name: coaching
+    factory_id: coaching_tips
+    required: false
+    depends_on: [compliance, sentiment]
+
+recipe: |
+  ## Insurance Claim from Call Processing
+
+  This playbook uses the Small Factory pattern to process insurance claim calls
+  through a DAG of 12 factories, each performing specialized analysis.
+
+  ### Factory Chain Flow
+
+  ```
+  [Audio Upload]
+       │
+       ▼
+  ┌─────────────┐
+  │  Transcribe │─────────────────────────────────────┐
+  └─────────────┘                                      │
+       │                                               │
+       ├────────────────┐                              │
+       ▼                ▼                              ▼
+  ┌─────────┐    ┌───────────┐               ┌──────────────┐
+  │ Diarize │    │  Intent   │               │   Entities   │
+  └─────────┘    └───────────┘               └──────────────┘
+       │              │                              │
+       ├──────────────┼──────────────────────────────┤
+       ▼              ▼                              ▼
+  ┌───────────┐ ┌───────────┐                ┌───────────┐
+  │ Sentiment │ │ Compliance│                │   Claim   │
+  └───────────┘ └───────────┘                └───────────┘
+       │              │                              │
+       └──────────────┼──────────────────────────────┘
+                      ▼
+               ┌───────────┐
+               │   Fraud   │
+               └───────────┘
+                      │
+       ┌──────────────┼──────────────┐
+       ▼              ▼              ▼
+  ┌──────────┐ ┌──────────┐   ┌───────────┐
+  │ Priority │ │ Summary  │   │ Coaching  │
+  └──────────┘ └──────────┘   └───────────┘
+       │
+       ▼
+  ┌──────────┐
+  │ Decision │
+  └──────────┘
+  ```
+
+  ### Step 1: Audio Transcription
+  - Convert audio to text using AWS Transcribe
+  - Enable speaker diarization for multi-party calls
+  - Output: full_text, segments, speakers
+
+  ### Step 2: Speaker Diarization
+  - Label speakers as Agent/Customer
+  - Calculate talk time per speaker
+  - Analyze conversation flow
+
+  ### Step 3: Intent Classification
+  - Determine primary call intent (file_claim, check_status, etc.)
+  - Identify secondary intents
+  - Extract intent signals
+
+  ### Step 4: Sentiment Timeline
+  - Analyze sentiment throughout call
+  - Track sentiment arc (improving/declining)
+  - Identify positive/negative peaks
+
+  ### Step 5: Entity Extraction
+  - Extract PERSON, DATE, LOCATION, MONEY
+  - Extract POLICY_NUMBER, CLAIM_NUMBER
+  - Build entity summary
+
+  ### Step 6: Claim Extraction
+  - Determine claim type (auto, home, health, life)
+  - Extract incident details
+  - Calculate claim completeness
+
+  ### Step 7: Compliance Audit
+  - Check greeting and closing
+  - Verify identity verification
+  - Audit empathy and accuracy
+  - Flag prohibited language
+
+  ### Step 8: Fraud Detection
+  - Check for inconsistent stories
+  - Detect excessive claims
+  - Identify reluctance to provide details
+  - Score overall fraud risk
+
+  ### Step 9: Priority Calculation
+  - Combine sentiment, fraud, compliance scores
+  - Calculate weighted priority
+  - Determine SLA requirements
+
+  ### Step 10: Summary Generation
+  - Create structured call summary
+  - List action items
+  - Highlight compliance notes
+
+  ### Step 11: Auto Decision
+  - Route based on priority and fraud
+  - Auto-approve low-risk claims
+  - Escalate high-value claims
+  - Block high-fraud claims
+
+  ### Step 12: Coaching Tips
+  - Identify improvement areas
+  - Generate agent coaching tips
+  - Recommend training modules
+
+triggers:
+  - type: api
+    endpoint: /api/v1/voice/upload
+  - type: s3_event
+    bucket: apex-audio
+    prefix: uploads/
+  - type: websocket
+    endpoint: /api/v1/voice/stream
+
+worker:
+  queue: apex-voice-processing-queue
+  concurrency: 10
+  timeout_seconds: 300
+
+integrations:
+  - name: aws_transcribe
+    type: speech_to_text
+    config:
+      region: us-east-1
+      language: en-US
+
+  - name: dynamodb
+    type: database
+    config:
+      table: apex-voice-jobs
+
+  - name: websocket
+    type: realtime
+    config:
+      endpoint: /api/v1/voice/stream
+
+metadata:
+  tags: [voice, claims, insurance, transcription, fraud, compliance]
+  owner: contact_center_team
+  created_at: "2026-03-16"

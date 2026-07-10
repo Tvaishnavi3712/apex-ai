@@ -1,0 +1,202 @@
+{
+  "blueprintName": "apex-discharge-summary-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from hospital discharge summaries",
+  "industry": "healthcare_providers",
+  "documentType": "discharge_summary",
+  "bdaSchema": {
+    "class": "ApexDischargeSummary",
+    "description": "Hospital discharge summary extraction for continuity of care",
+    "definitions": {
+      "DISCHARGE_MEDICATION": {
+        "properties": {
+          "medication_name": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "dosage": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "frequency": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "route": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "duration": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "new_medication": {
+            "type": "boolean",
+            "inferenceType": "inferred"
+          }
+        }
+      },
+      "FOLLOW_UP": {
+        "properties": {
+          "provider_type": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "provider_name": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "timeframe": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "reason": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "patient_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "mrn": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Medical Record Number"
+      },
+      "account_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "date_of_birth": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "admission_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "discharge_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "length_of_stay": {
+        "type": "number",
+        "inferenceType": "inferred"
+      },
+      "attending_physician": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "admitting_diagnosis": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "principal_diagnosis": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "principal_diagnosis_icd10": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "secondary_diagnoses": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "procedures_performed": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "hospital_course": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "discharge_condition": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "discharge_disposition": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Home, SNF, Rehab, etc."
+      },
+      "discharge_medications": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/DISCHARGE_MEDICATION"
+        }
+      },
+      "diet_instructions": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "activity_restrictions": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "wound_care_instructions": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "follow_up_appointments": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/FOLLOW_UP"
+        }
+      },
+      "pending_labs": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "pending_studies": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "patient_education_provided": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "dme_ordered": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "home_health_ordered": {
+        "type": "boolean",
+        "inferenceType": "explicit"
+      },
+      "code_status": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "dictating_physician": {
+        "type": "string",
+        "inferenceType": "explicit"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.85
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeRawText": true
+  },
+  "blueprintArn": "arn:aws:bedrock:us-east-1:457795063704:blueprint/05b22dcd678d"
+}

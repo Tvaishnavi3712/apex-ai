@@ -1,0 +1,86 @@
+# CBTS Apex AI Platform - Referral Management Runbook
+name: referral_management
+version: "1.0.0"
+description: "Automated referral processing with authorization and scheduling"
+industry: healthcare_providers
+category: care_coordination
+
+intent: |
+  Process incoming referrals by extracting details, obtaining necessary
+  authorizations, scheduling appointments, and coordinating care between
+  providers.
+
+output:
+  - name: processed_referral
+    type: structured_data
+    schema:
+      referral_id: string
+      authorization_status: string
+      scheduled_appointment: object
+  - name: care_coordination_tasks
+    type: work_item
+    schema:
+      records_to_obtain: array
+      consults_needed: array
+
+context:
+  business_rules:
+    - "Schedule urgent referrals within 48 hours"
+    - "Obtain auth before scheduling if required"
+    - "Request records from referring provider"
+    - "Notify referring provider of appointment"
+
+actions:
+  - name: referral_extract
+    action_id: healthcare_providers.referral_extract
+    required: true
+  - name: auth_check
+    action_id: healthcare_payers.auth_check
+    required: true
+  - name: scheduler
+    action_id: healthcare_providers.appointment_schedule
+    required: false
+  - name: records_request
+    action_id: healthcare_providers.records_request
+    required: false
+
+recipe: |
+  ## Referral Management Workflow
+
+  ### Step 1: Referral Intake
+  1. Use `referral_extract` to capture referral details
+  2. Identify urgency level and specialty
+  3. Verify insurance and eligibility
+  4. Check if authorization required
+
+  ### Step 2: Authorization
+  1. Use `auth_check` to verify existing auth
+  2. If no auth, initiate prior auth request
+  3. Track authorization status
+  4. Notify staff if auth denied
+
+  ### Step 3: Scheduling
+  1. Match to appropriate provider/specialty
+  2. Schedule based on urgency
+  3. Send confirmation to patient
+  4. Notify referring provider
+
+  ### Step 4: Care Coordination
+  1. Use `records_request` to obtain medical records
+  2. Prepare chart for visit
+  3. Identify any pre-visit testing needed
+  4. Complete referral loop after visit
+
+triggers:
+  - type: fax
+    number: "+1-800-XXX-XXXX"
+  - type: api
+    endpoint: /api/v1/referrals
+
+worker:
+  queue: apex-referral-queue
+  concurrency: 15
+  timeout_seconds: 300
+
+metadata:
+  tags: [referrals, care-coordination, scheduling, healthcare-providers]

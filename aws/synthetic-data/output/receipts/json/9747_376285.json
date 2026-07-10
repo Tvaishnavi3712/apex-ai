@@ -1,0 +1,62 @@
+{
+  "merchant": {
+    "name": "Morton's Steakhouse",
+    "category": "Restaurant",
+    "address": {
+      "street": "400 Market St",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "94102"
+    },
+    "phone": "(589) 892-4711"
+  },
+  "transaction": {
+    "date": "2026-02-06",
+    "time": "21:16:52",
+    "receipt_number": "9747-376285"
+  },
+  "line_items": [
+    {
+      "description": "Caesar Salad",
+      "quantity": 1,
+      "unit_price": 12.99,
+      "amount": 12.99
+    },
+    {
+      "description": "Pasta Primavera",
+      "quantity": 1,
+      "unit_price": 18.99,
+      "amount": 18.99
+    },
+    {
+      "description": "Chicken Parmesan",
+      "quantity": 1,
+      "unit_price": 22.99,
+      "amount": 22.99
+    },
+    {
+      "description": "Coffee",
+      "quantity": 3,
+      "unit_price": 3.99,
+      "amount": 11.97
+    },
+    {
+      "description": "Filet Mignon",
+      "quantity": 1,
+      "unit_price": 45.99,
+      "amount": 45.99
+    }
+  ],
+  "totals": {
+    "subtotal": 112.93,
+    "tax_rate": 0.0825,
+    "tax_amount": 9.32,
+    "tip": 24.84,
+    "total": 147.09
+  },
+  "payment": {
+    "method": "Credit Card",
+    "card_type": "Visa",
+    "last_four": "5543"
+  }
+}

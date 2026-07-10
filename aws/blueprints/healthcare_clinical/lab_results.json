@@ -1,0 +1,130 @@
+{
+  "blueprintName": "apex-lab-results-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from laboratory results reports",
+  "industry": "healthcare_clinical",
+  "documentType": "lab_results",
+  "bdaSchema": {
+    "class": "ApexLabResults",
+    "description": "Laboratory results extraction for clinical decision support",
+    "definitions": {
+      "LAB_TEST": {
+        "properties": {
+          "test_name": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "test_code": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "result_value": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "result_unit": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "reference_range": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "flag": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "H=High, L=Low, C=Critical"
+          },
+          "status": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "patient_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "patient_dob": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "mrn": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "accession_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "ordering_provider": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "ordering_provider_npi": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "collection_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "collection_time": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "received_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "reported_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "specimen_type": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "lab_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "lab_clia": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "tests": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/LAB_TEST"
+        }
+      },
+      "has_critical_values": {
+        "type": "boolean",
+        "inferenceType": "inferred"
+      },
+      "has_abnormal_values": {
+        "type": "boolean",
+        "inferenceType": "inferred"
+      },
+      "pathologist_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "comments": {
+        "type": "string",
+        "inferenceType": "explicit"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.9
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  },
+  "blueprintArn": "arn:aws:bedrock:us-east-1:457795063704:blueprint/772fab53664a"
+}

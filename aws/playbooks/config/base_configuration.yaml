@@ -1,0 +1,183 @@
+# =============================================================================
+# APEX AI Platform - Base Configuration Template
+# =============================================================================
+# This file defines centralized configuration patterns for all playbooks.
+# All values use ${VARIABLE} syntax for environment-based substitution.
+# =============================================================================
+
+version: "2.0.0"
+config_type: "base_configuration"
+
+# -----------------------------------------------------------------------------
+# Environment Configuration
+# -----------------------------------------------------------------------------
+# These values are substituted at runtime based on deployment environment
+# -----------------------------------------------------------------------------
+environment:
+  name: "${APEX_ENVIRONMENT}"  # dev, staging, prod
+  region: "${AWS_REGION}"
+  account_id: "${AWS_ACCOUNT_ID}"
+
+# -----------------------------------------------------------------------------
+# AWS Resource Naming Patterns
+# -----------------------------------------------------------------------------
+# Use these patterns instead of hardcoding resource names
+# -----------------------------------------------------------------------------
+aws_resources:
+  # S3 Bucket naming pattern: apex-{environment}-{purpose}
+  s3_buckets:
+    documents_incoming: "apex-${APEX_ENVIRONMENT}-documents-incoming"
+    documents_processed: "apex-${APEX_ENVIRONMENT}-documents-processed"
+    documents_archive: "apex-${APEX_ENVIRONMENT}-documents-archive"
+    call_recordings: "apex-${APEX_ENVIRONMENT}-call-recordings"
+    sales_recordings: "apex-${APEX_ENVIRONMENT}-sales-recordings"
+
+  # DynamoDB table naming pattern: apex-{environment}-{entity}
+  dynamodb_tables:
+    # Core tables
+    playbooks: "apex-${APEX_ENVIRONMENT}-playbooks"
+    blueprints: "apex-${APEX_ENVIRONMENT}-blueprints"
+    work_items: "apex-${APEX_ENVIRONMENT}-work-items"
+    audit_log: "apex-${APEX_ENVIRONMENT}-audit-log"
+
+  # SQS Queue naming pattern: apex-{environment}-{workflow}-queue
+  sqs_queues:
+    default_pattern: "apex-${APEX_ENVIRONMENT}-{workflow}-queue"
+    dead_letter_pattern: "apex-${APEX_ENVIRONMENT}-{workflow}-dlq"
+
+  # Bedrock resources
+  bedrock:
+    blueprint_arn_pattern: "arn:aws:bedrock:${AWS_REGION}:${AWS_ACCOUNT_ID}:blueprint/{blueprint_id}"
+
+# -----------------------------------------------------------------------------
+# Common Approval Thresholds
+# -----------------------------------------------------------------------------
+# Standard approval levels used across industries
+# -----------------------------------------------------------------------------
+approval_thresholds:
+  # Financial approval tiers
+  financial:
+    auto_approve: 5000
+    supervisor: 25000
+    manager: 50000
+    director: 100000
+    vp: 250000
+    svp: 500000
+    cfo: 1000000
+    ceo: null  # No limit
+
+  # Document processing approval
+  document:
+    auto_approve_confidence: 95
+    review_threshold: 85
+    reject_threshold: 60
+
+# -----------------------------------------------------------------------------
+# Common SLA Configurations
+# -----------------------------------------------------------------------------
+# Standard SLA tiers used across workflows
+# -----------------------------------------------------------------------------
+sla_configurations:
+  # Processing time SLAs (in hours unless specified)
+  processing:
+    emergency: 4
+    urgent: 24
+    expedited: 48
+    standard: 72
+    extended: 168  # 7 days
+
+  # Turnaround time SLAs (in business days)
+  turnaround:
+    standard_days: 14
+    urgent_days: 3
+    emergency_hours: 24
+
+  # Retry configurations
+  retry:
+    max_attempts: 3
+    backoff_multiplier: 2
+    initial_delay_seconds: 60
+
+# -----------------------------------------------------------------------------
+# Common Confidence Thresholds
+# -----------------------------------------------------------------------------
+# AI/ML confidence thresholds for document processing
+# -----------------------------------------------------------------------------
+confidence_thresholds:
+  extraction:
+    high: 95
+    medium: 85
+    low: 70
+    reject: 60
+
+  classification:
+    high: 90
+    medium: 80
+    low: 65
+
+  entity_recognition:
+    accept: 85
+    review: 70
+    reject: 50
+
+# -----------------------------------------------------------------------------
+# Common Compliance Rules
+# -----------------------------------------------------------------------------
+# Compliance rules that apply across industries
+# -----------------------------------------------------------------------------
+compliance:
+  # Data retention
+  retention:
+    documents_days: 2555  # 7 years
+    audit_logs_days: 2555
+    pii_max_days: 365
+
+  # Geographic restrictions
+  blocked_regions:
+    ofac_countries: ["NK", "IR", "SY", "CU", "RU"]  # OFAC sanctioned
+
+  # Required disclosures
+  disclosures:
+    call_recording: "This call may be recorded for quality and training purposes"
+    data_collection: "Your information will be processed in accordance with our privacy policy"
+
+# -----------------------------------------------------------------------------
+# Worker Configuration Defaults
+# -----------------------------------------------------------------------------
+worker_defaults:
+  concurrency: 5
+  timeout_seconds: 300
+  max_retries: 3
+  visibility_timeout: 60
+  batch_size: 10
+
+# -----------------------------------------------------------------------------
+# Notification Defaults
+# -----------------------------------------------------------------------------
+notification_defaults:
+  channels:
+    - email
+    - slack
+  escalation_minutes: 60
+  reminder_intervals: [30, 60, 120, 240]
+
+# -----------------------------------------------------------------------------
+# Audit Configuration
+# -----------------------------------------------------------------------------
+audit:
+  enabled: true
+  log_level: "INFO"
+  include_pii: false
+  retention_days: 2555
+
+# -----------------------------------------------------------------------------
+# Feature Flags
+# -----------------------------------------------------------------------------
+# Environment-specific feature toggles
+# -----------------------------------------------------------------------------
+feature_flags:
+  ai_enhancement_enabled: true
+  auto_approval_enabled: true
+  parallel_processing_enabled: true
+  real_time_notifications: true
+  advanced_analytics: true

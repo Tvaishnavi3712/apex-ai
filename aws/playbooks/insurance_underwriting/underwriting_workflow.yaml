@@ -1,0 +1,117 @@
+# CBTS Apex AI Platform - Insurance Underwriting Runbook
+name: underwriting_workflow
+version: "1.0.0"
+description: "Automated insurance underwriting with risk assessment and pricing"
+industry: insurance_underwriting
+category: underwriting
+
+intent: |
+  Process insurance applications by extracting applicant data, running risk
+  assessments, applying underwriting rules, calculating premiums, and routing
+  for appropriate approval or declination.
+
+output:
+  - name: underwriting_decision
+    type: decision
+    schema:
+      application_number: string
+      decision: string
+      premium: number
+      conditions: array
+  - name: risk_summary
+    type: assessment
+    schema:
+      risk_score: number
+      risk_grade: string
+      factors: array
+
+context:
+  business_rules:
+    - "Credit score below 600 requires senior underwriter"
+    - "Loss ratio above 70% requires manager approval"
+    - "New business over $1M requires actuarial review"
+    - "Prior cancellation requires explanation"
+
+  underwriting_tiers:
+    preferred: {score_min: 800, discount: 0.15}
+    standard: {score_min: 650, discount: 0}
+    substandard: {score_min: 500, surcharge: 0.25}
+    decline: {score_max: 499}
+
+  auto_approve_criteria:
+    max_premium: 5000
+    min_credit_score: 700
+    max_claims_5yr: 1
+    no_prior_cancellation: true
+
+actions:
+  - name: app_extract
+    action_id: insurance.application_extract
+    required: true
+  - name: credit_check
+    action_id: insurance.credit_check
+    required: true
+  - name: loss_history_check
+    action_id: insurance.loss_history_check
+    required: true
+  - name: risk_score
+    action_id: insurance.risk_score
+    required: true
+  - name: premium_calculate
+    action_id: insurance.premium_calculate
+    required: true
+  - name: underwriter_route
+    action_id: insurance.underwriter_route
+    required: false
+
+recipe: |
+  ## Insurance Underwriting Workflow
+
+  ### Step 1: Application Intake
+  1. Use `app_extract` to capture application data
+  2. Validate required fields complete
+  3. Check for duplicate applications
+  4. Verify agent licensing
+
+  ### Step 2: Data Verification
+  1. Use `credit_check` for credit score
+  2. Use `loss_history_check` for claims history
+  3. Verify prior coverage information
+  4. Check MVR for auto policies
+
+  ### Step 3: Risk Assessment
+  1. Use `risk_score` with all data points
+  2. Calculate risk tier (preferred, standard, substandard)
+  3. Identify risk factors requiring attention
+  4. Check against underwriting guidelines
+
+  ### Step 4: Premium Calculation
+  1. Use `premium_calculate` with risk tier
+  2. Apply base rates for territory
+  3. Apply credits and surcharges
+  4. Calculate final premium
+
+  ### Step 5: Decision Routing
+  If auto-approve criteria met:
+  1. Issue policy automatically
+  2. Generate welcome kit
+
+  If manual review needed:
+  1. Use `underwriter_route` based on risk level
+  2. Queue for appropriate review level
+  3. Track SLA for response time
+
+triggers:
+  - type: api
+    endpoint: /api/v1/underwriting
+  - type: s3_event
+    bucket: apex-insurance-apps
+    prefix: applications/
+
+worker:
+  queue: apex-underwriting-queue
+  concurrency: 25
+  timeout_seconds: 300
+
+metadata:
+  tags: [underwriting, insurance, risk, premium, auto-approve]

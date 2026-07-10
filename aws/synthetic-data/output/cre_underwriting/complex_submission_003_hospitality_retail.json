@@ -1,0 +1,461 @@
+{
+  "submission_id": "CRE-2026-003-HRT",
+  "submission_type": "New Business",
+  "complexity": "High",
+  "page_count": 10,
+  "document_sections": [
+    "ACORD 125 Application (Pages 1-2)",
+    "Hospitality Supplemental Application (Page 3)",
+    "Statement of Values - All Properties (Pages 4-5)",
+    "5-Year Loss History (Pages 6-7)",
+    "Property Condition Reports Summary (Page 8)",
+    "Revenue & Occupancy Schedules (Page 9)",
+    "Management Company Information (Page 10)"
+  ],
+
+  "named_insured": {
+    "name": "Coastal Hospitality Holdings LLC",
+    "dba": "Seaside Collection Hotels & Resorts",
+    "entity_type": "Limited Liability Company",
+    "fein": "59-8765432",
+    "years_in_business": 22,
+    "contact": {
+      "name": "Victoria Sanderson",
+      "title": "SVP Risk & Insurance",
+      "phone": "(305) 555-9100",
+      "email": "vsanderson@coastalhh.com"
+    },
+    "mailing_address": {
+      "street": "1200 Brickell Avenue, Suite 2800",
+      "city": "Miami",
+      "state": "FL",
+      "zip": "33131"
+    }
+  },
+
+  "broker_information": {
+    "agency": "Hospitality Risk Partners International",
+    "producer": "Christopher Morgan, CIC, CPCU",
+    "license_number": "FL-445566",
+    "phone": "(305) 555-8800",
+    "email": "cmorgan@hrpi.com"
+  },
+
+  "policy_information": {
+    "effective_date": "2026-06-01",
+    "expiration_date": "2027-06-01",
+    "policy_term": "12 months",
+    "coverage_type": "Commercial Property - Hospitality Special Form",
+    "valuation_basis": "Replacement Cost",
+    "coinsurance": "90%",
+    "deductible": {
+      "all_other_perils": 100000,
+      "named_storm": "3% of TIV per location, $500,000 minimum",
+      "flood": "2% of TIV per location",
+      "earthquake": "5% of TIV per location"
+    }
+  },
+
+  "locations": [
+    {
+      "location_number": 1,
+      "property_name": "The Seaside Grand Resort & Spa",
+      "address": {
+        "street": "4500 Collins Avenue",
+        "city": "Miami Beach",
+        "state": "FL",
+        "zip": "33140",
+        "county": "Miami-Dade"
+      },
+      "property_type": "Full-Service Luxury Resort",
+      "brand_affiliation": "Independent - Seaside Collection",
+      "star_rating": 5,
+      "occupancy_details": {
+        "rooms_suites": 425,
+        "avg_daily_rate": 485,
+        "occupancy_rate_annual": 0.78,
+        "convention_space_sqft": 45000,
+        "restaurants": 4,
+        "bars_lounges": 3,
+        "spa_sqft": 18000,
+        "pool_count": 3,
+        "beach_access": true
+      },
+      "construction": {
+        "type": "Fire Resistive (ISO Class 6)",
+        "frame": "Reinforced Concrete - Hurricane Rated",
+        "exterior_walls": "Impact-Resistant Glass, Concrete",
+        "roof_type": "Concrete Deck with Modified Bitumen",
+        "roof_age": 5,
+        "hurricane_shutters": "Automatic Rolling",
+        "wind_rating": "180 mph"
+      },
+      "building_details": {
+        "year_built": 2008,
+        "year_renovated": 2023,
+        "renovation_cost": 85000000,
+        "stories": 22,
+        "total_square_feet": 685000,
+        "parking_spaces": 450
+      },
+      "protection": {
+        "sprinklered": true,
+        "sprinkler_type": "Wet System - Full Coverage",
+        "fire_alarm": "Central Station with Voice Evacuation",
+        "security": "24/7 On-Site Security Team, AI Surveillance",
+        "protection_class": 2,
+        "backup_generator": true,
+        "generator_capacity_kw": 3500
+      },
+      "amenities": [
+        "Rooftop Restaurant & Bar",
+        "Full-Service Spa",
+        "Fitness Center",
+        "Business Center",
+        "Kids Club",
+        "Private Beach Club",
+        "Valet Parking"
+      ],
+      "values": {
+        "building": 165000000,
+        "furniture_fixtures_equipment": 32000000,
+        "business_income_12_months": 58000000,
+        "extra_expense": 12000000,
+        "valuable_papers": 500000,
+        "fine_arts": 2500000,
+        "total_insured_value": 270000000
+      }
+    },
+    {
+      "location_number": 2,
+      "property_name": "Bayfront Boutique Hotel",
+      "address": {
+        "street": "2200 Biscayne Boulevard",
+        "city": "Miami",
+        "state": "FL",
+        "zip": "33137",
+        "county": "Miami-Dade"
+      },
+      "property_type": "Boutique Hotel",
+      "brand_affiliation": "Independent - Seaside Collection",
+      "star_rating": 4,
+      "occupancy_details": {
+        "rooms_suites": 145,
+        "avg_daily_rate": 295,
+        "occupancy_rate_annual": 0.82,
+        "restaurant_seats": 120,
+        "rooftop_bar": true,
+        "pool": true
+      },
+      "construction": {
+        "type": "Fire Resistive (ISO Class 5)",
+        "frame": "Concrete Frame",
+        "exterior_walls": "Stucco with Impact Glass",
+        "roof_type": "Flat with TPO",
+        "roof_age": 8,
+        "wind_rating": "150 mph"
+      },
+      "building_details": {
+        "year_built": 2015,
+        "stories": 12,
+        "total_square_feet": 125000,
+        "parking_spaces": 180
+      },
+      "protection": {
+        "sprinklered": true,
+        "sprinkler_type": "Wet System",
+        "fire_alarm": "Central Station Monitored",
+        "security": "Key Card Access, CCTV, Night Security",
+        "protection_class": 3,
+        "backup_generator": true
+      },
+      "values": {
+        "building": 42000000,
+        "furniture_fixtures_equipment": 8500000,
+        "business_income_12_months": 12500000,
+        "extra_expense": 2500000,
+        "total_insured_value": 65500000
+      }
+    },
+    {
+      "location_number": 3,
+      "property_name": "Seaside Shopping Village",
+      "address": {
+        "street": "4600 Collins Avenue",
+        "city": "Miami Beach",
+        "state": "FL",
+        "zip": "33140",
+        "county": "Miami-Dade"
+      },
+      "property_type": "Lifestyle Retail Center",
+      "occupancy_details": {
+        "gross_leasable_area": 185000,
+        "occupied_percentage": 0.94,
+        "anchor_tenants": ["Williams-Sonoma", "Anthropologie", "Lululemon"],
+        "restaurant_count": 8,
+        "tenant_count": 52
+      },
+      "construction": {
+        "type": "Non-Combustible (ISO Class 4)",
+        "frame": "Steel and Concrete",
+        "exterior_walls": "Stucco with Decorative Stone",
+        "roof_type": "Built-Up with Tile Mansard",
+        "roof_age": 12,
+        "wind_rating": "140 mph"
+      },
+      "building_details": {
+        "year_built": 2010,
+        "year_renovated": 2022,
+        "stories": 2,
+        "total_square_feet": 185000,
+        "outdoor_dining_sqft": 15000,
+        "parking_spaces": 650
+      },
+      "protection": {
+        "sprinklered": true,
+        "sprinkler_type": "Wet System",
+        "fire_alarm": "Central Station Monitored",
+        "security": "Mall Security, CCTV",
+        "protection_class": 2
+      },
+      "values": {
+        "building": 58000000,
+        "tenants_improvements": 12000000,
+        "business_income_12_months": 18000000,
+        "extra_expense": 3500000,
+        "total_insured_value": 91500000
+      }
+    },
+    {
+      "location_number": 4,
+      "property_name": "Palm Coast Conference Center",
+      "address": {
+        "street": "800 Convention Center Drive",
+        "city": "Palm Beach",
+        "state": "FL",
+        "zip": "33480",
+        "county": "Palm Beach"
+      },
+      "property_type": "Conference & Events Center",
+      "occupancy_details": {
+        "meeting_rooms": 24,
+        "ballroom_sqft": 35000,
+        "total_meeting_sqft": 85000,
+        "max_capacity": 3500,
+        "annual_events": 280
+      },
+      "construction": {
+        "type": "Fire Resistive (ISO Class 5)",
+        "frame": "Steel Frame with Concrete",
+        "exterior_walls": "Precast Concrete Panels",
+        "roof_type": "Metal Deck with EPDM",
+        "roof_age": 10,
+        "wind_rating": "155 mph"
+      },
+      "building_details": {
+        "year_built": 2012,
+        "stories": 3,
+        "total_square_feet": 145000,
+        "parking_garage_spaces": 850
+      },
+      "protection": {
+        "sprinklered": true,
+        "sprinkler_type": "Wet System with Quick Response",
+        "fire_alarm": "Addressable with Voice Evacuation",
+        "security": "Event Security, Access Control",
+        "protection_class": 2,
+        "backup_generator": true,
+        "generator_capacity_kw": 1500
+      },
+      "special_features": [
+        "Commercial Kitchen - Catering",
+        "AV Equipment - Built-In",
+        "Outdoor Event Space",
+        "Green Room Facilities"
+      ],
+      "values": {
+        "building": 48000000,
+        "furniture_fixtures_equipment": 8500000,
+        "av_equipment": 3500000,
+        "business_income_12_months": 15000000,
+        "extra_expense": 3000000,
+        "total_insured_value": 78000000
+      }
+    }
+  ],
+
+  "total_insured_values": {
+    "total_building": 313000000,
+    "total_ffe_equipment": 64500000,
+    "total_tenants_improvements": 12000000,
+    "total_business_income": 103500000,
+    "total_extra_expense": 21000000,
+    "total_fine_arts": 2500000,
+    "total_valuable_papers": 500000,
+    "grand_total_tiv": 505000000
+  },
+
+  "loss_history": {
+    "years_covered": 5,
+    "prior_carrier": "Hospitality Mutual Insurance Company",
+    "claims": [
+      {
+        "date": "2022-09-28",
+        "location": "The Seaside Grand Resort",
+        "type": "Named Storm - Hurricane Ian",
+        "description": "Wind and water damage to facade, pool area, and landscaping",
+        "paid": 2850000,
+        "reserved": 0,
+        "status": "Closed",
+        "bi_component": 1200000
+      },
+      {
+        "date": "2023-04-12",
+        "location": "Bayfront Boutique Hotel",
+        "type": "Kitchen Fire",
+        "description": "Grease fire in restaurant kitchen, contained by suppression system",
+        "paid": 385000,
+        "reserved": 0,
+        "status": "Closed"
+      },
+      {
+        "date": "2023-11-15",
+        "location": "Seaside Shopping Village",
+        "type": "Water Damage",
+        "description": "Sprinkler activation due to contractor error, multiple tenant spaces affected",
+        "paid": 520000,
+        "reserved": 0,
+        "status": "Closed",
+        "subrogation": 520000
+      },
+      {
+        "date": "2024-06-02",
+        "location": "The Seaside Grand Resort",
+        "type": "Guest Injury - Slip & Fall",
+        "description": "Guest fell in spa area, liability claim (not included in property)",
+        "paid": 0,
+        "reserved": 0,
+        "status": "N/A - Liability",
+        "notes": "Excluded from property loss history"
+      },
+      {
+        "date": "2024-08-20",
+        "location": "Palm Coast Conference Center",
+        "type": "Equipment Breakdown",
+        "description": "HVAC chiller failure during major event, temporary cooling required",
+        "paid": 195000,
+        "reserved": 0,
+        "status": "Closed"
+      },
+      {
+        "date": "2025-10-05",
+        "location": "The Seaside Grand Resort",
+        "type": "Named Storm - Hurricane Milton",
+        "description": "Roof damage, window breaches on upper floors, BI loss",
+        "paid": 4200000,
+        "reserved": 850000,
+        "status": "Open",
+        "bi_component": 2800000
+      }
+    ],
+    "total_incurred": 8200000,
+    "total_paid": 7350000,
+    "total_reserved": 850000,
+    "loss_ratio_5_year": 0.35,
+    "hurricane_losses_5_year": 7050000
+  },
+
+  "underwriting_factors": {
+    "catastrophe_exposure": {
+      "hurricane_zone": "High - Coastal Florida",
+      "wind_pool_eligible": false,
+      "flood_zones": {
+        "miami_beach": "Zone AE - High Risk",
+        "miami": "Zone X",
+        "palm_beach": "Zone AE"
+      },
+      "storm_surge_zone": "Category 1-2 Surge Zone"
+    },
+    "special_hazards": [
+      "Hospitality Operations - 24/7",
+      "Food Service - Multiple Restaurants",
+      "Pool & Spa Operations",
+      "High-Value Guest Contents",
+      "Named Storm Exposure - Coastal"
+    ],
+    "positive_factors": [
+      "Hurricane-Rated Construction",
+      "Automatic Storm Shutters",
+      "Backup Power Systems",
+      "Recent $85M Renovation",
+      "Experienced Management Company",
+      "Strong Occupancy Rates"
+    ],
+    "concerns": [
+      "Significant hurricane loss history",
+      "Coastal flood exposure",
+      "High concentration in South Florida",
+      "Open hurricane claim from 2025"
+    ]
+  },
+
+  "requested_coverage": {
+    "property": {
+      "limit": 505000000,
+      "form": "Special - Replacement Cost",
+      "blanket": true
+    },
+    "business_income": {
+      "limit": 103500000,
+      "period": "18 months Actual Loss Sustained",
+      "extended_period": "365 days"
+    },
+    "extra_expense": {
+      "limit": 21000000
+    },
+    "flood": {
+      "requested": true,
+      "limit_per_location": 25000000,
+      "aggregate": 50000000
+    },
+    "equipment_breakdown": {
+      "requested": true,
+      "limit": 50000000,
+      "spoilage_sublimit": 2000000
+    },
+    "fine_arts": {
+      "limit": 2500000,
+      "form": "Agreed Value"
+    }
+  },
+
+  "ground_truth_expected_results": {
+    "risk_score": 52,
+    "risk_tier": "High",
+    "premium_estimate_range": {
+      "low": 1850000,
+      "mid": 2150000,
+      "high": 2650000
+    },
+    "decision": "Refer to Underwriting Manager",
+    "referral_reasons": [
+      "TIV exceeds $500M",
+      "Significant hurricane loss history ($7M+ in 5 years)",
+      "Open claim from recent hurricane",
+      "Coastal Florida wind/flood exposure",
+      "High-risk occupancy class"
+    ],
+    "recommended_conditions": [
+      "Wind engineering report required",
+      "Hurricane preparedness plan review",
+      "Minimum named storm deductible 5%",
+      "Flood sub-limits apply",
+      "Annual property inspections",
+      "Close open claim before binding"
+    ],
+    "potential_declination_factors": [
+      "Loss ratio exceeds acceptable threshold",
+      "Concentration risk in single catastrophe zone"
+    ]
+  }
+}

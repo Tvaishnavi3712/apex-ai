@@ -1,0 +1,65 @@
+{
+  "vendor": {
+    "name": "Summit Enterprises",
+    "address": {
+      "street": "789 Industrial Way",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60601"
+    },
+    "tax_id": "45-6789716",
+    "phone": "(305) 282-6146",
+    "email": "billing@summitente.com"
+  },
+  "invoice": {
+    "number": "INV2026-42890",
+    "date": "2026-02-08",
+    "due_date": "2026-03-10",
+    "po_number": "PO-480375",
+    "terms": "Due on Receipt"
+  },
+  "bill_to": {
+    "company_name": "Fabrikam Corp",
+    "address": {
+      "street": "999 Corporate Plaza",
+      "city": "Atlanta",
+      "state": "GA",
+      "zip": "30301"
+    }
+  },
+  "line_items": [
+    {
+      "description": "Cloud Hosting Services - Monthly",
+      "quantity": 11,
+      "unit_price": 829.66,
+      "amount": 9126.26,
+      "item_code": "ESO-5574"
+    },
+    {
+      "description": "Security Audit Services",
+      "quantity": 8,
+      "unit_price": 3758.02,
+      "amount": 30064.16,
+      "item_code": "RZA-2479"
+    },
+    {
+      "description": "Maintenance Support - Annual",
+      "quantity": 8,
+      "unit_price": 8847.86,
+      "amount": 70782.88,
+      "item_code": "EKE-7941"
+    }
+  ],
+  "totals": {
+    "subtotal": 109973.3,
+    "tax_rate": 0.0625,
+    "tax_amount": 6873.33,
+    "shipping": 0,
+    "total": 116846.63
+  },
+  "payment": {
+    "bank_name": "First National Bank",
+    "account_number": "****1234",
+    "routing_number": "021000089"
+  }
+}

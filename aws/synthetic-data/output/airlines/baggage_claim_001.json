@@ -1,0 +1,63 @@
+{
+  "_metadata": {
+    "blueprint": "apex-baggage-claim-v1",
+    "document_type": "baggage_claim",
+    "extraction_date": "2024-01-25T22:30:00Z",
+    "confidence_score": 0.93,
+    "source_file": "baggage_claim_form.pdf"
+  },
+  "file_reference": "LAXAA12345",
+  "claim_date": "2024-01-25",
+  "claim_type": "DELAYED",
+  "passenger": {
+    "name": "John Michael Smith",
+    "phone": "+1-312-555-7890",
+    "email": "jsmith@email.com",
+    "address": "789 Oak Drive, Chicago, IL 60614",
+    "frequent_flyer": "FF12345678"
+  },
+  "itinerary": {
+    "booking_reference": "ABC123",
+    "ticket_number": "0012345678901",
+    "flights": [
+      {
+        "flight_number": "AA1234",
+        "date": "2024-01-25",
+        "origin": "ORD",
+        "destination": "LAX",
+        "class": "J"
+      }
+    ]
+  },
+  "baggage": {
+    "tag_number": "AA123456",
+    "description": "Black Samsonite hard-shell spinner, 28 inch",
+    "color": "Black",
+    "brand": "Samsonite",
+    "type": "Checked bag",
+    "weight_kg": 22,
+    "contents_description": "Clothing, toiletries, business documents",
+    "declared_value": 500.00,
+    "distinctive_features": "Red luggage tag, TSA lock"
+  },
+  "last_seen": {
+    "location": "ORD",
+    "timestamp": "2024-01-25T08:00:00Z",
+    "status": "LOADED"
+  },
+  "delivery_address": {
+    "address": "1000 Hotel Blvd, Room 512",
+    "city": "Los Angeles",
+    "state": "CA",
+    "zip": "90001",
+    "phone": "+1-312-555-7890",
+    "delivery_instructions": "Leave with front desk"
+  },
+  "interim_expenses": {
+    "eligible": true,
+    "max_amount": 150.00,
+    "currency": "USD"
+  },
+  "status": "TRACING",
+  "estimated_delivery": "2024-01-26"
+}

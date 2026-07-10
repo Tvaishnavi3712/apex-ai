@@ -1,0 +1,624 @@
+# =============================================================================
+# Small Factory Chain Definitions (Context-Driven)
+# =============================================================================
+# Each chain is a DAG of factories that process data through multiple stages.
+# Factories now specify context_keys to receive relevant playbook context.
+# =============================================================================
+
+chains:
+  # ============================================
+  # FINANCIAL SERVICES - INVOICE PROCESSING
+  # ============================================
+  invoice_processing:
+    name: "Invoice Processing Chain"
+    description: "Process vendor invoices with context-driven validation and approval routing."
+
+    factories:
+      - id: document_intake
+        action: document_intake
+        context_keys: [aws_resources, extraction_config]
+        timeout_seconds: 60
+
+      - id: invoice_extract
+        action: invoice_extract
+        depends_on: [document_intake]
+        context_keys: [extraction_config]
+        ai_enhanced: true
+        timeout_seconds: 120
+
+      - id: vendor_lookup
+        action: vendor_lookup
+        depends_on: [invoice_extract]
+        context_keys: [vendor_validation, aws_resources]
+        timeout_seconds: 30
+
+      - id: po_match
+        action: po_match
+        depends_on: [invoice_extract, vendor_lookup]
+        context_keys: [po_matching, aws_resources]
+        timeout_seconds: 30
+
+      - id: compliance_check
+        action: compliance_check
+        depends_on: [vendor_lookup]
+        context_keys: [compliance, vendor_validation, po_matching]
+        timeout_seconds: 45
+
+      - id: approval_route
+        action: approval_route
+        depends_on: [po_match, compliance_check]
+        context_keys: [approval_workflow, gl_mappings]
+        timeout_seconds: 30
+
+      - id: notification
+        action: send_notification
+        depends_on: [approval_route]
+        context_keys: [notifications]
+        timeout_seconds: 30
+
+      - id: completion
+        action: completion
+        depends_on: [notification]
+        context_keys: [aws_resources, compliance, integrations]
+        timeout_seconds: 30
+
+    outputs:
+      - invoice_extract
+      - vendor_lookup
+      - po_match
+      - compliance_check
+      - approval_route
+
+  # ============================================
+  # HEALTHCARE PAYERS - CLAIMS PROCESSING
+  # ============================================
+  claims_processing:
+    name: "Claims Processing Chain"
+    description: "Process healthcare claims with context-driven adjudication rules."
+
+    factories:
+      - id: eligibility_verify
+        action: eligibility_verify
+        context_keys: [plan_configurations, cost_sharing]
+        timeout_seconds: 30
+
+      - id: medical_necessity
+        action: medical_necessity_check
+        depends_on: [eligibility_verify]
+        context_keys: [medical_necessity_rules]
+        ai_enhanced: true
+        timeout_seconds: 60
+
+      - id: fraud_detection
+        action: fraud_detection
+        depends_on: [eligibility_verify]
+        context_keys: [fraud_detection_rules, cci_edits]
+        timeout_seconds: 45
+
+      - id: claims_adjudication
+        action: claims_adjudication
+        depends_on: [eligibility_verify, medical_necessity, fraud_detection]
+        context_keys: [fee_schedules, denial_codes, prior_auth_codes, cost_sharing, plan_configurations]
+        timeout_seconds: 60
+
+      - id: payment_calculate
+        action: payment_calculate
+        depends_on: [claims_adjudication]
+        context_keys: [fee_schedules, cost_sharing, plan_configurations]
+        timeout_seconds: 30
+
+      - id: notification
+        action: send_notification
+        depends_on: [payment_calculate]
+        context_keys: [notifications]
+        timeout_seconds: 30
+
+    outputs:
+      - eligibility_verify
+      - medical_necessity
+      - fraud_detection
+      - claims_adjudication
+      - payment_calculate
+
+  # ============================================
+  # SALES AI - SALES INTERACTION AGENT
+  # ============================================
+  sales_interaction_agent:
+    name: "Sales Interaction Agent"
+    description: "Analyze sales conversations for insights, coaching, and deal intelligence."
+
+    factories:
+      - id: transcribe_audio
+        action: transcribe_audio
+        context_keys: [transcription_config]
+        ai_enhanced: false
+        timeout_seconds: 120
+
+      - id: diarize_speakers
+        action: diarize_speakers
+        depends_on: [transcribe_audio]
+        context_keys: [diarization_config]
+        ai_enhanced: false
+        timeout_seconds: 60
+
+      - id: emotion_analyze
+        action: emotion_analyze
+        depends_on: [diarize_speakers]
+        context_keys: [emotion_config, analysis_thresholds]
+        ai_enhanced: true
+        timeout_seconds: 60
+
+      - id: buying_signals
+        action: buying_signals
+        depends_on: [diarize_speakers]
+        context_keys: [buying_signal_config, signal_weights]
+        ai_enhanced: true
+        timeout_seconds: 60
+
+      - id: objection_detect
+        action: objection_detect
+        depends_on: [diarize_speakers]
+        context_keys: [objection_config, handling_strategies]
+        ai_enhanced: true
+        timeout_seconds: 60
+
+      - id: competitor_mentions
+        action: competitor_mentions
+        depends_on: [diarize_speakers]
+        context_keys: [competitor_config, battlecard_triggers]
+        ai_enhanced: true
+        timeout_seconds: 60
+
+      - id: deal_intelligence
+        action: deal_intelligence
+        depends_on: [emotion_analyze, buying_signals, objection_detect, competitor_mentions]
+        context_keys: [deal_config, scoring_model]
+        ai_enhanced: true
+        timeout_seconds: 60
+
+      - id: sales_coaching
+        action: sales_coaching
+        depends_on: [deal_intelligence]
+        context_keys: [coaching_config, training_modules]
+        ai_enhanced: true
+        timeout_seconds: 60
+
+      - id: sales_summary
+        action: sales_summary
+        depends_on: [deal_intelligence, sales_coaching]
+        context_keys: [summary_config, crm_fields]
+        ai_enhanced: true
+        timeout_seconds: 60
+
+    outputs:
+      - transcribe_audio
+      - diarize_speakers
+      - emotion_analyze
+      - buying_signals
+      - objection_detect
+      - competitor_mentions
+      - deal_intelligence
+      - sales_coaching
+      - sales_summary
+
+  # ============================================
+  # CONTACT CENTER - INSURANCE CLAIM FROM CALL
+  # ============================================
+  insurance_claim_from_call:
+    name: "Insurance Claim from Recorded Call"
+    description: "Process insurance claim from customer call recording with context-driven rules."
+
+    factories:
+      - id: transcribe
+        action: transcribe_audio
+        context_keys: [transcription_config]
+        config:
+          language: "en-US"
+          enable_diarization: true
+          max_speakers: 2
+
+      - id: diarize
+        action: diarize_speakers
+        depends_on: [transcribe]
+        context_keys: [diarization_config]
+        config:
+          speaker_labels:
+            spk_0: "Agent"
+            spk_1: "Customer"
+
+      - id: intent
+        action: intent_classify
+        depends_on: [transcribe]
+        context_keys: [intent_categories]
+
+      - id: sentiment
+        action: sentiment_timeline
+        depends_on: [diarize]
+        context_keys: [sentiment_config]
+        config:
+          granularity: "segment"
+          include_peaks: true
+
+      - id: entities
+        action: entity_extract
+        depends_on: [transcribe]
+        context_keys: [entity_types]
+
+      - id: claim
+        action: claim_extract
+        depends_on: [entities, intent]
+        context_keys: [claim_types, required_fields]
+        ai_enhanced: true
+
+      - id: compliance
+        action: compliance_audit
+        depends_on: [diarize]
+        context_keys: [compliance_checklist, qa_rules]
+
+      - id: fraud
+        action: fraud_indicators
+        depends_on: [claim, sentiment]
+        context_keys: [fraud_indicators, fraud_thresholds]
+
+      - id: priority
+        action: priority_calculate
+        depends_on: [sentiment, fraud, compliance]
+        context_keys: [priority_weights]
+
+      - id: summary
+        action: summary_generate
+        depends_on: [claim, sentiment, compliance]
+        context_keys: [summary_config]
+        ai_enhanced: true
+
+      - id: decision
+        action: auto_decision
+        depends_on: [priority, fraud]
+        context_keys: [decision_thresholds, escalation_rules]
+
+      - id: coaching
+        action: coaching_tips
+        depends_on: [compliance, sentiment]
+        context_keys: [coaching_areas]
+        parallel: true
+
+    outputs:
+      - transcribe
+      - diarize
+      - claim
+      - sentiment
+      - compliance
+      - fraud
+      - priority
+      - summary
+      - decision
+      - coaching
+
+  # ============================================
+  # CONTACT CENTER - CALL QUALITY ANALYSIS
+  # ============================================
+  call_quality_analysis:
+    name: "Call Quality Analysis"
+    description: "Analyze call for quality assurance with context-driven QA criteria."
+
+    factories:
+      - id: transcribe
+        action: transcribe_audio
+        context_keys: [transcription_config]
+        config:
+          language: "en-US"
+          enable_diarization: true
+
+      - id: diarize
+        action: diarize_speakers
+        depends_on: [transcribe]
+        context_keys: [diarization_config]
+
+      - id: sentiment
+        action: sentiment_timeline
+        depends_on: [diarize]
+        context_keys: [sentiment_config]
+
+      - id: compliance
+        action: compliance_audit
+        depends_on: [diarize]
+        context_keys: [qa_checklist, compliance_rules, required_phrases, prohibited_phrases]
+
+      - id: quality_score
+        action: quality_score
+        depends_on: [sentiment, compliance]
+        context_keys: [quality_criteria, scoring_weights]
+
+      - id: coaching
+        action: coaching_tips
+        depends_on: [quality_score, compliance]
+        context_keys: [coaching_areas, training_modules]
+
+    outputs:
+      - transcribe
+      - sentiment
+      - compliance
+      - quality_score
+      - coaching
+
+  # ============================================
+  # HR - RESUME SCREENING
+  # ============================================
+  resume_screening:
+    name: "Resume Screening Chain"
+    description: "Screen resumes with context-driven scoring criteria."
+
+    factories:
+      - id: document_intake
+        action: document_intake
+        context_keys: [aws_resources, document_config]
+        timeout_seconds: 30
+
+      - id: resume_extract
+        action: resume_extract
+        depends_on: [document_intake]
+        context_keys: [extraction_config]
+        ai_enhanced: true
+        timeout_seconds: 60
+
+      - id: skills_match
+        action: skills_match
+        depends_on: [resume_extract]
+        context_keys: [job_requirements, skills_taxonomy, scoring_weights]
+        ai_enhanced: true
+        timeout_seconds: 45
+
+      - id: experience_evaluate
+        action: experience_evaluate
+        depends_on: [resume_extract]
+        context_keys: [experience_requirements, scoring_rules]
+        ai_enhanced: true
+        timeout_seconds: 45
+
+      - id: education_verify
+        action: education_verify
+        depends_on: [resume_extract]
+        context_keys: [education_requirements]
+        timeout_seconds: 30
+
+      - id: candidate_score
+        action: candidate_score
+        depends_on: [skills_match, experience_evaluate, education_verify]
+        context_keys: [scoring_weights, score_thresholds]
+        timeout_seconds: 30
+
+      - id: routing_decision
+        action: candidate_route
+        depends_on: [candidate_score]
+        context_keys: [routing_rules, workflow_config]
+        timeout_seconds: 30
+
+    outputs:
+      - resume_extract
+      - skills_match
+      - experience_evaluate
+      - candidate_score
+      - routing_decision
+
+  # ============================================
+  # MANUFACTURING - PO PROCESSING
+  # ============================================
+  po_processing:
+    name: "Purchase Order Processing"
+    description: "Process purchase orders with context-driven validation and approval."
+
+    factories:
+      - id: document_intake
+        action: document_intake
+        context_keys: [aws_resources]
+        timeout_seconds: 30
+
+      - id: po_extract
+        action: po_extract
+        depends_on: [document_intake]
+        context_keys: [extraction_config]
+        ai_enhanced: true
+        timeout_seconds: 60
+
+      - id: vendor_validate
+        action: vendor_validate
+        depends_on: [po_extract]
+        context_keys: [vendor_requirements, approved_vendors]
+        timeout_seconds: 30
+
+      - id: inventory_check
+        action: inventory_check
+        depends_on: [po_extract]
+        context_keys: [inventory_thresholds]
+        timeout_seconds: 30
+
+      - id: budget_check
+        action: budget_check
+        depends_on: [po_extract]
+        context_keys: [budget_rules, cost_centers]
+        timeout_seconds: 30
+
+      - id: approval_route
+        action: approval_route
+        depends_on: [vendor_validate, budget_check]
+        context_keys: [approval_thresholds, lead_time_requirements]
+        timeout_seconds: 30
+
+    outputs:
+      - po_extract
+      - vendor_validate
+      - inventory_check
+      - budget_check
+      - approval_route
+
+  # ============================================
+  # RETAIL - RETURNS PROCESSING
+  # ============================================
+  returns_processing:
+    name: "Returns Processing Chain"
+    description: "Process returns with context-driven policy enforcement."
+
+    factories:
+      - id: return_intake
+        action: return_intake
+        context_keys: [aws_resources, return_config]
+        timeout_seconds: 30
+
+      - id: order_lookup
+        action: order_lookup
+        depends_on: [return_intake]
+        context_keys: [order_validation]
+        timeout_seconds: 30
+
+      - id: policy_check
+        action: return_policy_check
+        depends_on: [order_lookup]
+        context_keys: [return_policies, exceptions]
+        timeout_seconds: 30
+
+      - id: condition_assess
+        action: condition_assess
+        depends_on: [return_intake]
+        context_keys: [condition_criteria]
+        ai_enhanced: true
+        timeout_seconds: 45
+
+      - id: refund_calculate
+        action: refund_calculate
+        depends_on: [policy_check, condition_assess]
+        context_keys: [refund_rules, restocking_fees]
+        timeout_seconds: 30
+
+      - id: approval_route
+        action: return_approval
+        depends_on: [refund_calculate]
+        context_keys: [approval_thresholds]
+        timeout_seconds: 30
+
+    outputs:
+      - order_lookup
+      - policy_check
+      - condition_assess
+      - refund_calculate
+      - approval_route
+
+  # ============================================
+  # SUPPLY CHAIN - INVENTORY OPTIMIZATION
+  # ============================================
+  inventory_optimization:
+    name: "Inventory Optimization Chain"
+    description: "Optimize inventory with context-driven thresholds and forecasting."
+
+    factories:
+      - id: demand_forecast
+        action: demand_forecast
+        context_keys: [forecast_config, historical_data]
+        ai_enhanced: true
+        timeout_seconds: 90
+
+      - id: inventory_analysis
+        action: inventory_analysis
+        context_keys: [inventory_thresholds, safety_stock_rules]
+        timeout_seconds: 45
+
+      - id: reorder_calculate
+        action: reorder_calculate
+        depends_on: [demand_forecast, inventory_analysis]
+        context_keys: [reorder_rules, lead_times, supplier_config]
+        timeout_seconds: 45
+
+      - id: supplier_select
+        action: supplier_select
+        depends_on: [reorder_calculate]
+        context_keys: [supplier_performance, pricing_rules]
+        timeout_seconds: 30
+
+      - id: order_generate
+        action: order_generate
+        depends_on: [supplier_select]
+        context_keys: [order_templates, approval_thresholds]
+        timeout_seconds: 30
+
+    outputs:
+      - demand_forecast
+      - inventory_analysis
+      - reorder_calculate
+      - supplier_select
+      - order_generate
+
+  # ============================================
+  # QUICK ANALYSIS CHAINS
+  # ============================================
+  quick_sentiment:
+    name: "Quick Sentiment Analysis"
+    description: "Fast sentiment analysis for call triage."
+
+    factories:
+      - id: transcribe
+        action: transcribe_audio
+        context_keys: [transcription_config]
+        config:
+          enable_diarization: false
+
+      - id: sentiment
+        action: sentiment_timeline
+        depends_on: [transcribe]
+        context_keys: [sentiment_config]
+        config:
+          granularity: "overall"
+
+      - id: escalation
+        action: escalation_detect
+        depends_on: [sentiment]
+        context_keys: [escalation_thresholds]
+
+    outputs:
+      - sentiment
+      - escalation
+
+  agent_coaching:
+    name: "Agent Coaching Recommendations"
+    description: "Analyze agent performance and generate coaching recommendations."
+
+    factories:
+      - id: transcribe
+        action: transcribe_audio
+        context_keys: [transcription_config]
+        config:
+          enable_diarization: true
+
+      - id: diarize
+        action: diarize_speakers
+        depends_on: [transcribe]
+        context_keys: [diarization_config]
+
+      - id: sentiment
+        action: sentiment_timeline
+        depends_on: [diarize]
+        context_keys: [sentiment_config]
+        config:
+          focus: "agent"
+
+      - id: compliance
+        action: compliance_audit
+        depends_on: [diarize]
+        context_keys: [qa_checklist]
+
+      - id: escalation
+        action: escalation_detect
+        depends_on: [sentiment]
+        context_keys: [escalation_thresholds]
+
+      - id: coaching
+        action: coaching_tips
+        depends_on: [sentiment, compliance, escalation]
+        context_keys: [coaching_areas, training_modules]
+        config:
+          detail_level: "comprehensive"
+          include_examples: true
+
+    outputs:
+      - sentiment
+      - compliance
+      - escalation
+      - coaching

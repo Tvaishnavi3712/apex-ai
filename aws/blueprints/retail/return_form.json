@@ -1,0 +1,122 @@
+{
+  "blueprintName": "apex-return-form-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from return/exchange forms",
+  "industry": "retail",
+  "documentType": "return_form",
+  "bdaSchema": {
+    "class": "ApexReturnForm",
+    "description": "Return form extraction for merchandise returns",
+    "definitions": {
+      "RETURN_ITEM": {
+        "properties": {
+          "sku": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "quantity": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "original_price": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "reason_code": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "condition": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "return_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "return_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "original_transaction_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "original_transaction_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "store_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "customer_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "customer_phone": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "customer_email": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "items": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/RETURN_ITEM"
+        }
+      },
+      "return_reason": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "return_type": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Refund, Exchange, Store Credit"
+      },
+      "refund_amount": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "refund_method": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "restocking_fee": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "manager_approval": {
+        "type": "boolean",
+        "inferenceType": "explicit"
+      },
+      "manager_id": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "customer_signature": {
+        "type": "boolean",
+        "inferenceType": "explicit"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.85
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  },
+  "blueprintArn": "arn:aws:bedrock:us-east-1:457795063704:blueprint/382b3bdbb561"
+}

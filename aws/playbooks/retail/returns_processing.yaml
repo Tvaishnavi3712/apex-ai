@@ -1,0 +1,100 @@
+# CBTS Apex AI Platform - Returns Processing Runbook
+name: returns_processing
+version: "1.0.0"
+description: "Automated returns processing with fraud detection and inventory update"
+industry: retail
+category: customer_service
+
+intent: |
+  Process merchandise returns by validating receipts, checking return policies,
+  detecting potential fraud patterns, processing refunds, and updating inventory.
+
+output:
+  - name: return_decision
+    type: authorization
+    schema:
+      approved: boolean
+      refund_amount: number
+      refund_method: string
+  - name: inventory_update
+    type: adjustment
+    schema:
+      items: array
+      restock_location: string
+
+context:
+  business_rules:
+    - "Returns within 30 days with receipt get full refund"
+    - "Returns 31-90 days get store credit"
+    - "No returns after 90 days"
+    - "Electronics return window is 15 days"
+    - "Manager approval for returns over $200"
+
+  fraud_detection:
+    max_returns_per_month: 5
+    max_no_receipt_amount: 50
+    high_risk_categories: ["electronics", "designer"]
+
+actions:
+  - name: receipt_validate
+    action_id: retail.receipt_validate
+    required: true
+  - name: policy_check
+    action_id: retail.return_policy_check
+    required: true
+  - name: fraud_check
+    action_id: retail.fraud_detection
+    required: true
+  - name: refund_process
+    action_id: retail.refund_process
+    required: false
+  - name: inventory_adjust
+    action_id: retail.inventory_adjust
+    required: false
+
+recipe: |
+  ## Returns Processing Workflow
+
+  ### Step 1: Return Validation
+  1. Extract return form and original receipt data
+  2. Validate transaction exists in system
+  3. Verify items match original purchase
+  4. Check return window compliance
+
+  ### Step 2: Policy Check
+  1. Use `policy_check` for item categories
+  2. Determine applicable return policy
+  3. Calculate restocking fees if applicable
+  4. Check for manager approval requirement
+
+  ### Step 3: Fraud Detection
+  1. Use `fraud_check` against customer history
+  2. Check return frequency
+  3. Analyze return patterns
+  4. Flag suspicious activity
+
+  ### Step 4: Refund Processing
+  1. Calculate final refund amount
+  2. Process refund to original payment method
+  3. Issue store credit if applicable
+  4. Generate return receipt
+
+  ### Step 5: Inventory Update
+  1. Update inventory counts
+  2. Route items for inspection
+  3. Determine restock vs. damage out
+  4. Update shrink reports
+
+triggers:
+  - type: api
+    endpoint: /api/v1/returns
+  - type: pos_event
+    event_type: return_initiated
+
+worker:
+  queue: apex-returns-queue
+  concurrency: 30
+  timeout_seconds: 180
+
+metadata:
+  tags: [returns, refunds, retail, fraud-detection]

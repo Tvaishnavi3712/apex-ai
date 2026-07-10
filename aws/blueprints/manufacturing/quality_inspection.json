@@ -1,0 +1,214 @@
+{
+  "blueprintName": "apex-quality-inspection-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from quality inspection reports for QC tracking",
+  "industry": "manufacturing",
+  "documentType": "quality_inspection",
+  "bdaSchema": {
+    "class": "ApexQualityInspection",
+    "description": "Apex AI Platform quality inspection extraction blueprint for QC operations",
+    "definitions": {
+      "INSPECTION_TEST": {
+        "properties": {
+          "test_name": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Name of the test or inspection point"
+          },
+          "specification": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Required specification or tolerance"
+          },
+          "actual_value": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Actual measured value"
+          },
+          "unit": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Unit of measurement"
+          },
+          "result": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Pass, Fail, or Marginal"
+          },
+          "notes": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Inspector notes or observations"
+          }
+        }
+      },
+      "DEFECT": {
+        "properties": {
+          "defect_code": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Defect classification code"
+          },
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Description of the defect"
+          },
+          "severity": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Critical, Major, or Minor"
+          },
+          "quantity_affected": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Number of units affected"
+          },
+          "location": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Location of defect on product"
+          }
+        }
+      }
+    },
+    "properties": {
+      "inspection_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Inspection report number"
+      },
+      "inspection_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date of inspection"
+      },
+      "inspection_type": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Type of inspection (Incoming, In-Process, Final, etc.)"
+      },
+      "part_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Part number being inspected"
+      },
+      "part_description": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Description of the part"
+      },
+      "revision": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Part revision level"
+      },
+      "lot_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Lot or batch number"
+      },
+      "po_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Related purchase order"
+      },
+      "supplier_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Supplier or vendor name"
+      },
+      "sample_size": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Number of samples inspected"
+      },
+      "lot_size": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Total lot size"
+      },
+      "aql_level": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Acceptable Quality Level used"
+      },
+      "inspection_tests": {
+        "type": "array",
+        "instruction": "All inspection tests performed",
+        "items": {
+          "$ref": "#/definitions/INSPECTION_TEST"
+        }
+      },
+      "defects_found": {
+        "type": "array",
+        "instruction": "All defects identified during inspection",
+        "items": {
+          "$ref": "#/definitions/DEFECT"
+        }
+      },
+      "total_pass": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Number of units that passed"
+      },
+      "total_fail": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Number of units that failed"
+      },
+      "overall_result": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Overall lot disposition: Accept, Reject, Conditional"
+      },
+      "inspector_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Name of the inspector"
+      },
+      "inspector_id": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Inspector badge or employee ID"
+      },
+      "supervisor_approval": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Supervisor approval name/signature"
+      },
+      "corrective_action_required": {
+        "type": "boolean",
+        "inferenceType": "inferred",
+        "instruction": "Is corrective action required based on findings?"
+      },
+      "disposition_notes": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Notes on lot disposition and next steps"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "confidenceThreshold": 0.85
+  },
+  "validationRules": [
+    {
+      "name": "sample_count_validation",
+      "description": "Pass + Fail should equal sample size",
+      "expression": "total_pass + total_fail == sample_size"
+    },
+    {
+      "name": "sample_vs_lot_validation",
+      "description": "Sample size should not exceed lot size",
+      "expression": "sample_size <= lot_size"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  },
+  "blueprintArn": "arn:aws:bedrock:us-east-1:457795063704:blueprint/830d228c8663"
+}

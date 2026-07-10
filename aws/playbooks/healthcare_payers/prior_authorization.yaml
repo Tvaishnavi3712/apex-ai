@@ -1,0 +1,153 @@
+# CBTS Apex AI Platform - Prior Authorization Runbook
+# Healthcare Payer Utilization Management Workflow
+
+name: prior_authorization
+version: "1.0.0"
+description: "Automated prior authorization processing with clinical criteria evaluation"
+industry: healthcare_payers
+category: utilization_management
+
+intent: |
+  Process prior authorization requests by extracting request details, checking
+  clinical criteria, evaluating medical necessity, and routing for clinical
+  review when necessary to meet regulatory turnaround requirements.
+
+output:
+  - name: auth_decision
+    type: authorization_result
+    description: "Prior authorization determination"
+    schema:
+      auth_number: string
+      decision: string
+      approved_services: array
+      effective_dates: object
+      denial_reason: string
+
+  - name: clinical_review_request
+    type: work_item
+    description: "Request for clinical review if needed"
+    schema:
+      priority: string
+      reviewer_type: string
+      due_date: string
+
+context:
+  business_rules:
+    - "Standard requests: 14 calendar day turnaround"
+    - "Urgent requests: 72 hour turnaround"
+    - "Emergency requests: 24 hour turnaround"
+    - "Peer-to-peer available before denial"
+    - "All denials require clinical reviewer signature"
+
+  turnaround_requirements:
+    standard_days: 14
+    urgent_hours: 72
+    emergency_hours: 24
+    extension_max_days: 14
+
+  clinical_criteria:
+    source: "InterQual/MCG guidelines"
+    auto_approve_services: ["preventive care", "routine labs"]
+    always_review_services: ["transplant", "experimental"]
+
+data_sources:
+  - name: auth_request
+    type: s3_document
+    input_parameter: document_s3_uri
+  - name: clinical_guidelines
+    type: dynamodb
+    table: apex-clinical-criteria
+  - name: member_history
+    type: dynamodb
+    table: apex-member-clinical
+
+actions:
+  - name: auth_extract
+    action_id: healthcare_payers.auth_extract
+    required: true
+  - name: eligibility_check
+    action_id: healthcare_payers.eligibility_check
+    required: true
+  - name: criteria_evaluate
+    action_id: healthcare_payers.criteria_evaluate
+    required: true
+  - name: clinical_route
+    action_id: healthcare_payers.clinical_route
+    required: false
+  - name: auth_decision
+    action_id: healthcare_payers.auth_decision
+    required: true
+  - name: notification_send
+    action_id: core.send_notification
+    required: false
+
+recipe: |
+  ## Prior Authorization Workflow
+
+  ### Step 1: Request Intake
+  1. Use `auth_extract` to extract authorization request details
+  2. Determine urgency level (standard, urgent, emergency)
+  3. Calculate due date based on turnaround requirements
+  4. Validate required clinical documentation attached
+  5. Check for existing/duplicate authorizations
+
+  ### Step 2: Eligibility Verification
+  1. Use `eligibility_check` with member ID
+  2. Verify active coverage for requested dates
+  3. Check if service requires prior auth per plan
+  4. Verify provider is eligible to render service
+  5. If auto-approved service type, fast-track
+
+  ### Step 3: Clinical Criteria Evaluation
+  1. Use `criteria_evaluate` with diagnosis and procedure
+  2. Match against InterQual/MCG guidelines
+  3. Check if clinical documentation meets criteria
+  4. Identify any gaps in clinical information
+  5. Score likelihood of approval
+
+  ### Step 4: Auto-Decision Routing
+  Based on criteria evaluation:
+  - Auto-Approve: Meets all criteria, low-risk service
+  - Clinical Review: Does not clearly meet criteria
+  - Request Info: Missing required documentation
+  - Expedite: Urgent/emergency with documentation
+
+  ### Step 5: Clinical Review (if needed)
+  1. Use `clinical_route` to assign reviewer
+  2. Route to RN for initial review
+  3. If denial pending, route to MD reviewer
+  4. Track peer-to-peer request if provider initiates
+  5. Ensure decision before deadline
+
+  ### Step 6: Decision Processing
+  1. Use `auth_decision` to record determination
+  2. Generate authorization number if approved
+  3. Document denial reason with clinical rationale
+  4. Calculate approved units/dates
+  5. Update authorization database
+
+  ### Step 7: Notification
+  1. Notify requesting provider of decision
+  2. Notify servicing provider/facility
+  3. Send member notification (required for denials)
+  4. Include appeal rights with denials
+  5. Log all communications
+
+triggers:
+  - type: s3_event
+    bucket: apex-auth-requests
+    prefix: prior-auth/
+    events: ["s3:ObjectCreated:*"]
+  - type: api
+    endpoint: /api/v1/prior-auth
+    method: POST
+  - type: fax
+    number: "+1-800-XXX-XXXX"
+
+worker:
+  queue: apex-prior-auth-queue
+  concurrency: 30
+  timeout_seconds: 600
+
+metadata:
+  tags: [prior-auth, utilization-management, healthcare-payers, clinical]

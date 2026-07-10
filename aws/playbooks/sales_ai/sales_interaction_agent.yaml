@@ -1,0 +1,271 @@
+# CBTS Apex AI Platform - Sales Interaction Agent
+# Sales Conversation Intelligence Pipeline
+
+name: sales_interaction_agent
+version: "1.0.0"
+description: "AI-powered sales conversation analysis with emotion intelligence, buying signals, and coaching"
+industry: sales_ai
+category: conversation_intelligence
+
+intent: |
+  Analyze sales conversations to provide real-time insights, detect buying signals,
+  identify objections, track competitor mentions, assess deal health, generate
+  personalized coaching recommendations, and automate post-call workflows.
+
+output:
+  - name: deal_assessment
+    type: structured_data
+    description: "Comprehensive deal health assessment"
+    schema:
+      win_probability: number
+      deal_health: string
+      risk_factors: array
+      next_best_actions: array
+
+  - name: coaching_report
+    type: document
+    description: "Personalized coaching recommendations"
+    schema:
+      coaching_tips: array
+      skill_assessment: object
+      training_recommendations: array
+
+  - name: crm_update
+    type: system_action
+    description: "Suggested CRM field updates"
+    schema:
+      field_values: object
+      suggested_updates: array
+
+context:
+  business_rules:
+    - "All sales calls should be analyzed within 5 minutes of completion"
+    - "Deals with win probability < 30% require manager review"
+    - "High-value deals (>$100K) get enhanced analysis"
+    - "Coaching recommendations generated for all calls"
+    - "CRM updates suggested but require rep approval"
+
+  analysis_thresholds:
+    high_engagement: 70
+    low_engagement: 30
+    strong_buying_intent: 60
+    weak_buying_intent: 30
+    high_objection_severity: 60
+    competitive_threat: 50
+
+  deal_stages:
+    - discovery
+    - qualification
+    - demo_evaluation
+    - proposal
+    - negotiation
+    - verbal_commit
+    - closed_won
+
+data_sources:
+  - name: call_recording
+    type: s3_audio
+    input_parameter: audio_s3_uri
+  - name: crm_deal
+    type: api
+    endpoint: /api/v1/deals/{deal_id}
+  - name: competitor_database
+    type: dynamodb
+    table: apex-competitors
+
+actions:
+  - name: transcribe_audio
+    action_id: core.transcribe_audio
+    required: true
+  - name: diarize_speakers
+    action_id: core.diarize_speakers
+    required: true
+  - name: emotion_analyze
+    action_id: sales_ai.emotion_analyze
+    required: true
+  - name: buying_signals
+    action_id: sales_ai.buying_signals
+    required: true
+  - name: objection_detect
+    action_id: sales_ai.objection_detect
+    required: true
+  - name: competitor_mentions
+    action_id: sales_ai.competitor_mentions
+    required: true
+  - name: deal_intelligence
+    action_id: sales_ai.deal_intelligence
+    required: true
+  - name: sales_coaching
+    action_id: sales_ai.sales_coaching
+    required: true
+  - name: sales_summary
+    action_id: sales_ai.sales_summary
+    required: true
+
+recipe: |
+  ## Sales Interaction Agent Workflow
+
+  ### Step 1: Audio Processing
+  1. Use `transcribe_audio` to convert recording to text
+  2. Use `diarize_speakers` to identify sales rep vs prospect
+  3. Label transcript segments by speaker
+
+  ### Step 2: Emotion & Engagement Analysis
+  1. Use `emotion_analyze` on prospect segments
+  2. Track emotional trajectory through conversation
+  3. Calculate engagement score
+  4. Identify emotional peaks and risk indicators
+
+  ### Step 3: Buying Signal Detection
+  1. Use `buying_signals` to identify purchase intent
+  2. Detect timeline urgency, budget discussions, next step requests
+  3. Score buying intent (0-100)
+  4. Track deal momentum
+
+  ### Step 4: Objection Analysis
+  1. Use `objection_detect` to find objections
+  2. Categorize: price, timing, authority, need, trust, competitor
+  3. Identify unhandled objections
+  4. Generate handling recommendations
+
+  ### Step 5: Competitive Intelligence
+  1. Use `competitor_mentions` to track competitor references
+  2. Analyze competitor sentiment
+  3. Calculate competitive threat level
+  4. Trigger battlecard recommendations
+
+  ### Step 6: Deal Intelligence
+  1. Use `deal_intelligence` to aggregate all signals
+  2. Calculate win probability
+  3. Assess deal health (healthy/at_risk/critical)
+  4. Generate prioritized next actions
+
+  ### Step 7: Coaching Generation
+  1. Use `sales_coaching` to create recommendations
+  2. Identify strengths and improvement areas
+  3. Generate personalized coaching tips
+  4. Recommend training modules
+
+  ### Step 8: Summary & CRM Update
+  1. Use `sales_summary` to create call summary
+  2. Generate action items with owners and due dates
+  3. Prepare CRM field updates
+  4. Create next meeting agenda
+
+triggers:
+  - type: s3_event
+    bucket: apex-sales-recordings
+    prefix: calls/
+    events: ["s3:ObjectCreated:*"]
+  - type: api
+    endpoint: /api/v1/analyze-sales-call
+    method: POST
+  - type: webhook
+    source: zoom
+    event: recording.completed
+  - type: webhook
+    source: gong
+    event: call.completed
+
+# Small Factory Chain Definition
+factory_chain:
+  chain_id: sales_interaction_agent
+  description: "Complete sales conversation analysis pipeline"
+  factories:
+    - id: transcribe_audio
+      action: transcribe_audio
+      ai_enhanced: false
+      description: "Convert audio to text transcript"
+      timeout_seconds: 120
+
+    - id: diarize_speakers
+      action: diarize_speakers
+      ai_enhanced: false
+      depends_on:
+        - transcribe_audio
+      description: "Identify speakers in conversation"
+      timeout_seconds: 30
+
+    - id: emotion_analyze
+      action: emotion_analyze
+      ai_enhanced: true
+      depends_on:
+        - diarize_speakers
+      description: "Analyze emotional cues and engagement"
+      timeout_seconds: 45
+
+    - id: buying_signals
+      action: buying_signals
+      ai_enhanced: true
+      depends_on:
+        - diarize_speakers
+      description: "Detect buying intent signals"
+      timeout_seconds: 30
+
+    - id: objection_detect
+      action: objection_detect
+      ai_enhanced: true
+      depends_on:
+        - diarize_speakers
+      description: "Identify and categorize objections"
+      timeout_seconds: 30
+
+    - id: competitor_mentions
+      action: competitor_mentions
+      ai_enhanced: true
+      depends_on:
+        - diarize_speakers
+      description: "Track competitor references"
+      timeout_seconds: 30
+
+    - id: deal_intelligence
+      action: deal_intelligence
+      ai_enhanced: true
+      depends_on:
+        - emotion_analyze
+        - buying_signals
+        - objection_detect
+        - competitor_mentions
+      description: "Aggregate signals into deal assessment"
+      timeout_seconds: 30
+
+    - id: sales_coaching
+      action: sales_coaching
+      ai_enhanced: true
+      depends_on:
+        - deal_intelligence
+      description: "Generate personalized coaching"
+      timeout_seconds: 30
+
+    - id: sales_summary
+      action: sales_summary
+      ai_enhanced: true
+      depends_on:
+        - deal_intelligence
+        - sales_coaching
+      description: "Create call summary and CRM updates"
+      timeout_seconds: 45
+
+  output_schema:
+    aggregated: true
+    properties:
+      call_id: string
+      transcript: object
+      emotion_analysis: object
+      buying_signals: object
+      objection_analysis: object
+      competitor_analysis: object
+      deal_intelligence: object
+      coaching: object
+      summary: object
+      crm_update: object
+
+worker:
+  queue: apex-sales-analysis-queue
+  concurrency: 25
+  timeout_seconds: 600
+
+metadata:
+  tags: [sales, conversation-intelligence, coaching, deal-intelligence, small-factory]
+  ai_enhanced: true
+  comparable_to: "Uniphore Sales Interaction Agent"

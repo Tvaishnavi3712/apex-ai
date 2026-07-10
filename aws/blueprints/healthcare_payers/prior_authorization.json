@@ -1,0 +1,173 @@
+{
+  "blueprintName": "apex-prior-auth-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from prior authorization requests",
+  "industry": "healthcare_payers",
+  "documentType": "prior_authorization",
+  "bdaSchema": {
+    "class": "ApexPriorAuthorization",
+    "description": "Prior authorization request extraction for utilization management",
+    "definitions": {
+      "REQUESTED_SERVICE": {
+        "properties": {
+          "cpt_code": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "CPT/HCPCS code for requested service"
+          },
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Description of requested service"
+          },
+          "quantity": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Number of units/visits requested"
+          },
+          "frequency": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Frequency of service"
+          },
+          "duration": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Duration of authorization requested"
+          }
+        }
+      }
+    },
+    "properties": {
+      "auth_request_id": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Prior authorization request ID"
+      },
+      "request_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date request was submitted"
+      },
+      "urgency": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Urgency level: Standard, Urgent, Emergency"
+      },
+      "member_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Patient/member name"
+      },
+      "member_id": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Member ID"
+      },
+      "member_dob": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Member date of birth"
+      },
+      "requesting_provider_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Requesting provider/physician name"
+      },
+      "requesting_provider_npi": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Requesting provider NPI"
+      },
+      "requesting_provider_phone": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Provider contact phone"
+      },
+      "requesting_provider_fax": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Provider fax number"
+      },
+      "servicing_provider_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Servicing/rendering provider name"
+      },
+      "servicing_provider_npi": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Servicing provider NPI"
+      },
+      "facility_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Facility/hospital name"
+      },
+      "facility_npi": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Facility NPI"
+      },
+      "primary_diagnosis": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Primary ICD-10 diagnosis code"
+      },
+      "secondary_diagnoses": {
+        "type": "array",
+        "instruction": "Secondary diagnosis codes",
+        "items": {
+          "type": "string"
+        }
+      },
+      "requested_services": {
+        "type": "array",
+        "instruction": "Services being requested for authorization",
+        "items": {
+          "$ref": "#/definitions/REQUESTED_SERVICE"
+        }
+      },
+      "clinical_information": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Clinical justification/history provided"
+      },
+      "start_date_requested": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Requested start date for services"
+      },
+      "end_date_requested": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Requested end date for services"
+      },
+      "place_of_service": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Where service will be performed"
+      },
+      "inpatient_admission": {
+        "type": "boolean",
+        "inferenceType": "inferred",
+        "instruction": "Is this an inpatient admission request?"
+      },
+      "medical_necessity_documented": {
+        "type": "boolean",
+        "inferenceType": "inferred",
+        "instruction": "Is medical necessity documentation included?"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.85
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": true
+  },
+  "blueprintArn": "arn:aws:bedrock:us-east-1:457795063704:blueprint/09cac743a6fa"
+}

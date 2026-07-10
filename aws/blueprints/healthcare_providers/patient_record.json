@@ -1,0 +1,133 @@
+{
+  "blueprintName": "apex-patient-record-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Patient record processing output schema for clinical documentation",
+  "industry": "healthcare_providers",
+  "documentType": "clinical_documentation",
+  "processingType": "small_factory_chain",
+  "chainId": "patient_record_process",
+  "bdaSchema": {
+    "class": "ApexPatientRecord",
+    "description": "Clinical documentation processing output schema",
+    "definitions": {
+      "DIAGNOSIS": {
+        "properties": {
+          "description": {"type": "string"},
+          "icd_code": {"type": "string"},
+          "confidence": {"type": "number"}
+        }
+      },
+      "MEDICATION": {
+        "properties": {
+          "name": {"type": "string"},
+          "dose": {"type": "string"},
+          "unit": {"type": "string"},
+          "frequency": {"type": "string"}
+        }
+      },
+      "CODE": {
+        "properties": {
+          "code": {"type": "string"},
+          "description": {"type": "string"},
+          "confidence": {"type": "number"},
+          "match_type": {"type": "string"}
+        }
+      },
+      "QUALITY_SECTION": {
+        "properties": {
+          "category": {"type": "string"},
+          "score": {"type": "number"},
+          "passed": {"type": "boolean"},
+          "issues": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "properties": {
+      "job_id": {"type": "string"},
+      "processing_status": {"type": "string", "enum": ["completed", "partial", "failed"]},
+
+      "patient_identify": {
+        "type": "object",
+        "properties": {
+          "mrn": {"type": "string"},
+          "patient": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "object"},
+              "date_of_birth": {"type": "string"},
+              "insurance": {"type": "object"}
+            }
+          },
+          "verified": {"type": "boolean"},
+          "confidence": {"type": "number"}
+        }
+      },
+
+      "clinical_extract": {
+        "type": "object",
+        "properties": {
+          "sections": {
+            "type": "object",
+            "properties": {
+              "chief_complaint": {"type": "string"},
+              "history_present_illness": {"type": "string"},
+              "assessment": {"type": "string"},
+              "plan": {"type": "string"}
+            }
+          },
+          "vitals": {"type": "object"},
+          "medications": {"type": "array", "items": {"$ref": "#/definitions/MEDICATION"}},
+          "diagnoses": {"type": "array", "items": {"$ref": "#/definitions/DIAGNOSIS"}},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      },
+
+      "code_suggest": {
+        "type": "object",
+        "properties": {
+          "icd_codes": {"type": "array", "items": {"$ref": "#/definitions/CODE"}},
+          "cpt_codes": {"type": "array", "items": {"$ref": "#/definitions/CODE"}},
+          "coding_confidence": {"type": "number"},
+          "requires_review": {"type": "boolean"},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      },
+
+      "quality_audit": {
+        "type": "object",
+        "properties": {
+          "overall_score": {"type": "number"},
+          "passed": {"type": "boolean"},
+          "section_scores": {"type": "array", "items": {"$ref": "#/definitions/QUALITY_SECTION"}},
+          "issues": {"type": "array", "items": {"type": "string"}},
+          "ready_for_billing": {"type": "boolean"}
+        }
+      },
+
+      "ehr_format": {
+        "type": "object",
+        "properties": {
+          "format": {"type": "string"},
+          "ehr_system": {"type": "string"},
+          "ready_to_import": {"type": "boolean"},
+          "formatted_data": {"type": "object"}
+        }
+      }
+    }
+  },
+  "extractionRules": {
+    "confidenceThreshold": 0.7,
+    "processingTimeout": 180
+  },
+  "factoryChain": {
+    "chainId": "patient_record_process",
+    "factories": [
+      {"id": "document_classify", "action": "document_classify"},
+      {"id": "patient_identify", "action": "patient_identify"},
+      {"id": "clinical_extract", "action": "clinical_extract"},
+      {"id": "code_suggest", "action": "code_suggest"},
+      {"id": "quality_audit", "action": "quality_audit"},
+      {"id": "ehr_format", "action": "ehr_format"}
+    ]
+  }
+}

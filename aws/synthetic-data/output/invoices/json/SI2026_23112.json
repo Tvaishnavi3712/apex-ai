@@ -1,0 +1,51 @@
+{
+  "vendor": {
+    "name": "Quality Products Ltd",
+    "address": {
+      "street": "999 Corporate Plaza",
+      "city": "Atlanta",
+      "state": "GA",
+      "zip": "30301"
+    },
+    "tax_id": "77-9415127",
+    "phone": "(916) 286-6339",
+    "email": "billing@qualitypro.com"
+  },
+  "invoice": {
+    "number": "SI2026-23112",
+    "date": "2026-02-09",
+    "due_date": "2026-03-26",
+    "po_number": "PO-282616",
+    "terms": "NET45"
+  },
+  "bill_to": {
+    "company_name": "Fabrikam Corp",
+    "address": {
+      "street": "123 Business Park Dr",
+      "city": "Austin",
+      "state": "TX",
+      "zip": "78701"
+    }
+  },
+  "line_items": [
+    {
+      "description": "Data Migration Services",
+      "quantity": 3,
+      "unit_price": 9180.26,
+      "amount": 27540.78,
+      "item_code": "GWV-3532"
+    }
+  ],
+  "totals": {
+    "subtotal": 27540.78,
+    "tax_rate": 0.0625,
+    "tax_amount": 1721.3,
+    "shipping": 38.66,
+    "total": 29300.74
+  },
+  "payment": {
+    "bank_name": "First National Bank",
+    "account_number": "****1234",
+    "routing_number": "021000089"
+  }
+}

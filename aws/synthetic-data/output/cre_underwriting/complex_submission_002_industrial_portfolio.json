@@ -1,0 +1,501 @@
+{
+  "submission_id": "CRE-2026-002-IND",
+  "submission_type": "New Business",
+  "complexity": "High",
+  "page_count": 10,
+  "document_sections": [
+    "ACORD 125 Application (Pages 1-2)",
+    "ACORD 140 Property Section (Page 3)",
+    "Statement of Values - 5 Locations (Pages 4-5)",
+    "Loss Run Report - 5 Year (Pages 6-7)",
+    "Environmental Site Assessment Summary (Page 8)",
+    "Tenant Information & Lease Schedule (Page 9)",
+    "Supplemental Industrial Questionnaire (Page 10)"
+  ],
+
+  "named_insured": {
+    "name": "Heartland Industrial Partners LP",
+    "dba": "Heartland Logistics Centers",
+    "entity_type": "Limited Partnership",
+    "fein": "38-7654321",
+    "years_in_business": 18,
+    "contact": {
+      "name": "James Mitchell",
+      "title": "Director of Risk Management",
+      "phone": "(614) 555-7200",
+      "email": "jmitchell@heartlandip.com"
+    },
+    "mailing_address": {
+      "street": "8500 Lyra Drive, Suite 400",
+      "city": "Columbus",
+      "state": "OH",
+      "zip": "43240"
+    }
+  },
+
+  "broker_information": {
+    "agency": "National Industrial Risk Advisors",
+    "producer": "Patricia Walsh, CPCU",
+    "license_number": "OH-2234587",
+    "phone": "(614) 555-3300",
+    "email": "pwalsh@nira-insurance.com"
+  },
+
+  "policy_information": {
+    "effective_date": "2026-05-01",
+    "expiration_date": "2027-05-01",
+    "policy_term": "12 months",
+    "coverage_type": "Commercial Property - Industrial Special Form",
+    "valuation_basis": "Replacement Cost",
+    "coinsurance": "90%",
+    "deductible": {
+      "all_other_perils": 50000,
+      "wind_hail_per_occurrence": 100000,
+      "flood": "2% of TIV per location, $250,000 minimum",
+      "earthquake": "5% of TIV per location"
+    }
+  },
+
+  "locations": [
+    {
+      "location_number": 1,
+      "property_name": "Columbus Distribution Center",
+      "address": {
+        "street": "4500 Logistics Parkway",
+        "city": "Columbus",
+        "state": "OH",
+        "zip": "43217",
+        "county": "Franklin"
+      },
+      "occupancy": {
+        "primary": "Distribution/Warehouse",
+        "secondary": "Light Assembly",
+        "hazard_classification": "Mercantile",
+        "sic_code": "5085"
+      },
+      "construction": {
+        "type": "Non-Combustible (ISO Class 3)",
+        "frame": "Pre-Engineered Metal Building",
+        "exterior_walls": "Insulated Metal Panels",
+        "roof_type": "Metal Deck with TPO Membrane",
+        "roof_age": 6,
+        "clear_height": 36
+      },
+      "building_details": {
+        "year_built": 2018,
+        "total_square_feet": 650000,
+        "office_square_feet": 25000,
+        "dock_doors": 84,
+        "drive_in_doors": 4,
+        "trailer_parking": 150
+      },
+      "protection": {
+        "sprinklered": true,
+        "sprinkler_type": "ESFR (Early Suppression Fast Response)",
+        "fire_alarm": "Central Station Monitored",
+        "security": "Gated with Guard House 24/7",
+        "protection_class": 3,
+        "water_supply": "Municipal + 500,000 gallon on-site tank"
+      },
+      "special_features": {
+        "cold_storage": false,
+        "hazmat_storage": "Minimal - Cleaning Supplies Only",
+        "rack_storage": true,
+        "max_storage_height": 32,
+        "conveyor_systems": true
+      },
+      "values": {
+        "building": 48500000,
+        "business_personal_property": 8500000,
+        "tenants_improvements": 2200000,
+        "business_income_12_months": 6800000,
+        "extra_expense": 1200000,
+        "total_insured_value": 67200000
+      },
+      "tenant": {
+        "name": "GlobalShip Logistics Inc.",
+        "type": "3PL Provider",
+        "lease_term": "15 years",
+        "lease_expiry": "2033-04-30",
+        "triple_net": true
+      }
+    },
+    {
+      "location_number": 2,
+      "property_name": "Indianapolis Cross-Dock Facility",
+      "address": {
+        "street": "2200 Freight Way",
+        "city": "Indianapolis",
+        "state": "IN",
+        "zip": "46241",
+        "county": "Marion"
+      },
+      "occupancy": {
+        "primary": "Cross-Dock/Transload",
+        "hazard_classification": "Warehouse"
+      },
+      "construction": {
+        "type": "Non-Combustible (ISO Class 3)",
+        "frame": "Pre-Engineered Metal Building",
+        "exterior_walls": "Metal Panels",
+        "roof_type": "Metal Deck with Built-Up",
+        "roof_age": 12,
+        "clear_height": 28
+      },
+      "building_details": {
+        "year_built": 2012,
+        "year_renovated": 2022,
+        "total_square_feet": 285000,
+        "office_square_feet": 8000,
+        "dock_doors": 120,
+        "drive_in_doors": 8
+      },
+      "protection": {
+        "sprinklered": true,
+        "sprinkler_type": "Wet System - Ordinary Hazard",
+        "fire_alarm": "Central Station Monitored",
+        "security": "Fenced with Electronic Access",
+        "protection_class": 4
+      },
+      "values": {
+        "building": 21000000,
+        "business_personal_property": 3200000,
+        "business_income_12_months": 4200000,
+        "total_insured_value": 28400000
+      },
+      "tenant": {
+        "name": "Midwest Freight Systems",
+        "type": "LTL Carrier",
+        "lease_term": "10 years",
+        "lease_expiry": "2029-06-30"
+      }
+    },
+    {
+      "location_number": 3,
+      "property_name": "Cincinnati Cold Storage Complex",
+      "address": {
+        "street": "7800 Refrigeration Drive",
+        "city": "Cincinnati",
+        "state": "OH",
+        "zip": "45246",
+        "county": "Hamilton"
+      },
+      "occupancy": {
+        "primary": "Cold Storage Warehouse",
+        "secondary": "Freezer Storage",
+        "temperature_zones": ["Frozen (-10F)", "Refrigerated (34F)", "Cool (55F)"]
+      },
+      "construction": {
+        "type": "Non-Combustible (ISO Class 3)",
+        "frame": "Insulated Concrete Panels",
+        "exterior_walls": "8-inch Insulated Panels",
+        "roof_type": "Insulated Metal with Vapor Barrier",
+        "roof_age": 4,
+        "insulation_r_value": 50
+      },
+      "building_details": {
+        "year_built": 2020,
+        "total_square_feet": 180000,
+        "frozen_sqft": 80000,
+        "refrigerated_sqft": 60000,
+        "cool_sqft": 25000,
+        "office_sqft": 15000,
+        "dock_doors": 24
+      },
+      "protection": {
+        "sprinklered": true,
+        "sprinkler_type": "Wet System + Glycol in Freezer",
+        "fire_alarm": "Central Station Monitored with Ammonia Detection",
+        "security": "24/7 Staffed, Biometric Access",
+        "protection_class": 3
+      },
+      "special_hazards": {
+        "ammonia_refrigeration": true,
+        "ammonia_charge_lbs": 45000,
+        "psi_certification": true,
+        "backup_generators": 2,
+        "generator_capacity_kw": 2500
+      },
+      "values": {
+        "building": 42000000,
+        "machinery_equipment": 18500000,
+        "business_personal_property": 4500000,
+        "spoilage_coverage": 5000000,
+        "business_income_12_months": 8500000,
+        "ammonia_contamination": 2000000,
+        "total_insured_value": 80500000
+      },
+      "tenant": {
+        "name": "Arctic Foods Distribution",
+        "type": "Food Distributor",
+        "lease_term": "20 years",
+        "lease_expiry": "2040-12-31"
+      }
+    },
+    {
+      "location_number": 4,
+      "property_name": "Dayton Manufacturing Support",
+      "address": {
+        "street": "1500 Industrial Boulevard",
+        "city": "Dayton",
+        "state": "OH",
+        "zip": "45404",
+        "county": "Montgomery"
+      },
+      "occupancy": {
+        "primary": "Light Manufacturing",
+        "secondary": "Warehouse Storage",
+        "products": "Automotive Parts Assembly"
+      },
+      "construction": {
+        "type": "Non-Combustible (ISO Class 4)",
+        "frame": "Steel Frame",
+        "exterior_walls": "Concrete Block with Metal Siding",
+        "roof_type": "Metal Deck with Rubber Membrane",
+        "roof_age": 18,
+        "clear_height": 24
+      },
+      "building_details": {
+        "year_built": 2006,
+        "year_renovated": 2019,
+        "total_square_feet": 220000,
+        "manufacturing_sqft": 140000,
+        "warehouse_sqft": 65000,
+        "office_sqft": 15000
+      },
+      "protection": {
+        "sprinklered": true,
+        "sprinkler_type": "Wet System - Ordinary Hazard Group 2",
+        "fire_alarm": "Central Station Monitored",
+        "security": "Gated with Electronic Access",
+        "protection_class": 5
+      },
+      "special_features": {
+        "welding_operations": true,
+        "paint_booth": true,
+        "compressed_gas_storage": true,
+        "overhead_cranes": 4
+      },
+      "values": {
+        "building": 16500000,
+        "machinery_equipment": 12000000,
+        "business_personal_property": 5500000,
+        "business_income_12_months": 7200000,
+        "total_insured_value": 41200000
+      },
+      "tenant": {
+        "name": "Precision Auto Components LLC",
+        "type": "Tier 2 Auto Supplier",
+        "lease_term": "10 years",
+        "lease_expiry": "2031-08-31"
+      }
+    },
+    {
+      "location_number": 5,
+      "property_name": "Louisville E-Commerce Fulfillment",
+      "address": {
+        "street": "9200 Commerce Center Drive",
+        "city": "Louisville",
+        "state": "KY",
+        "zip": "40218",
+        "county": "Jefferson"
+      },
+      "occupancy": {
+        "primary": "E-Commerce Fulfillment",
+        "secondary": "Returns Processing"
+      },
+      "construction": {
+        "type": "Non-Combustible (ISO Class 3)",
+        "frame": "Tilt-Up Concrete",
+        "exterior_walls": "Tilt-Up Concrete Panels",
+        "roof_type": "TPO Membrane on Metal Deck",
+        "roof_age": 2,
+        "clear_height": 40
+      },
+      "building_details": {
+        "year_built": 2023,
+        "total_square_feet": 820000,
+        "mezzanine_sqft": 85000,
+        "office_sqft": 35000,
+        "dock_doors": 96,
+        "automation_level": "High"
+      },
+      "protection": {
+        "sprinklered": true,
+        "sprinkler_type": "ESFR with In-Rack",
+        "fire_alarm": "Central Station with VESDA",
+        "security": "AI-Powered Surveillance, 24/7 SOC",
+        "protection_class": 2
+      },
+      "special_features": {
+        "automated_storage_retrieval": true,
+        "robotic_picking": true,
+        "conveyor_miles": 12,
+        "lithium_battery_charging": true,
+        "solar_panels_kw": 2500
+      },
+      "values": {
+        "building": 68000000,
+        "machinery_equipment": 45000000,
+        "business_personal_property": 12000000,
+        "business_income_12_months": 25000000,
+        "extra_expense": 5000000,
+        "total_insured_value": 155000000
+      },
+      "tenant": {
+        "name": "SwiftShip E-Commerce Inc.",
+        "type": "E-Commerce Retailer",
+        "lease_term": "15 years",
+        "lease_expiry": "2038-02-28"
+      }
+    }
+  ],
+
+  "total_insured_values": {
+    "total_building": 196000000,
+    "total_machinery_equipment": 75500000,
+    "total_bpp": 33700000,
+    "total_business_income": 51700000,
+    "total_extra_expense": 6200000,
+    "total_spoilage": 5000000,
+    "total_ammonia": 2000000,
+    "grand_total_tiv": 372300000
+  },
+
+  "loss_history": {
+    "years_covered": 5,
+    "prior_carrier": "Industrial Mutual Insurance Group",
+    "claims": [
+      {
+        "date": "2022-06-18",
+        "location": "Cincinnati Cold Storage",
+        "type": "Equipment Breakdown",
+        "description": "Compressor failure caused partial thaw in freezer section",
+        "paid": 485000,
+        "reserved": 0,
+        "status": "Closed",
+        "cause": "Mechanical failure"
+      },
+      {
+        "date": "2023-02-28",
+        "location": "Dayton Manufacturing",
+        "type": "Fire - Contained",
+        "description": "Welding spark ignited debris, contained by sprinklers",
+        "paid": 125000,
+        "reserved": 0,
+        "status": "Closed"
+      },
+      {
+        "date": "2024-04-15",
+        "location": "Indianapolis Cross-Dock",
+        "type": "Roof Leak",
+        "description": "Storm damage to roof caused water intrusion",
+        "paid": 78000,
+        "reserved": 0,
+        "status": "Closed"
+      },
+      {
+        "date": "2024-09-03",
+        "location": "Louisville E-Commerce",
+        "type": "Conveyor System Damage",
+        "description": "Automated system collision damaged conveyor section",
+        "paid": 220000,
+        "reserved": 45000,
+        "status": "Open"
+      },
+      {
+        "date": "2025-11-22",
+        "location": "Columbus Distribution",
+        "type": "Forklift Damage",
+        "description": "Forklift struck rack system, inventory damage",
+        "paid": 95000,
+        "reserved": 0,
+        "status": "Closed"
+      }
+    ],
+    "total_incurred": 1048000,
+    "total_paid": 1003000,
+    "total_reserved": 45000,
+    "loss_ratio_5_year": 0.22
+  },
+
+  "underwriting_factors": {
+    "catastrophe_exposure": {
+      "tornado_zone": "Moderate - Midwest Corridor",
+      "flood_zones": {
+        "columbus": "Zone X",
+        "indianapolis": "Zone X",
+        "cincinnati": "Zone X",
+        "dayton": "Zone X",
+        "louisville": "Zone AE - Partial"
+      },
+      "earthquake_zone": "New Madrid Seismic Zone - Moderate"
+    },
+    "special_hazards": [
+      "Cold Storage - Ammonia Refrigeration",
+      "Light Manufacturing Operations",
+      "High-Value Automation Systems",
+      "Lithium Battery Charging"
+    ],
+    "positive_factors": [
+      "Modern Construction",
+      "Fully Sprinklered with ESFR",
+      "Strong Tenant Credit",
+      "Long-Term Leases",
+      "Professional Property Management",
+      "Geographic Diversification"
+    ],
+    "concerns": [
+      "Large TIV concentration in Louisville",
+      "Ammonia exposure in Cincinnati",
+      "Manufacturing operations in Dayton",
+      "Recent automation-related loss"
+    ]
+  },
+
+  "requested_coverage": {
+    "property": {
+      "limit": 372300000,
+      "form": "Special - Replacement Cost",
+      "blanket": true
+    },
+    "business_income": {
+      "limit": 51700000,
+      "period": "12 months Actual Loss Sustained"
+    },
+    "equipment_breakdown": {
+      "requested": true,
+      "limit": 75500000,
+      "spoilage_sublimit": 5000000,
+      "ammonia_contamination": 2000000
+    },
+    "flood": {
+      "requested": true,
+      "limit_per_location": 10000000,
+      "aggregate": 25000000
+    }
+  },
+
+  "ground_truth_expected_results": {
+    "risk_score": 62,
+    "risk_tier": "Moderate-High",
+    "premium_estimate_range": {
+      "low": 725000,
+      "mid": 812000,
+      "high": 920000
+    },
+    "decision": "Refer to Senior Underwriter",
+    "referral_reasons": [
+      "TIV exceeds $350M threshold",
+      "Ammonia refrigeration exposure",
+      "Manufacturing operations",
+      "Recent equipment-related losses"
+    ],
+    "recommended_conditions": [
+      "Ammonia system inspection required",
+      "Hot work permit procedures review",
+      "Automation system maintenance records",
+      "Updated flood elevation certificate for Louisville"
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+# CBTS Apex AI Platform - Prescription Processing Runbook
+name: prescription_processing
+version: "1.0.0"
+description: "Automated prescription processing with drug interaction and formulary checks"
+industry: healthcare_clinical
+category: pharmacy
+
+intent: |
+  Process prescription orders by extracting medication details, performing
+  drug safety checks, verifying formulary coverage, and routing for
+  pharmacist review or electronic transmission.
+
+output:
+  - name: processed_rx
+    type: structured_data
+    schema:
+      rx_number: string
+      medication: object
+      safety_checks: object
+  - name: safety_alerts
+    type: alert
+    schema:
+      interaction_type: string
+      severity: string
+      recommendation: string
+
+context:
+  business_rules:
+    - "All prescriptions require drug interaction check"
+    - "Controlled substances require valid DEA number"
+    - "Formulary alternatives suggested for non-covered"
+    - "Duplicate therapy alerts generated"
+
+actions:
+  - name: rx_extract
+    action_id: healthcare_clinical.rx_extract
+    required: true
+  - name: drug_interaction_check
+    action_id: healthcare_clinical.drug_interaction_check
+    required: true
+  - name: formulary_check
+    action_id: healthcare_clinical.formulary_check
+    required: true
+  - name: e_prescribe
+    action_id: healthcare_clinical.e_prescribe
+    required: false
+
+recipe: |
+  ## Prescription Processing Workflow
+
+  ### Step 1: Prescription Extraction
+  1. Use `rx_extract` to capture prescription details
+  2. Validate prescriber credentials (NPI, DEA if controlled)
+  3. Verify patient identification
+  4. Parse sig/directions
+
+  ### Step 2: Drug Safety Checks
+  1. Use `drug_interaction_check` against patient medications
+  2. Check for drug-drug interactions
+  3. Check for drug-allergy interactions
+  4. Verify dosing appropriateness
+  5. Check for duplicate therapy
+
+  ### Step 3: Formulary Verification
+  1. Use `formulary_check` with patient insurance
+  2. Identify if medication is covered
+  3. Determine tier and copay
+  4. Suggest alternatives if not covered
+  5. Check prior auth requirements
+
+  ### Step 4: Transmission
+  1. If safety checks pass, transmit via `e_prescribe`
+  2. If controlled, verify PDMP check completed
+  3. Route to pharmacist queue for review
+  4. Generate confirmation for provider
+
+triggers:
+  - type: api
+    endpoint: /api/v1/prescriptions
+  - type: hl7
+    message_type: "RDE^O11"
+
+worker:
+  queue: apex-prescription-queue
+  concurrency: 30
+  timeout_seconds: 180
+
+metadata:
+  tags: [prescription, pharmacy, drug-safety, e-prescribe]

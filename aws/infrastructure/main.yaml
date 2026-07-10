@@ -1,0 +1,493 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CBTS Apex AI Platform - Main Stack'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: development
+    AllowedValues:
+      - development
+      - staging
+      - production
+    Description: Deployment environment
+
+  ProjectName:
+    Type: String
+    Default: apex-ai-platform
+    Description: Project name for resource naming
+
+Resources:
+  # ============================================================================
+  # S3 Buckets
+  # ============================================================================
+  DocumentsIncomingBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub '${ProjectName}-documents-incoming-${AWS::AccountId}'
+      VersioningConfiguration:
+        Status: Enabled
+      NotificationConfiguration:
+        EventBridgeConfiguration:
+          EventBridgeEnabled: true
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  DocumentsProcessedBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub '${ProjectName}-documents-processed-${AWS::AccountId}'
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  BlueprintsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub '${ProjectName}-blueprints-${AWS::AccountId}'
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  # ============================================================================
+  # DynamoDB Tables
+  # ============================================================================
+  PlaybooksTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-playbooks'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: playbook_id
+          AttributeType: S
+        - AttributeName: industry
+          AttributeType: S
+        - AttributeName: status
+          AttributeType: S
+      KeySchema:
+        - AttributeName: playbook_id
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: industry-status-index
+          KeySchema:
+            - AttributeName: industry
+              KeyType: HASH
+            - AttributeName: status
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  AgentsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-agents'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: agent_id
+          AttributeType: S
+        - AttributeName: environment
+          AttributeType: S
+        - AttributeName: status
+          AttributeType: S
+      KeySchema:
+        - AttributeName: agent_id
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: environment-status-index
+          KeySchema:
+            - AttributeName: environment
+              KeyType: HASH
+            - AttributeName: status
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  BlueprintsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-blueprints'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: blueprint_id
+          AttributeType: S
+        - AttributeName: industry
+          AttributeType: S
+      KeySchema:
+        - AttributeName: blueprint_id
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: industry-index
+          KeySchema:
+            - AttributeName: industry
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  ActionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-actions'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: action_id
+          AttributeType: S
+        - AttributeName: category
+          AttributeType: S
+      KeySchema:
+        - AttributeName: action_id
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: category-index
+          KeySchema:
+            - AttributeName: category
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  WorkItemsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-work-items'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: work_item_id
+          AttributeType: S
+        - AttributeName: agent_id
+          AttributeType: S
+        - AttributeName: status
+          AttributeType: S
+        - AttributeName: created_at
+          AttributeType: S
+      KeySchema:
+        - AttributeName: work_item_id
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: agent-status-index
+          KeySchema:
+            - AttributeName: agent_id
+              KeyType: HASH
+            - AttributeName: status
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: status-created-index
+          KeySchema:
+            - AttributeName: status
+              KeyType: HASH
+            - AttributeName: created_at
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  SessionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-sessions'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: session_id
+          AttributeType: S
+        - AttributeName: agent_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: session_id
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: agent-index
+          KeySchema:
+            - AttributeName: agent_id
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  # ============================================================================
+  # SQS Queue for Work Items
+  # ============================================================================
+  WorkItemsQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub '${ProjectName}-work-items-queue.fifo'
+      FifoQueue: true
+      ContentBasedDeduplication: true
+      VisibilityTimeout: 300
+      MessageRetentionPeriod: 1209600  # 14 days
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  WorkItemsDLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub '${ProjectName}-work-items-dlq.fifo'
+      FifoQueue: true
+      MessageRetentionPeriod: 1209600
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  # ============================================================================
+  # EventBridge
+  # ============================================================================
+  ApexEventBus:
+    Type: AWS::Events::EventBus
+    Properties:
+      Name: !Sub '${ProjectName}-event-bus'
+
+  # Rule for S3 document uploads
+  DocumentUploadRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: !Sub '${ProjectName}-document-upload-rule'
+      EventBusName: default
+      EventPattern:
+        source:
+          - aws.s3
+        detail-type:
+          - Object Created
+        detail:
+          bucket:
+            name:
+              - !Ref DocumentsIncomingBucket
+      State: ENABLED
+      Targets:
+        - Id: ProcessDocumentTarget
+          Arn: !GetAtt DocumentProcessorFunction.Arn
+
+  # ============================================================================
+  # IAM Roles
+  # ============================================================================
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${ProjectName}-lambda-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: ApexLambdaPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:DeleteObject
+                  - s3:ListBucket
+                Resource:
+                  - !Sub 'arn:aws:s3:::${DocumentsIncomingBucket}/*'
+                  - !Sub 'arn:aws:s3:::${DocumentsProcessedBucket}/*'
+                  - !Sub 'arn:aws:s3:::${BlueprintsBucket}/*'
+                  - !Sub 'arn:aws:s3:::${DocumentsIncomingBucket}'
+                  - !Sub 'arn:aws:s3:::${DocumentsProcessedBucket}'
+                  - !Sub 'arn:aws:s3:::${BlueprintsBucket}'
+              - Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                Resource:
+                  - !GetAtt PlaybooksTable.Arn
+                  - !GetAtt AgentsTable.Arn
+                  - !GetAtt BlueprintsTable.Arn
+                  - !GetAtt ActionsTable.Arn
+                  - !GetAtt WorkItemsTable.Arn
+                  - !GetAtt SessionsTable.Arn
+                  - !Sub '${PlaybooksTable.Arn}/index/*'
+                  - !Sub '${AgentsTable.Arn}/index/*'
+                  - !Sub '${BlueprintsTable.Arn}/index/*'
+                  - !Sub '${ActionsTable.Arn}/index/*'
+                  - !Sub '${WorkItemsTable.Arn}/index/*'
+                  - !Sub '${SessionsTable.Arn}/index/*'
+              - Effect: Allow
+                Action:
+                  - sqs:SendMessage
+                  - sqs:ReceiveMessage
+                  - sqs:DeleteMessage
+                  - sqs:GetQueueAttributes
+                Resource:
+                  - !GetAtt WorkItemsQueue.Arn
+                  - !GetAtt WorkItemsDLQ.Arn
+              - Effect: Allow
+                Action:
+                  - bedrock:*
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - events:PutEvents
+                Resource:
+                  - !GetAtt ApexEventBus.Arn
+
+  # ============================================================================
+  # Lambda Functions
+  # ============================================================================
+  DocumentProcessorFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${ProjectName}-document-processor'
+      Runtime: python3.11
+      Handler: index.handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Timeout: 300
+      MemorySize: 512
+      Environment:
+        Variables:
+          DOCUMENTS_INCOMING_BUCKET: !Ref DocumentsIncomingBucket
+          DOCUMENTS_PROCESSED_BUCKET: !Ref DocumentsProcessedBucket
+          BLUEPRINTS_TABLE: !Ref BlueprintsTable
+          WORK_ITEMS_TABLE: !Ref WorkItemsTable
+          AWS_REGION_NAME: !Ref AWS::Region
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          import os
+
+          def handler(event, context):
+              print(f"Received event: {json.dumps(event)}")
+
+              # Extract S3 info from EventBridge event
+              detail = event.get('detail', {})
+              bucket = detail.get('bucket', {}).get('name')
+              key = detail.get('object', {}).get('key')
+
+              if not bucket or not key:
+                  return {'statusCode': 400, 'body': 'Missing bucket or key'}
+
+              print(f"Processing document: s3://{bucket}/{key}")
+
+              # TODO: Implement BDA processing
+              # 1. Get document from S3
+              # 2. Determine blueprint based on metadata or classification
+              # 3. Call InvokeDataAutomationAsync
+              # 4. Store result in processed bucket
+
+              return {
+                  'statusCode': 200,
+                  'body': json.dumps({
+                      'message': 'Document processing initiated',
+                      'bucket': bucket,
+                      'key': key
+                  })
+              }
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  DocumentProcessorPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref DocumentProcessorFunction
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt DocumentUploadRule.Arn
+
+Outputs:
+  DocumentsIncomingBucketName:
+    Description: S3 bucket for incoming documents
+    Value: !Ref DocumentsIncomingBucket
+    Export:
+      Name: !Sub '${ProjectName}-documents-incoming-bucket'
+
+  DocumentsProcessedBucketName:
+    Description: S3 bucket for processed documents
+    Value: !Ref DocumentsProcessedBucket
+    Export:
+      Name: !Sub '${ProjectName}-documents-processed-bucket'
+
+  PlaybooksTableName:
+    Description: DynamoDB table for playbooks
+    Value: !Ref PlaybooksTable
+    Export:
+      Name: !Sub '${ProjectName}-playbooks-table'
+
+  AgentsTableName:
+    Description: DynamoDB table for agents
+    Value: !Ref AgentsTable
+    Export:
+      Name: !Sub '${ProjectName}-agents-table'
+
+  WorkItemsQueueUrl:
+    Description: SQS queue URL for work items
+    Value: !Ref WorkItemsQueue
+    Export:
+      Name: !Sub '${ProjectName}-work-items-queue-url'
+
+  LambdaExecutionRoleArn:
+    Description: IAM role ARN for Lambda functions
+    Value: !GetAtt LambdaExecutionRole.Arn
+    Export:
+      Name: !Sub '${ProjectName}-lambda-role-arn'

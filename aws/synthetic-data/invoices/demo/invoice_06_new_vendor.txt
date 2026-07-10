@@ -1,0 +1,41 @@
+═══════════════════════════════════════════════════════════════════════════════
+                            INVOICE
+═══════════════════════════════════════════════════════════════════════════════
+
+VENDOR:                                      BILL TO:
+---------------------------------           ---------------------------------
+Bright Ideas Marketing Agency               Apex Financial Corp
+456 Creative Blvd                           500 Enterprise Way
+Los Angeles, CA 90028                       San Francisco, CA 94105
+Tax ID: 95-1112223
+Phone: (323) 555-0777
+Email: billing@brightideas.agency
+
+═══════════════════════════════════════════════════════════════════════════════
+Invoice Number:    BI-2024-0012
+Invoice Date:      March 11, 2024
+Due Date:          April 10, 2024
+PO Number:         PO-2024-8899
+Payment Terms:     Net 30
+═══════════════════════════════════════════════════════════════════════════════
+
+DESCRIPTION                          QTY      UNIT PRICE      AMOUNT
+-------------------------------------------------------------------------------
+Brand Strategy Workshop               1      $3,500.00      $3,500.00
+Logo Design Package                   1      $2,500.00      $2,500.00
+Brand Guidelines Document             1      $1,800.00      $1,800.00
+Social Media Templates (10)           1        $950.00        $950.00
+-------------------------------------------------------------------------------
+
+                                              Subtotal:     $8,750.00
+                                              Tax (9.5%):     $831.25
+                                              ─────────────────────────
+                                              TOTAL DUE:    $9,581.25
+
+═══════════════════════════════════════════════════════════════════════════════
+                First-time vendor - W9 attached separately
+                    Project kickoff scheduled: March 18, 2024
+═══════════════════════════════════════════════════════════════════════════════
+
+TEST SCENARIO: New Vendor (Not in System)
+Expected Result: FLAGGED - Route to vendor onboarding workflow

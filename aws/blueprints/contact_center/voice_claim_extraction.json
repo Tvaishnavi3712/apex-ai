@@ -1,0 +1,371 @@
+{
+  "blueprintName": "apex-voice-claim-extraction-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract insurance claim data from voice call transcripts using Small Factory pattern",
+  "industry": "contact_center",
+  "documentType": "voice_call_transcript",
+  "processingType": "small_factory_chain",
+  "chainId": "insurance_claim_from_call",
+  "bdaSchema": {
+    "class": "ApexVoiceClaimExtraction",
+    "description": "Voice-based insurance claim extraction output schema",
+    "definitions": {
+      "SPEAKER_SEGMENT": {
+        "properties": {
+          "speaker": {"type": "string"},
+          "speaker_id": {"type": "string"},
+          "text": {"type": "string"},
+          "start_time": {"type": "number"},
+          "end_time": {"type": "number"}
+        }
+      },
+      "ENTITY": {
+        "properties": {
+          "type": {"type": "string"},
+          "value": {"type": "string"},
+          "confidence": {"type": "number"}
+        }
+      },
+      "SENTIMENT_POINT": {
+        "properties": {
+          "segment_index": {"type": "number"},
+          "start_time": {"type": "number"},
+          "speaker": {"type": "string"},
+          "sentiment": {"type": "string"},
+          "score": {"type": "number"}
+        }
+      },
+      "COMPLIANCE_RESULT": {
+        "properties": {
+          "rule": {"type": "string"},
+          "passed": {"type": "boolean"},
+          "score": {"type": "number"},
+          "description": {"type": "string"}
+        }
+      },
+      "FRAUD_INDICATOR": {
+        "properties": {
+          "indicator": {"type": "string"},
+          "description": {"type": "string"},
+          "evidence": {"type": "array", "items": {"type": "string"}},
+          "weight": {"type": "number"}
+        }
+      },
+      "COACHING_TIP": {
+        "properties": {
+          "area": {"type": "string"},
+          "tip": {"type": "string"},
+          "priority": {"type": "string"},
+          "description": {"type": "string"}
+        }
+      }
+    },
+    "properties": {
+      "job_id": {
+        "type": "string",
+        "description": "Unique job identifier"
+      },
+      "audio_s3_uri": {
+        "type": "string",
+        "description": "S3 URI of source audio file"
+      },
+      "chain_id": {
+        "type": "string",
+        "description": "Small Factory chain used for processing"
+      },
+      "processing_status": {
+        "type": "string",
+        "enum": ["completed", "partial", "failed"]
+      },
+
+      "transcription": {
+        "type": "object",
+        "properties": {
+          "full_text": {"type": "string"},
+          "word_count": {"type": "number"},
+          "duration_seconds": {"type": "number"},
+          "segments": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/SPEAKER_SEGMENT"}
+          },
+          "speakers": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        }
+      },
+
+      "diarization": {
+        "type": "object",
+        "properties": {
+          "speakers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {"type": "string"},
+                "name": {"type": "string"},
+                "role": {"type": "string"},
+                "talk_time_seconds": {"type": "number"},
+                "word_count": {"type": "number"}
+              }
+            }
+          },
+          "conversation_flow": {
+            "type": "object",
+            "properties": {
+              "turn_count": {"type": "number"},
+              "avg_turn_duration_seconds": {"type": "number"}
+            }
+          }
+        }
+      },
+
+      "intent": {
+        "type": "object",
+        "properties": {
+          "primary_intent": {"type": "string"},
+          "confidence": {"type": "number"},
+          "secondary_intents": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "intent": {"type": "string"},
+                "confidence": {"type": "number"}
+              }
+            }
+          }
+        }
+      },
+
+      "sentiment": {
+        "type": "object",
+        "properties": {
+          "overall_sentiment": {"type": "string"},
+          "average_score": {"type": "number"},
+          "sentiment_arc": {"type": "string"},
+          "timeline": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/SENTIMENT_POINT"}
+          },
+          "by_speaker": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "average_score": {"type": "number"},
+                "sentiment": {"type": "string"}
+              }
+            }
+          }
+        }
+      },
+
+      "entities": {
+        "type": "object",
+        "properties": {
+          "entity_count": {"type": "number"},
+          "all_entities": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/ENTITY"}
+          },
+          "summary": {
+            "type": "object",
+            "additionalProperties": {"type": "string"}
+          }
+        }
+      },
+
+      "claim": {
+        "type": "object",
+        "properties": {
+          "claim_type": {"type": "string"},
+          "claim_type_confidence": {"type": "number"},
+          "completeness_score": {"type": "number"},
+          "is_actionable": {"type": "boolean"},
+          "requires_callback": {"type": "boolean"},
+          "missing_fields": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "extracted_entities": {
+            "type": "object",
+            "properties": {
+              "policy_number": {"type": "string"},
+              "claim_number": {"type": "string"},
+              "claimant_name": {"type": "string"},
+              "incident_date": {"type": "string"},
+              "damage_amount": {"type": "string"},
+              "location": {"type": "string"},
+              "vehicle": {"type": "string"}
+            }
+          }
+        }
+      },
+
+      "compliance": {
+        "type": "object",
+        "properties": {
+          "overall_score": {"type": "number"},
+          "passed": {"type": "boolean"},
+          "checklist_used": {"type": "string"},
+          "violation_count": {"type": "number"},
+          "violations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "rule": {"type": "string"},
+                "severity": {"type": "string"},
+                "description": {"type": "string"}
+              }
+            }
+          },
+          "rule_results": {
+            "type": "object",
+            "additionalProperties": {"$ref": "#/definitions/COMPLIANCE_RESULT"}
+          },
+          "recommendations": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        }
+      },
+
+      "fraud": {
+        "type": "object",
+        "properties": {
+          "fraud_score": {"type": "number"},
+          "risk_level": {"type": "string"},
+          "exceeds_threshold": {"type": "boolean"},
+          "requires_review": {"type": "boolean"},
+          "indicator_count": {"type": "number"},
+          "indicators_detected": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/FRAUD_INDICATOR"}
+          },
+          "recommendation": {"type": "string"}
+        }
+      },
+
+      "priority": {
+        "type": "object",
+        "properties": {
+          "priority_score": {"type": "number"},
+          "priority_level": {"type": "string"},
+          "recommended_sla_hours": {"type": "number"},
+          "requires_immediate_attention": {"type": "boolean"},
+          "escalate_to_supervisor": {"type": "boolean"},
+          "reasoning": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        }
+      },
+
+      "summary": {
+        "type": "object",
+        "properties": {
+          "summary": {"type": "string"},
+          "claim_type": {"type": "string"},
+          "requires_followup": {"type": "boolean"},
+          "key_facts": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "action_items": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        }
+      },
+
+      "decision": {
+        "type": "object",
+        "properties": {
+          "decision": {"type": "string"},
+          "routing": {"type": "string"},
+          "confidence": {"type": "number"},
+          "automation_eligible": {"type": "boolean"},
+          "requires_human_review": {"type": "boolean"},
+          "reasons": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "flags": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "route_details": {
+            "type": "object",
+            "properties": {
+              "queue": {"type": "string"},
+              "sla_hours": {"type": "number"},
+              "handler": {"type": "string"}
+            }
+          }
+        }
+      },
+
+      "coaching": {
+        "type": "object",
+        "properties": {
+          "coaching_priority": {"type": "string"},
+          "requires_followup": {"type": "boolean"},
+          "tip_count": {"type": "number"},
+          "tips": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/COACHING_TIP"}
+          },
+          "priority_areas": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "strengths": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "training_modules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "module_id": {"type": "string"},
+                "title": {"type": "string"},
+                "duration_minutes": {"type": "number"},
+                "reason": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "extractionRules": {
+    "confidenceThreshold": 0.7,
+    "processingTimeout": 300
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeProcessingMetrics": true,
+    "formatTimestamps": true
+  },
+  "factoryChain": {
+    "chainId": "insurance_claim_from_call",
+    "factories": [
+      {"id": "transcribe", "action": "transcribe_audio"},
+      {"id": "diarize", "action": "diarize_speakers"},
+      {"id": "intent", "action": "intent_classify"},
+      {"id": "sentiment", "action": "sentiment_timeline"},
+      {"id": "entities", "action": "entity_extract"},
+      {"id": "claim", "action": "claim_extract"},
+      {"id": "compliance", "action": "compliance_audit"},
+      {"id": "fraud", "action": "fraud_indicators"},
+      {"id": "priority", "action": "priority_calculate"},
+      {"id": "summary", "action": "summary_generate"},
+      {"id": "decision", "action": "auto_decision"},
+      {"id": "coaching", "action": "coaching_tips"}
+    ]
+  }
+}

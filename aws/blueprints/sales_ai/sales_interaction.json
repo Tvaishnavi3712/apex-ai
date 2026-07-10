@@ -1,0 +1,222 @@
+{
+  "blueprintName": "apex-sales-interaction-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Sales conversation intelligence output schema",
+  "industry": "sales_ai",
+  "documentType": "sales_call",
+  "processingType": "small_factory_chain",
+  "chainId": "sales_interaction_agent",
+  "bdaSchema": {
+    "class": "ApexSalesInteraction",
+    "description": "Sales Interaction Agent output schema",
+    "definitions": {
+      "EMOTION_PROFILE": {
+        "properties": {
+          "dominant_emotion": {"type": "string"},
+          "emotion_scores": {"type": "object"},
+          "positive_ratio": {"type": "number"},
+          "engagement_trend": {"type": "string", "enum": ["increasing", "stable", "decreasing"]}
+        }
+      },
+      "BUYING_SIGNAL": {
+        "properties": {
+          "category": {"type": "string"},
+          "matched_text": {"type": "string"},
+          "context": {"type": "string"},
+          "weight": {"type": "number"}
+        }
+      },
+      "OBJECTION": {
+        "properties": {
+          "category": {"type": "string", "enum": ["price", "timing", "authority", "need", "trust", "competitor", "complexity"]},
+          "matched_text": {"type": "string"},
+          "severity": {"type": "string"},
+          "handling_strategies": {"type": "array"}
+        }
+      },
+      "COMPETITOR_MENTION": {
+        "properties": {
+          "competitor": {"type": "string"},
+          "context": {"type": "string"},
+          "mention_type": {"type": "string"},
+          "sentiment": {"type": "string"}
+        }
+      },
+      "RISK_FACTOR": {
+        "properties": {
+          "risk": {"type": "string"},
+          "impact": {"type": "number"},
+          "source": {"type": "string"}
+        }
+      },
+      "ACTION_ITEM": {
+        "properties": {
+          "action": {"type": "string"},
+          "priority": {"type": "string", "enum": ["high", "medium", "low"]},
+          "owner": {"type": "string"},
+          "due": {"type": "string"}
+        }
+      },
+      "COACHING_TIP": {
+        "properties": {
+          "area": {"type": "string"},
+          "priority": {"type": "string"},
+          "observation": {"type": "string"},
+          "recommendations": {"type": "array"},
+          "training_modules": {"type": "array"}
+        }
+      },
+      "CRM_UPDATE": {
+        "properties": {
+          "field": {"type": "string"},
+          "current_value": {"type": "string"},
+          "suggested_value": {"type": "string"},
+          "reason": {"type": "string"}
+        }
+      }
+    },
+    "properties": {
+      "job_id": {"type": "string"},
+      "call_id": {"type": "string"},
+      "processing_status": {"type": "string", "enum": ["completed", "partial", "failed"]},
+
+      "transcribe_audio": {
+        "type": "object",
+        "properties": {
+          "transcript_text": {"type": "string"},
+          "duration_seconds": {"type": "number"},
+          "word_count": {"type": "number"},
+          "confidence": {"type": "number"}
+        }
+      },
+
+      "diarize_speakers": {
+        "type": "object",
+        "properties": {
+          "speakers": {"type": "array"},
+          "speaker_count": {"type": "number"},
+          "talk_ratio": {"type": "object"}
+        }
+      },
+
+      "emotion_analyze": {
+        "type": "object",
+        "properties": {
+          "prospect_emotions": {"$ref": "#/definitions/EMOTION_PROFILE"},
+          "rep_emotions": {"$ref": "#/definitions/EMOTION_PROFILE"},
+          "engagement_score": {"type": "number"},
+          "emotional_peaks": {"type": "array"},
+          "risk_indicators": {"type": "array"},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      },
+
+      "buying_signals": {
+        "type": "object",
+        "properties": {
+          "buying_intent_score": {"type": "number"},
+          "signals_detected": {"type": "array", "items": {"$ref": "#/definitions/BUYING_SIGNAL"}},
+          "signal_breakdown": {"type": "object"},
+          "negative_signals": {"type": "array"},
+          "deal_momentum": {"type": "number"},
+          "recommended_actions": {"type": "array", "items": {"$ref": "#/definitions/ACTION_ITEM"}},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      },
+
+      "objection_detect": {
+        "type": "object",
+        "properties": {
+          "objections": {"type": "array", "items": {"$ref": "#/definitions/OBJECTION"}},
+          "objection_summary": {"type": "object"},
+          "objection_severity_score": {"type": "number"},
+          "handling_recommendations": {"type": "array"},
+          "unhandled_objections": {"type": "array"},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      },
+
+      "competitor_mentions": {
+        "type": "object",
+        "properties": {
+          "mentions": {"type": "array", "items": {"$ref": "#/definitions/COMPETITOR_MENTION"}},
+          "competitive_landscape": {"type": "object"},
+          "competitor_sentiment": {"type": "string"},
+          "competitive_threat_level": {"type": "number"},
+          "battlecard_triggers": {"type": "array"},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      },
+
+      "deal_intelligence": {
+        "type": "object",
+        "properties": {
+          "win_probability": {"type": "number"},
+          "deal_health": {"type": "string", "enum": ["healthy", "at_risk", "critical", "unknown"]},
+          "recommended_stage": {"type": "string"},
+          "risk_factors": {"type": "array", "items": {"$ref": "#/definitions/RISK_FACTOR"}},
+          "positive_indicators": {"type": "array"},
+          "next_best_actions": {"type": "array", "items": {"$ref": "#/definitions/ACTION_ITEM"}},
+          "trend": {"type": "string", "enum": ["improving", "stable", "declining"]},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      },
+
+      "sales_coaching": {
+        "type": "object",
+        "properties": {
+          "coaching_tips": {"type": "array", "items": {"$ref": "#/definitions/COACHING_TIP"}},
+          "strengths": {"type": "array"},
+          "improvement_areas": {"type": "array"},
+          "training_recommendations": {"type": "array"},
+          "conversation_score": {
+            "type": "object",
+            "properties": {
+              "overall": {"type": "number"},
+              "components": {"type": "object"}
+            }
+          },
+          "skill_assessment": {"type": "object"},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      },
+
+      "sales_summary": {
+        "type": "object",
+        "properties": {
+          "executive_summary": {"type": "string"},
+          "key_discussion_points": {"type": "array"},
+          "action_items": {"type": "array", "items": {"$ref": "#/definitions/ACTION_ITEM"}},
+          "crm_update": {
+            "type": "object",
+            "properties": {
+              "suggested_updates": {"type": "array", "items": {"$ref": "#/definitions/CRM_UPDATE"}},
+              "field_values": {"type": "object"}
+            }
+          },
+          "next_meeting_agenda": {"type": "string"},
+          "deal_snapshot": {"type": "object"},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      }
+    }
+  },
+  "extractionRules": {
+    "confidenceThreshold": 0.8,
+    "processingTimeout": 600
+  },
+  "factoryChain": {
+    "chainId": "sales_interaction_agent",
+    "factories": [
+      {"id": "transcribe_audio", "action": "transcribe_audio", "aiEnhanced": false},
+      {"id": "diarize_speakers", "action": "diarize_speakers", "aiEnhanced": false},
+      {"id": "emotion_analyze", "action": "emotion_analyze", "aiEnhanced": true},
+      {"id": "buying_signals", "action": "buying_signals", "aiEnhanced": true},
+      {"id": "objection_detect", "action": "objection_detect", "aiEnhanced": true},
+      {"id": "competitor_mentions", "action": "competitor_mentions", "aiEnhanced": true},
+      {"id": "deal_intelligence", "action": "deal_intelligence", "aiEnhanced": true},
+      {"id": "sales_coaching", "action": "sales_coaching", "aiEnhanced": true},
+      {"id": "sales_summary", "action": "sales_summary", "aiEnhanced": true}
+    ]
+  }
+}

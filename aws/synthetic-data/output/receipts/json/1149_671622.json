@@ -1,0 +1,38 @@
+{
+  "merchant": {
+    "name": "Lyft",
+    "category": "Ground Transportation",
+    "address": {
+      "street": "200 Pike St",
+      "city": "Seattle",
+      "state": "WA",
+      "zip": "98101"
+    },
+    "phone": "(642) 639-3650"
+  },
+  "transaction": {
+    "date": "2026-02-13",
+    "time": "08:57:39",
+    "receipt_number": "1149-671622"
+  },
+  "line_items": [
+    {
+      "description": "Drip Coffee - Large",
+      "quantity": 2,
+      "unit_price": 2.95,
+      "amount": 5.9
+    }
+  ],
+  "totals": {
+    "subtotal": 5.9,
+    "tax_rate": 0.0625,
+    "tax_amount": 0.37,
+    "tip": 0,
+    "total": 6.27
+  },
+  "payment": {
+    "method": "Credit Card",
+    "card_type": "Amex",
+    "last_four": "3816"
+  }
+}

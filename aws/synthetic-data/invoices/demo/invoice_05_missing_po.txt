@@ -1,0 +1,42 @@
+═══════════════════════════════════════════════════════════════════════════════
+                            INVOICE
+═══════════════════════════════════════════════════════════════════════════════
+
+VENDOR:                                      BILL TO:
+---------------------------------           ---------------------------------
+Metro Catering Services                     Apex Financial Corp
+789 Culinary Lane                           500 Enterprise Way
+San Francisco, CA 94102                     San Francisco, CA 94105
+Tax ID: 94-8888222
+Phone: (415) 555-0333
+Email: events@metrocatering.com
+
+═══════════════════════════════════════════════════════════════════════════════
+Invoice Number:    MCS-2024-0445
+Invoice Date:      March 8, 2024
+Due Date:          March 22, 2024
+PO Number:         ** NOT PROVIDED **
+Payment Terms:     Net 15
+═══════════════════════════════════════════════════════════════════════════════
+
+DESCRIPTION                          QTY      UNIT PRICE      AMOUNT
+-------------------------------------------------------------------------------
+Corporate Event Catering              1      $2,800.00      $2,800.00
+  - 75 guests, full service
+Premium Beverage Package              1        $650.00        $650.00
+Event Setup & Breakdown               1        $400.00        $400.00
+Gratuity (18%)                        1        $693.00        $693.00
+-------------------------------------------------------------------------------
+
+                                              Subtotal:     $4,543.00
+                                              Tax (8.625%):   $391.83
+                                              ─────────────────────────
+                                              TOTAL DUE:    $4,934.83
+
+═══════════════════════════════════════════════════════════════════════════════
+           Event Date: March 5, 2024 - Q1 All-Hands Meeting
+               Contact: Sarah Johnson, Events Coordinator
+═══════════════════════════════════════════════════════════════════════════════
+
+TEST SCENARIO: Missing PO Number (Exception)
+Expected Result: FLAGGED for review - Invoice over $1,000 requires PO match

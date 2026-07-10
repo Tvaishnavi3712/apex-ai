@@ -1,0 +1,95 @@
+# CBTS Apex AI Platform - Product Compliance Runbook
+name: product_compliance
+version: "1.0.0"
+description: "Automated product compliance verification and certification tracking"
+industry: cpg
+category: regulatory
+
+intent: |
+  Manage product compliance by extracting specification data, validating
+  against regulatory requirements, tracking certifications, and alerting
+  on upcoming expirations or compliance gaps.
+
+output:
+  - name: compliance_status
+    type: validation
+    schema:
+      product_code: string
+      compliant: boolean
+      gaps: array
+      certifications: array
+  - name: regulatory_alerts
+    type: notification
+    schema:
+      alert_type: string
+      deadline: string
+      action_required: string
+
+context:
+  business_rules:
+    - "FDA compliance required for all food products"
+    - "Organic certification must be current"
+    - "Allergen declarations must match ingredients"
+    - "30-day alert before certification expiry"
+
+  compliance_requirements:
+    fda_labeling: true
+    allergen_declaration: true
+    country_specific: true
+
+actions:
+  - name: spec_extract
+    action_id: cpg.spec_extract
+    required: true
+  - name: compliance_validate
+    action_id: cpg.compliance_validate
+    required: true
+  - name: cert_check
+    action_id: cpg.certification_check
+    required: true
+  - name: label_validate
+    action_id: cpg.label_validate
+    required: false
+
+recipe: |
+  ## Product Compliance Workflow
+
+  ### Step 1: Specification Extraction
+  1. Use `spec_extract` to capture product details
+  2. Extract ingredient lists and percentages
+  3. Capture nutrition facts
+  4. Identify allergen declarations
+
+  ### Step 2: Regulatory Validation
+  1. Use `compliance_validate` against requirements
+  2. Check FDA labeling compliance
+  3. Verify allergen declarations complete
+  4. Validate nutrition panel format
+
+  ### Step 3: Certification Tracking
+  1. Use `cert_check` for all required certs
+  2. Verify certifications are current
+  3. Check scope covers product
+  4. Alert on upcoming expirations
+
+  ### Step 4: Label Validation
+  1. Cross-check label against specification
+  2. Verify claims match certifications
+  3. Check country-specific requirements
+  4. Generate compliance report
+
+triggers:
+  - type: s3_event
+    bucket: apex-product-specs
+    prefix: specifications/
+  - type: schedule
+    cron: "0 6 * * 1"
+    description: "Weekly compliance scan"
+
+worker:
+  queue: apex-cpg-compliance-queue
+  concurrency: 20
+  timeout_seconds: 300
+
+metadata:
+  tags: [compliance, cpg, regulatory, fda, certification]

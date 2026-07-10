@@ -1,0 +1,158 @@
+{
+  "blueprintName": "apex-invoice-v1",
+  "blueprintVersion": "1.0.0",
+  "blueprintArn": "arn:aws:bedrock:us-east-1:457795063704:blueprint/714db076ff45",
+  "description": "Extract structured data from vendor invoices for accounts payable processing",
+  "industry": "financial_services",
+  "documentType": "invoice",
+  "bdaSchema": {
+    "class": "ApexInvoice",
+    "description": "Apex AI Platform invoice extraction blueprint for financial document processing",
+    "definitions": {
+      "LINEITEM": {
+        "properties": {
+          "quantity": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "unit_price": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "The price per unit for this line item"
+          },
+          "amount": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Total amount for this line item (unit price * quantity)"
+          },
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "The full description of the product or service"
+          }
+        }
+      }
+    },
+    "properties": {
+      "invoice_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The unique invoice identifier or number"
+      },
+      "invoice_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The date the invoice was issued"
+      },
+      "due_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The payment due date"
+      },
+      "po_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Purchase order reference number"
+      },
+      "payment_terms": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Payment terms such as NET30, NET60, Due on Receipt"
+      },
+      "vendor_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The name of the vendor or supplier company issuing the invoice"
+      },
+      "vendor_address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The complete address of the vendor"
+      },
+      "vendor_tax_id": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The vendor's tax ID, EIN, or VAT number"
+      },
+      "vendor_phone": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The vendor's phone number"
+      },
+      "vendor_email": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The vendor's email address"
+      },
+      "bill_to_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The name of the company or person being billed"
+      },
+      "bill_to_address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The complete billing address"
+      },
+      "line_items": {
+        "type": "array",
+        "instruction": "All line items on the invoice including description, quantity, unit price, and amount",
+        "items": {
+          "$ref": "#/definitions/LINEITEM"
+        }
+      },
+      "subtotal": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "The subtotal amount before tax (sum of all line item amounts)"
+      },
+      "tax_rate": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The tax rate percentage applied"
+      },
+      "tax_amount": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "The total tax amount"
+      },
+      "total_amount": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "The total invoice amount including subtotal and tax"
+      },
+      "validation_check": {
+        "type": "boolean",
+        "instruction": "Is subtotal + tax_amount equal to total_amount?"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "currencyFormat": "decimal",
+    "decimalPrecision": 2,
+    "confidenceThreshold": 0.85
+  },
+  "validationRules": [
+    {
+      "name": "line_item_total_validation",
+      "description": "Validate that line item amounts equal qty * unit_price",
+      "expression": "line_items.each { |item| (item.quantity * item.unit_price - item.amount).abs < 0.01 }"
+    },
+    {
+      "name": "subtotal_validation",
+      "description": "Validate subtotal equals sum of line items",
+      "expression": "(subtotal - line_items.sum { |item| item.amount }).abs < 0.01"
+    },
+    {
+      "name": "total_validation",
+      "description": "Validate total calculation",
+      "expression": "(total_amount - (subtotal + tax_amount)).abs < 0.01"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  }
+}

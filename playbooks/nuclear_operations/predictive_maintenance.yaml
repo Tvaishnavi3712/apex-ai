@@ -1,0 +1,92 @@
+name: predictive_maintenance
+version: "1.0.0"
+description: "ChatSTP UC-4 — predict equipment failures and recommend PM advances using ApexSignal RUL + anomaly + failure-class endpoints."
+industry: nuclear_operations
+category: predictive_intelligence
+
+intent: |
+  When the user asks about future failure risk, anomalies, or PM
+  recommendations for an equipment item, run the four predictive actions
+  in sequence and synthesize a structured risk report. The agent leads
+  with risk tier, then days-until-failure with confidence band, then
+  the recommended PM action with avoidance estimate, then ends with the
+  audit-log marker.
+
+  Example user prompts the playbook resolves:
+    "Predict failure risk for Pump-3A in next 30 days."
+    "What anomalies are active on EDG-2 right now?"
+    "Should I advance the next PM on MOV-7B? Why?"
+    "Recommend PM actions for the next 30 days." (system-wide)
+
+output:
+  - name: risk_assessment
+    type: structured_data
+    description: "{ risk_score, risk_tier, days_until_failure, confidence_bands, scripted_message }"
+  - name: pm_recommendation
+    type: structured_data
+    description: "{ recommendation, recommended_pm_template, urgency, estimated_avoidance, mitigation_steps[] }"
+  - name: audit_log_id
+    type: identifier
+    description: "Audit Lens trace id for the Governance pillar"
+
+context:
+  business_rules:
+    - "Lead with the risk tier (CRITICAL/HIGH/MODERATE/LOW), not the days number — operators triage by tier."
+    - "Always quote the scripted_message verbatim when present — that's the rehearsed demo line."
+    - "End every response with the audit_log marker so Audit Lens can rewind the decision."
+    - "Confidence bands matter: state both 80% and 95% intervals when reporting RUL."
+
+actions:
+  - name: intent_classify
+    action_id: nuclear_operations.intent_classify
+    description: "Confirm predictive_maintenance intent and extract equipment_id."
+    required: true
+  - name: anomaly_detect
+    action_id: nuclear_operations.anomaly_detect
+    description: "Surface anomalies in the recent sensor window. Cached for tonight; live Azure ML tomorrow."
+    required: true
+  - name: rul_predict
+    action_id: nuclear_operations.rul_predict
+    description: "Forecast days-until-failure with 80%/95% confidence bands."
+    required: true
+  - name: risk_score_compute
+    action_id: nuclear_operations.risk_score_compute
+    description: "Composite 0-100 risk score combining anomalies + history + PM gap + criticality."
+    required: true
+  - name: pm_recommend
+    action_id: nuclear_operations.pm_recommend
+    description: "Translate risk + failure mode into a concrete PM-advance recommendation."
+    required: true
+
+recipe: |
+  1. Run `intent_classify`. Confirm intent == "predictive_maintenance" and equipment_id present.
+  2. Call `anomaly_detect(equipment_id, lookback_days=14)`.
+  3. Call `rul_predict(equipment_id, horizon_days=30)`.
+  4. Call `risk_score_compute(equipment_id)`.
+  5. Call `pm_recommend(equipment_id)`.
+  6. Format the response (4-line structure — RELIABILITY agent contract):
+       <RISK_TIER>: <equipment_id> — risk score <score>/100
+       Predicted failure: <days_until_failure>d (80% CI <lower>–<upper>d, 95% CI <lower>–<upper>d)
+       Recommended action: <recommendation>  Estimated avoidance: $<cost_usd>, <downtime_hours>h.
+       <scripted_message>
+       [Decision logged to apex.audit_log: <audit_log_id>]
+  7. Emit an audit_log entry with all upstream tool outputs for Audit Lens.
+
+triggers:
+  - type: chat_message
+    routed_by: chatstp_router
+  - type: api_invoke
+    endpoint: /api/v1/agents/ReliabilityAgent/invoke
+  - type: scheduled
+    cron: "*/15 * * * *"
+    description: "Proactive scan — fires every 15 min during demo to land the live alert banner on cue"
+
+foundry_agent: apex-stp-reliability-agent
+azure_ml_endpoints:
+  - apex-signal-stp-rul          # DeepAR (deploys overnight)
+  - apex-signal-stp-anomaly      # Random Cut Forest
+  - apex-signal-stp-failure-class # XGBoost multi-class
+governance:
+  audit_log: true
+  human_review_threshold: 0.6   # below 60% confidence routes to senior engineer
+  citation_required: true

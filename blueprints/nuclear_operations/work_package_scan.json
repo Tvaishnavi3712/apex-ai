@@ -1,0 +1,82 @@
+{
+  "blueprintName": "apex-stp-work-package-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "OCR-extract scanned work-package PDFs from FileNet — cover sheet, procedure steps, sign-offs and redline notes",
+  "industry": "nuclear_operations",
+  "documentType": "work_package",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "cover_sheet": {
+        "type": "object",
+        "properties": {
+          "wo_id":       {"type": "string"},
+          "equipment_id": {"type": "string"},
+          "procedure_doc": {"type": "string", "description": "Reference to 0PMP/0POP doc"},
+          "type":         {"type": "string"},
+          "opened":       {"type": "string", "format": "date"},
+          "closed":       {"type": "string", "format": "date"},
+          "lead_engineer": {"type": "string"},
+          "technicians":  {"type": "array", "items": {"type": "string"}},
+          "barcode_present": {"type": "boolean"}
+        },
+        "required": ["wo_id", "equipment_id"]
+      },
+      "procedure_steps": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "step_number": {"type": "string"},
+            "instruction_text": {"type": "string"},
+            "performer_initials": {"type": "string"},
+            "performer_date":   {"type": "string", "format": "date"},
+            "verifier_initials": {"type": "string"},
+            "verifier_date":   {"type": "string", "format": "date"},
+            "step_status":      {"type": "string", "enum": ["completed", "skipped", "na"]}
+          }
+        }
+      },
+      "redline_notes": {
+        "type": "array",
+        "description": "Hand-written annotations on procedure pages",
+        "items": {
+          "type": "object",
+          "properties": {
+            "page":          {"type": "integer"},
+            "ocr_text":      {"type": "string"},
+            "ocr_confidence": {"type": "number"},
+            "annotation_type": {"type": "string", "enum": ["correction", "note", "deviation", "out_of_spec"]}
+          }
+        }
+      },
+      "signoff_block": {
+        "type": "object",
+        "properties": {
+          "performer_signed":     {"type": "boolean"},
+          "verifier_signed":      {"type": "boolean"},
+          "supervisor_signed":    {"type": "boolean"},
+          "rp_signed":            {"type": "boolean"},
+          "all_signoffs_present": {"type": "boolean"}
+        }
+      },
+      "metadata": {
+        "type": "object",
+        "properties": {
+          "page_count": {"type": "integer"},
+          "ocr_overall_confidence": {"type": "number"},
+          "extracted_at": {"type": "string", "format": "date-time"}
+        }
+      }
+    },
+    "required": ["cover_sheet", "metadata"]
+  },
+  "extractionRules": {
+    "ocrEngine": "AzureDocumentIntelligence",
+    "ocrDpi": 300,
+    "handwrittenRecognition": true,
+    "signatureDetection": true,
+    "confidenceThreshold": 0.75,
+    "preserveVerbatimText": true
+  }
+}

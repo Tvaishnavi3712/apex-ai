@@ -1,0 +1,277 @@
+{
+  "blueprintName": "apex-bank-statement-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from bank statements for reconciliation and analysis",
+  "industry": "financial_services",
+  "documentType": "bank_statement",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "bank": {
+        "type": "object",
+        "description": "Bank/financial institution information",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Bank name",
+            "extraction_hints": ["Bank:", "Financial Institution:"]
+          },
+          "branch": {
+            "type": "string",
+            "description": "Branch name or number"
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": {"type": "string"},
+              "city": {"type": "string"},
+              "state": {"type": "string"},
+              "postal_code": {"type": "string"}
+            }
+          },
+          "routing_number": {
+            "type": "string",
+            "description": "ABA routing number",
+            "pattern": "^[0-9]{9}$"
+          },
+          "swift_code": {
+            "type": "string",
+            "description": "SWIFT/BIC code"
+          }
+        },
+        "required": ["name"]
+      },
+      "account": {
+        "type": "object",
+        "description": "Account holder and account details",
+        "properties": {
+          "holder_name": {
+            "type": "string",
+            "description": "Account holder name",
+            "extraction_hints": ["Account Holder:", "Name:"]
+          },
+          "holder_address": {
+            "type": "object",
+            "properties": {
+              "street": {"type": "string"},
+              "city": {"type": "string"},
+              "state": {"type": "string"},
+              "postal_code": {"type": "string"}
+            }
+          },
+          "account_number": {
+            "type": "string",
+            "description": "Account number (may be partially masked)",
+            "extraction_hints": ["Account #:", "Account Number:"]
+          },
+          "account_type": {
+            "type": "string",
+            "description": "Type of account",
+            "enum": ["Checking", "Savings", "Money Market", "Business Checking", "Business Savings"]
+          }
+        },
+        "required": ["holder_name", "account_number"]
+      },
+      "statement_period": {
+        "type": "object",
+        "description": "Statement date range",
+        "properties": {
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Statement period start date",
+            "extraction_hints": ["From:", "Period Start:", "Beginning:"]
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Statement period end date",
+            "extraction_hints": ["To:", "Period End:", "Ending:"]
+          },
+          "statement_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date statement was generated"
+          }
+        },
+        "required": ["start_date", "end_date"]
+      },
+      "balances": {
+        "type": "object",
+        "description": "Account balance information",
+        "properties": {
+          "beginning_balance": {
+            "type": "number",
+            "description": "Balance at start of period",
+            "extraction_hints": ["Beginning Balance:", "Opening Balance:", "Previous Balance:"]
+          },
+          "ending_balance": {
+            "type": "number",
+            "description": "Balance at end of period",
+            "extraction_hints": ["Ending Balance:", "Closing Balance:", "Current Balance:"]
+          },
+          "available_balance": {
+            "type": "number",
+            "description": "Available balance (if shown)",
+            "extraction_hints": ["Available Balance:", "Available:"]
+          },
+          "average_balance": {
+            "type": "number",
+            "description": "Average daily balance for the period"
+          },
+          "minimum_balance": {
+            "type": "number",
+            "description": "Minimum balance during period"
+          }
+        },
+        "required": ["beginning_balance", "ending_balance"]
+      },
+      "summary": {
+        "type": "object",
+        "description": "Transaction summary",
+        "properties": {
+          "total_deposits": {
+            "type": "number",
+            "description": "Sum of all deposits/credits",
+            "extraction_hints": ["Total Deposits:", "Total Credits:"]
+          },
+          "deposit_count": {
+            "type": "integer",
+            "description": "Number of deposits"
+          },
+          "total_withdrawals": {
+            "type": "number",
+            "description": "Sum of all withdrawals/debits",
+            "extraction_hints": ["Total Withdrawals:", "Total Debits:"]
+          },
+          "withdrawal_count": {
+            "type": "integer",
+            "description": "Number of withdrawals"
+          },
+          "total_fees": {
+            "type": "number",
+            "description": "Sum of all fees charged",
+            "extraction_hints": ["Total Fees:", "Service Charges:"]
+          },
+          "interest_earned": {
+            "type": "number",
+            "description": "Interest earned during period",
+            "extraction_hints": ["Interest Earned:", "Interest Paid:"]
+          },
+          "interest_paid": {
+            "type": "number",
+            "description": "Interest paid (for loan accounts)"
+          }
+        }
+      },
+      "transactions": {
+        "type": "array",
+        "description": "Individual transactions",
+        "items": {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "string",
+              "format": "date",
+              "description": "Transaction date"
+            },
+            "post_date": {
+              "type": "string",
+              "format": "date",
+              "description": "Date transaction posted to account"
+            },
+            "description": {
+              "type": "string",
+              "description": "Transaction description/memo"
+            },
+            "type": {
+              "type": "string",
+              "description": "Transaction type",
+              "enum": [
+                "Deposit", "Withdrawal", "Transfer", "Check", "Debit Card",
+                "ACH Credit", "ACH Debit", "Wire Transfer", "ATM",
+                "Fee", "Interest", "Adjustment"
+              ]
+            },
+            "check_number": {
+              "type": "string",
+              "description": "Check number if applicable"
+            },
+            "reference_number": {
+              "type": "string",
+              "description": "Transaction reference number"
+            },
+            "debit": {
+              "type": "number",
+              "description": "Debit amount (withdrawals)"
+            },
+            "credit": {
+              "type": "number",
+              "description": "Credit amount (deposits)"
+            },
+            "amount": {
+              "type": "number",
+              "description": "Transaction amount (positive for credits, negative for debits)"
+            },
+            "balance": {
+              "type": "number",
+              "description": "Running balance after transaction"
+            },
+            "category": {
+              "type": "string",
+              "description": "Auto-categorized transaction type"
+            }
+          },
+          "required": ["date", "description"]
+        }
+      },
+      "fees": {
+        "type": "array",
+        "description": "Itemized fees charged",
+        "items": {
+          "type": "object",
+          "properties": {
+            "date": {"type": "string", "format": "date"},
+            "description": {"type": "string"},
+            "amount": {"type": "number"}
+          }
+        }
+      },
+      "metadata": {
+        "type": "object",
+        "description": "Extraction metadata",
+        "properties": {
+          "page_count": {"type": "integer"},
+          "extraction_confidence": {"type": "number"},
+          "transaction_count": {"type": "integer"}
+        }
+      }
+    },
+    "required": ["bank", "account", "statement_period", "balances", "transactions"]
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "currencyFormat": "decimal",
+    "decimalPrecision": 2,
+    "confidenceThreshold": 0.85,
+    "transactionTableDetection": true
+  },
+  "validationRules": [
+    {
+      "name": "balance_validation",
+      "description": "Validate ending balance = beginning + deposits - withdrawals",
+      "expression": "(balances.ending_balance - (balances.beginning_balance + summary.total_deposits - summary.total_withdrawals)).abs < 0.01"
+    },
+    {
+      "name": "transaction_sum_validation",
+      "description": "Validate transaction totals match summary",
+      "expression": "(transactions.sum { |t| t.credit || 0 } - summary.total_deposits).abs < 0.01"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": true,
+    "includeRawText": false,
+    "sortTransactionsByDate": true
+  }
+}

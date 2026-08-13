@@ -1,0 +1,436 @@
+# =============================================================================
+# APEX AI Platform - CNC Programming Assistant Playbook
+# =============================================================================
+# Aerospace & Defense: Assist machinists with G-code review, optimization,
+# and machine part programming for aerospace manufacturing.
+# =============================================================================
+
+playbook:
+  name: cnc_programming_assistant
+  version: "1.0.0"
+  industry: aerospace_defense
+  category: manufacturing
+  description: "AI-assisted CNC programming for aerospace parts manufacturing"
+  compliance: ["ITAR", "AS9100", "NADCAP"]
+
+  # ---------------------------------------------------------------------------
+  # LLM Configuration
+  # ---------------------------------------------------------------------------
+  llm_config:
+    code_review_model:
+      provider: azure_openai
+      model_id: anthropic.claude-opus-4-6
+      region: us-gov-west-1
+      parameters:
+        temperature: 0.1
+        max_tokens: 8000
+
+    optimization_model:
+      provider: azure_openai
+      model_id: anthropic.claude-3-sonnet
+      region: us-gov-west-1
+      parameters:
+        temperature: 0.2
+        max_tokens: 4000
+
+  # ---------------------------------------------------------------------------
+  # INTENT
+  # ---------------------------------------------------------------------------
+  intent: |
+    Assist machinists and manufacturing engineers with CNC programming:
+    1. Review G-code for syntax errors and potential issues
+    2. Validate feeds/speeds against material specifications
+    3. Suggest optimizations based on historical programs
+    4. Check toolpath safety and clearance
+    5. Reference past successful programs for similar parts
+    6. Provide machining best practices for aerospace alloys
+
+  # ---------------------------------------------------------------------------
+  # OUTPUT
+  # ---------------------------------------------------------------------------
+  output:
+    schema:
+      type: object
+      properties:
+        code_analysis:
+          type: object
+        issues_found:
+          type: array
+        optimizations:
+          type: array
+        material_recommendations:
+          type: object
+        similar_programs:
+          type: array
+        safety_warnings:
+          type: array
+
+  # ===========================================================================
+  # CONTEXT SECTION
+  # ===========================================================================
+  context:
+    # -------------------------------------------------------------------------
+    # Data Sources (READ)
+    # -------------------------------------------------------------------------
+    data_sources:
+      solidworks_pdm:
+        type: sql_database
+        connection: "${SOLIDWORKS_PDM_CONNECTION}"
+        mode: read_only
+        tables:
+          parts: "dbo.Parts"
+          drawings: "dbo.Drawings"
+          materials: "dbo.Materials"
+          revisions: "dbo.Revisions"
+
+      program_repository:
+        type: file_share
+        base_path: "${CNC_PROGRAM_PATH}"
+        mode: read_only
+        description: "Historical CNC programs"
+        file_types: [".nc", ".tap", ".mpf", ".iso"]
+
+      material_database:
+        type: sql_database
+        connection: "${MATERIAL_DB_CONNECTION}"
+        mode: read_only
+        tables:
+          specifications: "dbo.MaterialSpecs"
+          machining_params: "dbo.MachiningParameters"
+          cutting_data: "dbo.CuttingData"
+
+      tooling_database:
+        type: sql_database
+        connection: "${TOOLING_DB_CONNECTION}"
+        mode: read_only
+        tables:
+          tools: "dbo.CuttingTools"
+          holders: "dbo.ToolHolders"
+          recommendations: "dbo.ToolRecommendations"
+
+    # -------------------------------------------------------------------------
+    # Output Destinations (WRITE)
+    # -------------------------------------------------------------------------
+    output_destinations:
+      analysis_reports:
+        type: s3
+        bucket: "apex-${APEX_ENVIRONMENT}-cnc-analysis"
+        prefix: "reports/"
+        mode: write
+
+      program_suggestions:
+        type: file_share
+        base_path: "${CNC_SUGGESTIONS_PATH}"
+        mode: write
+        description: "Suggested program modifications"
+
+      audit_log:
+        type: cosmos_db
+        table: "apex-${APEX_ENVIRONMENT}-audit-log"
+        mode: write
+
+    # -------------------------------------------------------------------------
+    # Material Specifications
+    # -------------------------------------------------------------------------
+    materials:
+      titanium:
+        grades:
+          "Ti-6Al-4V":
+            ams_spec: "AMS-4911"
+            hardness_hrc: "36-42"
+            sfm_range: [100, 150]
+            feed_per_tooth: [0.002, 0.006]
+            coolant: "high_pressure_flood"
+            notes: "Use sharp tools, minimize dwell time"
+
+          "Ti-6Al-4V ELI":
+            ams_spec: "AMS-4930"
+            hardness_hrc: "32-38"
+            sfm_range: [120, 180]
+            feed_per_tooth: [0.002, 0.006]
+            coolant: "high_pressure_flood"
+
+      aluminum:
+        grades:
+          "7075-T6":
+            ams_spec: "AMS-4045"
+            hardness_hrc: "87 HRB"
+            sfm_range: [800, 1500]
+            feed_per_tooth: [0.004, 0.012]
+            coolant: "flood_or_mist"
+
+          "2024-T3":
+            ams_spec: "AMS-4037"
+            hardness_hrc: "75 HRB"
+            sfm_range: [700, 1200]
+            feed_per_tooth: [0.004, 0.010]
+
+      steel:
+        grades:
+          "15-5 PH":
+            ams_spec: "AMS-5659"
+            hardness_hrc: "35-42"
+            sfm_range: [150, 250]
+            feed_per_tooth: [0.003, 0.008]
+            coolant: "flood"
+
+          "17-4 PH":
+            ams_spec: "AMS-5643"
+            hardness_hrc: "38-44"
+            sfm_range: [120, 200]
+            feed_per_tooth: [0.003, 0.007]
+
+      inconel:
+        grades:
+          "718":
+            ams_spec: "AMS-5662"
+            hardness_hrc: "36-44"
+            sfm_range: [60, 100]
+            feed_per_tooth: [0.002, 0.005]
+            coolant: "high_pressure_required"
+            notes: "Work hardening material - maintain consistent chip load"
+
+    # -------------------------------------------------------------------------
+    # Machine Types
+    # -------------------------------------------------------------------------
+    machines:
+      mazak:
+        controls: ["Mazatrol", "Fanuc"]
+        supported_codes: ["G-code", "Mazatrol Conversational"]
+        max_spindle_rpm: 12000
+        max_feed_rate: 2000
+
+      dmg_mori:
+        controls: ["Siemens", "Fanuc", "CELOS"]
+        supported_codes: ["G-code", "Siemens"]
+        max_spindle_rpm: 18000
+        max_feed_rate: 3000
+
+      haas:
+        controls: ["Haas"]
+        supported_codes: ["G-code"]
+        max_spindle_rpm: 8100
+        max_feed_rate: 1000
+
+      hermle:
+        controls: ["Heidenhain", "Siemens"]
+        supported_codes: ["Heidenhain TNC", "G-code"]
+        max_spindle_rpm: 18000
+        max_feed_rate: 3000
+
+    # -------------------------------------------------------------------------
+    # Safety Checks
+    # -------------------------------------------------------------------------
+    safety_checks:
+      rapid_clearance:
+        min_z_clearance_inches: 0.25
+        min_xy_clearance_inches: 0.5
+        check_fixture_interference: true
+
+      spindle_limits:
+        max_rpm_warning: 15000
+        max_rpm_hard_limit: 20000
+        min_rpm_warning: 100
+
+      feed_rate_limits:
+        max_cutting_feed: 500
+        max_rapid_traverse: 2000
+        min_feed_warning: 0.001
+
+      tool_engagement:
+        max_stepover_percent: 75
+        max_depth_of_cut_multiplier: 2.0
+        check_chip_evacuation: true
+
+  # ===========================================================================
+  # RECIPE
+  # ===========================================================================
+  recipe: |
+    ## CNC Programming Assistant Workflow
+
+    ### Phase 1: Code Intake
+    1. Receive G-code or program file from user
+    2. Detect control type (Fanuc, Mazatrol, Siemens, etc.)
+    3. Parse part number from program header if available
+    4. Retrieve part/drawing from context.data_sources.solidworks_pdm
+
+    ### Phase 2: Syntax Analysis
+    1. Parse G-code line by line
+    2. Validate syntax against control type
+    3. Check for deprecated or unsupported codes
+    4. Verify block numbering sequence
+    5. Flag any syntax errors
+
+    ### Phase 3: Material/Tooling Lookup (READ)
+    1. Query context.data_sources.material_database for material specs
+    2. Query context.data_sources.tooling_database for tool parameters
+    3. Retrieve historical programs from context.data_sources.program_repository
+    4. Compare against context.materials specifications
+
+    ### Phase 4: Feeds/Speeds Validation
+    Using context.llm_config.code_review_model (GPT-5.4):
+    1. Extract spindle speed and feed rate from code
+    2. Calculate SFM based on tool diameter
+    3. Compare against material recommendations
+    4. Flag aggressive or conservative parameters
+    5. Calculate chip load and verify
+
+    ### Phase 5: Safety Analysis
+    1. Check rapid traverse Z-clearance per context.safety_checks
+    2. Verify spindle limits per context.safety_checks.spindle_limits
+    3. Check for potential collisions
+    4. Validate tool engagement per context.safety_checks.tool_engagement
+    5. Generate safety warnings
+
+    ### Phase 6: Optimization Suggestions
+    Using context.llm_config.optimization_model:
+    1. Compare against similar successful programs
+    2. Suggest feed/speed optimizations
+    3. Recommend toolpath improvements
+    4. Identify cycle time reduction opportunities
+    5. Suggest tool alternatives
+
+    ### Phase 7: Response Generation
+    1. Format comprehensive analysis report
+    2. Include line-by-line issues with recommendations
+    3. Reference similar programs from history
+    4. Save report to context.output_destinations.analysis_reports
+    5. Log interaction to audit trail
+
+  # ===========================================================================
+  # FACTORY CHAIN
+  # ===========================================================================
+  factory_chain:
+    chainId: cnc_assistant_chain
+    description: "CNC code review and optimization"
+    factories:
+      - id: code_intake
+        action: code_intake
+        context_keys: [machines]
+        timeout_seconds: 30
+
+      - id: part_lookup
+        action: solidworks_query
+        depends_on: [code_intake]
+        context_keys: [data_sources.solidworks_pdm]
+        mode: read
+        timeout_seconds: 30
+
+      - id: material_lookup
+        action: material_lookup
+        depends_on: [code_intake]
+        context_keys: [data_sources.material_database, materials]
+        mode: read
+        timeout_seconds: 30
+
+      - id: program_search
+        action: program_search
+        depends_on: [code_intake]
+        context_keys: [data_sources.program_repository]
+        mode: read
+        timeout_seconds: 45
+
+      - id: code_analysis
+        action: cnc_code_review
+        depends_on: [code_intake, material_lookup]
+        context_keys: [llm_config.code_review_model, safety_checks]
+        ai_enhanced: true
+        model: anthropic.claude-opus-4-6
+        timeout_seconds: 120
+
+      - id: safety_check
+        action: safety_check
+        depends_on: [code_analysis]
+        context_keys: [safety_checks]
+        timeout_seconds: 30
+
+      - id: optimization
+        action: optimization_suggest
+        depends_on: [code_analysis, program_search]
+        context_keys: [llm_config.optimization_model]
+        ai_enhanced: true
+        timeout_seconds: 90
+
+      - id: report_generate
+        action: report_generate
+        depends_on: [code_analysis, safety_check, optimization]
+        context_keys: [output_destinations]
+        mode: write
+        timeout_seconds: 60
+
+  # ===========================================================================
+  # ACTIONS
+  # ===========================================================================
+  actions:
+    - id: code_intake
+      handler: aerospace_defense.code_intake
+      description: "Parse and validate CNC program"
+
+    - id: solidworks_query
+      handler: aerospace_defense.solidworks_query
+      description: "Query SolidWorks PDM for part data (READ)"
+      mode: read
+
+    - id: material_lookup
+      handler: aerospace_defense.material_lookup
+      description: "Look up material specifications (READ)"
+      mode: read
+
+    - id: program_search
+      handler: aerospace_defense.program_search
+      description: "Search historical programs (READ)"
+      mode: read
+
+    - id: cnc_code_review
+      handler: aerospace_defense.cnc_code_review
+      description: "AI-powered code analysis"
+
+    - id: safety_check
+      handler: aerospace_defense.safety_check
+      description: "Safety validation checks"
+
+    - id: optimization_suggest
+      handler: aerospace_defense.optimization_suggest
+      description: "Generate optimization suggestions"
+
+    - id: report_generate
+      handler: aerospace_defense.report_generate
+      description: "Generate analysis report (WRITE)"
+      mode: write
+
+  # ===========================================================================
+  # CONNECTORS
+  # ===========================================================================
+  connectors:
+    - id: solidworks_pdm
+      type: sql_server
+      mode: read
+      description: "SolidWorks PDM Vault - READ ONLY"
+
+    - id: material_db
+      type: sql_server
+      mode: read
+      description: "Material specifications database - READ ONLY"
+
+    - id: cnc_programs
+      type: smb_share
+      mode: read
+      description: "CNC program repository - READ ONLY"
+
+    - id: analysis_output
+      type: s3
+      mode: write
+      description: "Analysis reports - WRITE"
+
+  # ===========================================================================
+  # METADATA
+  # ===========================================================================
+  metadata:
+    created_by: apex-platform
+    created_at: "2026-03-24"
+    tags:
+      - aerospace
+      - cnc
+      - manufacturing
+      - g-code
+      - machining

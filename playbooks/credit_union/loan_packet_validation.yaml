@@ -1,0 +1,102 @@
+playbook_id: pb-cwfcu-5
+name: loan_packet_validation
+version: "1.0.0"
+description: "End-to-end loan packet ingest, extraction, validation, and underwriting routing — auto / HELOC / mortgage / personal."
+industry: credit_union
+category: lending
+
+intent: |
+  Process every CWFCU loan application through a single pipeline that
+  ingests the packet (CWAnyWhere mobile, in-branch upload, or Encompass
+  LOS adapter for mortgage), extracts every document via BDA with the
+  bp-cwfcu-loan-app blueprint, cross-validates income / employment /
+  collateral, calculates DTI and LTV, runs an OFAC rescreen, and either
+  routes to underwriting straight-through (if packet 100% complete and
+  validations clean) or to HITL with a specific itemized checklist of
+  missing or anomalous items. Every loan packet is indexed into the
+  NCUA exam credit risk folder. HMDA-reportable loans are tagged for
+  the Q2 / Q4 batch HMDA submission.
+
+output:
+  - name: loan_packet
+    type: structured_data
+    description: "Fully extracted loan packet conforming to bp-cwfcu-loan-app"
+  - name: missing_doc_checklist
+    type: structured_data
+    description: "Itemized missing-doc list (if any) routed to member"
+  - name: routing_decision
+    type: routing_decision
+    description: "auto_to_underwriter | hitl_missing_docs | decline_creditrisk"
+
+context:
+  business_rules:
+    - "HIGH-risk members get enhanced income source-of-funds verification"
+    - "Income verification requires 2 yrs W-2 (W-2 employees) or 2 yrs Schedule C (self-employed)"
+    - "Missing required doc → HITL with member-side reminder via CWAnyWhere"
+    - "QM safe-harbor: back-end DTI ≤ 43% for QM loans"
+    - "HMDA-reportable (mortgage / HELOC / refi) tagged for batch HMDA filing"
+
+actions:
+  - name: ingest_packet
+    action_id: credit_union.loan_ingest
+    description: "Ingest from CWAnyWhere / in-branch / Encompass LOS adapter"
+    required: true
+  - name: extract_documents
+    action_id: credit_union.loan_extract
+    description: "BDA extraction across all packet documents"
+    required: true
+  - name: cross_validate_income
+    action_id: credit_union.loan_cross_validate_income
+    description: "Cross-validate paystub vs W-2 vs tax return vs bank deposits"
+    required: true
+  - name: collateral_validate
+    action_id: credit_union.collateral_validate
+    description: "Validate vehicle (NADA/KBB) or property (appraisal) collateral"
+    required: true
+  - name: calculate_dti_ltv
+    action_id: credit_union.calculate_dti_ltv
+    description: "DTI + LTV calculations"
+    required: true
+  - name: ofac_rescreen
+    action_id: credit_union.ofac_screen
+    description: "Re-screen applicant + co-applicant at application"
+    required: true
+  - name: detect_missing_docs
+    action_id: credit_union.detect_missing_docs
+    description: "Diff packet against blueprint required-field list"
+    required: true
+  - name: route_decision
+    action_id: credit_union.loan_route
+    description: "Auto-to-underwriter OR HITL with checklist"
+    required: true
+
+recipe: |
+  1. Ingest the loan application packet from CWAnyWhere / in-branch /
+     Encompass LOS. Capture submission timestamp.
+  2. Extract every document via BDA using bp-cwfcu-loan-app. Track
+     per-document extraction confidence (target ≥ 92% packet-wide).
+  3. Cross-validate income across paystub + W-2 + tax return + bank
+     deposits. Self-employed: validate Schedule C against deposits 100%.
+  4. Validate collateral. Vehicle: NADA + KBB cross-check. Property:
+     order appraisal if not yet provided.
+  5. Pull credit report. Calculate front + back-end DTI. Calculate LTV.
+  6. Re-screen OFAC at application time. Document any near-match.
+  7. Diff packet against blueprint required-field list. If anything
+     missing or below confidence floor, build itemized HITL checklist.
+  8. ROUTE:
+       - All required docs present + validations clean + within policy
+         → AUTO to underwriter
+       - Missing 1+ doc OR validation flag OR HIGH-risk member
+         → HITL queue with specific checklist + CWAnyWhere member
+           notification for missing items
+       - Credit risk fail → decline
+  9. Index loan packet to NCUA exam credit risk folder.
+  10. Tag HMDA-reportable loans (mortgage / HELOC / refi) for Q2 / Q4
+      HMDA batch filing.
+
+triggers:
+  - type: webhook
+    source: cwanywhere
+    path: /loan/submit
+  - type: connector
+    source: encompass_los

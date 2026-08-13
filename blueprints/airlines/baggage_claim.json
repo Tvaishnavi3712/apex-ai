@@ -1,0 +1,157 @@
+{
+  "blueprintName": "apex-baggage-claim-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from baggage claim forms",
+  "industry": "airlines",
+  "documentType": "baggage_claim",
+  "documentSchema": {
+    "class": "ApexBaggageClaim",
+    "description": "Baggage claim extraction for lost luggage processing",
+    "definitions": {
+      "BAG_DESCRIPTION": {
+        "properties": {
+          "bag_tag_number": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "bag_type": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "color": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "brand": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "size": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "weight": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "distinguishing_features": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      },
+      "CONTENT_ITEM": {
+        "properties": {
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "quantity": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "value": {
+            "type": "number",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "claim_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "claim_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "claim_type": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Delayed, Lost, Damaged"
+      },
+      "passenger_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "booking_reference": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "ticket_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "contact_phone": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "contact_email": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "delivery_address": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "flight_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "flight_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "departure_airport": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "arrival_airport": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "connecting_flights": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "bags": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/BAG_DESCRIPTION"
+        }
+      },
+      "contents": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/CONTENT_ITEM"
+        }
+      },
+      "total_claimed_value": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "passenger_signature": {
+        "type": "boolean",
+        "inferenceType": "explicit"
+      },
+      "agent_id": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "filing_location": {
+        "type": "string",
+        "inferenceType": "explicit"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.85
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  }
+}

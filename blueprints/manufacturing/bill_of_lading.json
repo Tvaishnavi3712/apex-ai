@@ -1,0 +1,207 @@
+{
+  "blueprintName": "apex-bill-of-lading-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from bills of lading for shipment tracking and logistics",
+  "industry": "manufacturing",
+  "documentType": "bill_of_lading",
+  "documentSchema": {
+    "class": "ApexBillOfLading",
+    "description": "Apex AI Platform bill of lading extraction blueprint for shipping documents",
+    "definitions": {
+      "CARGO_ITEM": {
+        "properties": {
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Description of the cargo or goods"
+          },
+          "quantity": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Number of packages or pieces"
+          },
+          "package_type": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Type of packaging (e.g., pallets, boxes, drums)"
+          },
+          "weight": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Weight of the cargo"
+          },
+          "weight_unit": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Weight unit (LB, KG)"
+          },
+          "dimensions": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Dimensions (L x W x H)"
+          },
+          "freight_class": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Freight class for pricing"
+          },
+          "hazmat_code": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Hazardous material code if applicable"
+          }
+        }
+      }
+    },
+    "properties": {
+      "bol_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The bill of lading number"
+      },
+      "pro_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "PRO number (Progressive Rotating Order)"
+      },
+      "ship_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date of shipment"
+      },
+      "delivery_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Expected or actual delivery date"
+      },
+      "carrier_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Name of the shipping carrier"
+      },
+      "carrier_scac": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Standard Carrier Alpha Code"
+      },
+      "trailer_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Trailer or container number"
+      },
+      "seal_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Seal number for container security"
+      },
+      "shipper_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Name of the shipper"
+      },
+      "shipper_address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Complete shipper address"
+      },
+      "consignee_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Name of the consignee (receiver)"
+      },
+      "consignee_address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Complete consignee address"
+      },
+      "third_party_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Third party freight bill-to name if applicable"
+      },
+      "origin_city": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "City of origin"
+      },
+      "origin_state": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "State/province of origin"
+      },
+      "destination_city": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Destination city"
+      },
+      "destination_state": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Destination state/province"
+      },
+      "cargo_items": {
+        "type": "array",
+        "instruction": "All cargo items listed on the BOL",
+        "items": {
+          "$ref": "#/definitions/CARGO_ITEM"
+        }
+      },
+      "total_pieces": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Total number of pieces/packages"
+      },
+      "total_weight": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Total weight of shipment"
+      },
+      "freight_charges": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Freight charges amount"
+      },
+      "freight_terms": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Freight terms (Prepaid, Collect, Third Party)"
+      },
+      "special_instructions": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Special handling or delivery instructions"
+      },
+      "po_reference": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Purchase order reference number"
+      },
+      "is_hazmat": {
+        "type": "boolean",
+        "inferenceType": "inferred",
+        "instruction": "Does this shipment contain hazardous materials?"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "confidenceThreshold": 0.85
+  },
+  "validationRules": [
+    {
+      "name": "total_pieces_validation",
+      "description": "Validate total pieces matches sum of cargo items",
+      "expression": "total_pieces == cargo_items.sum { |item| item.quantity }"
+    },
+    {
+      "name": "total_weight_validation",
+      "description": "Validate total weight is reasonable",
+      "expression": "total_weight > 0 && total_weight < 100000"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  }
+}

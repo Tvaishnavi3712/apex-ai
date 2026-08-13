@@ -1,0 +1,132 @@
+═══════════════════════════════════════════════════════════════════════════════
+VERIZON FAR EDGE · OPENSHIFT OPERATOR HEALTH & TROUBLESHOOTING GUIDE
+Document ID:    VZ-OPENSHIFT-OPERATOR-GUIDE-v5
+Revision:       Rev 5 · December 2025
+Audience:       Platform-team, on-call cert engineers
+═══════════════════════════════════════════════════════════════════════════════
+
+This guide covers operator-level troubleshooting on Verizon Far Edge CaaS
+nodes. It assumes familiarity with the CaaS-orchestrator pod scheduling model
+and the Wind River CaaS boot sequence (see VZ-RUNBOOK-CAAS-v24 §4).
+
+The audience is the platform team and the on-call cert engineer. Operations
+that require Distinguished Engineer sign-off are called out explicitly.
+
+───────────────────────────────────────────────────────────────────────────────
+1. SUPPORTED OPENSHIFT VERSIONS BY FIRMWARE
+───────────────────────────────────────────────────────────────────────────────
+
+  Wind River 23.06  →  OpenShift 4.12, 4.13
+  Wind River 23.12  →  OpenShift 4.13, 4.14
+  Wind River 24.01  →  OpenShift 4.14
+  Wind River 24.06  →  OpenShift 4.14, 4.15
+  Wind River 24.12  →  OpenShift 4.14, 4.15, 4.16
+  Wind River 25.01  →  OpenShift 4.15, 4.16, 4.17 (planned)
+
+Running an OpenShift version below the supported floor will cause the
+operator-bundle init container to fail. Running above the ceiling is
+unsupported by Wind River.
+
+───────────────────────────────────────────────────────────────────────────────
+2. OPERATOR HEALTH RUNBOOK
+───────────────────────────────────────────────────────────────────────────────
+
+  2.1  Quick triage commands
+       Always start here when an operator misbehaves.
+
+         oc get pods -n caas-system
+         oc get pods -n openshift-operators
+         oc get csv -A
+         oc get installplan -A
+         oc get subscription -A
+
+  2.2  CaaS-orchestrator pod stuck in ContainerCreating
+       Most common cause: stale lock file from a non-graceful shutdown
+       (KB-2026-0044). Clear and reboot:
+         rm -f /var/lib/caas/lock
+         oc delete pod caas-orchestrator-0 -n caas-system
+
+  2.3  Operator subscription InstallPlanFailed
+       Inspect the InstallPlan for the failed manifest:
+         oc describe installplan -n openshift-operators install-xyz12
+       Common causes: digest mismatch (mirror cache stale), webhook
+       certificate not present, CRD already installed at a different
+       version.
+
+  2.4  OperatorHub source ImagePullBackOff
+       The Verizon mirror registry caches the OperatorHub catalog images.
+       If pulls fail, check:
+         oc get pods -n openshift-marketplace
+       Restart the catalog-source pod and confirm the cache is reachable
+       from the affected node.
+
+───────────────────────────────────────────────────────────────────────────────
+3. POD SCHEDULING SLA
+───────────────────────────────────────────────────────────────────────────────
+
+The post-boot certification suite asserts that every caas-system pod
+reaches Running within 90 seconds of the kubelet starting. Breaches are
+classified per the openshift_pod_scheduling.robot rules:
+
+  90-105 sec    →  WARN  (within tolerance, monitor)
+  105-120 sec   →  P2 FAIL  (cycle-blocking, requires investigation)
+  > 120 sec     →  P1 FAIL  (production-blocker)
+
+Known causes of slow pod scheduling
+  • Image-pull from cold cache (first boot after cache eviction)
+  • CSI driver init delay (storage backend unreachable)
+  • OperatorLifecycleManager catalog refresh blocking init
+  • Cgroup v2 hierarchy not pre-warmed
+
+───────────────────────────────────────────────────────────────────────────────
+4. ETCD HEALTH
+───────────────────────────────────────────────────────────────────────────────
+
+CaaS nodes run a single-member etcd instance (not a cluster) — this is by
+design for far-edge form factor. The single-member instance MUST achieve
+the following:
+
+  • Disk sync latency P99 ≤ 25 ms
+  • Member quorum: always 1/1
+  • Defragmentation: weekly at 02:00 local time, automated
+
+The openshift_etcd_health.robot test runs each cycle and fails if any
+of the above is breached.
+
+───────────────────────────────────────────────────────────────────────────────
+5. DAY-2 OPERATIONS — UPGRADE FLOW
+───────────────────────────────────────────────────────────────────────────────
+
+OpenShift cluster upgrades on far-edge nodes are decoupled from firmware
+upgrades. The sequence is:
+
+  STEP 1   Drain CaaS workloads via caas_drain.yml
+  STEP 2   `oc adm upgrade --to-image=...`
+  STEP 3   Wait for ClusterVersion to reach Reconciling=False
+  STEP 4   Confirm all operators have UPDATED_VERSION=target_version
+  STEP 5   Run post_upgrade_smoke.robot
+  STEP 6   Uncordon via caas_uncordon.yml
+
+If any step fails, halt and engage the platform team. Do NOT proceed to
+the next step without an explicit go from the on-call cert engineer.
+
+───────────────────────────────────────────────────────────────────────────────
+6. SECURITY POSTURE
+───────────────────────────────────────────────────────────────────────────────
+
+  6.1  PodSecurityPolicy enforcement is REQUIRED in production.
+       PSP is removed in OpenShift 4.13; use Pod Security Admission
+       (PSA) with baseline + restricted profiles per namespace.
+
+  6.2  OAuth server logs MUST be shipped to the central log collector.
+       The default 24.06 base image does this; 23.x base images do not
+       and need an additional Logging operator install.
+
+  6.3  Service account token rotation is automatic in 4.14+ and uses
+       a 6-hour lifetime. Earlier versions are unsupported in production.
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF EXCERPT — full operator guide is 35 pages. Sections 7-10 cover
+upgrade procedures, troubleshooting trees, and operator-bundle release
+notes per OpenShift version.
+═══════════════════════════════════════════════════════════════════════════════

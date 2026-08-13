@@ -1,0 +1,53 @@
+================================================================================
+                            HALLIBURTON ENERGY SERVICES, INC.
+                            3000 N. Sam Houston Parkway East
+                                  Houston, TX 77032
+                            Tax ID: 75-2677995  Phone: (281) 871-2699
+================================================================================
+
+INVOICE
+
+Invoice Number:    INV-HAL-2026-04-3847
+Invoice Date:      05/02/2026
+Service Period:    04/01/2026 - 04/30/2026
+PO Number:         PO-2026-INT-3318
+MSA Reference:     MSA-HAL-2024-03
+Payment Terms:     Net 45
+Due Date:          06/16/2026
+
+Bill To:
+    Enterprise Products Operating LLC
+    Attn: Accounts Payable - Pipeline Integrity
+    P.O. Box 4324
+    Houston, TX 77210-4324
+
+Remit To:
+    Halliburton Energy Services, Inc.
+    P.O. Box 301341
+    Dallas, TX 75303-1341
+
+--------------------------------------------------------------------------------
+LINE  DESCRIPTION                                     QTY    UNIT      TOTAL
+--------------------------------------------------------------------------------
+ 1    Inline Inspection (ILI) - 24" Mainline,         148    miles     128,760.00
+      Seminole-Hobbs Lateral, MFL High-Resolution            @ 870.00/mi
+ 2    NDT Ultrasonic Wall-Thickness Survey,            72    hours      18,360.00
+      compressor station discharge piping                    @ 255.00/hr
+ 3    Integrity Assessment Report & ECDA workup        1     lot        42,500.00
+      (External Corrosion Direct Assessment)
+ 4    Crew Mobilization & Demobilization               2     events     14,800.00
+      (Hobbs NM and Mont Belvieu TX)                         @ 7,400.00
+ 5    Hydrostatic Pressure Test Support,               14    days       80,080.00
+      9.6-mile segment, MAOP requalification                 @ 5,720.00/day
+--------------------------------------------------------------------------------
+                                              Subtotal:      284,500.00
+                                              TX State Tax (0.00% - resale):  0.00
+                                              TOTAL DUE:    USD 284,500.00
+================================================================================
+
+Remarks: Per Section 4.2 of MSA-HAL-2024-03, all rates inclusive of standard
+PPE, consumables, and per-diem. Report deliverables transmitted via secure
+portal to integrity.engineering@eprod.com on 05/01/2026.
+
+Questions: ar.midstream@halliburton.com  |  Ref: INV-HAL-2026-04-3847
+================================================================================

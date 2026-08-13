@@ -1,0 +1,78 @@
+LOAN APPLICATION PACKET — PERSONAL
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+═══════════════════════════════════════════════════════════════
+
+Loan Reference:        LN-2026-0517
+Application Channel:   CWAnyWhere mobile app
+Submitted:             2026-06-02 19:08:33 ET
+Processing Agent:      Loan Document Agent · v2.4.1
+Decision Status:       IN PROGRESS · 62% packet complete
+
+──────── APPLICANT ────────
+Member Number:         #38914
+Legal Name:            WILLIAMS, Darnell J.
+Date of Birth:         1993-02-22 (33)
+Address:               1944 W Ireland Rd, South Bend, IN 46614
+Employer:              Self-employed · Williams Photography LLC
+Annual Income:         $52,400 (Schedule C, self-reported)
+CIP On File:           ✓ (member since 2022-11-14)
+Risk Tier:             MEDIUM (self-employed, income volatility)
+
+──────── LOAN REQUEST ────────
+Type:                  Personal (unsecured)
+Amount Requested:      $12,500
+Term:                  36 months
+Rate (offered):        9.95% APR
+Use of Funds:          Equipment purchase (camera + lighting)
+
+──────── DOCUMENTATION (8 of 13 received) ────────
+Loan Application:      ✓
+Indiana DL:            ✓ Verified (expires 2027-02-22)
+2025 Tax Return:       ✗ NOT RECEIVED ← BLOCKER
+2024 Tax Return:       ✓ Schedule C ($48,200 net)
+2026 YTD P&L:          ✓ Self-prepared (Quickbooks export)
+Bank Statements (90d): ✓ CWFCU verified
+Credit Pull:           ✓ FICO 684 (MEDIUM tier · 660-719)
+Business License:      ✓ Indiana SOS
+Equipment Quote:       ✓ B&H Photo ($14,200 itemized)
+2 most recent paystubs: N/A (self-employed)
+Schedule SE:           ✗ NOT RECEIVED ← Recommended
+Insurance (business):  ✗ NOT REQUIRED FOR THIS LOAN
+References:            ✓ 2 client invoices on file
+
+──────── AGENT VALIDATION (in progress) ────────
+Income Verification:   PARTIAL (Schedule C 2024 + Q1 2026 P&L only)
+                       ─ 2025 tax return required to confirm income trend
+DTI Calculation:       Estimated Front 14.2% · Back 31.4% (under unverified)
+                       Will recalc with 2025 return
+Credit Pull:           FICO 684 (within MEDIUM tier)
+Source of Funds:       Personal loan · no member SOF required
+OFAC Re-screen:        ✓ Clear
+
+──────── MISSING DOC ROUTING ────────
+Item #1:               2025 Tax Return (Form 1040 + Schedule C)
+Notification:          ✓ Sent CWAnyWhere 2026-06-02 19:42 ET
+Reminder #1:           Scheduled 2026-06-04 09:00 ET
+Item #2:               Schedule SE (recommend self-employment tax doc)
+Notification:          Bundled with item #1 reminder
+
+──────── PACKET CONFIDENCE ────────
+Completeness:          62%
+Extracted accuracy:    93.2% across 8 received documents
+
+──────── DECISION TIMELINE ────────
+Submitted:             2026-06-02 19:08:33 ET
+Extraction complete:   2026-06-02 19:14:08 ET
+Missing-doc flagged:   2026-06-02 19:42 ET
+Status:                IN PROGRESS (member upload pending)
+
+──────── HAND-OFF NOTES ────────
+→ Member:              Encouraged to upload via CWAnyWhere
+→ Compliance Agent:    Self-employed flag → routine SOF check on disbursement
+→ Underwriter:         Hold until missing docs received
+
+──────── NCUA EXAM FOLDER INDEX ────────
+Folder Path:           ncua-exam-2026/credit_risk/personal/2026-Q2/
+Immutable Audit ID:    AUDIT-2026-06-02-19:08:33-LN-0517
+HITL Status:           IN QUEUE · Priority LOW · Wait 36 hrs

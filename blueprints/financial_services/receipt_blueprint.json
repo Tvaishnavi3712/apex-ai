@@ -1,0 +1,214 @@
+{
+  "blueprintName": "apex-receipt-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from receipts for expense reporting",
+  "industry": "financial_services",
+  "documentType": "receipt",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "merchant": {
+        "type": "object",
+        "description": "Merchant/vendor information",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Merchant name",
+            "extraction_hints": ["Store:", "Restaurant:", "Hotel:"]
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street": {"type": "string"},
+              "city": {"type": "string"},
+              "state": {"type": "string"},
+              "postal_code": {"type": "string"}
+            }
+          },
+          "phone": {"type": "string"},
+          "website": {"type": "string"},
+          "store_number": {
+            "type": "string",
+            "description": "Store or location number"
+          },
+          "category": {
+            "type": "string",
+            "description": "Auto-detected merchant category",
+            "enum": [
+              "Restaurant", "Hotel", "Airline", "Ground Transportation",
+              "Office Supplies", "Gas Station", "Retail", "Grocery",
+              "Parking", "Telecom", "Entertainment", "Other"
+            ]
+          }
+        },
+        "required": ["name"]
+      },
+      "transaction": {
+        "type": "object",
+        "description": "Transaction details",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Transaction date",
+            "extraction_hints": ["Date:", "Transaction Date:"]
+          },
+          "time": {
+            "type": "string",
+            "description": "Transaction time"
+          },
+          "receipt_number": {
+            "type": "string",
+            "description": "Receipt or transaction number",
+            "extraction_hints": ["Receipt #:", "Trans #:", "Order #:"]
+          },
+          "register": {
+            "type": "string",
+            "description": "Register or terminal ID"
+          },
+          "cashier": {
+            "type": "string",
+            "description": "Cashier name or ID"
+          }
+        },
+        "required": ["date"]
+      },
+      "line_items": {
+        "type": "array",
+        "description": "Purchased items",
+        "items": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "description": "Item description"
+            },
+            "quantity": {
+              "type": "number",
+              "description": "Quantity"
+            },
+            "unit_price": {
+              "type": "number",
+              "description": "Price per unit"
+            },
+            "amount": {
+              "type": "number",
+              "description": "Line total"
+            },
+            "sku": {
+              "type": "string",
+              "description": "Item SKU or code"
+            }
+          }
+        }
+      },
+      "totals": {
+        "type": "object",
+        "description": "Receipt totals",
+        "properties": {
+          "subtotal": {
+            "type": "number",
+            "description": "Subtotal before tax",
+            "extraction_hints": ["Subtotal:", "Sub-Total:"]
+          },
+          "tax": {
+            "type": "number",
+            "description": "Tax amount",
+            "extraction_hints": ["Tax:", "Sales Tax:"]
+          },
+          "tax_rate": {
+            "type": "number",
+            "description": "Tax rate percentage"
+          },
+          "tip": {
+            "type": "number",
+            "description": "Tip/gratuity amount",
+            "extraction_hints": ["Tip:", "Gratuity:"]
+          },
+          "discount": {
+            "type": "number",
+            "description": "Discount amount",
+            "extraction_hints": ["Discount:", "Savings:"]
+          },
+          "total": {
+            "type": "number",
+            "description": "Total amount",
+            "extraction_hints": ["Total:", "Grand Total:", "Amount Due:"]
+          }
+        },
+        "required": ["total"]
+      },
+      "payment": {
+        "type": "object",
+        "description": "Payment details",
+        "properties": {
+          "method": {
+            "type": "string",
+            "description": "Payment method",
+            "enum": ["Cash", "Credit Card", "Debit Card", "Gift Card", "Check", "Mobile Payment"]
+          },
+          "card_type": {
+            "type": "string",
+            "description": "Card brand",
+            "enum": ["Visa", "MasterCard", "Amex", "Discover", "Other"]
+          },
+          "last_four": {
+            "type": "string",
+            "description": "Last 4 digits of card",
+            "pattern": "^[0-9]{4}$"
+          },
+          "auth_code": {
+            "type": "string",
+            "description": "Authorization code"
+          },
+          "amount_tendered": {
+            "type": "number",
+            "description": "Amount paid"
+          },
+          "change_due": {
+            "type": "number",
+            "description": "Change given"
+          }
+        }
+      },
+      "expense_category": {
+        "type": "string",
+        "description": "Auto-suggested expense category",
+        "enum": [
+          "Meals - Business",
+          "Meals - Team",
+          "Travel - Airfare",
+          "Travel - Hotel",
+          "Travel - Ground Transportation",
+          "Travel - Parking",
+          "Office Supplies",
+          "Equipment",
+          "Entertainment",
+          "Professional Services",
+          "Other"
+        ]
+      },
+      "metadata": {
+        "type": "object",
+        "properties": {
+          "extraction_confidence": {"type": "number"},
+          "image_quality": {"type": "string", "enum": ["Good", "Fair", "Poor"]},
+          "currency": {"type": "string", "default": "USD"}
+        }
+      }
+    },
+    "required": ["merchant", "transaction", "totals"]
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "currencyFormat": "decimal",
+    "decimalPrecision": 2,
+    "confidenceThreshold": 0.75
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": true,
+    "autoCategorizeMerchant": true,
+    "suggestExpenseCategory": true
+  }
+}

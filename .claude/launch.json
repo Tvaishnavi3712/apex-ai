@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "apex-frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "frontend", "run", "dev", "--", "--port", "3002"],
+      "port": 3002,
+      "autoPort": false
+    },
+    {
+      "name": "apex-aws-frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "../aws/frontend", "run", "dev", "--", "--port", "3000"],
+      "port": 3000,
+      "autoPort": false
+    }
+  ]
+}

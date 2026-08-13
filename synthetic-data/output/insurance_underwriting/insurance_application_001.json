@@ -1,0 +1,112 @@
+{
+  "_metadata": {
+    "blueprint": "apex-insurance-app-v1",
+    "document_type": "insurance_application",
+    "extraction_date": "2024-01-19T10:30:00Z",
+    "confidence_score": 0.95,
+    "source_file": "auto_insurance_app.pdf"
+  },
+  "application_number": "APP-2024-456789",
+  "application_date": "2024-01-19",
+  "application_type": "NEW_BUSINESS",
+  "policy_type": "AUTO",
+  "applicant": {
+    "first_name": "Michael",
+    "last_name": "Johnson",
+    "dob": "1985-08-15",
+    "ssn_last_four": "4567",
+    "gender": "Male",
+    "marital_status": "Married",
+    "occupation": "Software Engineer",
+    "employer": "Tech Solutions Inc.",
+    "annual_income": 125000
+  },
+  "contact": {
+    "address": "456 Elm Street",
+    "city": "Austin",
+    "state": "TX",
+    "zip": "78701",
+    "phone": "512-555-1234",
+    "email": "mjohnson@email.com"
+  },
+  "drivers": [
+    {
+      "name": "Michael Johnson",
+      "relationship": "Applicant",
+      "dob": "1985-08-15",
+      "license_number": "TX12345678",
+      "license_state": "TX",
+      "years_licensed": 20,
+      "accidents_3yr": 0,
+      "violations_3yr": 0
+    },
+    {
+      "name": "Sarah Johnson",
+      "relationship": "Spouse",
+      "dob": "1987-03-22",
+      "license_number": "TX87654321",
+      "license_state": "TX",
+      "years_licensed": 18,
+      "accidents_3yr": 0,
+      "violations_3yr": 1
+    }
+  ],
+  "vehicles": [
+    {
+      "year": 2022,
+      "make": "Toyota",
+      "model": "Camry",
+      "vin": "1HGBH41JXMN109186",
+      "usage": "Commute",
+      "annual_miles": 12000,
+      "ownership": "Financed",
+      "garaging_address": "Same as mailing"
+    },
+    {
+      "year": 2021,
+      "make": "Honda",
+      "model": "CR-V",
+      "vin": "2HKRW2H53MH123456",
+      "usage": "Pleasure",
+      "annual_miles": 8000,
+      "ownership": "Owned",
+      "garaging_address": "Same as mailing"
+    }
+  ],
+  "coverage_requested": {
+    "liability": {
+      "bodily_injury": "100/300",
+      "property_damage": 100000
+    },
+    "um_uim": {
+      "bodily_injury": "100/300"
+    },
+    "comprehensive": {
+      "deductible": 500
+    },
+    "collision": {
+      "deductible": 500
+    },
+    "pip": 10000,
+    "roadside": true,
+    "rental": true
+  },
+  "prior_insurance": {
+    "currently_insured": true,
+    "carrier": "State Farm",
+    "policy_number": "SF-123456789",
+    "coverage_years": 5,
+    "claims_3yr": 0
+  },
+  "discounts_requested": [
+    "Multi-car",
+    "Good driver",
+    "Paid in full",
+    "Paperless"
+  ],
+  "signature": {
+    "applicant_signed": true,
+    "signature_date": "2024-01-19",
+    "electronic_signature": true
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "manifest_version": "1.0",
+  "created_date": "2026-03-13",
+  "industry": "Commercial Real Estate Underwriting",
+  "description": "Complex CRE underwriting test submissions for APEX AI Platform demo",
+  "files": [
+    {
+      "filename": "complex_submission_001_mixed_use_portfolio.json",
+      "submission_id": "CRE-2026-001-MUP",
+      "property_type": "Mixed-Use High-Rise Portfolio",
+      "locations": 3,
+      "total_tiv": 226000000,
+      "page_count": 10,
+      "complexity": "High",
+      "expected_decision": "Refer to Senior Underwriter",
+      "key_challenges": [
+        "High-rise buildings",
+        "Mixed-use complexity",
+        "Recent water damage claim"
+      ]
+    },
+    {
+      "filename": "complex_submission_002_industrial_portfolio.json",
+      "submission_id": "CRE-2026-002-IND",
+      "property_type": "Industrial/Warehouse Portfolio",
+      "locations": 5,
+      "total_tiv": 372300000,
+      "page_count": 10,
+      "complexity": "High",
+      "expected_decision": "Refer to Senior Underwriter",
+      "key_challenges": [
+        "Cold storage with ammonia",
+        "Light manufacturing",
+        "High automation",
+        "Geographic spread"
+      ]
+    },
+    {
+      "filename": "complex_submission_003_hospitality_retail.json",
+      "submission_id": "CRE-2026-003-HRT",
+      "property_type": "Hospitality & Retail Portfolio",
+      "locations": 4,
+      "total_tiv": 505000000,
+      "page_count": 10,
+      "complexity": "Very High",
+      "expected_decision": "Refer to Underwriting Manager",
+      "key_challenges": [
+        "Hurricane exposure",
+        "Significant loss history",
+        "Coastal Florida location",
+        "Open claim pending"
+      ]
+    }
+  ],
+  "s3_location": "s3://apex-documents/synthetic-data/cre_underwriting/",
+  "test_actions": [
+    "risk_score",
+    "premium_calculate",
+    "coverage_validate",
+    "loss_history",
+    "auto_decision"
+  ]
+}

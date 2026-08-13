@@ -1,0 +1,83 @@
+{
+  "blueprintName": "known-issues-kb-extractor",
+  "blueprintVersion": "1.0.0",
+  "description": "Indexes the Verizon Known Issues knowledge base (KB articles) for MentorAgent retrieval \u2014 each entry is a self-contained record with symptoms, root cause, workaround, and permanent fix version.",
+  "industry": "telecommunications",
+  "documentType": "known_issue_kb_article",
+  "documentSchema": {
+    "class": "ApexKnownIssue",
+    "description": "Single known-issue article from the Verizon Far Edge KB",
+    "properties": {
+      "issue_id": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "KB article ID, e.g. KB-2026-0118"
+      },
+      "title": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "severity": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "critical / high / medium / low"
+      },
+      "affected_versions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "instruction": "Firmware / software versions affected"
+      },
+      "affected_devices": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "symptoms": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Observable symptoms in plain text"
+      },
+      "root_cause": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "workaround": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Interim mitigation steps"
+      },
+      "permanent_fix": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Permanent resolution"
+      },
+      "fix_version": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Version where the permanent fix lands"
+      },
+      "first_reported": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "cross_references": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "instruction": "Related documents / KB IDs / release-note sections"
+      }
+    }
+  },
+  "extractionRules": {
+    "confidenceThreshold": 0.9,
+    "splitOnHeader": "KB-"
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeRawText": true
+  }
+}

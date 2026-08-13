@@ -1,0 +1,219 @@
+{
+  "blueprintName": "apex-work-order-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from manufacturing work orders and travelers",
+  "industry": "aerospace_defense",
+  "documentType": "work_order",
+  "compliance": ["AS9100D", "NADCAP"],
+  "documentSchema": {
+    "class": "ApexWorkOrder",
+    "description": "Work order extraction blueprint for aerospace manufacturing",
+    "definitions": {
+      "OPERATION": {
+        "properties": {
+          "operation_number": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Operation sequence number (e.g., 10, 20, 30)"
+          },
+          "operation_description": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Description of the operation"
+          },
+          "work_center": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Work center or machine assignment"
+          },
+          "setup_hours": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Setup time in hours"
+          },
+          "run_hours": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Run time in hours per unit"
+          },
+          "status": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Operation status: Pending, In Progress, Complete"
+          },
+          "completed_by": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Employee ID or name who completed operation"
+          },
+          "completion_date": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Date operation was completed"
+          }
+        }
+      },
+      "MATERIAL": {
+        "properties": {
+          "material_number": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Material part number"
+          },
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Material description"
+          },
+          "quantity_required": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Quantity required for work order"
+          },
+          "quantity_issued": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Quantity issued from stock"
+          },
+          "lot_number": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Material lot or batch number"
+          },
+          "heat_number": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Heat number for traceability"
+          }
+        }
+      }
+    },
+    "properties": {
+      "work_order_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Work order number or job number"
+      },
+      "part_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Part number being manufactured"
+      },
+      "part_description": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Description of the part"
+      },
+      "revision": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Drawing or part revision level"
+      },
+      "quantity_ordered": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Quantity ordered"
+      },
+      "quantity_complete": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Quantity completed"
+      },
+      "quantity_scrapped": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Quantity scrapped"
+      },
+      "customer": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Customer name"
+      },
+      "customer_po": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Customer purchase order number"
+      },
+      "program": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Program designation (e.g., F-35, F-22)"
+      },
+      "priority": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Priority level: AOG, Critical, High, Normal"
+      },
+      "status": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Work order status: Open, In Progress, On Hold, Complete, Closed"
+      },
+      "release_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date work order was released"
+      },
+      "required_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Required completion date"
+      },
+      "completion_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Actual completion date"
+      },
+      "operations": {
+        "type": "array",
+        "instruction": "List of manufacturing operations in sequence",
+        "items": {
+          "$ref": "#/definitions/OPERATION"
+        }
+      },
+      "materials": {
+        "type": "array",
+        "instruction": "List of materials required for the work order",
+        "items": {
+          "$ref": "#/definitions/MATERIAL"
+        }
+      },
+      "quality_hold": {
+        "type": "boolean",
+        "inferenceType": "explicit",
+        "instruction": "Is work order on quality hold?"
+      },
+      "ncr_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Associated Non-Conformance Report number if any"
+      },
+      "inspection_required": {
+        "type": "boolean",
+        "inferenceType": "explicit",
+        "instruction": "Is source inspection required?"
+      },
+      "special_instructions": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Special manufacturing or handling instructions"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "confidenceThreshold": 0.85
+  },
+  "validationRules": [
+    {
+      "name": "quantity_validation",
+      "description": "Complete + scrap should not exceed ordered",
+      "expression": "quantity_complete + quantity_scrapped <= quantity_ordered"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  }
+}

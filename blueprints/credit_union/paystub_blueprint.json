@@ -1,0 +1,30 @@
+{
+  "blueprint_id": "bp-cwfcu-paystub",
+  "name": "CWFCU Pay Stub",
+  "description": "Pay stub extraction for loan income verification.",
+  "industry": "credit_union",
+  "document_type": "paystub",
+  "version": "1.0",
+  "documentSchema": {
+    "documentClass": "CWFCU Pay Stub",
+    "description": "Pay stub schema covering employer, employee, pay period, earnings, deductions, YTD totals.",
+    "extractionInstructions": "Extract from W-2 employer paystubs OR self-employment draw statements. Self-employed cases require Schedule C cross-reference.",
+    "fields": {
+      "employer_name":        { "type": "string", "description": "Employer legal name", "required": true },
+      "employee_name":        { "type": "string", "description": "Employee legal name", "required": true },
+      "pay_period_start":     { "type": "date",   "description": "Pay period start", "required": true },
+      "pay_period_end":       { "type": "date",   "description": "Pay period end", "required": true },
+      "pay_date":             { "type": "date",   "description": "Pay date", "required": true },
+      "gross_earnings":       { "type": "number", "description": "Gross earnings this period", "required": true },
+      "net_earnings":         { "type": "number", "description": "Net (take-home) this period", "required": true },
+      "federal_wh":           { "type": "number", "description": "Federal income tax withholding", "required": false },
+      "state_wh":             { "type": "number", "description": "State income tax withholding", "required": false },
+      "social_security_wh":   { "type": "number", "description": "Social Security withholding", "required": false },
+      "medicare_wh":          { "type": "number", "description": "Medicare withholding", "required": false },
+      "other_deductions":     { "type": "array",  "description": "Other deductions (401k, insurance, etc.)", "required": false },
+      "ytd_gross":            { "type": "number", "description": "Year-to-date gross", "required": true },
+      "ytd_net":              { "type": "number", "description": "Year-to-date net", "required": true },
+      "is_self_employment":   { "type": "boolean","description": "Self-employment draw statement", "required": true }
+    }
+  }
+}

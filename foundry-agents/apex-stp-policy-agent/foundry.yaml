@@ -1,0 +1,5 @@
+# Azure AI Foundry agent definition
+name: apex-stp-policy-agent
+runtime: azure-ai-foundry
+model: ${AZURE_OPENAI_DEPLOYMENT}
+entrypoint: agent.py

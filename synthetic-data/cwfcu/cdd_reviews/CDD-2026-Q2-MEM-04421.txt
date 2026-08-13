@@ -1,0 +1,73 @@
+CUSTOMER DUE DILIGENCE (CDD) REVIEW
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+Enhanced Due Diligence Sub-Review
+═══════════════════════════════════════════════════════════════
+
+Review ID:             CDD-2026-Q2-MEM-04421
+Review Type:           EDD (Enhanced Due Diligence) · Quarterly Refresh
+Trigger:               Wire activity to 3 high-risk jurisdictions
+                       Initial onboarding risk tier: HIGH
+Review Period:         2026-03-01 through 2026-05-31
+
+Conducted By:          Compliance Agent · v2.6.3
+Sign-off Pending:      Adrienne Williams (BSA Officer)
+
+──────── MEMBER PROFILE ────────
+Member Number:         #39104
+Legal Name:            MENDOZA, Carlos Ignacio
+Date of Birth:         1968-09-22 (57)
+Address:               14422 Coquina Ln, Granger, IN 46530
+Member Since:          2023-08-14
+Account Type(s):       Share-Draft (checking) + Money Market
+Stated Occupation:     Import / export agent (textiles)
+Stated Income:         $245,000 annual (Schedule C verified 2024)
+
+──────── RISK FACTORS (At opening) ────────
+─ Cross-border business (Mexico, Honduras, Vietnam suppliers)
+─ Cash-intensive intermediary role
+─ PEP-adjacent (cousin to former Honduran county commissioner)
+─ High wire volume (50+ international wires/year)
+
+──────── REVIEW PERIOD ACTIVITY ────────
+Wire transfers (in):   18 wires · $182,400 total
+                       Originators: 6 entities (4 Mexico, 1 Honduras, 1 PA)
+Wire transfers (out):  22 wires · $174,200 total
+                       Recipients: 8 entities (5 Mexico, 2 Vietnam, 1 US)
+Cash deposits:         3 deposits · $14,200 total (under CTR threshold)
+ATM activity:          Normal pattern (US-domestic only)
+Card spend:            $48,200 (consistent w/ business travel)
+
+──────── ANOMALIES DETECTED ────────
+Q1 (Mar-Apr-May):
+  ─ 3 wires to NEW recipients in Vietnam (added Apr 2026)
+    Vendor name: "Mekong Textile Trading Co" — appears in OFAC
+    594(a) consolidated list as MEDIUM-risk (proliferation finance
+    secondary watchlist). NO match to SDN.
+    Decision: Documented and risk-accepted. Continued monitoring.
+
+  ─ Average wire size +18% vs trailing 12mo baseline
+    Stated cause: Increased Q2 textile orders for holiday season
+    Documentation: Customer purchase orders (3) reviewed and on file
+
+──────── CDD UPDATES ────────
+Risk Tier Reaffirmed:  HIGH (no change)
+Monitoring Frequency:  Quarterly (no change)
+Cash Threshold:        Reduce from $5,000 → $3,000 (new alert level)
+Wire Threshold:        Add specific alert: any single wire ≥$20,000
+
+──────── ATTACHMENTS ────────
+─ Wire transfer log (40 records, signed XML)
+─ Vietnamese supplier KYC packets (3 vendors, on file)
+─ Updated source-of-funds questionnaire (signed by member 2026-05-28)
+─ Mekong Textile Trading Co secondary watchlist review notes
+
+──────── HAND-OFF NOTES ────────
+→ Onboarding Agent:    No re-screening triggered (no PEP change)
+→ Loan Document Agent: Member has $35K business LOC · enhanced annual review
+→ Policy & HR Agent:   Front-line training: international wire scrutiny
+
+──────── NCUA EXAM FOLDER INDEX ────────
+Folder Path:           ncua-exam-2026/bsa_aml/cdd_records/2026-Q2/
+Immutable Audit ID:    AUDIT-2026-06-01-09:14:08-CDD-04421
+Annual Review Due:     2026-08-14 (next semi-annual touch)

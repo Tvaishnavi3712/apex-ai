@@ -1,0 +1,76 @@
+playbook_id: pb-cwfcu-4
+name: cdd_periodic_review
+version: "1.0.0"
+description: "Periodic Customer Due Diligence / Enhanced Due Diligence review on every member based on risk tier."
+industry: credit_union
+category: compliance
+
+intent: |
+  Automate the periodic CDD touch every CWFCU member receives based on
+  risk tier. LOW: annual. MEDIUM: semi-annual. HIGH (EDD): quarterly.
+  Pull the activity summary, compare to baseline, surface anomalies,
+  re-screen against OFAC and PEP, and either reaffirm or update the
+  risk tier. Close every review with an immutable audit ID and an
+  updated NCUA exam folder index entry.
+
+output:
+  - name: cdd_review
+    type: structured_data
+    description: "Completed CDD review packet conforming to bp-cwfcu-cdd"
+  - name: risk_tier_update
+    type: structured_data
+    description: "Risk-tier decision (REAFFIRMED / ELEVATED / REDUCED) with rationale"
+
+context:
+  business_rules:
+    - "LOW-tier members: annual review (12mo cycle)"
+    - "MEDIUM-tier members: semi-annual (6mo cycle)"
+    - "HIGH-tier / EDD members: quarterly (3mo cycle)"
+    - "Risk-tier elevation requires Compliance Officer concurrence"
+    - "Risk-tier reduction requires 2 consecutive clean reviews"
+
+actions:
+  - name: schedule_review
+    action_id: credit_union.cdd_schedule
+    description: "Schedule next CDD touch based on risk tier"
+    required: true
+  - name: pull_activity_summary
+    action_id: credit_union.pull_activity_summary
+    description: "Aggregate wire, cash, ACH, P2P, card activity for review period"
+    required: true
+  - name: detect_anomalies
+    action_id: credit_union.detect_anomalies
+    description: "Compare activity to baseline + flag deviations"
+    required: true
+  - name: rescreen_ofac_pep
+    action_id: credit_union.rescreen
+    description: "Re-run OFAC + PEP screens"
+    required: true
+  - name: assemble_cdd_packet
+    action_id: credit_union.cdd_assemble_packet
+    description: "Assemble final CDD review structure"
+    required: true
+  - name: index_to_ncua_folder
+    action_id: credit_union.ncua_folder_index
+    description: "Index CDD review to NCUA exam folder"
+    required: true
+
+recipe: |
+  1. Daily job iterates members whose CDD due date is today.
+  2. For each member, pull the activity summary for the review period
+     (since last CDD touch).
+  3. Compare wire / cash / ACH / P2P / card volumes to baseline.
+     Flag any anomaly > 30% deviation from member's own baseline.
+  4. Re-screen against OFAC + PEP. Document any new near-matches.
+  5. Calculate updated risk tier. Reduction requires 2 consecutive
+     clean reviews. Elevation requires Compliance Officer concurrence
+     via HITL queue.
+  6. Update monitoring thresholds (cash, wire, velocity) based on new
+     tier.
+  7. Assemble CDD review packet via bp-cwfcu-cdd blueprint.
+  8. Index to NCUA exam folder with immutable audit ID.
+  9. Schedule next CDD touch.
+
+triggers:
+  - type: schedule
+    cron: "0 6 * * *"   # daily 06:00 ET

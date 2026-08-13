@@ -1,0 +1,182 @@
+{
+  "blueprintName": "apex-call-analytics-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Call analytics output schema for contact center automation",
+  "industry": "contact_center",
+  "documentType": "call_recording",
+  "processingType": "small_factory_chain",
+  "chainId": "call_analytics_chain",
+  "documentSchema": {
+    "class": "ApexCallAnalytics",
+    "description": "Call analytics chain output schema",
+    "definitions": {
+      "SPEAKER": {
+        "properties": {
+          "speaker_id": {"type": "string"},
+          "role": {"type": "string", "enum": ["agent", "customer", "unknown"]},
+          "talk_time_seconds": {"type": "number"},
+          "turn_count": {"type": "number"}
+        }
+      },
+      "SENTIMENT_POINT": {
+        "properties": {
+          "timestamp": {"type": "number"},
+          "sentiment": {"type": "string", "enum": ["positive", "neutral", "negative"]},
+          "score": {"type": "number"},
+          "speaker": {"type": "string"}
+        }
+      },
+      "ENTITY": {
+        "properties": {
+          "type": {"type": "string"},
+          "value": {"type": "string"},
+          "confidence": {"type": "number"}
+        }
+      },
+      "COMPLIANCE_ITEM": {
+        "properties": {
+          "requirement": {"type": "string"},
+          "found": {"type": "boolean"},
+          "timestamp": {"type": "number"},
+          "severity": {"type": "string"}
+        }
+      },
+      "QUALITY_CATEGORY": {
+        "properties": {
+          "category": {"type": "string"},
+          "score": {"type": "number"},
+          "weight": {"type": "number"},
+          "passed": {"type": "boolean"},
+          "notes": {"type": "array", "items": {"type": "string"}}
+        }
+      },
+      "COACHING_TIP": {
+        "properties": {
+          "area": {"type": "string"},
+          "observation": {"type": "string"},
+          "recommendation": {"type": "string"},
+          "priority": {"type": "string", "enum": ["high", "medium", "low"]}
+        }
+      }
+    },
+    "properties": {
+      "job_id": {"type": "string"},
+      "call_id": {"type": "string"},
+      "processing_status": {"type": "string", "enum": ["completed", "partial", "failed"]},
+
+      "transcribe_audio": {
+        "type": "object",
+        "properties": {
+          "transcript_text": {"type": "string"},
+          "duration_seconds": {"type": "number"},
+          "word_count": {"type": "number"},
+          "language": {"type": "string"},
+          "confidence": {"type": "number"}
+        }
+      },
+
+      "diarize_speakers": {
+        "type": "object",
+        "properties": {
+          "speakers": {"type": "array", "items": {"$ref": "#/definitions/SPEAKER"}},
+          "speaker_count": {"type": "number"},
+          "talk_ratio": {"type": "object"}
+        }
+      },
+
+      "intent_classify": {
+        "type": "object",
+        "properties": {
+          "primary_intent": {"type": "string"},
+          "secondary_intents": {"type": "array"},
+          "confidence": {"type": "number"},
+          "intent_changes": {"type": "array"},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      },
+
+      "sentiment_timeline": {
+        "type": "object",
+        "properties": {
+          "overall_sentiment": {"type": "string"},
+          "sentiment_score": {"type": "number"},
+          "timeline": {"type": "array", "items": {"$ref": "#/definitions/SENTIMENT_POINT"}},
+          "sentiment_shift": {"type": "boolean"},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      },
+
+      "entity_extract": {
+        "type": "object",
+        "properties": {
+          "entities": {"type": "array", "items": {"$ref": "#/definitions/ENTITY"}},
+          "entity_count": {"type": "number"},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      },
+
+      "compliance_audit": {
+        "type": "object",
+        "properties": {
+          "compliant": {"type": "boolean"},
+          "score": {"type": "number"},
+          "items": {"type": "array", "items": {"$ref": "#/definitions/COMPLIANCE_ITEM"}},
+          "violations": {"type": "array"},
+          "warnings": {"type": "array"}
+        }
+      },
+
+      "summary_generate": {
+        "type": "object",
+        "properties": {
+          "summary": {"type": "string"},
+          "key_points": {"type": "array"},
+          "action_items": {"type": "array"},
+          "resolution": {"type": "string"},
+          "follow_up_required": {"type": "boolean"},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      },
+
+      "quality_score": {
+        "type": "object",
+        "properties": {
+          "overall_score": {"type": "number"},
+          "categories": {"type": "array", "items": {"$ref": "#/definitions/QUALITY_CATEGORY"}},
+          "passed": {"type": "boolean"},
+          "flags": {"type": "array"},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      },
+
+      "coaching_recommend": {
+        "type": "object",
+        "properties": {
+          "recommendations": {"type": "array", "items": {"$ref": "#/definitions/COACHING_TIP"}},
+          "strengths": {"type": "array"},
+          "improvement_areas": {"type": "array"},
+          "training_suggestions": {"type": "array"},
+          "ai_enhanced": {"type": "boolean"}
+        }
+      }
+    }
+  },
+  "extractionRules": {
+    "confidenceThreshold": 0.8,
+    "processingTimeout": 300
+  },
+  "factoryChain": {
+    "chainId": "call_analytics_chain",
+    "factories": [
+      {"id": "transcribe_audio", "action": "transcribe_audio", "aiEnhanced": false},
+      {"id": "diarize_speakers", "action": "diarize_speakers", "aiEnhanced": false},
+      {"id": "intent_classify", "action": "intent_classify", "aiEnhanced": true},
+      {"id": "sentiment_timeline", "action": "sentiment_timeline", "aiEnhanced": true},
+      {"id": "entity_extract", "action": "entity_extract", "aiEnhanced": true},
+      {"id": "compliance_audit", "action": "compliance_audit", "aiEnhanced": false},
+      {"id": "summary_generate", "action": "summary_generate", "aiEnhanced": true},
+      {"id": "quality_score", "action": "quality_score", "aiEnhanced": true},
+      {"id": "coaching_recommend", "action": "coaching_recommend", "aiEnhanced": true}
+    ]
+  }
+}

@@ -1,0 +1,377 @@
+# =============================================================================
+# APEX AI Platform - Pricing Prediction Playbook
+# =============================================================================
+# Aerospace & Defense: Predict pricing for RFPs based on historical data,
+# material costs, and labor trends.
+# =============================================================================
+
+playbook:
+  name: pricing_prediction
+  version: "1.0.0"
+  industry: aerospace_defense
+  category: pricing
+  description: "AI-powered pricing prediction for defense contracts and RFPs"
+  compliance: ["ITAR", "TINA", "FAR/DFARS"]
+
+  # ---------------------------------------------------------------------------
+  # LLM Configuration
+  # ---------------------------------------------------------------------------
+  llm_config:
+    analysis_model:
+      provider: azure_openai
+      model_id: anthropic.claude-opus-4-6
+      region: us-gov-west-1
+      parameters:
+        temperature: 0.1
+        max_tokens: 8000
+
+    prediction_model:
+      provider: azure_openai
+      model_id: anthropic.claude-opus-4-6
+      region: us-gov-west-1
+      parameters:
+        temperature: 0.2
+        max_tokens: 4000
+
+  # ---------------------------------------------------------------------------
+  # INTENT
+  # ---------------------------------------------------------------------------
+  intent: |
+    Generate data-driven pricing predictions for RFPs and quotes:
+    1. Analyze historical contract pricing from PowerFlow (READ)
+    2. Incorporate current material cost indices (READ)
+    3. Apply labor rate escalations
+    4. Consider program-specific factors
+    5. Generate pricing recommendations with confidence intervals
+    6. Save predictions for future reference (WRITE)
+
+  # ===========================================================================
+  # CONTEXT SECTION
+  # ===========================================================================
+  context:
+    # -------------------------------------------------------------------------
+    # Data Sources (READ)
+    # -------------------------------------------------------------------------
+    data_sources:
+      power_flow_pricing:
+        type: sql_database
+        connection: "${POWER_FLOW_CONNECTION_STRING}"
+        mode: read_only
+        tables:
+          contracts: "dbo.Contracts"
+          pricing_history: "dbo.PricingHistory"
+          cost_elements: "dbo.CostElements"
+          labor_history: "dbo.LaborHistory"
+
+      material_indices:
+        type: api
+        base_url: "https://api.metalexchange.com"
+        mode: read_only
+        endpoints:
+          aluminum: "/prices/aluminum"
+          titanium: "/prices/titanium"
+          steel: "/prices/steel"
+          nickel: "/prices/nickel"
+
+      erp_costing:
+        type: erp
+        api_endpoint: "${ERP_API_ENDPOINT}"
+        mode: read_only
+        entities:
+          standard_costs: "/api/standard-costs"
+          routing_costs: "/api/routing-costs"
+          bom_costs: "/api/bom-costs"
+
+    # -------------------------------------------------------------------------
+    # Output Destinations (WRITE)
+    # -------------------------------------------------------------------------
+    output_destinations:
+      pricing_recommendations:
+        type: s3
+        bucket: "apex-${APEX_ENVIRONMENT}-pricing"
+        prefix: "recommendations/"
+        mode: write
+
+      pricing_database:
+        type: sql_database
+        connection: "${PRICING_DB_CONNECTION}"
+        mode: write
+        tables:
+          predictions: "dbo.PricingPredictions"
+          model_results: "dbo.ModelResults"
+
+      audit_log:
+        type: cosmos_db
+        table: "apex-${APEX_ENVIRONMENT}-audit-log"
+        mode: write
+
+    # -------------------------------------------------------------------------
+    # Pricing Configuration
+    # -------------------------------------------------------------------------
+    pricing_config:
+      cost_elements:
+        direct_material:
+          weight: 0.35
+          escalation_source: "material_indices"
+        direct_labor:
+          weight: 0.30
+          escalation_rate: 0.042
+        manufacturing_overhead:
+          rate: 0.85
+          basis: "direct_labor"
+        general_admin:
+          rate: 0.15
+          basis: "total_cost"
+        profit_targets:
+          commercial: 0.12
+          government_firm_fixed: 0.10
+          government_cost_plus: 0.08
+
+      escalation_factors:
+        material_annual: 0.045
+        labor_annual: 0.042
+        overhead_annual: 0.030
+        default_contract_years: 5
+
+      confidence_levels:
+        high: 0.90
+        medium: 0.75
+        low: 0.60
+
+    # -------------------------------------------------------------------------
+    # Program-Specific Factors
+    # -------------------------------------------------------------------------
+    program_factors:
+      "F-35":
+        complexity_multiplier: 1.15
+        quality_requirements: "AS9100D_NADCAP"
+        typical_quantities: [50, 100, 200, 500]
+        prime_contractor: "Lockheed Martin"
+
+      "F-22":
+        complexity_multiplier: 1.20
+        quality_requirements: "AS9100D_NADCAP"
+        typical_quantities: [25, 50]
+        prime_contractor: "Lockheed Martin"
+
+      "C-17":
+        complexity_multiplier: 1.05
+        quality_requirements: "AS9100D"
+        typical_quantities: [10, 25, 50]
+        prime_contractor: "Boeing"
+
+      "UH-60":
+        complexity_multiplier: 1.10
+        quality_requirements: "AS9100D_NADCAP"
+        typical_quantities: [50, 100, 200]
+        prime_contractor: "Sikorsky"
+
+  # ===========================================================================
+  # RECIPE
+  # ===========================================================================
+  recipe: |
+    ## Pricing Prediction Workflow
+
+    ### Phase 1: Requirements Analysis
+    1. Parse RFP or quote request for:
+       - Part number(s)
+       - Quantities and delivery schedule
+       - Target program
+       - Contract type (FFP, CPFF, T&M)
+    2. Validate required inputs
+
+    ### Phase 2: Historical Data Retrieval (READ)
+    1. Query context.data_sources.power_flow_pricing for:
+       - Past contracts for same/similar parts
+       - Historical pricing by quantity breaks
+       - Labor hour actuals vs estimates
+    2. Apply program factors from context.program_factors
+
+    ### Phase 3: Current Cost Analysis (READ)
+    1. Retrieve current material indices from context.data_sources.material_indices
+    2. Get standard costs from context.data_sources.erp_costing
+    3. Calculate material cost impact
+
+    ### Phase 4: Pricing Model Execution
+    Using context.llm_config.prediction_model (GPT-5.4):
+    1. Apply cost element weights from context.pricing_config.cost_elements
+    2. Calculate escalation per context.pricing_config.escalation_factors
+    3. Add overhead and G&A per rates
+    4. Apply profit targets based on contract type
+    5. Generate quantity break pricing
+
+    ### Phase 5: Confidence Assessment
+    1. Calculate prediction confidence based on:
+       - Historical data availability
+       - Material cost volatility
+       - Program maturity
+    2. Generate confidence intervals
+
+    ### Phase 6: Output Generation (WRITE)
+    1. Format pricing recommendation with:
+       - Unit prices by quantity
+       - NRE if applicable
+       - Escalation schedule
+       - Confidence intervals
+       - Supporting data citations
+    2. Save to context.output_destinations.pricing_database
+    3. Generate report to context.output_destinations.pricing_recommendations
+    4. Log to audit trail
+
+  # ===========================================================================
+  # FACTORY CHAIN
+  # ===========================================================================
+  factory_chain:
+    chainId: pricing_prediction_chain
+    description: "Data-driven pricing prediction"
+    factories:
+      - id: requirements_parse
+        action: requirements_parse
+        context_keys: [pricing_config]
+        timeout_seconds: 30
+
+      - id: historical_query
+        action: contract_lookup
+        depends_on: [requirements_parse]
+        context_keys: [data_sources.power_flow_pricing]
+        mode: read
+        timeout_seconds: 60
+
+      - id: material_lookup
+        action: material_index_query
+        depends_on: [requirements_parse]
+        context_keys: [data_sources.material_indices]
+        mode: read
+        timeout_seconds: 30
+
+      - id: erp_costing
+        action: erp_query
+        depends_on: [requirements_parse]
+        context_keys: [data_sources.erp_costing]
+        mode: read
+        timeout_seconds: 45
+
+      - id: pricing_model
+        action: pricing_analysis
+        depends_on: [historical_query, material_lookup, erp_costing]
+        context_keys: [llm_config.prediction_model, pricing_config, program_factors]
+        ai_enhanced: true
+        model: anthropic.claude-opus-4-6
+        timeout_seconds: 180
+
+      - id: confidence_calc
+        action: confidence_calculate
+        depends_on: [pricing_model]
+        context_keys: [pricing_config.confidence_levels]
+        timeout_seconds: 30
+
+      - id: database_save
+        action: pricing_save
+        depends_on: [pricing_model, confidence_calc]
+        context_keys: [output_destinations.pricing_database]
+        mode: write
+        timeout_seconds: 30
+
+      - id: report_generate
+        action: report_generate
+        depends_on: [pricing_model, confidence_calc]
+        context_keys: [output_destinations.pricing_recommendations]
+        mode: write
+        timeout_seconds: 60
+
+      - id: audit_log
+        action: audit_log_write
+        depends_on: [database_save]
+        context_keys: [output_destinations.audit_log]
+        mode: write
+        timeout_seconds: 15
+
+  # ===========================================================================
+  # ACTIONS
+  # ===========================================================================
+  actions:
+    - id: requirements_parse
+      handler: aerospace_defense.requirements_parse
+      description: "Parse RFP requirements"
+
+    - id: contract_lookup
+      handler: aerospace_defense.contract_lookup
+      description: "Query historical contracts (READ)"
+      mode: read
+
+    - id: material_index_query
+      handler: aerospace_defense.material_index_query
+      description: "Get current material prices (READ)"
+      mode: read
+
+    - id: erp_query
+      handler: aerospace_defense.erp_query
+      description: "Query ERP costing data (READ)"
+      mode: read
+
+    - id: pricing_analysis
+      handler: aerospace_defense.pricing_analysis
+      description: "AI-powered pricing model"
+
+    - id: confidence_calculate
+      handler: aerospace_defense.confidence_calculate
+      description: "Calculate prediction confidence"
+
+    - id: pricing_save
+      handler: aerospace_defense.pricing_save
+      description: "Save pricing to database (WRITE)"
+      mode: write
+
+    - id: report_generate
+      handler: aerospace_defense.report_generate
+      description: "Generate pricing report (WRITE)"
+      mode: write
+
+    - id: audit_log_write
+      handler: core.audit_log
+      description: "Write audit record (WRITE)"
+      mode: write
+
+  # ===========================================================================
+  # CONNECTORS
+  # ===========================================================================
+  connectors:
+    # READ
+    - id: power_flow_read
+      type: sql_server
+      mode: read
+      description: "Historical pricing data"
+
+    - id: material_api
+      type: rest_api
+      mode: read
+      description: "Material price indices"
+
+    - id: erp_costing_read
+      type: rest_api
+      mode: read
+      description: "Standard costs from ERP"
+
+    # WRITE
+    - id: pricing_db_write
+      type: sql_server
+      mode: write
+      description: "Save pricing predictions"
+
+    - id: s3_reports
+      type: s3
+      mode: write
+      description: "Store pricing reports"
+
+  # ===========================================================================
+  # METADATA
+  # ===========================================================================
+  metadata:
+    created_by: apex-platform
+    created_at: "2026-03-24"
+    tags:
+      - aerospace
+      - pricing
+      - rfp
+      - prediction
+      - claude-opus-4-6

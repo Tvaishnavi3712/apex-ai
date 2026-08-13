@@ -1,0 +1,65 @@
+{
+  "vendor": {
+    "name": "Summit Enterprises",
+    "address": {
+      "street": "321 Tech Center Ln",
+      "city": "San Jose",
+      "state": "CA",
+      "zip": "95110"
+    },
+    "tax_id": "59-7299109",
+    "phone": "(272) 898-2780",
+    "email": "billing@summitente.com"
+  },
+  "invoice": {
+    "number": "INV2026-16191",
+    "date": "2026-02-03",
+    "due_date": "2026-03-05",
+    "po_number": "PO-884345",
+    "terms": "NET30"
+  },
+  "bill_to": {
+    "company_name": "Adventure Works",
+    "address": {
+      "street": "555 Enterprise Ave",
+      "city": "Denver",
+      "state": "CO",
+      "zip": "80202"
+    }
+  },
+  "line_items": [
+    {
+      "description": "Network Equipment - Enterprise",
+      "quantity": 6,
+      "unit_price": 1645.1,
+      "amount": 9870.6,
+      "item_code": "AGE-4501"
+    },
+    {
+      "description": "Network Equipment - Enterprise",
+      "quantity": 15,
+      "unit_price": 759.1,
+      "amount": 11386.5,
+      "item_code": "XFP-2334"
+    },
+    {
+      "description": "Data Migration Services",
+      "quantity": 18,
+      "unit_price": 6517.48,
+      "amount": 117314.64,
+      "item_code": "WPE-9031"
+    }
+  ],
+  "totals": {
+    "subtotal": 138571.74,
+    "tax_rate": 0,
+    "tax_amount": 0.0,
+    "shipping": 0,
+    "total": 138571.74
+  },
+  "payment": {
+    "bank_name": "First National Bank",
+    "account_number": "****1234",
+    "routing_number": "021000089"
+  }
+}

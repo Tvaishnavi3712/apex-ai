@@ -1,0 +1,60 @@
+# Apex AI Platform - Backend Dependencies
+
+# Web Framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+python-multipart==0.0.6
+
+# AWS SDK
+boto3==1.34.0
+botocore==1.34.0
+
+# Azure SDK (Apex on Azure)
+azure-identity==1.19.0
+azure-cosmos==4.9.0
+azure-storage-blob==12.24.0
+azure-keyvault-secrets==4.9.0
+azure-ai-formrecognizer==3.3.3
+azure-search-documents==11.5.2
+azure-ai-ml==1.23.1
+azure-ai-projects==1.0.0
+azure-ai-agents==1.0.0
+openai>=2.40,<3
+
+# Data Validation
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# YAML Processing
+pyyaml==6.0.1
+
+# Async Support
+httpx==0.26.0
+aiofiles==23.2.1
+
+# Database
+aiodynamo==24.7
+
+# Authentication
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# Utilities
+python-dotenv==1.0.0
+structlog==24.1.0
+
+# Testing
+pytest==7.4.4
+pytest-asyncio==0.23.3
+pytest-cov==4.1.0
+moto==4.2.13
+
+# Development
+black==24.1.0
+isort==5.13.2
+mypy==1.8.0
+
+# PDF / analytics / env
+reportlab==4.2.5
+duckdb==1.1.3
+python-dotenv==1.0.1

@@ -1,0 +1,124 @@
+# CBTS Apex AI Platform - Inventory Optimization Runbook
+name: inventory_optimization
+version: "1.0.0"
+description: "Automated inventory optimization with demand-driven replenishment"
+industry: supply_chain
+category: inventory_management
+
+intent: |
+  Optimize inventory levels by analyzing demand forecasts, calculating optimal
+  stock levels, generating replenishment recommendations, and automating
+  purchase order creation while minimizing carrying costs and stockouts.
+
+output:
+  - name: optimization_recommendations
+    type: analysis
+    schema:
+      sku: string
+      action: string
+      quantity: number
+      savings_potential: number
+  - name: replenishment_orders
+    type: purchase_order
+    schema:
+      vendor: string
+      items: array
+      total_value: number
+
+context:
+  business_rules:
+    - "Maintain 2 weeks safety stock for A items"
+    - "B items: 3 weeks safety stock"
+    - "C items: 4 weeks safety stock"
+    - "Emergency orders require manager approval"
+    - "Consolidate vendor orders over $5000"
+
+  optimization_parameters:
+    service_level_target: 0.98
+    carrying_cost_percent: 0.25
+    stockout_cost_multiplier: 5
+    review_period_days: 7
+
+  abc_classification:
+    a_items: {revenue_pct: 80, item_pct: 20}
+    b_items: {revenue_pct: 15, item_pct: 30}
+    c_items: {revenue_pct: 5, item_pct: 50}
+
+actions:
+  - name: forecast_analyze
+    action_id: supply_chain.forecast_analyze
+    required: true
+  - name: inventory_analyze
+    action_id: supply_chain.inventory_analyze
+    required: true
+  - name: eoq_calculate
+    action_id: supply_chain.eoq_calculate
+    required: true
+  - name: reorder_point_calc
+    action_id: supply_chain.reorder_point_calc
+    required: true
+  - name: po_generate
+    action_id: supply_chain.po_generate
+    required: false
+  - name: vendor_select
+    action_id: supply_chain.vendor_select
+    required: false
+
+recipe: |
+  ## Inventory Optimization Workflow
+
+  ### Step 1: Demand Analysis
+  1. Use `forecast_analyze` to process demand forecasts
+  2. Calculate demand variability by SKU
+  3. Identify seasonal patterns
+  4. Detect trend changes
+
+  ### Step 2: Inventory Assessment
+  1. Use `inventory_analyze` for current state
+  2. Calculate inventory days on hand
+  3. Identify slow-moving inventory
+  4. Flag excess/obsolete stock
+  5. Classify items (ABC analysis)
+
+  ### Step 3: Optimal Stock Calculation
+  1. Use `eoq_calculate` for economic order quantities
+  2. Use `reorder_point_calc` for reorder triggers
+  3. Calculate safety stock by classification
+  4. Factor in lead time variability
+
+  ### Step 4: Replenishment Planning
+  For items below reorder point:
+  1. Calculate order quantity (EOQ adjusted)
+  2. Use `vendor_select` for best supplier
+  3. Consider order consolidation
+  4. Apply volume discounts
+
+  ### Step 5: Order Generation
+  1. Use `po_generate` for auto-approved items
+  2. Route emergency orders for approval
+  3. Consolidate by vendor
+  4. Schedule deliveries to level workload
+
+  ### Step 6: Performance Tracking
+  1. Calculate fill rate performance
+  2. Track inventory turns
+  3. Measure forecast accuracy
+  4. Report savings achieved
+
+triggers:
+  - type: schedule
+    cron: "0 5 * * *"
+    description: "Daily optimization run"
+  - type: event
+    source: inventory_system
+    event_type: below_reorder_point
+  - type: api
+    endpoint: /api/v1/inventory-optimization
+
+worker:
+  queue: apex-inventory-optimization-queue
+  concurrency: 10
+  timeout_seconds: 600
+
+metadata:
+  tags: [inventory, optimization, replenishment, supply-chain, eoq]

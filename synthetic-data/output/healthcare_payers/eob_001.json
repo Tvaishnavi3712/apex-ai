@@ -1,0 +1,68 @@
+{
+  "_metadata": {
+    "blueprint": "apex-eob-v1",
+    "document_type": "explanation_of_benefits",
+    "extraction_date": "2024-01-20T14:45:00Z",
+    "confidence_score": 0.93,
+    "source_file": "eob_sample.pdf"
+  },
+  "eob_number": "EOB-2024-567890",
+  "claim_number": "CLM-2024-001234",
+  "patient_name": "John Michael Smith",
+  "member_id": "XYZ123456789",
+  "group_number": "GRP-98765",
+  "provider_name": "Springfield Medical Associates",
+  "provider_npi": "1234567890",
+  "service_date": "01/10/2024",
+  "processed_date": "01/18/2024",
+  "services": [
+    {
+      "cpt_code": "99214",
+      "description": "Office visit, established patient",
+      "billed_amount": 185.00,
+      "allowed_amount": 142.50,
+      "deductible": 0.00,
+      "copay": 25.00,
+      "coinsurance": 23.50,
+      "plan_paid": 94.00,
+      "member_responsibility": 48.50,
+      "adjustment_reason": "Contractual adjustment"
+    },
+    {
+      "cpt_code": "87880",
+      "description": "Strep test",
+      "billed_amount": 45.00,
+      "allowed_amount": 32.00,
+      "deductible": 0.00,
+      "copay": 0.00,
+      "coinsurance": 6.40,
+      "plan_paid": 25.60,
+      "member_responsibility": 6.40,
+      "adjustment_reason": "Contractual adjustment"
+    }
+  ],
+  "totals": {
+    "total_billed": 230.00,
+    "total_allowed": 174.50,
+    "total_deductible": 0.00,
+    "total_copay": 25.00,
+    "total_coinsurance": 29.90,
+    "total_plan_paid": 119.60,
+    "total_member_responsibility": 54.90
+  },
+  "deductible_status": {
+    "individual_met": 450.00,
+    "individual_max": 500.00,
+    "family_met": 890.00,
+    "family_max": 1500.00
+  },
+  "oop_status": {
+    "individual_met": 1200.00,
+    "individual_max": 6000.00
+  },
+  "appeal_deadline": "04/18/2024",
+  "contact_info": {
+    "phone": "1-800-555-BCBS",
+    "website": "www.bcbsil.com/members"
+  }
+}

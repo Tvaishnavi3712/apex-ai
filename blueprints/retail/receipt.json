@@ -1,0 +1,137 @@
+{
+  "blueprintName": "apex-retail-receipt-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from retail receipts for returns and analytics",
+  "industry": "retail",
+  "documentType": "receipt",
+  "documentSchema": {
+    "class": "ApexRetailReceipt",
+    "description": "Retail receipt extraction for transaction processing",
+    "definitions": {
+      "LINE_ITEM": {
+        "properties": {
+          "sku": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "quantity": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "unit_price": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "discount": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "line_total": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "department": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "store_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "store_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "store_address": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "store_phone": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "transaction_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "transaction_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "transaction_time": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "register_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "cashier_id": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "items": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/LINE_ITEM"
+        }
+      },
+      "subtotal": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "discount_total": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "tax_rate": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "tax_amount": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "total": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "payment_method": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "card_last_four": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "loyalty_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "points_earned": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "return_policy": {
+        "type": "string",
+        "inferenceType": "explicit"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "currencyFormat": "decimal",
+    "confidenceThreshold": 0.85
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  }
+}

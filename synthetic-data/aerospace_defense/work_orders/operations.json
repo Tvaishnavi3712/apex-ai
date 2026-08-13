@@ -1,0 +1,106 @@
+[
+  {
+    "work_order_id": "WO-2026-001234",
+    "operation_number": "10",
+    "description": "CNC Mill Rough",
+    "work_center": "MAZAK-01",
+    "status": "COMPLETE",
+    "setup_hours": 2.0,
+    "run_hours_per_unit": 0.75,
+    "completed_date": "2026-02-15"
+  },
+  {
+    "work_order_id": "WO-2026-001234",
+    "operation_number": "20",
+    "description": "CNC Mill Finish",
+    "work_center": "DMG-02",
+    "status": "IN_PROGRESS",
+    "setup_hours": 1.5,
+    "run_hours_per_unit": 1.25,
+    "completed_date": null
+  },
+  {
+    "work_order_id": "WO-2026-001234",
+    "operation_number": "30",
+    "description": "Deburr and Edge Break",
+    "work_center": "BENCH-01",
+    "status": "PENDING",
+    "setup_hours": 0.5,
+    "run_hours_per_unit": 0.25,
+    "completed_date": null
+  },
+  {
+    "work_order_id": "WO-2026-001234",
+    "operation_number": "40",
+    "description": "Anodize Type III",
+    "work_center": "OUTSIDE-ANODIZE",
+    "status": "PENDING",
+    "setup_hours": 0,
+    "run_hours_per_unit": 0,
+    "outside_processing": true,
+    "vendor": "Precision Anodizing Inc",
+    "completed_date": null
+  },
+  {
+    "work_order_id": "WO-2026-001234",
+    "operation_number": "50",
+    "description": "Final Inspection",
+    "work_center": "QC-01",
+    "status": "PENDING",
+    "setup_hours": 0.25,
+    "run_hours_per_unit": 0.5,
+    "completed_date": null
+  },
+  {
+    "work_order_id": "WO-2026-001198",
+    "operation_number": "10",
+    "description": "CNC Turn",
+    "work_center": "MAZAK-TURN-01",
+    "status": "COMPLETE",
+    "setup_hours": 1.5,
+    "run_hours_per_unit": 0.5,
+    "completed_date": "2026-02-01"
+  },
+  {
+    "work_order_id": "WO-2026-001198",
+    "operation_number": "20",
+    "description": "CNC Mill 5-Axis",
+    "work_center": "DMG-01",
+    "status": "COMPLETE",
+    "setup_hours": 3.0,
+    "run_hours_per_unit": 1.5,
+    "completed_date": "2026-02-20"
+  },
+  {
+    "work_order_id": "WO-2026-001198",
+    "operation_number": "30",
+    "description": "Deburr",
+    "work_center": "BENCH-02",
+    "status": "COMPLETE",
+    "setup_hours": 0.25,
+    "run_hours_per_unit": 0.2,
+    "completed_date": "2026-03-01"
+  },
+  {
+    "work_order_id": "WO-2026-001198",
+    "operation_number": "40",
+    "description": "Anodize Type II",
+    "work_center": "OUTSIDE-ANODIZE",
+    "status": "IN_PROGRESS",
+    "setup_hours": 0,
+    "run_hours_per_unit": 0,
+    "outside_processing": true,
+    "vendor": "Precision Anodizing Inc",
+    "completed_date": null
+  },
+  {
+    "work_order_id": "WO-2026-001198",
+    "operation_number": "50",
+    "description": "Final Inspection",
+    "work_center": "QC-01",
+    "status": "PENDING",
+    "setup_hours": 0.25,
+    "run_hours_per_unit": 0.4,
+    "completed_date": null
+  }
+]

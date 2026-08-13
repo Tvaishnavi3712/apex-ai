@@ -1,0 +1,82 @@
+CUSTOMER IDENTIFICATION PROGRAM (CIP) PACKET
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+NCUA Charter #66234  ·  RSSD ID 2842091
+═══════════════════════════════════════════════════════════════
+
+Application ID:        CIP-MEM-2026-0421-ROSALES
+Submission Channel:    CWAnyWhere mobile app
+Submitted:             April 21, 2026 · 09:14:38 ET
+Branch of Record:      South Bend Main · 1610 Lincolnway W
+Branch Officer:        Diane Okafor (Member Services Lead)
+Processing Agent:      Member Onboarding Agent · v2.4.1
+
+──────── APPLICANT INFORMATION ────────
+Legal Name:            ROSALES, Elena Maria
+Date of Birth:         1991-07-22  (age 34)
+Place of Birth:        South Bend, IN (US Citizen)
+SSN:                   XXX-XX-4471  (validated via SSA SSNVS)
+Address:               2207 Miami St, South Bend, IN 46613-2118
+                       USPS DPV: D1 (deliverable, primary)
+                       Address tenure: 4y 2mo (verified via LexisNexis)
+Phone:                 (574) 555-0182  (mobile · T-Mobile · OK)
+Email:                 e.rosales@gmail.com (verified · double opt-in)
+Occupation:            RN · Memorial Hospital · South Bend
+Employer Tenure:       6 years
+Annual Income:         $72,400 (W-2 verified)
+Marital Status:        Single
+
+──────── GOVERNMENT ID ────────
+ID Type:               Indiana Driver License
+ID Number:             IN-2841-7793-22
+Issued:                2022-08-04
+Expires:               2026-08-04
+DLDV API Check:        VERIFIED (AAMVA · matches name + DOB + address)
+Photo Match:           97.4% confidence (face scan vs DL photo)
+Document Authenticity: GENUINE (Mitek SDK · all 14 features present)
+
+──────── SCREENING RESULTS ────────
+OFAC SDN List:         CLEAR  (run 2026-04-21 09:14:42 ET)
+OFAC Consolidated:     CLEAR
+FinCEN 314(a):         CLEAR
+PEP Screening:         NEGATIVE (WorldCheck One v12)
+Adverse Media:         CLEAR (Dow Jones RiskCenter)
+ChexSystems:           CLEAR (no prior account issues)
+
+──────── RISK ASSESSMENT ────────
+Inherent Risk Tier:    LOW
+Risk Factors:
+  ─ Domestic US citizen
+  ─ Stable employment (6y same employer)
+  ─ Stable residency (4y same address)
+  ─ Standard W-2 income source
+  ─ No PEP / no foreign nexus / no sanctions concern
+  ─ ChexSystems clean
+EDD Required:          NO (standard CDD only)
+Annual CDD Refresh:    YES (next: 2027-04-21)
+
+──────── BENEFICIAL OWNERSHIP ────────
+Account Type:          Consumer (individual)
+Beneficial Owner Rule: NOT APPLICABLE (no legal entity)
+
+──────── DECISION ────────
+Account Type Opened:   Share-Savings (regular)
+Opening Deposit:       $25.00  (par value share)
+Account Number:        XXXXXXXX-44721
+Member Since:          2026-04-21
+Card Issuance:         CWFCU Visa Debit · auto-shipped
+
+Approved:              Diane Okafor (Member Services Lead) at 09:21:11 ET
+Approval Method:       Agent-assisted (HITL touch: 14 sec)
+Member Welcome Sent:   2026-04-21 09:21:45 ET (email + push)
+
+──────── NCUA EXAM FOLDER INDEX ────────
+Folder Path:           ncua-exam-2026/cip_records/2026-04/
+File Hash (SHA-256):   8af2c7e1...c0d4
+Immutable Audit ID:    AUDIT-2026-04-21-09:14:38-CIP-44721
+Linked SARs:           None
+Linked CTRs:           None
+Linked Loans:          None
+
+[NCUA examiner can pull this record by name, DOB, or member number.
+ All 14 CIP requirements (31 CFR § 1020.220) verifiably satisfied.]

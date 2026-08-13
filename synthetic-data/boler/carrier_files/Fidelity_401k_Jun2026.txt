@@ -1,0 +1,55 @@
+FIDELITY INVESTMENTS — 401(k) EMPLOYER MATCH CONTRIBUTION
+═══════════════════════════════════════════════════════════════
+Plan:            The Boler Company 401(k) Retirement Plan
+Plan #:          88-441208
+Period:          June 1-30, 2026
+Statement Date:  Jun 2, 2026
+Plan Sponsor:    The Boler Company · EIN 36-XXXXXXX
+Recordkeeper:    Fidelity Workplace Investing
+
+─────────────── EMPLOYER MATCH SUMMARY ───────────────
+Total Employer Match:    $412,880.00
+Match Rate Applied:       4.5% of eligible compensation ⚠
+Eligible Comp Base:       $9,175,111.11
+Active Participants:      803 employees (44 not enrolled · auto-enroll opt-out)
+
+─────────────── DIVISION BREAKDOWN ───────────────
+Hendrickson Intl       388 EE  $167,000
+Boler Mfg Services     149 EE  $79,200
+Boler Holdings         119 EE  $63,000
+Boler Real Estate       85 EE  $44,800
+Corporate/Shared        62 EE  $33,200
+                                ────────
+                                $387,200
+Catch-up + reconciliation:      $25,680
+                                ────────
+Total                           $412,880
+
+─────────────── DISCREPANCY ALERT ───────────────
+⚠ MATCH RATE MISMATCH
+
+  Fidelity carrier file applies:    4.5%
+  Boler HR policy (P-COMP-401K-2024): 4.0%
+  Delta:                              0.5%
+
+Financial impact at 4.5%: $412,880
+Financial impact at 4.0%: $367,000
+Monthly delta:             $45,880  (excludes catch-up/reconciliation)
+Cycle-relevant delta:      $8,240   (per APEX calc — net of reconciliation)
+
+Root cause options:
+  1. Fidelity rate card auto-incremented (plan amendment Apr 2026?)
+  2. HR policy was updated but not propagated to allocation system
+
+→ Flagged as EXC-2026-0445 by APEX Benefits Allocation Agent.
+→ Sarah Mitchell (Benefits Director) follow-up requested.
+
+─────────────── CONTRIBUTION BREAKDOWN BY VESTING ───────────────
+Fully vested (5+ years):      $312,400  (76% of total)
+Partially vested:             $76,200   (18%)
+Cliff-vested 3-yr:            $24,280   (6%)
+
+─────────────── REMITTANCE ───────────────
+Method:       ACH from Boler operating account → Fidelity Trust
+Reference:    BOLER-401K-JUN26
+Settlement:   T+1 (Jun 3, 2026)

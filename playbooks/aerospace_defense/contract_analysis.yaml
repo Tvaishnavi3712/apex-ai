@@ -1,0 +1,489 @@
+# =============================================================================
+# APEX AI Platform - Contract Analysis Playbook
+# =============================================================================
+# Aerospace & Defense: Analyze historical contracts, compare pricing,
+# identify patterns for RFP responses. Uses GPT-5.4 for complex reasoning.
+# =============================================================================
+
+playbook:
+  name: contract_analysis
+  version: "1.0.0"
+  industry: aerospace_defense
+  category: contracts
+  description: "Analyze defense contracts, compare pricing, extract terms for RFP support"
+  compliance: ["ITAR", "FedRAMP", "NIST-800-171", "CMMC"]
+
+  # ---------------------------------------------------------------------------
+  # Configuration
+  # ---------------------------------------------------------------------------
+  inherits:
+    - config/base_configuration.yaml
+
+  # ---------------------------------------------------------------------------
+  # LLM Configuration - Multi-Model Support
+  # ---------------------------------------------------------------------------
+  llm_config:
+    primary_model:
+      provider: azure_openai
+      model_id: anthropic.claude-opus-4-6
+      region: us-gov-west-1
+      parameters:
+        temperature: 0.1
+        max_tokens: 8000
+
+    extraction_model:
+      provider: azure_openai
+      model_id: anthropic.claude-3-haiku
+      region: us-gov-west-1
+      parameters:
+        temperature: 0
+        max_tokens: 4000
+
+    analysis_model:
+      provider: azure_openai
+      model_id: anthropic.claude-opus-4-6
+      region: us-gov-west-1
+      parameters:
+        temperature: 0.2
+        max_tokens: 16000
+
+  # ---------------------------------------------------------------------------
+  # INTENT
+  # ---------------------------------------------------------------------------
+  intent: |
+    Analyze defense contracts from historical database to:
+    1. Extract key contract terms, pricing structures, and deliverables
+    2. Compare similar contracts across programs (F-35, F-22, etc.)
+    3. Identify pricing trends and patterns over time
+    4. Support RFP responses with data-driven recommendations
+    5. Flag compliance requirements and special clauses
+
+  # ---------------------------------------------------------------------------
+  # OUTPUT
+  # ---------------------------------------------------------------------------
+  output:
+    schema:
+      type: object
+      properties:
+        analysis_id:
+          type: string
+        contracts_analyzed:
+          type: array
+        pricing_analysis:
+          type: object
+        trend_analysis:
+          type: object
+        recommendations:
+          type: array
+        compliance_flags:
+          type: array
+        sources:
+          type: array
+
+  # ===========================================================================
+  # CONTEXT SECTION - ALL BUSINESS RULES
+  # ===========================================================================
+  context:
+    # -------------------------------------------------------------------------
+    # Data Sources (READ)
+    # -------------------------------------------------------------------------
+    data_sources:
+      power_flow:
+        type: sql_database
+        connection: "${POWER_FLOW_CONNECTION_STRING}"
+        mode: read_only
+        description: "Historical contracts and document repository"
+        tables:
+          contracts: "dbo.Contracts"
+          contract_lines: "dbo.ContractLineItems"
+          pricing_history: "dbo.PricingHistory"
+          vendors: "dbo.Vendors"
+          programs: "dbo.Programs"
+
+      sharepoint_gcc:
+        type: sharepoint
+        tenant: "${M365_GCC_TENANT}"
+        mode: read_only
+        description: "Policy documents and procedures"
+        sites:
+          contracts: "/sites/Contracts"
+          engineering: "/sites/Engineering"
+          quality: "/sites/QualityAssurance"
+
+      network_files:
+        type: file_share
+        base_path: "${NETWORK_FILE_PATH}"
+        mode: read_only
+        description: "Legacy contract documents"
+        allowed_extensions: [".pdf", ".docx", ".xlsx"]
+
+      solidworks_pdm:
+        type: sql_database
+        connection: "${SOLIDWORKS_PDM_CONNECTION}"
+        mode: read_only
+        description: "CAD data and part specifications"
+        tables:
+          parts: "dbo.Parts"
+          assemblies: "dbo.Assemblies"
+          bom: "dbo.BillOfMaterials"
+
+    # -------------------------------------------------------------------------
+    # Output Destinations (WRITE)
+    # -------------------------------------------------------------------------
+    output_destinations:
+      analysis_results:
+        type: s3
+        bucket: "apex-${APEX_ENVIRONMENT}-analysis-results"
+        prefix: "contract_analysis/"
+        mode: write
+
+      audit_log:
+        type: cosmos_db
+        table: "apex-${APEX_ENVIRONMENT}-audit-log"
+        mode: write
+        description: "NIST 800-171 compliant audit trail"
+        retention_days: 365
+
+    # -------------------------------------------------------------------------
+    # Contract Analysis Configuration
+    # -------------------------------------------------------------------------
+    analysis_config:
+      programs:
+        - code: "F-35"
+          name: "Joint Strike Fighter"
+          prime: "Lockheed Martin"
+        - code: "F-22"
+          name: "Raptor"
+          prime: "Lockheed Martin"
+        - code: "C-17"
+          name: "Globemaster III"
+          prime: "Boeing"
+        - code: "UH-60"
+          name: "Black Hawk"
+          prime: "Sikorsky"
+        - code: "F-15"
+          name: "Eagle"
+          prime: "Boeing"
+        - code: "F-16"
+          name: "Fighting Falcon"
+          prime: "Lockheed Martin"
+
+      product_categories:
+        - "Platform Controls"
+        - "Throttle Grips"
+        - "Sidestick Assemblies"
+        - "Control Wheels"
+        - "LOX Equipment"
+        - "Emergency Breathing Systems"
+        - "Build-to-Print"
+
+      pricing_factors:
+        material_indices:
+          aluminum: "source:metal_exchange"
+          titanium: "source:metal_exchange"
+          steel: "source:metal_exchange"
+          composites: "source:supplier_quotes"
+
+        labor_rates:
+          machining: 85.00
+          assembly: 72.00
+          inspection: 78.00
+          engineering: 125.00
+
+        escalation:
+          default_annual: 0.03
+          material_annual: 0.04
+          labor_annual: 0.035
+
+    # -------------------------------------------------------------------------
+    # Compliance Requirements
+    # -------------------------------------------------------------------------
+    compliance:
+      itar:
+        enabled: true
+        classification_check: true
+        export_control_review: true
+        us_persons_only: true
+
+      dfars:
+        clauses_to_check:
+          - "252.204-7012"  # Safeguarding Covered Defense Information
+          - "252.225-7001"  # Buy American
+          - "252.225-7002"  # Qualifying Country Sources
+          - "252.227-7013"  # Rights in Technical Data
+
+      audit:
+        log_all_queries: true
+        log_all_results: true
+        pii_masking: true
+        retention_days: 365
+        required_fields:
+          - user_id
+          - timestamp
+          - action
+          - data_sources_accessed
+          - query_text
+          - result_summary
+
+    # -------------------------------------------------------------------------
+    # Access Control
+    # -------------------------------------------------------------------------
+    access_control:
+      authentication:
+        provider: azure_ad
+        tenant: "${AZURE_AD_TENANT}"
+        required_groups:
+          - "APEX-Contract-Analysts"
+          - "APEX-Program-Managers"
+          - "APEX-Pricing-Team"
+
+      data_classification:
+        cui:
+          required_clearance: "CUI-Authorized"
+          handling: "NIST-800-171"
+        itar:
+          required_clearance: "US-Person"
+          handling: "ITAR-Controlled"
+
+  # ===========================================================================
+  # RECIPE
+  # ===========================================================================
+  recipe: |
+    ## Contract Analysis Workflow
+
+    ### Phase 1: Query Understanding
+    1. Parse user query to identify:
+       - Target programs (F-35, F-22, etc.)
+       - Product categories
+       - Time range for analysis
+       - Specific metrics requested (pricing, terms, trends)
+    2. Validate user has access to requested data per context.access_control
+    3. Log query to context.output_destinations.audit_log
+
+    ### Phase 2: Data Retrieval (READ Operations)
+    1. Query context.data_sources.power_flow for matching contracts
+       - SELECT from contracts, contract_lines, pricing_history
+       - Apply program and date filters
+    2. Search context.data_sources.sharepoint_gcc for related documents
+    3. Search context.data_sources.network_files for legacy contracts
+    4. Retrieve part specifications from context.data_sources.solidworks_pdm if needed
+
+    ### Phase 3: Contract Extraction
+    Using context.llm_config.extraction_model (Claude Haiku):
+    1. Extract key fields from each contract:
+       - Contract number, dates, parties
+       - Pricing structure (unit price, NRE, tooling)
+       - Quantities and delivery schedules
+       - Special clauses and compliance requirements
+    2. Normalize data for comparison
+
+    ### Phase 4: Analysis (GPT-5.4)
+    Using context.llm_config.analysis_model:
+    1. Compare pricing across similar contracts
+    2. Identify trends using context.analysis_config.pricing_factors
+    3. Calculate escalation based on material and labor indices
+    4. Flag anomalies or significant deviations
+    5. Generate recommendations for RFP pricing
+
+    ### Phase 5: Compliance Check
+    1. Verify ITAR compliance per context.compliance.itar
+    2. Check for required DFARS clauses per context.compliance.dfars
+    3. Flag any compliance concerns
+
+    ### Phase 6: Response Generation
+    1. Format analysis results with source citations
+    2. Include confidence scores for recommendations
+    3. Save results to context.output_destinations.analysis_results
+    4. Log completion to audit trail
+
+  # ===========================================================================
+  # FACTORY CHAIN
+  # ===========================================================================
+  factory_chain:
+    chainId: contract_analysis_chain
+    description: "Multi-source contract analysis with GPT-5.4"
+    factories:
+      - id: query_parse
+        action: query_parse
+        context_keys: [analysis_config]
+        timeout_seconds: 30
+
+      - id: access_validate
+        action: access_validate
+        depends_on: [query_parse]
+        context_keys: [access_control]
+        timeout_seconds: 15
+
+      - id: power_flow_query
+        action: contract_lookup
+        depends_on: [access_validate]
+        context_keys: [data_sources.power_flow, analysis_config]
+        mode: read
+        timeout_seconds: 60
+
+      - id: sharepoint_search
+        action: document_search
+        depends_on: [access_validate]
+        context_keys: [data_sources.sharepoint_gcc]
+        mode: read
+        timeout_seconds: 45
+
+      - id: network_file_search
+        action: document_search
+        depends_on: [access_validate]
+        context_keys: [data_sources.network_files]
+        mode: read
+        timeout_seconds: 45
+
+      - id: contract_extraction
+        action: contract_extract
+        depends_on: [power_flow_query, sharepoint_search, network_file_search]
+        context_keys: [llm_config.extraction_model]
+        ai_enhanced: true
+        timeout_seconds: 120
+
+      - id: pricing_analysis
+        action: pricing_analysis
+        depends_on: [contract_extraction]
+        context_keys: [llm_config.analysis_model, analysis_config.pricing_factors]
+        ai_enhanced: true
+        model: anthropic.claude-opus-4-6
+        timeout_seconds: 180
+
+      - id: compliance_check
+        action: compliance_check
+        depends_on: [contract_extraction]
+        context_keys: [compliance]
+        timeout_seconds: 30
+
+      - id: response_generate
+        action: response_generate
+        depends_on: [pricing_analysis, compliance_check]
+        context_keys: [llm_config.primary_model]
+        ai_enhanced: true
+        timeout_seconds: 120
+
+      - id: audit_log
+        action: audit_log_write
+        depends_on: [response_generate]
+        context_keys: [output_destinations.audit_log, compliance.audit]
+        mode: write
+        timeout_seconds: 15
+
+      - id: results_save
+        action: results_save
+        depends_on: [response_generate]
+        context_keys: [output_destinations.analysis_results]
+        mode: write
+        timeout_seconds: 30
+
+  # ===========================================================================
+  # ACTIONS
+  # ===========================================================================
+  actions:
+    - id: query_parse
+      handler: aerospace_defense.query_parse
+      description: "Parse and validate user query"
+
+    - id: access_validate
+      handler: core.access_validate
+      description: "Validate user access permissions"
+
+    - id: contract_lookup
+      handler: aerospace_defense.contract_lookup
+      description: "Query PowerFlow SQL for contracts (READ)"
+      mode: read
+
+    - id: document_search
+      handler: aerospace_defense.document_search
+      description: "Search SharePoint and file shares (READ)"
+      mode: read
+
+    - id: contract_extract
+      handler: aerospace_defense.contract_extract
+      description: "Extract contract data using AI"
+
+    - id: pricing_analysis
+      handler: aerospace_defense.pricing_analysis
+      description: "Analyze pricing trends and patterns"
+
+    - id: compliance_check
+      handler: aerospace_defense.compliance_check
+      description: "Check ITAR/DFARS compliance"
+
+    - id: response_generate
+      handler: core.response_generate
+      description: "Generate final response with citations"
+
+    - id: audit_log_write
+      handler: core.audit_log
+      description: "Write to audit log (WRITE)"
+      mode: write
+
+    - id: results_save
+      handler: core.s3_write
+      description: "Save analysis results (WRITE)"
+      mode: write
+
+  # ===========================================================================
+  # TRIGGERS
+  # ===========================================================================
+  triggers:
+    - type: api
+      path: "/api/v1/aerospace-defense/contract-analysis"
+      methods: ["POST"]
+      auth: azure_ad
+
+    - type: agent_hub
+      agent_id: "ContractBot"
+      description: "Natural language contract queries"
+
+  # ===========================================================================
+  # CONNECTORS (READ/WRITE)
+  # ===========================================================================
+  connectors:
+    - id: power_flow_sql
+      type: sql_server
+      mode: read
+      connection_string_env: "POWER_FLOW_CONNECTION_STRING"
+      description: "PowerFlow electronic file cabinet"
+
+    - id: sharepoint_gcc
+      type: sharepoint_online
+      mode: read
+      tenant_env: "M365_GCC_TENANT"
+      auth: service_principal
+      description: "M365 GCC High SharePoint"
+
+    - id: solidworks_pdm
+      type: sql_server
+      mode: read
+      connection_string_env: "SOLIDWORKS_PDM_CONNECTION"
+      description: "SolidWorks PDM Vault"
+
+    - id: network_files
+      type: smb_share
+      mode: read
+      base_path_env: "NETWORK_FILE_PATH"
+      description: "Network file shares"
+
+    - id: govcloud_erp
+      type: erp_connector
+      mode: read_write
+      api_endpoint_env: "ERP_API_ENDPOINT"
+      description: "GovCloud ERP system"
+
+  # ===========================================================================
+  # METADATA
+  # ===========================================================================
+  metadata:
+    created_by: apex-platform
+    created_at: "2026-03-24"
+    version_notes: "v1.0.0 - Essex Industries demo"
+    tags:
+      - aerospace
+      - defense
+      - contracts
+      - itar
+      - govcloud
+      - claude-opus-4-6

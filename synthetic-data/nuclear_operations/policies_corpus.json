@@ -1,0 +1,235 @@
+[
+  {
+    "doc_id": "STP-415",
+    "doc_number": "STP-415",
+    "title": "Business Travel & Per-Diem Allowances",
+    "effective_date": "2024-06-01",
+    "revision": "Rev 4",
+    "owner": "STP Finance / Travel Services",
+    "nrc_classification": "Public",
+    "sections": [
+      {
+        "section": "3.1",
+        "heading": "Lodging",
+        "text": "Lodging at on-site business meetings shall be reimbursed at actual cost up to the GSA per-diem rate for the locality."
+      },
+      {
+        "section": "3.2",
+        "heading": "Meal Allowance",
+        "text": "Per-diem meal allowance for on-site business meetings shall not exceed $75.00 per traveler per calendar day, inclusive of gratuity."
+      },
+      {
+        "section": "3.3",
+        "heading": "Incidental Expenses",
+        "text": "Incidental expenses (parking, tolls, business calls) shall be reimbursed at actual cost with itemized receipts."
+      }
+    ],
+    "keywords": [
+      "meal",
+      "allowance",
+      "per-diem",
+      "travel",
+      "site-meeting",
+      "business travel",
+      "$75",
+      "75"
+    ]
+  },
+  {
+    "doc_id": "STP-401",
+    "doc_number": "STP-401",
+    "title": "Overtime Authorization",
+    "effective_date": "2023-09-15",
+    "revision": "Rev 2",
+    "owner": "STP HR",
+    "nrc_classification": "Internal",
+    "sections": [
+      {
+        "section": "2.1",
+        "heading": "Approval Threshold",
+        "text": "All overtime hours in excess of 16 per pay period require Manager approval prior to work performance."
+      },
+      {
+        "section": "2.2",
+        "heading": "Fatigue Management",
+        "text": "Cumulative work hours shall conform to 10 CFR 26 fatigue-management limits; covered employees may not exceed 16 hours in any 24-hour period without supervisor sign-off."
+      }
+    ],
+    "keywords": [
+      "overtime",
+      "fatigue",
+      "10 CFR 26",
+      "manager approval"
+    ]
+  },
+  {
+    "doc_id": "STP-402",
+    "doc_number": "STP-402",
+    "title": "Paid Time Off",
+    "effective_date": "2024-01-01",
+    "revision": "Rev 5",
+    "owner": "STP HR",
+    "nrc_classification": "Internal",
+    "sections": [
+      {
+        "section": "1.1",
+        "heading": "Accrual",
+        "text": "Full-time employees accrue PTO at 1.92 hours per pay period during the first 5 years, 2.77 thereafter, capped at 200 hours."
+      }
+    ],
+    "keywords": [
+      "pto",
+      "paid time off",
+      "accrual",
+      "vacation"
+    ]
+  },
+  {
+    "doc_id": "STP-403",
+    "doc_number": "STP-403",
+    "title": "Training Reimbursement",
+    "effective_date": "2023-04-01",
+    "revision": "Rev 3",
+    "owner": "STP Training",
+    "nrc_classification": "Internal",
+    "sections": [
+      {
+        "section": "1.0",
+        "heading": "Eligibility",
+        "text": "STP will reimburse pre-approved external training up to $5,000/year for active full-time employees with at least 12 months of service."
+      }
+    ],
+    "keywords": [
+      "training",
+      "reimbursement",
+      "$5,000",
+      "external training"
+    ]
+  },
+  {
+    "doc_id": "STP-404",
+    "doc_number": "STP-404",
+    "title": "Site ID Badge Policy",
+    "effective_date": "2023-07-01",
+    "revision": "Rev 2",
+    "owner": "STP Security",
+    "nrc_classification": "Security-Related",
+    "sections": [
+      {
+        "section": "1.0",
+        "heading": "Issue & Wear",
+        "text": "All personnel inside the protected area shall display a site-issued photo ID badge above the waist at all times. Lost badges must be reported within 30 minutes."
+      }
+    ],
+    "keywords": [
+      "badge",
+      "id",
+      "photo id",
+      "protected area"
+    ]
+  },
+  {
+    "doc_id": "STP-405",
+    "doc_number": "STP-405",
+    "title": "Vendor On-Site Conduct",
+    "effective_date": "2024-02-01",
+    "revision": "Rev 1",
+    "owner": "STP Security",
+    "nrc_classification": "Security-Related",
+    "sections": [
+      {
+        "section": "2.0",
+        "heading": "Escort Requirements",
+        "text": "All vendors lacking unescorted-access training shall be continuously escorted by an STP employee in the protected area; escort ratios shall not exceed 1:5."
+      }
+    ],
+    "keywords": [
+      "vendor",
+      "escort",
+      "protected area",
+      "1:5 ratio"
+    ]
+  },
+  {
+    "doc_id": "STP-OP-2204",
+    "doc_number": "STP-OP-2204",
+    "title": "Reactor Coolant Pump Surveillance & Lockout",
+    "effective_date": "2023-11-15",
+    "revision": "Rev 3",
+    "owner": "Operations / RCS",
+    "nrc_classification": "Internal",
+    "sections": [
+      {
+        "section": "5.1",
+        "heading": "Vibration Monitoring",
+        "text": "Reactor coolant pump vibration shall be monitored continuously; any single-axis reading exceeding 0.30 in/s peak shall trigger a Tech-Spec entry within 4 hours."
+      },
+      {
+        "section": "5.4",
+        "heading": "Lockout / Tagout",
+        "text": "Prior to maintenance on any RCP, two-person verification of breaker open and tag-applied shall be documented in the work package per OSHA 1910.147."
+      }
+    ],
+    "keywords": [
+      "RCP",
+      "reactor coolant pump",
+      "vibration",
+      "0.30",
+      "lockout",
+      "tagout",
+      "LOTO"
+    ]
+  },
+  {
+    "doc_id": "STP-TS-3.4.5",
+    "doc_number": "STP-TS-3.4.5",
+    "title": "Tech Spec 3.4.5 \u2014 ESW Pump Operability",
+    "effective_date": "2022-03-01",
+    "revision": "Rev 1",
+    "owner": "Licensing",
+    "nrc_classification": "Public",
+    "sections": [
+      {
+        "section": "3.4.5",
+        "heading": "Limiting Condition for Operation",
+        "text": "Two of three Essential Service Water pumps shall be operable in MODES 1, 2, 3, 4. With one pump inoperable, restore within 7 days or be in MODE 3 within the next 6 hours and MODE 5 within the following 36 hours."
+      }
+    ],
+    "keywords": [
+      "ESW",
+      "essential service water",
+      "operability",
+      "tech spec",
+      "3.4.5",
+      "MODE 3"
+    ]
+  },
+  {
+    "doc_id": "0PMP-RCS-7B",
+    "doc_number": "0PMP-RCS-7B",
+    "title": "RCP Bearing Inspection & Replacement (PM-7B)",
+    "effective_date": "2024-09-01",
+    "revision": "Rev 2",
+    "owner": "Maintenance / Mechanical",
+    "nrc_classification": "Internal",
+    "sections": [
+      {
+        "section": "1.0",
+        "heading": "Scope",
+        "text": "This procedure governs scheduled inspection of RCP thrust and journal bearings on Westinghouse Model-93A RCPs at intervals of 730 days."
+      },
+      {
+        "section": "4.0",
+        "heading": "Acceptance Criteria",
+        "text": "Bearing axial vibration shall be \u2264 0.20 in/s post-maintenance; thrust play shall be 0.020 \u00b1 0.005 in."
+      }
+    ],
+    "keywords": [
+      "PM-7B",
+      "RCP bearing",
+      "inspection",
+      "Westinghouse",
+      "Model-93A"
+    ]
+  }
+]

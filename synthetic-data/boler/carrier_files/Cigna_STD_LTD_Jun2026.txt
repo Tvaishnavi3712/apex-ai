@@ -1,0 +1,33 @@
+CIGNA — SHORT-TERM + LONG-TERM DISABILITY INVOICE
+═══════════════════════════════════════════════════════════════
+Group:           The Boler Company (Disability Policy #CD-77182)
+Period:          June 1-30, 2026
+Statement Date:  May 30, 2026
+
+─────────────── SUMMARY ───────────────
+Total Premium:     $94,450.00
+Total Lives:       847 employees (all employees auto-enrolled in STD; LTD opt-in)
+Coverage Mix:      STD 100% · LTD 78%
+
+─────────────── DIVISION BREAKDOWN ───────────────
+Hendrickson Intl       412 EE  $46,200
+Boler Mfg Services     156 EE  $17,640
+Boler Holdings         124 EE  $14,040
+Boler Real Estate       89 EE  $10,080
+Corporate/Shared        66 EE  $6,490
+
+─────────────── COVERAGE TIERS ───────────────
+STD (66.7% / 26 wks)   847 × $52/mo  = $44,044
+LTD (60% / Soc Sec int) 661 × $78/mo  = $51,558
+Coverage adjustments:  -$1,152 (5 new hires partial month)
+                                       ────────
+                                       $94,450 net
+
+─────────────── DRIFT NOTICE ───────────────
+Rate drift this cycle: +0.6% above contract.
+Status: Within tolerance.
+
+─────────────── REMITTANCE ───────────────
+Payable to:   Cigna Disability Group
+Reference:    BOLER-JUN26-DISABILITY
+Method:        ACH

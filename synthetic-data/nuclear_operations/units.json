@@ -1,0 +1,20 @@
+[
+  {
+    "unit_id": "U1",
+    "name": "South Texas Project Unit 1",
+    "commissioning_date": "1988-08-25",
+    "license_expiry": "2027-08-20",
+    "reactor_type": "Westinghouse 4-loop PWR",
+    "thermal_mw": 3853,
+    "electrical_mw": 1280
+  },
+  {
+    "unit_id": "U2",
+    "name": "South Texas Project Unit 2",
+    "commissioning_date": "1989-06-19",
+    "license_expiry": "2028-12-15",
+    "reactor_type": "Westinghouse 4-loop PWR",
+    "thermal_mw": 3853,
+    "electrical_mw": 1280
+  }
+]

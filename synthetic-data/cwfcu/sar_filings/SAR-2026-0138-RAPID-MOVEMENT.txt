@@ -1,0 +1,57 @@
+FinCEN SAR (Suspicious Activity Report) — Form 111
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+═══════════════════════════════════════════════════════════════
+
+FILING REFERENCE:      SAR-2026-0138
+FinCEN ID:             32026031400138
+Filing Type:           INITIAL
+Filing Status:         FILED (2026-06-01 09:17 ET)
+Detection Mechanism:   ApexAI Compliance Agent — Rapid Movement v2.1
+Drafted By:            Compliance Agent · v2.6.3 (96.4% confidence)
+Approved By:           Adrienne Williams (BSA Officer) at 2026-06-01 09:11
+
+──────── SUBJECT INFORMATION ────────
+Member Number:         #38204
+Legal Name:            HARTLEY, Russell J.
+Date of Birth:         1972-11-08 (53)
+Address:               4407 Edison Rd, South Bend, IN 46615
+Occupation:            Independent dispatcher (logistics)
+Member Since:          2024-08-21
+Risk Tier:             MEDIUM (auto-elevated post-pattern)
+
+──────── SUSPICIOUS ACTIVITY ────────
+Activity Type:         Rapid movement of funds (in-and-out cycling)
+Suspected Violation:   31 U.S.C. § 5318(g)
+Activity Date Range:   2026-05-09 through 2026-05-30 (22 days)
+Total In:              $18,500.00
+Total Out:             $18,150.00 (net retained: $350)
+Transaction Count:     12
+
+──────── PATTERN ────────
+─ 6 wire-ins ($2,800 to $4,100) from out-of-state senders
+─ 6 wire-outs to 4 different recipients within 24 hrs of receipt
+─ Mean dwell time: 18 hours
+─ All wires under $5,000 threshold
+─ No corresponding payroll, invoice, or legitimate business context
+
+──────── NARRATIVE ────────
+On or about May 9 through May 30, 2026, the subject (#38204) engaged in
+a pattern of rapid funds movement consisting of 6 incoming wire transfers
+from senders in Florida, Georgia, and Texas totaling $18,500. Each
+incoming wire was followed within 24 hours by an outgoing wire to one of
+4 recipients in different jurisdictions. Net retention across all 12
+transactions was $350. The pattern is consistent with funnel-account
+activity used to obscure the true origin or destination of funds.
+
+──────── HAND-OFF NOTES ────────
+→ Compliance Agent:    Member moved to enhanced monitoring queue
+→ Loan Document Agent: No active loans · enhanced verification on any future
+→ Policy & HR Agent:   No employee impact (member-side activity only)
+
+──────── NCUA EXAM FOLDER INDEX ────────
+Folder Path:           ncua-exam-2026/bsa_aml/sars/2026-Q2/
+Immutable Audit ID:    AUDIT-2026-05-30-22:14:08-SAR-0138
+Filed Timestamp:       2026-06-01 09:17:33 ET (within 30-day window)
+
+[Closed exemplar — filed, accepted by FinCEN, NCUA folder-indexed.]

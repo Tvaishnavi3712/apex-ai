@@ -1,0 +1,327 @@
+[
+  {
+    "mode_id": "FM-001",
+    "name": "bearing_seizure",
+    "early_indicators": [
+      "vibration > 4 mm/s",
+      "bearing_temp > 85C"
+    ],
+    "typical_lead_days": 14,
+    "mitigation_actions": [
+      "Replace bearing",
+      "Inspect shaft alignment",
+      "Verify lube oil quality"
+    ]
+  },
+  {
+    "mode_id": "FM-002",
+    "name": "seal_leak",
+    "early_indicators": [
+      "oil_pressure drop > 5%",
+      "visible drip rate > 2 drops/min"
+    ],
+    "typical_lead_days": 21,
+    "mitigation_actions": [
+      "Replace mechanical seal",
+      "Test seal flush system"
+    ]
+  },
+  {
+    "mode_id": "FM-003",
+    "name": "motor_winding_fault",
+    "early_indicators": [
+      "motor_current step > 15%",
+      "winding_temp > 130C"
+    ],
+    "typical_lead_days": 7,
+    "mitigation_actions": [
+      "Megger test",
+      "Replace motor",
+      "Check cooling fan"
+    ]
+  },
+  {
+    "mode_id": "FM-004",
+    "name": "valve_stem_galling",
+    "early_indicators": [
+      "stroke_time > spec",
+      "torque > spec"
+    ],
+    "typical_lead_days": 30,
+    "mitigation_actions": [
+      "Lubricate stem",
+      "Inspect packing",
+      "Replace stem if scored"
+    ]
+  },
+  {
+    "mode_id": "FM-005",
+    "name": "control_card_failure",
+    "early_indicators": [
+      "intermittent signal",
+      "memory_check fail"
+    ],
+    "typical_lead_days": 5,
+    "mitigation_actions": [
+      "Replace card",
+      "Restore configuration"
+    ]
+  },
+  {
+    "mode_id": "FM-006",
+    "name": "packing_leak",
+    "early_indicators": [
+      "weep > 1 drop/min",
+      "stem temperature elevated"
+    ],
+    "typical_lead_days": 45,
+    "mitigation_actions": [
+      "Adjust gland",
+      "Repack",
+      "Replace stem"
+    ]
+  },
+  {
+    "mode_id": "FM-007",
+    "name": "vibration_excursion",
+    "early_indicators": [
+      "axial vibration spike",
+      "harmonic content shift"
+    ],
+    "typical_lead_days": 10,
+    "mitigation_actions": [
+      "Balance impeller",
+      "Verify foundation grout",
+      "Bearing inspection"
+    ]
+  },
+  {
+    "mode_id": "FM-008",
+    "name": "thermal_overcurrent",
+    "early_indicators": [
+      "bearing_temp creep",
+      "motor_current rise"
+    ],
+    "typical_lead_days": 8,
+    "mitigation_actions": [
+      "Verify cooling water flow",
+      "Inspect insulation",
+      "Reduce load if possible"
+    ]
+  },
+  {
+    "mode_id": "FM-009",
+    "name": "design_deficiency",
+    "early_indicators": [
+      "multi-channel drift",
+      "repeated failures across train"
+    ],
+    "typical_lead_days": 60,
+    "mitigation_actions": [
+      "Engineering change request",
+      "Vendor consultation"
+    ]
+  },
+  {
+    "mode_id": "FM-010",
+    "name": "vendor_quality",
+    "early_indicators": [
+      "early-life failure",
+      "lot-correlated defects"
+    ],
+    "typical_lead_days": 90,
+    "mitigation_actions": [
+      "Lot quarantine",
+      "Vendor corrective action request"
+    ]
+  },
+  {
+    "mode_id": "FM-011",
+    "name": "operator_error",
+    "early_indicators": [
+      "procedure deviation",
+      "post-evolution alarm"
+    ],
+    "typical_lead_days": 0,
+    "mitigation_actions": [
+      "Just-in-time training",
+      "Procedure revision review"
+    ]
+  },
+  {
+    "mode_id": "FM-012",
+    "name": "thermal_cycling_fatigue",
+    "early_indicators": [
+      "weld crack indications",
+      "leak-by"
+    ],
+    "typical_lead_days": 120,
+    "mitigation_actions": [
+      "UT inspection",
+      "Weld repair",
+      "Stress relief"
+    ]
+  },
+  {
+    "mode_id": "FM-013",
+    "name": "instrumentation_drift",
+    "early_indicators": [
+      "cal-check out of tolerance"
+    ],
+    "typical_lead_days": 90,
+    "mitigation_actions": [
+      "Recalibrate",
+      "Replace transmitter"
+    ]
+  },
+  {
+    "mode_id": "FM-014",
+    "name": "lubrication_loss",
+    "early_indicators": [
+      "oil level low alarm",
+      "bearing_temp rise"
+    ],
+    "typical_lead_days": 3,
+    "mitigation_actions": [
+      "Top up oil",
+      "Investigate leak source"
+    ]
+  },
+  {
+    "mode_id": "FM-015",
+    "name": "corrosion_pitting",
+    "early_indicators": [
+      "UT thickness loss",
+      "visible pitting on coupons"
+    ],
+    "typical_lead_days": 365,
+    "mitigation_actions": [
+      "Coating refurb",
+      "Cathodic protection",
+      "Material upgrade"
+    ]
+  },
+  {
+    "mode_id": "FM-016",
+    "name": "electrical_breaker_trip",
+    "early_indicators": [
+      "frequent reset",
+      "mechanism wear"
+    ],
+    "typical_lead_days": 14,
+    "mitigation_actions": [
+      "Trip-unit calibration",
+      "Mechanism overhaul"
+    ]
+  },
+  {
+    "mode_id": "FM-017",
+    "name": "fan_belt_wear",
+    "early_indicators": [
+      "belt-flap noise",
+      "tensioner travel"
+    ],
+    "typical_lead_days": 30,
+    "mitigation_actions": [
+      "Replace belt",
+      "Verify alignment"
+    ]
+  },
+  {
+    "mode_id": "FM-018",
+    "name": "filter_clog",
+    "early_indicators": [
+      "differential pressure rise"
+    ],
+    "typical_lead_days": 7,
+    "mitigation_actions": [
+      "Replace filter element"
+    ]
+  },
+  {
+    "mode_id": "FM-019",
+    "name": "coupling_misalignment",
+    "early_indicators": [
+      "1x rotation vibration peak"
+    ],
+    "typical_lead_days": 14,
+    "mitigation_actions": [
+      "Laser-align",
+      "Replace coupling if cracked"
+    ]
+  },
+  {
+    "mode_id": "FM-020",
+    "name": "gasket_failure",
+    "early_indicators": [
+      "weep",
+      "small leak rate increase"
+    ],
+    "typical_lead_days": 60,
+    "mitigation_actions": [
+      "Replace gasket",
+      "Verify flange surface"
+    ]
+  },
+  {
+    "mode_id": "FM-021",
+    "name": "loose_bolting",
+    "early_indicators": [
+      "torque-check failure",
+      "vibration anomaly"
+    ],
+    "typical_lead_days": 30,
+    "mitigation_actions": [
+      "Re-torque to spec",
+      "Replace damaged bolts"
+    ]
+  },
+  {
+    "mode_id": "FM-022",
+    "name": "cooling_water_fouling",
+    "early_indicators": [
+      "heat exchanger DP rise",
+      "outlet temperature rise"
+    ],
+    "typical_lead_days": 90,
+    "mitigation_actions": [
+      "Chemical clean",
+      "Mechanical clean"
+    ]
+  },
+  {
+    "mode_id": "FM-023",
+    "name": "diaphragm_rupture",
+    "early_indicators": [
+      "fluid in actuator vent"
+    ],
+    "typical_lead_days": 0,
+    "mitigation_actions": [
+      "Replace diaphragm",
+      "Inspect actuator"
+    ]
+  },
+  {
+    "mode_id": "FM-024",
+    "name": "encoder_fault",
+    "early_indicators": [
+      "position-feedback noise"
+    ],
+    "typical_lead_days": 7,
+    "mitigation_actions": [
+      "Replace encoder"
+    ]
+  },
+  {
+    "mode_id": "FM-025",
+    "name": "age_wear",
+    "early_indicators": [
+      "multiple subsystems showing degradation"
+    ],
+    "typical_lead_days": 180,
+    "mitigation_actions": [
+      "Component replacement",
+      "End-of-life evaluation"
+    ]
+  }
+]

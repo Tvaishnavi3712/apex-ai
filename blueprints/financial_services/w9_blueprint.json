@@ -1,0 +1,190 @@
+{
+  "blueprintName": "apex-w9-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from IRS Form W-9 for vendor onboarding",
+  "industry": "financial_services",
+  "documentType": "w9_form",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "taxpayer_info": {
+        "type": "object",
+        "description": "Taxpayer identification",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name as shown on tax return (Line 1)",
+            "extraction_hints": ["1 Name"]
+          },
+          "business_name": {
+            "type": "string",
+            "description": "Business name/DBA (Line 2)",
+            "extraction_hints": ["2 Business name"]
+          },
+          "federal_tax_classification": {
+            "type": "string",
+            "description": "Tax classification (Line 3)",
+            "enum": [
+              "Individual/Sole Proprietor",
+              "C Corporation",
+              "S Corporation",
+              "Partnership",
+              "Trust/Estate",
+              "LLC - C",
+              "LLC - S",
+              "LLC - P",
+              "Other"
+            ],
+            "extraction_hints": ["3 Check appropriate box"]
+          },
+          "llc_classification": {
+            "type": "string",
+            "description": "LLC tax classification if applicable"
+          },
+          "exempt_payee_code": {
+            "type": "string",
+            "description": "Exempt payee code (Line 4)",
+            "extraction_hints": ["4 Exemptions"]
+          },
+          "fatca_exemption_code": {
+            "type": "string",
+            "description": "FATCA exemption code"
+          }
+        },
+        "required": ["name", "federal_tax_classification"]
+      },
+      "address": {
+        "type": "object",
+        "description": "Taxpayer address",
+        "properties": {
+          "street": {
+            "type": "string",
+            "description": "Street address (Line 5)",
+            "extraction_hints": ["5 Address"]
+          },
+          "city": {
+            "type": "string",
+            "description": "City (Line 6)"
+          },
+          "state": {
+            "type": "string",
+            "description": "State (Line 6)"
+          },
+          "zip_code": {
+            "type": "string",
+            "description": "ZIP code (Line 6)",
+            "pattern": "^[0-9]{5}(-[0-9]{4})?$"
+          },
+          "requester_info": {
+            "type": "string",
+            "description": "Requester's name and address (Line 7)"
+          },
+          "account_numbers": {
+            "type": "string",
+            "description": "List account numbers (Line 8)"
+          }
+        }
+      },
+      "tin": {
+        "type": "object",
+        "description": "Taxpayer Identification Number",
+        "properties": {
+          "ssn": {
+            "type": "string",
+            "description": "Social Security Number",
+            "pattern": "^[0-9]{3}-[0-9]{2}-[0-9]{4}$|^[0-9]{9}$",
+            "extraction_hints": ["Social security number"]
+          },
+          "ein": {
+            "type": "string",
+            "description": "Employer Identification Number",
+            "pattern": "^[0-9]{2}-[0-9]{7}$|^[0-9]{9}$",
+            "extraction_hints": ["Employer identification number"]
+          },
+          "tin_type": {
+            "type": "string",
+            "description": "Type of TIN provided",
+            "enum": ["SSN", "EIN"]
+          }
+        }
+      },
+      "certification": {
+        "type": "object",
+        "description": "Certification and signature",
+        "properties": {
+          "signature_present": {
+            "type": "boolean",
+            "description": "Whether signature is present"
+          },
+          "signature_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of signature",
+            "extraction_hints": ["Date"]
+          },
+          "backup_withholding": {
+            "type": "boolean",
+            "description": "Subject to backup withholding",
+            "default": false
+          }
+        }
+      },
+      "validation": {
+        "type": "object",
+        "description": "Validation results",
+        "properties": {
+          "form_version": {
+            "type": "string",
+            "description": "W-9 form revision date",
+            "extraction_hints": ["(Rev."]
+          },
+          "all_required_fields_present": {
+            "type": "boolean"
+          },
+          "tin_format_valid": {
+            "type": "boolean"
+          },
+          "signature_present": {
+            "type": "boolean"
+          }
+        }
+      },
+      "metadata": {
+        "type": "object",
+        "properties": {
+          "extraction_confidence": {"type": "number"},
+          "page_count": {"type": "integer"}
+        }
+      }
+    },
+    "required": ["taxpayer_info", "address", "tin", "certification"]
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "confidenceThreshold": 0.90,
+    "maskSensitiveData": true,
+    "sensitiveFields": ["tin.ssn", "tin.ein"]
+  },
+  "validationRules": [
+    {
+      "name": "tin_required",
+      "description": "Either SSN or EIN must be provided",
+      "expression": "tin.ssn != null || tin.ein != null"
+    },
+    {
+      "name": "signature_required",
+      "description": "Signature must be present",
+      "expression": "certification.signature_present == true"
+    },
+    {
+      "name": "name_required",
+      "description": "Taxpayer name is required",
+      "expression": "taxpayer_info.name != null && taxpayer_info.name.length > 0"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "maskTinInOutput": true,
+    "flagIncompleteForm": true
+  }
+}

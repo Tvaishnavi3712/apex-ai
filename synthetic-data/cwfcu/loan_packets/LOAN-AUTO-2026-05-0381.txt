@@ -1,0 +1,84 @@
+LOAN APPLICATION PACKET — AUTO
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+═══════════════════════════════════════════════════════════════
+
+Loan Reference:        LN-2026-05-0381
+Application Channel:   CWAnyWhere mobile app
+Submitted:             2026-05-21 18:42:08 ET
+Processing Agent:      Loan Document Agent · v2.4.1
+Decision Status:       APPROVED · ROUTED TO UNDERWRITER
+
+──────── APPLICANT ────────
+Member Number:         #29402
+Legal Name:            GARCIA, Lucia Marisol
+Date of Birth:         1988-12-04 (37)
+Address:               1842 N Hill St, South Bend, IN 46617
+Employer:              Memorial Hospital · South Bend (RN, 11 years)
+Annual Income:         $89,200 (W-2 verified)
+Co-applicant:          None
+CIP On File:           ✓ (member since 2014-06-12)
+Risk Tier:             LOW
+Prior CDD Concerns:    None · annual review current
+
+──────── LOAN REQUEST ────────
+Type:                  Auto Loan (new vehicle)
+Amount Requested:      $28,400
+Term:                  60 months
+Rate (offered):        4.75% APR · LOW risk pricing tier
+Down Payment:          $4,200 (member savings)
+
+──────── COLLATERAL ────────
+Vehicle:               2026 Honda CR-V EX-L (new)
+VIN:                   5J6RW2H89PL044128
+Dealer:                Gates Honda · South Bend, IN
+MSRP:                  $36,200
+Purchase Price:        $32,600 (negotiated)
+Loan-to-Value:         87.1%
+
+──────── DOCUMENTATION ────────
+Loan Application:      ✓ Signed (DocuSign · audit ID 88142)
+Indiana DL:            ✓ Verified (in good standing, expires 2027-12-04)
+Proof of Income:       ✓ 2 most recent paystubs + 2024 W-2
+Employment Verify:     ✓ Memorial Hospital HR confirmation (auto-fetched)
+Insurance Binder:      ✓ State Farm Auto · liability + comprehensive
+Title:                 ✓ Will issue on closing (clean — new vehicle)
+Bill of Sale:          ✓ Gates Honda
+
+──────── AGENT VALIDATION ────────
+Income Verification:   PASS (W-2 + paystub cross-check, 100% match)
+DTI Calculation:       Front 18.2% · Back 28.7% (within policy)
+Credit Pull:           FICO 762 (within LOW tier 720-850)
+Collateral Valuation:  ✓ NADA + KBB cross-check (LTV within policy)
+OFAC Re-screen:        ✓ Clear
+Source of Funds:       ✓ Down payment from share-savings (no anomaly)
+
+──────── EXTRACTION CONFIDENCE ────────
+Per-document confidence (n=8 documents):
+  ─ Loan App:          99.4%
+  ─ DL:                98.1%
+  ─ Paystubs:          97.8%
+  ─ W-2:               99.2%
+  ─ Insurance binder:  96.4%
+  ─ Title (forward):   97.1%
+  ─ Bill of sale:      98.8%
+  ─ Employment verify: 99.8%
+Overall packet confidence: 98.3%
+
+──────── DECISION TIMELINE ────────
+Submitted:             2026-05-21 18:42:08 ET
+Packet ingested:       2026-05-21 18:42:54 ET (46 sec)
+Extraction complete:   2026-05-21 18:46:11 ET (3 min 17 sec)
+Validation complete:   2026-05-21 18:47:28 ET (1 min 17 sec)
+Auto-approval:         2026-05-21 18:47:32 ET
+Routed to Underwriter: 2026-05-21 18:47:48 ET (Carrie Mendez · Sr UW)
+Underwriter Approve:   2026-05-22 09:48 ET (next-business-day)
+Total Cycle Time:      15 hrs 6 min (target ≤ 48 hrs)
+
+──────── HAND-OFF NOTES ────────
+→ Vendor Agent:        State Farm appointed (insurance vendor — no new MSA)
+→ Closing/Funding:     Scheduled 2026-05-26 14:00 ET at South Bend Main
+
+──────── NCUA EXAM FOLDER INDEX ────────
+Folder Path:           ncua-exam-2026/credit_risk/auto/2026-Q2/
+Immutable Audit ID:    AUDIT-2026-05-21-18:42:08-LN-0381

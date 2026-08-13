@@ -1,0 +1,5 @@
+# Azure AI Foundry agent definition
+name: apex-po-bot
+runtime: azure-ai-foundry
+model: ${AZURE_OPENAI_DEPLOYMENT}
+entrypoint: agent.py

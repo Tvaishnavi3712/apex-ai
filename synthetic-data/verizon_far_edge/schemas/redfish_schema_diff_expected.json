@@ -1,0 +1,84 @@
+{
+  "schema_diff_report": {
+    "baseline_version":      "v1.14.0",
+    "current_version":       "v1.16.0",
+    "detected_at":           "2026-01-12T03:18:44Z",
+    "days_before_cycle":     6,
+    "breaking_changes_count": 3,
+    "scripts_impacted_count": 14
+  },
+  "changes": [
+    {
+      "id":              "SCHEMA-DRIFT-001",
+      "endpoint":        "/redfish/v1/Systems/1",
+      "field_old":       "PowerState",
+      "field_new":       "Status.PowerState",
+      "change_type":     "path_migration",
+      "breaking":        true,
+      "confidence":      0.98,
+      "scripts_impacted": [
+        "power_check.yml",
+        "node_health_check.yml",
+        "pre_upgrade_validation.yml",
+        "post_upgrade_validation.yml",
+        "site_readiness_check.yml",
+        "wave_deployment_preflight.yml"
+      ],
+      "remediation": {
+        "find":    "Systems/1.PowerState",
+        "replace": "Systems/1.Status.PowerState",
+        "effort":  "low"
+      },
+      "vendor_release_note_ref": "Wind River 24.12 §3.2.1"
+    },
+    {
+      "id":              "SCHEMA-DRIFT-002",
+      "endpoint":        "/redfish/v1/Chassis/1/Thermal",
+      "field_old":       "FanSpeeds[].CurrentReading",
+      "field_new":       "Fans[].Reading",
+      "change_type":     "field_rename_and_restructure",
+      "breaking":        true,
+      "confidence":      0.96,
+      "scripts_impacted": [
+        "thermal_baseline.robot",
+        "thermal_regression.robot",
+        "thermal_stress_test.robot",
+        "fan_speed_monitor.yml",
+        "thermal_alert_check.yml"
+      ],
+      "remediation": {
+        "find":    "FanSpeeds[*].CurrentReading",
+        "replace": "Fans[*].Reading",
+        "effort":  "medium"
+      },
+      "vendor_release_note_ref": "Wind River 24.12 §3.2.2"
+    },
+    {
+      "id":              "SCHEMA-DRIFT-003",
+      "endpoint":        "/redfish/v1/Managers/1/EthernetInterfaces/1",
+      "field_old":       null,
+      "field_new":       "IPv6Addresses",
+      "change_type":     "new_required_field",
+      "breaking":        true,
+      "confidence":      0.99,
+      "scripts_impacted": [
+        "interface_validation.robot",
+        "ipv6_enumeration_check.robot",
+        "network_baseline.yml"
+      ],
+      "remediation": {
+        "find":    "ethernet_interface payload",
+        "replace": "Add IPv6Addresses: [] to all interface assertions",
+        "effort":  "low"
+      },
+      "vendor_release_note_ref": "Wind River 24.12 §3.2.3"
+    }
+  ],
+  "remediation_summary": {
+    "total_breaking_changes":  3,
+    "total_scripts_impacted":  14,
+    "estimated_total_effort_hours": 2.0,
+    "recommended_action":      "Hold wave deployment 6 days; remediate scripts; re-run certification.",
+    "wave_recommendation":     "HOLD_PENDING_REMEDIATION"
+  }
+}

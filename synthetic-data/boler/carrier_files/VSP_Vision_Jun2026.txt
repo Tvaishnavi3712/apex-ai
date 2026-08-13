@@ -1,0 +1,34 @@
+VSP VISION CARE — GROUP PREMIUM INVOICE
+═══════════════════════════════════════════════════════════════
+Group:           The Boler Company (VSP Group #VSP-08841)
+Period:          June 1-30, 2026
+Statement Date:  May 30, 2026
+
+─────────────── SUMMARY ───────────────
+Total Premium:     $62,140.00
+Total Lives:       798 employees (49 employees waived vision)
+Average per EE:    $77.87
+
+─────────────── DIVISION BREAKDOWN ───────────────
+Hendrickson Intl       391 EE  $38,200
+Boler Mfg Services     150 EE  $15,720
+Boler Holdings         120 EE  $12,480
+Boler Real Estate       85 EE  $8,910
+Corporate/Shared        62 EE  $6,610
+Waiver adjust            -      -$19,780 (49 waivers credited)
+
+─────────────── COVERAGE TIER ───────────────
+EE-only Choice         574 employees × $58/mo  = $33,292
+EE+Family Choice       224 employees × $134/mo = $30,016
+                                                ────────
+                                                $63,308
+Wave-off credit: $1,168 → $62,140 net
+
+─────────────── DRIFT NOTICE ───────────────
+Rate drift this cycle: +0.2% above contract
+Status: Well within tolerance. No Signal alert.
+
+─────────────── REMITTANCE ───────────────
+Payable to:   Vision Service Plan Insurance Co
+Reference:    BOLER-JUN26-VISION
+Method:        ACH

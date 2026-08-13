@@ -1,0 +1,118 @@
+================================================================================
+                              BECHTEL ENERGY INC.
+                                 3000 Post Oak Blvd.
+                                  Houston, TX 77056
+                                    (713) 235-2000
+================================================================================
+
+                              ENGINEERING QUOTATION
+
+Quote Number:         QUOTE-BECHTEL-2026-Q1-0089
+Date Issued:          02/27/2026
+Validity:             120 days (expires 06/27/2026)
+Subject:              Sweeny Fractionation Complex - Expansion Engineering
+                      Frac VIII through Frac X, debottleneck of common
+                      utilities and inbound NGL header
+Prepared For:         Enterprise Products Operating LLC
+                      Attn: D. Patel, VP Engineering & Construction
+Bechtel Project No:   26-04421-EXP
+Reference RFP:        RFP-EPD-SWEENY-EXP-2026-001
+
+--------------------------------------------------------------------------------
+PROJECT BACKGROUND
+--------------------------------------------------------------------------------
+Enterprise's Sweeny fractionation complex (Brazoria County, TX) currently
+operates seven NGL fractionators with combined nameplate ~756 MBPD. EPROD
+intends to add Frac VIII (150 MBPD), Frac IX (150 MBPD - design parallel), and
+prepare for Frac X. Common-system debottlenecks (inbound 24" Y-grade header,
+cooling water, flare, MCC capacity, and product header out to Mont Belvieu
+storage) are also in scope.
+
+--------------------------------------------------------------------------------
+SCOPE OF SERVICES (Multi-Phase)
+--------------------------------------------------------------------------------
+
+PHASE 1 - FEED VALIDATION & GAP ANALYSIS (16 weeks)
+  - Review existing FEED packages (Frac VIII completed by others)
+  - Heat & material balance reconciliation
+  - Tie-in study on common header, utilities, flare
+  - Class 3 estimate refresh (-15%/+25%)
+  - Risk register and execution-strategy options
+  Estimated cost:  USD 1,650,000
+
+PHASE 2 - DETAILED ENGINEERING FRAC IX (52 weeks)
+  - Process, mechanical, civil/structural, E&I, piping
+  - 3D model (Smart Plant 3D), IFC drawings
+  - Equipment specifications, MR packages
+  - Procurement support and bid-package issuance
+  - Constructability reviews, model reviews (30/60/90)
+  Estimated cost:  USD 4,950,000
+
+PHASE 3 - COMMON-SYSTEMS DEBOTTLENECK ENGR (28 weeks, parallel)
+  - 24" inbound header hydraulic upgrade study
+  - Cooling tower expansion (one new cell)
+  - Flare load study and tip replacement design
+  - MCC and substation expansion (138/13.8 kV)
+  - Detailed engineering and IFC drawings
+  Estimated cost:  USD 1,750,000
+
+PHASE 4 - CONSTRUCTION SUPPORT (24 weeks, on call)
+  - RFI response, field engineering, redlines
+  - Vendor data review for owner-furnished equipment
+  - Pre-commissioning and startup engineering support
+  Estimated cost:  USD   350,000
+
+                                              TOTAL PROPOSAL: USD 8,700,000.00
+
+--------------------------------------------------------------------------------
+SCHEDULE (PRELIMINARY)
+--------------------------------------------------------------------------------
+NTP target:                 Q3 2026
+Phase 1 complete:           Q4 2026
+Phase 2 IFC issuance:       Q4 2027 (rolling release Q2-Q4 2027)
+Phase 3 IFC issuance:       Q3 2027
+Frac IX mech complete:      Q4 2028 (under separate construction contract)
+
+--------------------------------------------------------------------------------
+COMMERCIAL TERMS
+--------------------------------------------------------------------------------
+Pricing structure:    Phase 1 - Lump Sum
+                      Phases 2 & 3 - Reimbursable with not-to-exceed (NTE)
+                      Phase 4 - T&M per Exhibit A
+Payment terms:        Net 30 from invoice receipt
+Invoicing:            Monthly, with detailed labor and ODC backup
+Currency:             USD, firm through validity period
+Travel:               Included in lump sums; reimbursable at cost +0% in
+                      Phases 2 - 4 (capped at $250K/yr)
+
+--------------------------------------------------------------------------------
+KEY ASSUMPTIONS
+--------------------------------------------------------------------------------
+  - Frac IX duplicates Frac VIII design with minor delta engineering only.
+  - Owner-furnished equipment list per Attachment C; vendor data made
+    available to Bechtel no later than 60 days post-NTP for long-leads.
+  - Workshare: 60% Houston, 25% Mumbai/Bechtel India, 15% New Delhi.
+  - Engineering tools: Smart Plant suite, Aspen HYSYS, AutoPIPE.
+  - EPROD provides existing site survey, process licensor docs (Honeywell
+    UOP), and operating data history.
+
+--------------------------------------------------------------------------------
+EXCLUSIONS
+--------------------------------------------------------------------------------
+  - Field surveys, geotechnical investigations
+  - Permitting / regulatory submissions (TCEQ, USACE)
+  - Process licensor fees
+  - Construction labor, materials, or subcontracts
+  - Owner-furnished equipment costs
+
+--------------------------------------------------------------------------------
+ACCEPTANCE
+--------------------------------------------------------------------------------
+Acceptance by signed return of this quotation or issuance of Purchase Order
+referencing QUOTE-BECHTEL-2026-Q1-0089.
+
+Bechtel Energy Inc.                       Enterprise Products Operating LLC
+By: ____________________                  By: ____________________
+P. Andersson                              Date: ___________
+SVP - Energy Business Line
+================================================================================

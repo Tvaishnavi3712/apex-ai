@@ -1,0 +1,101 @@
+LOAN APPLICATION PACKET — MORTGAGE
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+═══════════════════════════════════════════════════════════════
+
+Loan Reference:        LN-2026-0438
+Application Channel:   Encompass LOS adapter (CWFCU mortgage workflow)
+Submitted:             2026-05-29 10:08:42 ET
+Processing Agent:      Loan Document Agent · v2.4.1
+Decision Status:       APPROVED · CLOSED · FUNDED 2026-06-04
+
+──────── APPLICANT ────────
+Member Number:         #62411
+Legal Name:            PATEL, Anita Vinayak
+Date of Birth:         1984-07-08 (41)
+Address (current):     2104 Riverview Dr, South Bend, IN 46614 (will sell)
+Employer:              Indiana University Health · Physician, Internal Med (8 years)
+Annual Income:         $245,000 (W-2 verified)
+Co-applicant:          PATEL, Anand (spouse) · IT consultant · $112K
+CIP On File:           ✓ (member since 2017-09-11)
+Risk Tier:             LOW
+
+──────── LOAN REQUEST ────────
+Type:                  Mortgage (purchase)
+Amount Requested:      $215,000 (purchase $278,400 · down $63,400)
+Term:                  30-year fixed
+Rate (locked):         6.75% APR (rate-lock 2026-05-29 to 2026-07-29)
+Use of Funds:          Purchase principal residence
+
+──────── COLLATERAL ────────
+Property:              4814 Briarwood Ln, Granger, IN 46530
+Type:                  Single-family residence (3BR/3BA, built 1998)
+Purchase Price:        $278,400
+Appraisal Value:       $282,000 (Lakeside Appraisal · 2026-05-25)
+LTV:                   76.2%
+
+──────── DOCUMENTATION (32 items, all complete) ────────
+Loan Application URLA:       ✓
+2 yrs W-2 (2023, 2024):      ✓
+2 yrs Tax Returns:           ✓
+60-day Paystubs:             ✓ (5 paystubs, both applicants)
+Bank Statements (90d):       ✓ (CWFCU + Notre Dame FCU verified)
+Credit Report:               ✓ FICO 782 (LOW tier)
+Property Appraisal:          ✓ $282K
+Title Insurance:             ✓ Indiana Title Co
+HOI Binder:                  ✓ State Farm
+Flood Cert:                  ✓ Not in flood zone
+Purchase Agreement:          ✓ Signed
+Earnest Money Receipt:       ✓ $5,000
+Source-of-Funds (down):      ✓ CWFCU share-savings + Notre Dame FCU
+                             ✓ Schedule SOF questionnaire signed
+Survey:                      ✓ (Heritage Surveying)
+Termite Inspection:          ✓ Clear
+HOA Doc Review:              ✓ Briarwood HOA dues $42/mo
+Real Estate Settlement (RESPA): ✓
+TRID Disclosures:            ✓ All three required
+Verification of Employment:  ✓ IU Health HR + IT consulting client
+Mortgage Insurance:          N/A (LTV < 80%)
+
+──────── AGENT VALIDATION ────────
+Income Verification:   PASS (W-2 + paystub + VOE 100% match)
+DTI Calculation:       Front 32.1% · Back 38.4%
+                       Within QM safe-harbor (≤ 43%)
+Credit Pull:           FICO 782 · No derogatory items
+Collateral:            Appraisal supports purchase ($282K vs $278.4K)
+OFAC Re-screen:        ✓ Clear (both applicants)
+Source of Funds:       ✓ Verified from CWFCU + Notre Dame
+ATR/QM Compliance:     ✓ Qualified Mortgage · 8 ATR factors verified
+Fair Lending Check:    ✓ Comparator analysis · within policy
+
+──────── EXTRACTION CONFIDENCE ────────
+Per-document confidence (n=32):
+  Min:    91.2% (HOA bylaws, scanned PDF)
+  Max:    99.6% (URLA, fillable form)
+  Mean:   94.7%
+Overall packet confidence: 94.1% (target ≥ 92%)
+
+──────── DECISION TIMELINE ────────
+Submitted:             2026-05-29 10:08:42 ET
+Packet ingested:       2026-05-29 10:09:18 ET (36 sec)
+Extraction complete:   2026-05-29 10:42:11 ET (33 min · 32 docs)
+Validation complete:   2026-05-29 10:48:33 ET (6 min)
+Auto-approval:         2026-05-29 10:48:42 ET
+Routed to Underwriter: 2026-05-29 10:49 ET
+Underwriter Approve:   2026-05-30 14:18 ET
+Clear to Close:        2026-06-02 09:42 ET
+Closing:               2026-06-04 14:00 ET
+Funded:                2026-06-04 16:18 ET
+Total Cycle Time:      6 days 6 hrs (target ≤ 10 days)
+
+──────── HAND-OFF NOTES ────────
+→ Vendor Agent:        Lakeside Appraisal SOW · Indiana Title Co contract
+                       both linked to vendor risk register Q2 review
+→ Member Onboarding:   Spouse Anand Patel added as joint member (linked)
+→ Compliance:          Source-of-funds doc indexed to BSA folder
+
+──────── NCUA EXAM FOLDER INDEX ────────
+Folder Path:           ncua-exam-2026/credit_risk/mortgage/2026-Q2/
+Immutable Audit ID:    AUDIT-2026-05-29-10:08:42-LN-0438
+HMDA Reportable:       YES · LAR Code 1 (Conv. 30yr · approved)
+HMDA Filing Queue:     Q2 2026 batch (filing Jul 2026)

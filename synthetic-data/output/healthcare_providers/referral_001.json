@@ -1,0 +1,55 @@
+{
+  "_metadata": {
+    "blueprint": "apex-referral-v1",
+    "document_type": "referral",
+    "extraction_date": "2024-01-18T11:20:00Z",
+    "confidence_score": 0.94,
+    "source_file": "specialist_referral.pdf"
+  },
+  "referral_number": "REF-2024-456789",
+  "referral_date": "2024-01-18",
+  "expiration_date": "2024-07-18",
+  "urgency": "Routine",
+  "referring_provider": {
+    "name": "Dr. Jennifer Martinez",
+    "npi": "1234509876",
+    "specialty": "Family Medicine",
+    "practice_name": "Family Health Partners",
+    "phone": "312-555-1000",
+    "fax": "312-555-1001"
+  },
+  "referred_to_provider": {
+    "name": "Dr. David Kim",
+    "npi": "9876501234",
+    "specialty": "Cardiology",
+    "practice_name": "Heart & Vascular Specialists",
+    "phone": "312-555-2000",
+    "fax": "312-555-2001"
+  },
+  "patient": {
+    "name": "Robert Thompson",
+    "dob": "1960-04-22",
+    "member_id": "MEM-5551234",
+    "phone": "312-555-8888"
+  },
+  "reason_for_referral": "Evaluation of chest pain and shortness of breath on exertion. Recent EKG showed non-specific ST changes. Patient has history of hypertension and hyperlipidemia.",
+  "diagnoses": [
+    {"icd_code": "R07.9", "description": "Chest pain, unspecified"},
+    {"icd_code": "R06.02", "description": "Shortness of breath"},
+    {"icd_code": "I10", "description": "Essential hypertension"}
+  ],
+  "requested_services": [
+    "Cardiology consultation",
+    "Stress test",
+    "Echocardiogram if indicated"
+  ],
+  "authorized_visits": 3,
+  "clinical_notes": "58 y/o male with 2-week history of exertional chest pressure, relieved by rest. BP controlled on current medications. Lipid panel: TC 245, LDL 160. Family history significant for MI in father at age 55.",
+  "attachments": [
+    "EKG dated 01/15/2024",
+    "Recent lab results",
+    "Current medication list"
+  ],
+  "prior_auth_required": false,
+  "authorization_number": null
+}

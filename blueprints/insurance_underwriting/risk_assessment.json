@@ -1,0 +1,150 @@
+{
+  "blueprintName": "apex-risk-assessment-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from risk assessment reports",
+  "industry": "insurance_underwriting",
+  "documentType": "risk_assessment",
+  "documentSchema": {
+    "class": "ApexRiskAssessment",
+    "description": "Risk assessment extraction for underwriting decisions",
+    "definitions": {
+      "RISK_FACTOR": {
+        "properties": {
+          "factor_name": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "rating": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "score": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "notes": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "assessment_id": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "assessment_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "policy_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "application_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "risk_type": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "property_address": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "property_type": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "year_built": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "square_footage": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "construction_type": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "roof_type": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "roof_age": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "heating_type": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "electrical_type": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "plumbing_type": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "security_features": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "fire_protection": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "distance_to_fire_station": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "flood_zone": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "risk_factors": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/RISK_FACTOR"
+        }
+      },
+      "overall_risk_score": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "risk_grade": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "recommended_action": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "inspector_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "inspection_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "photos_attached": {
+        "type": "number",
+        "inferenceType": "explicit"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.85
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  }
+}

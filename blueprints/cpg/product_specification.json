@@ -1,0 +1,156 @@
+{
+  "blueprintName": "apex-product-spec-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from CPG product specifications",
+  "industry": "cpg",
+  "documentType": "product_specification",
+  "documentSchema": {
+    "class": "ApexProductSpec",
+    "description": "Product specification extraction for CPG manufacturing",
+    "definitions": {
+      "INGREDIENT": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "percentage": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "cas_number": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "function": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "origin": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      },
+      "NUTRITION_FACT": {
+        "properties": {
+          "nutrient": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "amount": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "daily_value_percent": {
+            "type": "number",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "product_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "product_code": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "upc": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "brand": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "category": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "subcategory": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "version": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "effective_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "description": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "ingredients": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/INGREDIENT"
+        }
+      },
+      "allergens": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "nutrition_facts": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/NUTRITION_FACT"
+        }
+      },
+      "serving_size": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "servings_per_container": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "net_weight": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "shelf_life_days": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "storage_conditions": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "certifications": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "country_of_origin": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "manufacturing_facility": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "regulatory_compliance": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.85
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  }
+}

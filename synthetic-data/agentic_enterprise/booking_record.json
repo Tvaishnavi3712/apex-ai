@@ -1,0 +1,41 @@
+{
+  "_description": "Synthetic booking record used by the Cruise Concierge demo. ConciergeAgent uses this as the conversation's state; modifications go through booking_modify action.",
+  "booking_id": "CSC-2026-04412",
+  "primary_guest": {
+    "guest_id": "G-78821",
+    "first_name": "Sarah",
+    "last_name": "Chen",
+    "email": "sarah.chen@example.com",
+    "phone": "+1-415-555-0188",
+    "loyalty_tier": "Gold"
+  },
+  "cabin_mates": [
+    { "guest_id": "G-78822", "first_name": "Daniel", "last_name": "Chen", "loyalty_tier": "Gold" }
+  ],
+  "ship": "Coral Aurora",
+  "stateroom": "11042",
+  "stateroom_class": "Balcony — Deluxe",
+  "itinerary": {
+    "departure_port": "Miami, FL",
+    "embark_date": "2026-06-14",
+    "disembark_date": "2026-06-21",
+    "stops": ["Cozumel", "Grand Cayman", "Ocho Rios", "Nassau"]
+  },
+  "fare": {
+    "base_fare_usd": 3284.00,
+    "taxes_fees_usd": 478.00,
+    "total_paid_usd": 3762.00,
+    "balance_due_usd": 0.00,
+    "currency": "USD"
+  },
+  "modifications_allowed": {
+    "date_change": true,
+    "cabin_upgrade": true,
+    "add_excursions": true
+  },
+  "history": [
+    { "ts": "2026-02-04T19:14:22Z", "event": "BOOKING_CREATED", "channel": "WEB" },
+    { "ts": "2026-03-11T08:02:15Z", "event": "PAYMENT_RECEIVED", "amount_usd": 3762.00 },
+    { "ts": "2026-04-22T13:38:01Z", "event": "EXCURSION_ADDED",  "label": "Cozumel — Snorkel Tour" }
+  ]
+}

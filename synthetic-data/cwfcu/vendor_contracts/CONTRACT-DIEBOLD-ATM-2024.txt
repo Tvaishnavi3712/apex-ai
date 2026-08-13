@@ -1,0 +1,58 @@
+VENDOR CONTRACT · ATM SERVICES + CASSETTE LOGISTICS
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+═══════════════════════════════════════════════════════════════
+
+Contract ID:           VND-DIEBOLD-ATM-2024
+Vendor:                Diebold Nixdorf Inc.  (North Canton, OH)
+Vendor Tier:           HIGH (Tier 2 · physical operations)
+Service Category:      ATM Hardware + Cassette Logistics + Maintenance
+Vendor Risk Score:     40 / 100 (LOW)
+
+────────  CONTRACT TERMS  ────────
+Effective:             2024-09-15
+Initial Term:          3 years (2024-09-15 → 2027-09-15)
+Auto-Renewal:          NO (RFP / re-bid required)
+Annual Value:          $353,000 / yr
+Coverage:              12 ATMs (4 branch + 8 standalone)
+Rate Escalator:        +3.5% / yr cap
+
+────────  SLA SUMMARY  ────────
+ATM Uptime:            99.96% per machine
+Cash Replenishment:    Same-day for branch ATMs, next-day for standalone
+Maintenance Response:  4 hr P1, 24 hr P2
+Performance Credits:   Per-ATM per-hour-downtime credits
+
+────────  PERFORMANCE Q2 2026  ────────
+ATM Uptime:            99.96% (avg across 12 ATMs)
+Avg Ticket TTR:        1.8 hrs (target 4 hr ✓)
+P1 Incidents:          0
+P2 Incidents:          5 (paper jams, card-reader cleanings · routine)
+SLA Breaches YTD:      0
+
+────────  CASSETTE LOGISTICS ────────
+Cash Cycles / Month:   28 (branch ATMs · 2x weekly)
+                       16 (standalone ATMs · 1x weekly)
+Cash Insurance:        $750K per location (Berkshire commercial)
+Dual-Control:          Enforced (CW + Diebold custodian present)
+
+────────  POLICY OBLIGATIONS TRIGGERED  ────────
+1. Annual Cash-Handling Training (§ 7.2 + CWFCU policy P-OPS-227):
+   ─ 14 employees handle ATM cassette logistics
+   ─ Current ack status: 12 / 14 (86%) ← 2 overdue
+   ─ Hand-off → Policy & HR Agent (in queue)
+
+2. Quarterly Key-Custodian Acknowledgment Refresh (§ 9.4):
+   ─ 4 custodians (1 per branch)
+   ─ Q2 2026 status: 4 / 4 acknowledged · COMPLETE
+
+3. Annual Third-Party Security Training (§ 11.1):
+   ─ All 84 CW employees · 78 / 84 complete (93%)
+
+────────  HAND-OFF NOTES  ────────
+→ Policy & HR Agent:   P-OPS-227 ack tracking · 2 overdue tellers
+→ Compliance Agent:    Cash insurance + dual-control logged BSA folder
+
+────────  NCUA EXAM FOLDER INDEX  ────────
+Folder Path:           ncua-exam-2026/third_party_risk/tier2_vendors/
+Immutable Audit ID:    AUDIT-2024-09-15-12:00:00-VND-DIEBOLD

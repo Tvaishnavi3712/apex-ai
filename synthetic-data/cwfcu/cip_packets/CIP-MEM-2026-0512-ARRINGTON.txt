@@ -1,0 +1,92 @@
+CUSTOMER IDENTIFICATION PROGRAM (CIP) PACKET
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+═══════════════════════════════════════════════════════════════
+
+Application ID:        CIP-MEM-2026-0512-ARRINGTON
+Submission Channel:    In-Branch (Granger)
+Submitted:             May 12, 2026 · 14:08:51 ET
+Branch of Record:      Granger Branch · 7102 Heritage Square Dr
+Branch Officer:        Jamal Greene (Member Services)
+Processing Agent:      Member Onboarding Agent · v2.4.1
+
+──────── APPLICANT INFORMATION ────────
+Legal Name:            ARRINGTON, Devon Christopher
+Date of Birth:         1986-09-04  (age 39)
+SSN:                   XXX-XX-2204  (validated via SSA SSNVS)
+Address:               5814 Bittersweet Rd, Apt 12B, Granger, IN 46530
+                       USPS DPV: D2 (deliverable secondary unit)
+                       Address tenure: 11 months
+Phone:                 (574) 555-9971  (mobile · Verizon)
+Email:                 d.arrington86@protonmail.com
+Occupation:            Independent Contractor (construction)
+Annual Income:         $86,200 (estimated, no W-2 last 18 months)
+
+──────── GOVERNMENT ID ────────
+ID Type:               Indiana Driver License
+ID Number:             IN-5520-1041-08
+Issued:                2023-09-04
+Expires:               2027-09-04
+DLDV API Check:        VERIFIED
+Photo Match:           96.0% confidence
+Document Authenticity: GENUINE
+
+──────── SCREENING RESULTS ────────
+OFAC SDN List:         NEAR-MATCH (87% similarity)
+                       ─ Match: "Devon Arrington" · narcotics-related entry
+                       ─ Different DOB (subject is 1971)
+                       ─ Different location (CA vs IN)
+                       ─ Different middle name
+                       ─ DISMISSED BY BSA OFFICER (Williams, A.) at 14:42 ET
+OFAC Consolidated:     CLEAR
+FinCEN 314(a):         CLEAR
+PEP Screening:         NEGATIVE
+Adverse Media:         FLAGGED (1 article — 2018 misdemeanor disturbance)
+ChexSystems:           PRIOR ACCOUNT CLOSURE (2019, overdrafts)
+
+──────── RISK ASSESSMENT ────────
+Inherent Risk Tier:    HIGH
+Risk Factors:
+  ─ Independent contractor income (cash-intensive)
+  ─ Recent address change (11mo)
+  ─ OFAC near-match (dismissed but documented)
+  ─ Prior ChexSystems closure
+  ─ Adverse media (low severity but present)
+  ─ No verified W-2 in past 18 months
+EDD Required:          YES — Enhanced Due Diligence assigned to Compliance Agent
+Annual CDD Refresh:    YES (next: 2026-11-12 — semi-annual)
+Enhanced Monitoring:   YES
+  ─ Cash deposit threshold: $3,000 (alert)
+  ─ Wire activity threshold: any cross-state $5,000+
+  ─ Monthly velocity review
+
+──────── BENEFICIAL OWNERSHIP ────────
+Account Type:          Consumer (individual)
+
+──────── DECISION ────────
+Account Type Opened:   Share-Savings only (no share-draft, no debit until 90d review)
+Opening Deposit:       $100.00 cash
+Account Number:        XXXXXXXX-44821
+Member Since:          2026-05-12
+
+Approved:              Jamal Greene with BSA Officer concurrence (Williams, A.)
+Approval Method:       HITL escalation — both OFAC near-match + ChexSystems
+HITL Touch Time:       38 minutes (full review + EDD provisioning)
+
+──────── HAND-OFF NOTES ────────
+→ Compliance Agent:    EDD assigned. Cash velocity monitoring active.
+→ Annual CDD:          Reduced to semi-annual cycle (next 2026-11-12)
+→ Loan Document Agent: Will apply enhanced verification on any future loan app
+                       (income source-of-funds documentation required)
+
+──────── NCUA EXAM FOLDER INDEX ────────
+Folder Path:           ncua-exam-2026/cip_records/2026-05/
+Immutable Audit ID:    AUDIT-2026-05-12-14:08:51-CIP-44821
+OFAC Dismissal Log:    AUDIT-2026-05-12-14:42:09-OFAC-DISMISS-44821
+EDD Assignment Log:    AUDIT-2026-05-12-14:43:11-EDD-44821
+Linked SARs:           ⚠ SAR-2026-0142 (filed Jun 4, 2026 — structuring pattern)
+Linked CTRs:           None (cash deposits all under $10K threshold)
+Linked Loans:          None
+
+[This member (#44821) is the central subject of the SAR-2026-0142
+ structuring case demoed during the NCUA exam-readiness walkthrough.]

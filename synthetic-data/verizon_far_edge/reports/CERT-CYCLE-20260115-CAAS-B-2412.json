@@ -1,0 +1,163 @@
+{
+  "report_id": "CERT-CYCLE-20260115-CAAS-B-2412",
+  "generated_by": "APEX CertificationAgent v1.0",
+  "generation_time_seconds": 12.4,
+  "header": {
+    "device_name": "CaaS-Edge-Node-Type-B",
+    "device_serial": "VZ-CAAS-B-NE-0042-SN-887421",
+    "firmware_version": "Wind River 24.12",
+    "certification_date": "2026-01-15T09:48:14Z",
+    "cycle_id": "CYCLE-20260115-CAAS-B-2412",
+    "region": "Northeast",
+    "site_id": "VZ-NE-NYC-00042",
+    "operator": "cert-eng-shift-day",
+    "overall_status": "FAIL",
+    "deployment_recommendation": "HOLD"
+  },
+  "executive_summary": {
+    "total_tests": 247,
+    "pass_count": 231,
+    "fail_count": 12,
+    "warn_count": 4,
+    "schema_drift_events": 3,
+    "scripts_impacted_by_drift": 14,
+    "jira_tickets_opened": 12,
+    "p1_count": 14,
+    "p2_count": 1,
+    "p3_count": 2,
+    "hours_saved_vs_manual": 38.2,
+    "apex_processing_time_minutes": 14.8,
+    "manual_baseline_hours": 40
+  },
+  "failure_analysis": [
+    { "test_id": "s1-t1",  "category": "latency_threshold_breach", "severity": "P1", "redfish_endpoint": null,
+      "summary": "CU-UP Interface Latency 8.3ms vs 5ms threshold",
+      "root_cause": "kernel.sched_rt_runtime_us at default 950000 — see KB-2026-0118",
+      "recommendation": "Apply RT tune workaround OR upgrade to Wind River 25.01",
+      "jira_ticket": "APEXVZ-2418" },
+
+    { "test_id": "s1-t2",  "category": "latency_threshold_breach", "severity": "P1", "redfish_endpoint": null,
+      "summary": "CU-UP Throughput 1.8Gbps vs 2Gbps threshold",
+      "root_cause": "Same RT-runtime root cause as s1-t1",
+      "recommendation": "Apply same workaround",
+      "jira_ticket": "APEXVZ-2419" },
+
+    { "test_id": "s2-t1",  "category": "schema_drift_failure",     "severity": "P1", "redfish_endpoint": "/redfish/v1/Systems/1",
+      "summary": "PowerState field not found at /redfish/v1/Systems/1",
+      "root_cause": "Schema v1.16.0 relocated PowerState to Status.PowerState (path migration)",
+      "recommendation": "SchemaWatchAgent has emitted remediation map; 6 playbooks need update",
+      "jira_ticket": "APEXVZ-2420",
+      "kb_match": "KB-WIND-RIVER-2412-S321" },
+
+    { "test_id": "s2-t2",  "category": "schema_drift_failure",     "severity": "P1", "redfish_endpoint": "/redfish/v1/Chassis/1/Thermal",
+      "summary": "FanSpeeds[].CurrentReading deprecated",
+      "root_cause": "Schema v1.16.0 renamed FanSpeeds[] to Fans[] and CurrentReading to Reading",
+      "recommendation": "Update 5 thermal scripts",
+      "jira_ticket": "APEXVZ-2421",
+      "kb_match": "KB-WIND-RIVER-2412-S322" },
+
+    { "test_id": "s2-t3",  "category": "schema_drift_failure",     "severity": "P1", "redfish_endpoint": "/redfish/v1/Managers/1/EthernetInterfaces/1",
+      "summary": "IPv6Addresses required field missing",
+      "root_cause": "Schema v1.16.0 elevated IPv6Addresses to required",
+      "recommendation": "Populate IPv6Addresses: [] in 3 interface scripts",
+      "jira_ticket": "APEXVZ-2422",
+      "kb_match": "KB-WIND-RIVER-2412-S323" },
+
+    { "test_id": "s2-t4",  "category": "regression_failure",       "severity": "P2", "redfish_endpoint": "/redfish/v1/Chassis/1",
+      "summary": "ChassisIntrusion regression — was Normal, now HardwareIntrusion",
+      "root_cause": "Hardware sensor reporting change — vendor advised non-impacting",
+      "recommendation": "Vendor engagement; suppress for this cycle",
+      "jira_ticket": "APEXVZ-2423" },
+
+    { "test_id": "s2-t5",  "category": "schema_drift_failure",     "severity": "P1", "redfish_endpoint": "/redfish/v1/Systems/1/Storage/1",
+      "summary": "StorageControllers moved to sub-resource",
+      "root_cause": "Schema v1.16.0 replaced embedded array with Controllers navigation link",
+      "recommendation": "Update storage_health_check.yml to follow nav link",
+      "jira_ticket": "APEXVZ-2424",
+      "kb_match": null },
+
+    { "test_id": "s2-t6",  "category": "schema_drift_failure",     "severity": "P1", "redfish_endpoint": "/redfish/v1/Systems/1/Bios",
+      "summary": "BIOS SecureBoot field path changed",
+      "root_cause": "Schema v1.16.0 BIOS subresource restructure",
+      "recommendation": "Update secure_boot_chain.robot field path",
+      "jira_ticket": "APEXVZ-2425" },
+
+    { "test_id": "s8-t1",  "category": "latency_threshold_breach", "severity": "P1", "redfish_endpoint": null,
+      "summary": "OAM Interface Packet Loss 0.6% exceeds 0.1% threshold",
+      "root_cause": "Suspected upstream switch buffer pressure — coincides with maintenance window on regional aggregator",
+      "recommendation": "Engage network ops; re-run after maintenance window closes",
+      "jira_ticket": "APEXVZ-2426" },
+
+    { "test_id": "s10-t1", "category": "schema_drift_failure",     "severity": "P1", "redfish_endpoint": "/redfish/v1/Managers/1/EthernetInterfaces/1",
+      "summary": "IPv6Addresses missing on eth0",
+      "root_cause": "Same root cause as s2-t3",
+      "recommendation": "Bundled into APEXVZ-2422",
+      "jira_ticket": "APEXVZ-2422" },
+
+    { "test_id": "s10-t2", "category": "schema_drift_failure",     "severity": "P1", "redfish_endpoint": "/redfish/v1/Managers/1/EthernetInterfaces/1",
+      "summary": "IPv6Addresses missing on eth1",
+      "root_cause": "Same root cause as s2-t3",
+      "recommendation": "Bundled into APEXVZ-2422",
+      "jira_ticket": "APEXVZ-2422" },
+
+    { "test_id": "s10-t3", "category": "schema_drift_failure",     "severity": "P1", "redfish_endpoint": "/redfish/v1/Managers/1/EthernetInterfaces/1",
+      "summary": "IPv6Addresses missing on mgmt0",
+      "root_cause": "Same root cause as s2-t3",
+      "recommendation": "Bundled into APEXVZ-2422",
+      "jira_ticket": "APEXVZ-2422" }
+  ],
+  "schema_drift_summary": [
+    { "id": "SCHEMA-DRIFT-001", "endpoint": "/redfish/v1/Systems/1",
+      "change_type": "path_migration", "field_old": "PowerState", "field_new": "Status.PowerState",
+      "scripts_impacted": ["power_check.yml","node_health_check.yml","pre_upgrade_validation.yml","post_upgrade_validation.yml","site_readiness_check.yml","wave_deployment_preflight.yml"],
+      "remediation": "Update field path in 6 playbooks. Effort: 30 min / playbook." },
+
+    { "id": "SCHEMA-DRIFT-002", "endpoint": "/redfish/v1/Chassis/1/Thermal",
+      "change_type": "field_rename_and_restructure", "field_old": "FanSpeeds[].CurrentReading", "field_new": "Fans[].Reading",
+      "scripts_impacted": ["thermal_baseline.robot","thermal_regression.robot","thermal_stress_test.robot","fan_speed_monitor.yml","thermal_alert_check.yml"],
+      "remediation": "Rename array + field. Effort: 45 min / script (test reruns needed)." },
+
+    { "id": "SCHEMA-DRIFT-003", "endpoint": "/redfish/v1/Managers/1/EthernetInterfaces/1",
+      "change_type": "new_required_field", "field_old": null, "field_new": "IPv6Addresses",
+      "scripts_impacted": ["interface_validation.robot","ipv6_enumeration_check.robot","network_baseline.yml"],
+      "remediation": "Populate IPv6Addresses: [] in interface payloads. Effort: 20 min / script." }
+  ],
+  "deployment_recommendation": {
+    "overall": "HOLD",
+    "rationale": "11 of 12 P1 failures trace to known root causes with established remediation; cycle MUST NOT clear the wave deployment until SchemaWatchAgent's remediation map is applied across the catalog AND the RT-runtime workaround is rolled to all Type-B sites in the Northeast region. The packet-loss finding (APEXVZ-2426) is independent and clears within 12 hours of the upstream aggregator maintenance window closing.",
+    "conditions_to_proceed": [
+      "All 14 impacted scripts in epic APEXVZ-SCHEMA-EPIC-2026-01 marked Done",
+      "RT-runtime workaround applied to all Type-B Northeast sites",
+      "APEXVZ-2426 closed by network ops",
+      "Re-run certification cycle on a representative Type-B site"
+    ],
+    "estimated_remediation_days": 6,
+    "hitl_approval_required": true,
+    "hitl_approver": "james.patchett@verizon.com"
+  },
+  "governance_trail": {
+    "audit_lens_event_ids": [
+      "DVR-20260115-094422-001",
+      "DVR-20260115-094423-002",
+      "DVR-20260115-101207-003",
+      "DVR-20260115-110214-004"
+    ],
+    "agent_actions_log": [
+      "parse_robot_output(file=robot_output_caas_node_v2412_full.xml)  →  247 tests parsed",
+      "schema_drift_check(baseline=v1.14.0, current=v1.16.0)  →  3 breaking changes",
+      "classify_failures()  →  14 P1, 1 P2, 2 P3",
+      "build_jira_tickets()  →  12 tickets opened in epic APEXVZ-SCHEMA-EPIC-2026-01",
+      "generate_certification_report()  →  this report",
+      "HITL pause  →  fail_count > 20 NOT triggered; schema_drift breaking_changes > 5 NOT triggered; report auto-generated"
+    ],
+    "human_approvals_required": [],
+    "human_approvals_received":  []
+  },
+  "_apex_metadata": {
+    "playbook_id": "playbook-full-certification-vz",
+    "model_used": "claude-3-5-sonnet",
+    "temperature": 0.1,
+    "tokens_consumed": 4218,
+    "cost_usd": 0.0421
+  }
+}

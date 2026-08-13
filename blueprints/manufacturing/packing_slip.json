@@ -1,0 +1,182 @@
+{
+  "blueprintName": "apex-packing-slip-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from packing slips for inventory management and receiving",
+  "industry": "manufacturing",
+  "documentType": "packing_slip",
+  "documentSchema": {
+    "class": "ApexPackingSlip",
+    "description": "Apex AI Platform packing slip extraction blueprint for receiving operations",
+    "definitions": {
+      "PACKED_ITEM": {
+        "properties": {
+          "line_number": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Line item number"
+          },
+          "part_number": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Part number or SKU"
+          },
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Item description"
+          },
+          "ordered_qty": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Quantity originally ordered"
+          },
+          "shipped_qty": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Quantity shipped in this package"
+          },
+          "backorder_qty": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Quantity on backorder"
+          },
+          "unit_of_measure": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Unit of measure"
+          },
+          "lot_number": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Lot or batch number"
+          },
+          "serial_numbers": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Serial numbers if applicable"
+          },
+          "country_of_origin": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Country where item was manufactured"
+          }
+        }
+      }
+    },
+    "properties": {
+      "packing_slip_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Packing slip or packing list number"
+      },
+      "ship_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date shipment was sent"
+      },
+      "po_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Related purchase order number"
+      },
+      "sales_order_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Sales order or SO number"
+      },
+      "shipment_id": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Shipment tracking ID"
+      },
+      "shipper_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Company shipping the goods"
+      },
+      "shipper_address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Complete shipper address"
+      },
+      "ship_to_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Recipient name"
+      },
+      "ship_to_address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Complete shipping address"
+      },
+      "carrier": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Shipping carrier name"
+      },
+      "tracking_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Carrier tracking number"
+      },
+      "packed_items": {
+        "type": "array",
+        "instruction": "All items included in this shipment",
+        "items": {
+          "$ref": "#/definitions/PACKED_ITEM"
+        }
+      },
+      "total_packages": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Total number of packages in shipment"
+      },
+      "package_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "This package number (e.g., 1 of 3)"
+      },
+      "total_weight": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Total weight of package"
+      },
+      "weight_unit": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Weight unit (LB, KG)"
+      },
+      "dimensions": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Package dimensions (L x W x H)"
+      },
+      "special_handling": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Special handling instructions"
+      },
+      "has_backorders": {
+        "type": "boolean",
+        "inferenceType": "inferred",
+        "instruction": "Are there any items on backorder?"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "confidenceThreshold": 0.85
+  },
+  "validationRules": [
+    {
+      "name": "quantity_validation",
+      "description": "Shipped qty should not exceed ordered qty",
+      "expression": "packed_items.each { |item| item.shipped_qty <= item.ordered_qty }"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  }
+}

@@ -1,0 +1,44 @@
+APEX EXCEPTION RECORD · MEDIUM PRIORITY · AUTO-FIXED
+═══════════════════════════════════════════════════════════════
+EXCEPTION ID:     EXC-2026-0444
+Type:             Division Transfer Misallocation
+Severity:         MEDIUM
+Detection Time:   June 6, 2026 · 09:22:14 ET
+Detection Agent:  Benefits Allocation Agent (BEN)
+Status:           AUTO-FIXED (no human review required)
+
+─────────────── DETECTION ───────────────
+4 employees transferred between divisions on or after 2026-05-15
+were still coded to their prior division in all carrier files.
+
+Employees affected (anonymized):
+  EMP-2241  Kim, Susan         Mfg Services → Real Estate    eff. 2026-05-22
+  EMP-3091  Foster, Marcus     Corporate → Hendrickson        eff. 2026-05-28
+  EMP-5184  Reilly, Dana       Boler Holdings → Mfg Services eff. 2026-05-30
+  EMP-4821  Chen, Robert       Hendrickson → Boler Holdings eff. 2026-05-15  ← ALSO EXC-0441
+
+Note: EMP-4821 (Chen) escalated separately as EXC-0441 HIGH due to $3,840/mo exposure.
+The other 3 transfers were under $5K each and auto-fixed per Boler reclassification policy.
+
+─────────────── AUTO-FIX APPLIED ───────────────
+EMP-2241 Kim:           - Mfg Services 6200-004 · $1,920/mo  → + Real Estate 6200-002 · $1,920/mo
+EMP-3091 Foster:        - Corporate 6200-005 · $2,440/mo     → + Hendrickson Intl 6200-001 · $2,440/mo
+EMP-5184 Reilly:        - Boler Holdings 6200-003 · $1,920/mo  → + Mfg Services 6200-004 · $1,920/mo
+
+Total auto-fixed: $14,320/mo
+Effective dates honored: each employee's actual transfer date.
+Catch-up prorate calculations applied to June JEs.
+
+─────────────── FINANCIAL IMPACT ───────────────
+Per-month misallocation (auto-corrected): $14,320
+Annualized: $171,840 if not detected
+Time-to-detect: < 24hr (vs ~30 days manual)
+
+─────────────── ROUTING ───────────────
+  • Detected by:      Benefits Allocation Agent
+  • Auto-fix policy:   Below $5K/mo per employee + clear HRIS source-of-truth
+  • Approval log:      Logged to Cosmos DB (no human approval needed per policy)
+  • Notification:     Confirmation email to Sarah Mitchell + audit log
+
+Storage: Cosmos DB · partition=2026-06 · sort=EXC-0444
+Audit ID: AUDIT-2026-06-06-09:22:14-EXC-0444-AUTOFIX

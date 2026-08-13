@@ -1,0 +1,304 @@
+================================================================================
+              STP NUCLEAR OPERATING COMPANY
+              CONDITION REPORT / INCIDENT REPORT
+================================================================================
+
+  Report Number:         CR-2026-0188
+  Report Type:           Condition Report (CR)
+  Severity:              Significant — Reportable per 10 CFR 50.72(b)(2)(iv)
+  Equipment:             PUMP-CCW-1A · Component Cooling Water Pump 1A
+  Manufacturer:          Sulzer · Model 16-CW-DL
+  System:                Component Cooling Water (CCW) · Train A
+  Unit:                  Unit 1
+  Plant Mode at Event:   MODE 1 · 100% Power
+  Event Date/Time:       2026-04-18  02:14:32 CDT
+  Discovery Date/Time:   2026-04-18  02:14:32 CDT (auto-trip on torque)
+  Reported By:           D. Alvarez · Shift Supervisor · License SRO-2024-018
+  CR Owner:              S. Reyes · Component Engineer (Mechanical)
+  10 CFR Reportability:  YES · 8-hour notification submitted 2026-04-18
+                          08:42 CDT · ENS Ref EN-58921
+
+
+--------------------------------------------------------------------------------
+                       1. EVENT SUMMARY
+--------------------------------------------------------------------------------
+
+At 02:14:32 CDT on 2026-04-18, Component Cooling Water Pump 1A (PUMP-CCW-1A)
+auto-tripped on motor thermal overload during a routine surveillance test
+(ST-RT-CCW-001 — Quarterly Pump Performance). The pump motor stalled and
+locked rotor torque was indicated. Vibration monitor recorded 1.42 in/s
+peak immediately prior to trip — five times the alert limit.
+
+Initial assessment by the Shift Supervisor identified a probable bearing
+seizure based on:
+
+   (a) High vibration trend over the prior 14 days (0.18 → 0.46 in/s)
+   (b) Rising bearing temperature (172 °F → 218 °F over 14 days)
+   (c) Locked rotor torque indication on motor amperage trace
+   (d) Audible low-frequency rumble noted by operator on walk-down
+
+
+--------------------------------------------------------------------------------
+                       2. EQUIPMENT INFORMATION
+--------------------------------------------------------------------------------
+
+  Equipment Tag:         PUMP-CCW-1A
+  Manufacturer:          Sulzer (formerly Bingham · Vesco)
+  Model:                 16-CW-DL · 16-inch double-suction
+  Serial Number:         CCW-1A-1985-4421
+  Year Installed:        1985
+  Time in Service:       40 years
+  Drive:                 7,500 hp · 4 kV · 1,790 rpm (synchronous 1,800 rpm)
+  Bearings:              Upper · Sleeve · Babbitt-lined
+                         Lower · Sleeve · Babbitt-lined
+  Last PM-7B:            2025-08-15 · WO-2025-04477 (8 months prior)
+  Next Scheduled PM-7B:  2027-02-15
+  Operating Hours since
+  last PM:               5,832 hours
+
+
+--------------------------------------------------------------------------------
+                       3. SEQUENCE OF EVENTS (TIMELINE)
+--------------------------------------------------------------------------------
+
+  TIMESTAMP (CDT)   EVENT
+  ───────────────── ────────────────────────────────────────────────────────
+  2026-04-04 08:00  Quarterly walk-down vibration: 0.18 in/s · NORMAL
+                    (Predictive Maintenance route — T. Davies)
+
+  2026-04-09 14:23  Continuous Bently Nevada 3500: vibration crosses 0.21
+                    (WATCH BAND entered).  Bearing temp 178 °F.
+
+  2026-04-12 09:15  Bently Nevada: 0.27 in/s (still WATCH BAND, no alarm).
+                    Bearing temp 191 °F (still NORMAL).
+                    NO ENGINEERING REVIEW INITIATED.   ⚠ FINDING #1
+
+  2026-04-15 06:42  Bently Nevada 3500: vibration crosses 0.30 (ALERT).
+                    Alarm "VIB-HI · CCW-1A" annunciated at MCB.
+                    Acknowledged by RO at 06:43.  LCO 3.7.7 Action A
+                    NOT entered (RO did not recognize as LCO entry —
+                    procedural confusion · STP-OP-2306 §5.2 ambiguous
+                    on CCW LCO entry timing).   ⚠ FINDING #2
+
+  2026-04-15 08:30  Engineering on-call (T. Davies, PdM Analyst) reviewed
+                    Bently trend.  Trend forwarded to Component Engineer
+                    by email — NOT formally captured in Eng. Action
+                    Database. ⚠ FINDING #3
+
+  2026-04-15 22:00  Bearing temp 211 °F (ALERT).  Trend continued.
+                    No additional notification or control-room action.
+
+  2026-04-17 18:00  Vibration 0.41 in/s (ALERT band).  Bearing temp
+                    218 °F (ALERT band).  Auto-bypass valve stayed open.
+
+  2026-04-18 02:14:32  Routine surveillance test ST-RT-CCW-001 begun
+                    by ROC-licensee S. Krause.  Within 8 seconds of
+                    test start, pump motor amperage spiked from 380 A
+                    to 920 A (locked rotor).
+
+  2026-04-18 02:14:40  Motor overload relay tripped.  Pump stopped.
+                    "PUMP TRIP · CCW-1A" alarm at MCB.
+
+  2026-04-18 02:18:10  Shift Supervisor D. Alvarez initiated CR-2026-0188.
+
+  2026-04-18 02:25:00  Operations entered LCO 3.7.7 ACTION A.
+                    Train B CCW Pump 1B started successfully · CCW
+                    flow restored within 7 minutes.
+
+  2026-04-18 08:42  10 CFR 50.72(b)(2)(iv) 8-hour notification
+                    submitted to NRC · ENS Ref EN-58921.
+
+  2026-04-18 14:00  Engineering disassembly initiated — see Section 5.
+
+
+--------------------------------------------------------------------------------
+                       4. INITIAL OPERATING IMPACT
+--------------------------------------------------------------------------------
+
+  Plant remained at 100% Power throughout.
+
+  CCW Train A → out of service.  CCW Train B carried full design load.
+  Heat exchangers HX-CCW-1A-1 through HX-CCW-1A-4 isolated.
+
+  Containment fan cooler heat removal margin reduced to 70%.  No
+  reactor protection limits challenged.
+
+  Tech Spec status:
+    LCO 3.7.7 ACTION A  · entered 02:25 CDT · 7 days to restore
+    OPERABILITY confirmed for redundant Train B.
+
+
+--------------------------------------------------------------------------------
+                       5. ROOT CAUSE ANALYSIS (RCA)
+--------------------------------------------------------------------------------
+
+  RCA Method:            Apollo Cause-and-Effect
+  RCA Lead:              S. Reyes (Component Engineer)
+  RCA Team:              T. Davies (PdM), J. Whitfield (RCS Engineer),
+                         M. Holloway (Mech Maint), L. Park (Vendor —
+                         Sulzer Field Service)
+  RCA Completion:        2026-04-29
+
+
+5.1  PRIMARY ROOT CAUSE.
+
+     Lower bearing seizure caused by lubrication starvation due to
+     restricted oil-feed orifice. Visual inspection (Sulzer's mobile
+     metallurgy van, 2026-04-23) revealed:
+
+     - Lower bearing Babbitt material smeared, > 0.012 in metal
+       transfer in concentrated 30° arc at 6 o'clock position.
+     - Oil-feed orifice (¾" diameter) plugged 65% with carbonized
+       oxidation deposits.
+     - Sump oil sample showed Fe = 412 ppm (limit 50), Cu = 78 ppm
+       (limit 25), TAN = 4.7 (limit 1.5).
+     - Last oil sample 2026-03-15 showed Fe = 38 ppm (within limit).
+       Trend went BAD between March 15 and April 18 — undetected
+       because monthly sampling was MISSED in April.
+
+5.2  CONTRIBUTING CAUSES.
+
+     5.2.1  MISSED OIL SAMPLE (April):  STP-MNT-1102 §5.3 requires
+            monthly oil sampling.  Sample for April was scheduled
+            for 2026-04-12 but was deferred without engineering
+            disposition due to staffing constraints.  Deferral was
+            NOT logged in the eAM system.  ⚠ FINDING #4
+
+     5.2.2  DELAYED ESCALATION:  PdM Analyst forwarded the rising
+            vibration trend by email rather than via the formal
+            Engineering Action Database (EAD).  Component Engineer
+            received email but did not formally action.  No PMAR
+            issued for advancing inspection.  ⚠ FINDING #3 (re-cited)
+
+     5.2.3  PROCEDURE AMBIGUITY:  STP-OP-2306 §5.2 (CCW Surveillance)
+            does not explicitly state that CCW vibration ≥ 0.30 in/s
+            triggers LCO 3.7.7 ACTION A entry — the procedure refers
+            to LCO 3.4.6 (RCP) by analogy. Operations missed entry.
+
+     5.2.4  ALARM ACKNOWLEDGEMENT WITHOUT ACTION:  RO acknowledged
+            VIB-HI alarm 2026-04-15 06:43 but took no further action
+            because the procedure did not require it.
+
+5.3  CORRECTIVE ACTIONS (CAR).
+
+     CAR-2026-0188-01  Disassemble PUMP-CCW-1A. Replace lower bearing,
+                        clean oil-feed orifice, full lube oil change.
+                        DUE 2026-04-25.  STATUS: COMPLETE 2026-04-24.
+
+     CAR-2026-0188-02  Revise STP-OP-2306 §5.2 to explicitly cross-
+                        reference LCO 3.7.7 ACTION A entry for CCW
+                        vibration ≥ 0.30 in/s.  DUE 2026-05-30.
+                        STATUS: OPEN · Owner B. Tan (Maint Mgr).
+
+     CAR-2026-0188-03  Add automated reminder + escalation in eAM
+                        when monthly oil sample is missed > 14 days.
+                        DUE 2026-06-30.  STATUS: OPEN · Owner I&C
+                        Eng team.
+
+     CAR-2026-0188-04  Revise PdM Analyst procedure to require all
+                        WATCH BAND entries to be logged in EAD with
+                        Component Engineer acknowledgement within 4 hr.
+                        DUE 2026-05-15.  STATUS: OPEN · Owner T. Davies.
+
+     CAR-2026-0188-05  Quarterly review of all WATCH BAND entries by
+                        Operations Manager — confirm escalation path
+                        followed.  RECURRING · Owner B. Trotter.
+
+
+--------------------------------------------------------------------------------
+                       6. RELATED HISTORY (CITED WORK ORDERS)
+--------------------------------------------------------------------------------
+
+  WO-2025-04477  Last PM-7B on PUMP-CCW-1A (2025-08-15).  No issues
+                  found at that time. Bearing wear within tolerance.
+                  Photos archived.
+
+  WO-2024-09112  PM-7A · 6-month bearing visual inspection (2024-08).
+                  No findings.
+
+  WO-2023-04477  PM-7B · 18-month replacement (2023-08).  Lower
+                  bearing replaced — preventive replacement.
+
+  CR-2024-0091   Earlier vibration WATCH BAND entry (2024-06-12) on
+                  PUMP-CCW-1A.  Same equipment.  NOT escalated to
+                  ALERT, returned to NORMAL after 9 days.  No action
+                  taken at the time.  This is a missed opportunity
+                  in retrospect — pattern emerges.
+
+  CR-2022-0211  Similar bearing-seizure event on PUMP-CCW-2A (Unit 2)
+                  in 2022.  Same root cause: lube oil starvation.
+                  Lessons learned NOT propagated to STP-OP-2306.
+                  ⚠ ORGANIZATIONAL FINDING #5
+
+
+--------------------------------------------------------------------------------
+                       7. RECURRENCE INDICATORS
+--------------------------------------------------------------------------------
+
+  Reviewing all CCW pump vibration trips at STP since 2018:
+
+    PUMP-CCW-1A  · CR-2018-0042  · 0.32 in/s WATCH (resolved naturally)
+    PUMP-CCW-2A  · CR-2022-0211  · BEARING SEIZURE — same root cause
+    PUMP-CCW-1B  · CR-2024-0091  · 0.31 in/s WATCH (resolved naturally)
+    PUMP-CCW-1A  · CR-2026-0188  · BEARING SEIZURE — current event
+
+  Pattern: 4 events in 8 years.  Two seizures (2 of 4 CCW pumps).
+  Both seizures attributed to lube starvation from carbonized oil.
+
+  ROOT-CAUSE PATTERN ACROSS EVENTS:
+    - All events on bearings with > 5,000 operating hours since PM
+    - All events preceded by missed or deferred oil sampling
+    - All events showed 14+ day vibration rise prior to seizure
+
+
+--------------------------------------------------------------------------------
+                       8. NRC REPORTABILITY SUMMARY
+--------------------------------------------------------------------------------
+
+  10 CFR 50.72(b)(2)(iv) "ANY EVENT OR CONDITION THAT RESULTED IN
+  ACTUATION OF AN ENGINEERED SAFETY FEATURE" — applies because CCW
+  Train B auto-started in response to Train A trip.
+
+  ENS Notification:    EN-58921 · 2026-04-18 08:42 CDT
+  Submitted by:        D. Alvarez (Shift Supervisor)
+  NRC Resident:        Verbal notification 2026-04-18 09:15 CDT
+  LER Required:        YES · LER 2026-001 · due 2026-06-17 (60 days)
+  10 CFR 50.73:        Reportable under §50.73(a)(2)(iv)(A)
+
+
+--------------------------------------------------------------------------------
+                       9. EXTERNAL REVIEWS
+--------------------------------------------------------------------------------
+
+  9.1  INPO REVIEW.  Initial event report submitted to INPO Operating
+       Experience program 2026-04-25.  Acknowledged INPO #2026-104.
+
+  9.2  VENDOR INVOLVEMENT.  Sulzer Field Service (L. Park, Senior
+       Field Engineer) deployed 2026-04-19.  Disassembly performed
+       on-site with Sulzer technical concurrence.
+
+  9.3  INDUSTRY PEER REVIEW.  Recurrence pattern shared with the WANO
+       Operating Experience network 2026-04-30.  Lessons learned
+       distributed to all sister plants.
+
+
+--------------------------------------------------------------------------------
+                       10. SIGNATURES & APPROVALS
+--------------------------------------------------------------------------------
+
+   ROLE                       NAME              EMP-ID    DATE
+   ─────────────────────────  ────────────────  ────────  ──────────
+   Originator                 D. Alvarez        EMP-1078  2026-04-18
+   CR Owner                   S. Reyes          EMP-2204  2026-04-18
+   RCA Team Lead              S. Reyes          EMP-2204  2026-04-29
+   PdM Analyst                T. Davies         EMP-3105  2026-04-29
+   Component Engineer         J. Whitfield      EMP-2117  2026-04-29
+   Operations Manager         B. Trotter        EMP-1009  2026-04-30
+   Maintenance Manager        B. Tan            EMP-1011  2026-04-30
+   Plant Manager              D. Hawkins        EMP-1001  2026-05-02
+   CR Closed                  Records Mgmt      EMP-9012  2026-05-04
+
+
+================================================================================
+                     END OF CONDITION REPORT — CR-2026-0188
+================================================================================

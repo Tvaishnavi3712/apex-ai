@@ -1,0 +1,119 @@
+═══════════════════════════════════════════════════════════════════════════════
+VERIZON FAR EDGE · UPGRADE PROCEDURES — 2026
+Document ID:    VZ-UPGRADE-PROC-2026
+Revision:       Rev 4 · January 2026
+Classification: VERIZON CONFIDENTIAL — INTERNAL USE ONLY
+═══════════════════════════════════════════════════════════════════════════════
+
+This document captures the canonical multi-step upgrade procedures for every
+supported source/target firmware combination on CaaS-Node-Type-A, Type-B, and
+Type-C devices. It supersedes the wiki content that lived in the HQ Planning
+SharePoint site through Q4 2025. The compatibility matrix referenced here is
+maintained as upgrade_compatibility_matrix.json under config management.
+
+NON-NEGOTIABLE RULES
+  1. NEVER perform a skip-level upgrade unless explicitly permitted in the
+     skip_targets list of the compatibility matrix.
+  2. EVERY upgrade requires the pre-check checklist in §3 to be completed
+     and recorded in the Apex Audit Lens BEFORE the first step runs.
+  3. If the historical failure rate for the requested path exceeds 15%,
+     the upgrade requires Distinguished Engineer sign-off (HQ Planning).
+
+───────────────────────────────────────────────────────────────────────────────
+1. SUPPORTED UPGRADE PATHS — CaaS-Node-Type-B
+───────────────────────────────────────────────────────────────────────────────
+
+The most common Type-B paths are listed below. The estimated duration includes
+boot, post-boot validation, and audit-log emission. Add 25% for sites with
+SLA-tier=standard (slower vendor escalation paths).
+
+  Source   Target   Steps                                Duration    Risk Tier
+  ──────   ──────   ──────────────────────────────────   ─────────   ─────────
+  22.12    24.12    22.12 → 23.06 → 24.01 → 24.12        262 min      low
+  23.06    24.12    23.06 → 23.12 → 24.01 → 24.12        198 min      low
+  23.06    24.01    23.06 → 24.01     (DIRECT)            92 min      HIGH ★
+  23.12    24.12    23.12 → 24.01 → 24.12                132 min      low
+  24.01    24.12    24.01 → 24.06 → 24.12                102 min      low
+  24.06    24.12    24.06 → 24.12                         62 min      low
+
+★ The direct 23.06→24.01 path has a documented 78% historical failure rate
+  on Type-B nodes in the Northeast region (see KB-2025-0288). This path is
+  permitted by the compatibility matrix but UpgradeAdvisorAgent will pause
+  the wave for human approval before authorizing the plan.
+
+───────────────────────────────────────────────────────────────────────────────
+2. STEP-BY-STEP — 22.12 to 24.12 on CaaS-Node-Type-B (262 min)
+───────────────────────────────────────────────────────────────────────────────
+
+  STEP 1 of 3 — 22.12 → 23.06    (~88 min)
+  ────────────────────────────────────────
+  2.1.1  Drain CaaS workloads:
+           ansible-playbook playbooks/caas_drain.yml --limit $SITE_ID
+  2.1.2  Apply firmware bundle 23.06:
+           bmc-cli update --image /firmware/23.06.bundle --reboot=yes
+  2.1.3  Wait for boot: 81 ± 6 seconds
+  2.1.4  Run post-boot validation suite (vz_far_edge_post_boot_v23.robot)
+  2.1.5  Rollback checkpoint snapshot:
+           bmc-cli snapshot create --label "post-23.06"
+
+  STEP 2 of 3 — 23.06 → 24.01    (~92 min)
+  ────────────────────────────────────────
+  ⚠ This step crosses the Redfish schema v1.13 → v1.14 boundary.
+  ⚠ Validate SchemaWatchAgent has reported zero outstanding remediation items
+    before proceeding.
+
+  2.2.1  Pre-check: confirm no outstanding schema-drift JIRA tickets in epic
+         APEXVZ-SCHEMA-EPIC-2024-09.
+  2.2.2  Apply firmware bundle 24.01:
+           bmc-cli update --image /firmware/24.01.bundle --reboot=yes
+  2.2.3  After boot: regenerate Redfish baseline snapshot:
+           curl -s -k https://$IP/redfish/v1/$metadata > /data/schemas/$SITE/$(date +%F)_baseline.xml
+  2.2.4  Run schema-aware validation suite (vz_far_edge_post_boot_v24.robot)
+
+  STEP 3 of 3 — 24.01 → 24.12    (~82 min)
+  ────────────────────────────────────────
+  2.3.1  Apply firmware bundle 24.12:
+           bmc-cli update --image /firmware/24.12.bundle --reboot=yes
+  2.3.2  Boot is expected at 81 ± 6 sec. If boot exceeds 95 sec, halt and
+         engage diagnostics — see KB-2026-0044.
+  2.3.3  Confirm Redfish responses use v1.16.0 schema (Status.PowerState,
+         Fans[].Reading, IPv6Addresses present).
+  2.3.4  Run full certification suite (247 tests) via
+         robot --output /data/robot-outputs/<run-id>.xml vz_far_edge_v2412.robot
+
+───────────────────────────────────────────────────────────────────────────────
+3. PRE-CHECK CHECKLIST (every upgrade)
+───────────────────────────────────────────────────────────────────────────────
+
+The following pre-checks MUST be recorded in the Apex Audit Lens for every
+upgrade execution. Missing a pre-check is grounds for the change ticket to be
+rejected at the post-upgrade review.
+
+  □ disk_space_min_20gb               — /var ≥ 20 GB free
+  □ ansible_version_min_2.14          — control node Ansible ≥ 2.14
+  □ openshift_cli_min_4.14            — oc CLI ≥ 4.14
+  □ redfish_baseline_snapshot         — pre-upgrade schema captured
+  □ vendor_support_ticket_open        — premium/platinum SLA tiers only
+  □ rollback_checkpoint_verified      — last good snapshot tested in dev
+  □ wave_authorization_signed         — DE HQ Planning signature on file
+  □ change_ticket_in_approved_state   — APEXVZ-XXXX status = Approved
+  □ schema_remediation_complete       — zero open items in current epic
+  □ ipv6_router_advert_enabled        — when target ≥ 24.12
+
+───────────────────────────────────────────────────────────────────────────────
+4. ROLLBACK PROCEDURE
+───────────────────────────────────────────────────────────────────────────────
+
+Each step in §2 records a rollback checkpoint via `bmc-cli snapshot`. To roll
+back to the last good state:
+
+  4.1  Drain workloads:    ansible-playbook playbooks/caas_drain.yml --limit $SITE_ID
+  4.2  Restore snapshot:   bmc-cli snapshot restore --label "post-<source-version>"
+  4.3  Reboot:             bmc-cli power cycle
+  4.4  Validate:           run the post-boot suite for the source version
+  4.5  Audit:              record rollback event in Apex Audit Lens with the
+                            reason, the reviewer, and the original change ticket ID
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF EXCERPT — full procedures document is 67 pages.
+═══════════════════════════════════════════════════════════════════════════════

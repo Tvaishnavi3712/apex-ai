@@ -1,0 +1,38 @@
+{
+  "merchant": {
+    "name": "Staples",
+    "category": "Office Supplies",
+    "address": {
+      "street": "100 Congress Ave",
+      "city": "Austin",
+      "state": "TX",
+      "zip": "78701"
+    },
+    "phone": "(619) 996-1493"
+  },
+  "transaction": {
+    "date": "2026-02-08",
+    "time": "09:23:54",
+    "receipt_number": "1366-247839"
+  },
+  "line_items": [
+    {
+      "description": "Ink Cartridge - Black",
+      "quantity": 1,
+      "unit_price": 34.99,
+      "amount": 34.99
+    }
+  ],
+  "totals": {
+    "subtotal": 34.99,
+    "tax_rate": 0.07,
+    "tax_amount": 2.45,
+    "tip": 0,
+    "total": 37.44
+  },
+  "payment": {
+    "method": "Debit Card",
+    "card_type": "Visa",
+    "last_four": "2902"
+  }
+}

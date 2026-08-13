@@ -1,0 +1,133 @@
+{
+  "blueprintName": "apex-referral-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from medical referral forms",
+  "industry": "healthcare_providers",
+  "documentType": "referral",
+  "documentSchema": {
+    "class": "ApexMedicalReferral",
+    "description": "Medical referral extraction for care coordination",
+    "properties": {
+      "referral_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "referral_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "urgency": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Routine, Urgent, STAT"
+      },
+      "patient_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "patient_dob": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "patient_phone": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "member_id": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "referring_provider_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "referring_provider_npi": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "referring_provider_phone": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "referring_provider_fax": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "referred_to_provider": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "referred_to_specialty": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "referred_to_facility": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "referred_to_phone": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "primary_diagnosis": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "icd10_codes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "reason_for_referral": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "clinical_history": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "current_medications": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "requested_services": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "number_of_visits": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "authorization_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "valid_from_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "valid_to_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "special_instructions": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "documents_attached": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.85
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  }
+}

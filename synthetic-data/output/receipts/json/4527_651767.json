@@ -1,0 +1,50 @@
+{
+  "merchant": {
+    "name": "Best Buy",
+    "category": "Retail",
+    "address": {
+      "street": "500 Peachtree St",
+      "city": "Atlanta",
+      "state": "GA",
+      "zip": "30308"
+    },
+    "phone": "(312) 901-6323"
+  },
+  "transaction": {
+    "date": "2026-02-13",
+    "time": "17:11:51",
+    "receipt_number": "4527-651767"
+  },
+  "line_items": [
+    {
+      "description": "Copy Paper - Case",
+      "quantity": 1,
+      "unit_price": 49.99,
+      "amount": 49.99
+    },
+    {
+      "description": "Ink Cartridge - Black",
+      "quantity": 1,
+      "unit_price": 34.99,
+      "amount": 34.99
+    },
+    {
+      "description": "Stapler",
+      "quantity": 1,
+      "unit_price": 18.99,
+      "amount": 18.99
+    }
+  ],
+  "totals": {
+    "subtotal": 103.97,
+    "tax_rate": 0.0825,
+    "tax_amount": 8.58,
+    "tip": 0,
+    "total": 112.55
+  },
+  "payment": {
+    "method": "Credit Card",
+    "card_type": "MasterCard",
+    "last_four": "6654"
+  }
+}

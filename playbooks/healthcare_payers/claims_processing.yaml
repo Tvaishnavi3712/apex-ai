@@ -1,0 +1,215 @@
+# CBTS Apex AI Platform - Claims Processing Runbook
+# Healthcare Payer Claims Adjudication Workflow
+
+name: claims_processing
+version: "1.0.0"
+description: "Automated medical claims processing with eligibility verification, adjudication, and payment"
+industry: healthcare_payers
+category: claims_management
+
+intent: |
+  Process medical claims by extracting claim data, verifying member eligibility,
+  validating provider credentials, applying benefits and pricing rules,
+  adjudicating claims, and routing exceptions for manual review.
+
+output:
+  - name: adjudicated_claim
+    type: structured_data
+    description: "Fully processed claim with payment determination"
+    schema:
+      claim_number: string
+      adjudication_status: string
+      allowed_amount: number
+      member_responsibility: number
+      plan_payment: number
+
+  - name: payment_instruction
+    type: payment_request
+    description: "Payment details for remittance"
+    schema:
+      payee: object
+      amount: number
+      payment_method: string
+
+context:
+  business_rules:
+    - "Claims must be filed within 365 days of service"
+    - "Member must be eligible on date of service"
+    - "Provider must be credentialed for service type"
+    - "Pre-authorization required for high-cost procedures"
+    - "Duplicate claims within 30 days require review"
+
+  adjudication_rules:
+    timely_filing_days: 365
+    duplicate_window_days: 30
+    auto_adjudicate_threshold: 5000
+    clinical_review_threshold: 25000
+
+  payment_rules:
+    in_network_coinsurance: 0.20
+    out_of_network_coinsurance: 0.40
+    emergency_out_of_network: "in_network_rates"
+
+data_sources:
+  - name: claim_document
+    type: s3_document
+    input_parameter: document_s3_uri
+  - name: member_database
+    type: cosmos_db
+    table: apex-members
+  - name: provider_database
+    type: cosmos_db
+    table: apex-providers
+  - name: benefits_configuration
+    type: cosmos_db
+    table: apex-benefits
+
+actions:
+  - name: claim_extract
+    action_id: healthcare_payers.claim_extract
+    required: true
+  - name: eligibility_check
+    action_id: healthcare_payers.eligibility_check
+    required: true
+  - name: provider_validate
+    action_id: healthcare_payers.provider_validate
+    required: true
+  - name: benefits_apply
+    action_id: healthcare_payers.benefits_apply
+    required: true
+  - name: pricing_lookup
+    action_id: healthcare_payers.pricing_lookup
+    required: true
+  - name: clinical_review
+    action_id: healthcare_payers.clinical_review
+    required: false
+  - name: payment_create
+    action_id: healthcare_payers.payment_create
+    required: false
+
+recipe: |
+  ## Claims Processing Workflow
+
+  ### Step 1: Claim Intake and Extraction
+  1. Use `claim_extract` to extract all claim data
+  2. Validate claim format (CMS-1500 or UB-04)
+  3. Check for required fields: member ID, provider NPI, diagnosis, procedure codes
+  4. Calculate claim age - reject if > 365 days
+  5. Check for duplicate claims in 30-day window
+
+  ### Step 2: Eligibility Verification
+  1. Use `eligibility_check` with member ID and date of service
+  2. Verify member was active on service date
+  3. Check coverage for service type
+  4. Verify COB (coordination of benefits) status
+  5. If not eligible, deny claim with appropriate code
+
+  ### Step 3: Provider Validation
+  1. Use `provider_validate` with provider NPI
+  2. Check network status (in/out of network)
+  3. Verify credentialing for service type
+  4. Check for provider sanctions or exclusions
+  5. Determine applicable fee schedule
+
+  ### Step 4: Benefits Application
+  1. Use `benefits_apply` with plan and service details
+  2. Apply deductible (individual and family)
+  3. Apply copay/coinsurance based on network status
+  4. Check against out-of-pocket maximum
+  5. Apply any plan exclusions or limitations
+
+  ### Step 5: Pricing
+  1. Use `pricing_lookup` for allowed amounts
+  2. Apply contracted rates for in-network
+  3. Apply UCR (usual, customary, reasonable) for out-of-network
+  4. Calculate provider write-off
+  5. Determine member responsibility
+
+  ### Step 6: Adjudication
+  1. Calculate final payment amounts
+  2. If auto-adjudication criteria met, approve
+  3. If clinical review needed, route to `clinical_review`
+  4. Generate EOB for member
+  5. Generate remittance advice for provider
+
+  ### Step 7: Payment Processing
+  1. Create payment record using `payment_create`
+  2. Add to payment batch
+  3. Generate 835 remittance file if electronic
+  4. Update claim status
+  5. Log all adjudication decisions
+
+triggers:
+  - type: blob_event
+    bucket: apex-claims-incoming
+    prefix: claims/
+    events: ["s3:ObjectCreated:*"]
+  - type: api
+    endpoint: /api/v1/process-claim
+    method: POST
+  - type: edi
+    transaction_set: "837"
+
+# Small Factory Chain Definition
+factory_chain:
+  chain_id: claims_processing_chain
+  description: "Claims processing factory chain with AI-enhanced fraud detection"
+  factories:
+    - id: eligibility_verify
+      action: eligibility_verify
+      ai_enhanced: false
+      description: "Verify member eligibility on date of service"
+      timeout_seconds: 30
+
+    - id: claims_adjudication
+      action: claims_adjudication
+      ai_enhanced: false
+      depends_on:
+        - eligibility_verify
+      description: "Adjudicate claim against policy rules"
+      timeout_seconds: 60
+
+    - id: medical_necessity_check
+      action: medical_necessity_check
+      ai_enhanced: true
+      depends_on:
+        - claims_adjudication
+      description: "AI-enhanced medical necessity evaluation"
+      timeout_seconds: 45
+      optional: true
+
+    - id: fraud_detection
+      action: fraud_detection
+      ai_enhanced: true
+      depends_on:
+        - claims_adjudication
+      description: "AI-powered fraud indicator detection"
+      timeout_seconds: 30
+
+    - id: payment_calculate
+      action: payment_calculate
+      ai_enhanced: false
+      depends_on:
+        - medical_necessity_check
+        - fraud_detection
+      description: "Calculate final payment amounts"
+      timeout_seconds: 30
+
+  output_schema:
+    aggregated: true
+    properties:
+      claim_id: string
+      status: string
+      eligibility: object
+      adjudication: object
+      medical_necessity: object
+      fraud_analysis: object
+      payment: object
+
+worker:
+  queue: apex-claims-processing-queue
+  concurrency: 50
+  timeout_seconds: 300
+
+metadata:
+  tags: [claims, adjudication, healthcare-payers, payment, small-factory]

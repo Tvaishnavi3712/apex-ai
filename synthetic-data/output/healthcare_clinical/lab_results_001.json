@@ -1,0 +1,101 @@
+{
+  "_metadata": {
+    "blueprint": "apex-lab-results-v1",
+    "document_type": "lab_results",
+    "extraction_date": "2024-01-16T14:00:00Z",
+    "confidence_score": 0.97,
+    "source_file": "lab_report.pdf"
+  },
+  "report_info": {
+    "accession_number": "LAB-2024-123456",
+    "collection_date": "2024-01-15",
+    "collection_time": "08:30",
+    "received_date": "2024-01-15",
+    "reported_date": "2024-01-16",
+    "specimen_type": "Blood"
+  },
+  "patient": {
+    "name": "James Anderson",
+    "dob": "1970-11-28",
+    "mrn": "MRN-789456",
+    "gender": "Male",
+    "fasting": true
+  },
+  "ordering_provider": {
+    "name": "Dr. Susan Lee",
+    "npi": "5566778899"
+  },
+  "results": [
+    {
+      "test_name": "Glucose, Fasting",
+      "result": 112,
+      "unit": "mg/dL",
+      "reference_range": "70-99",
+      "flag": "H",
+      "status": "Final"
+    },
+    {
+      "test_name": "Hemoglobin A1c",
+      "result": 6.2,
+      "unit": "%",
+      "reference_range": "<5.7",
+      "flag": "H",
+      "status": "Final"
+    },
+    {
+      "test_name": "Total Cholesterol",
+      "result": 215,
+      "unit": "mg/dL",
+      "reference_range": "<200",
+      "flag": "H",
+      "status": "Final"
+    },
+    {
+      "test_name": "LDL Cholesterol",
+      "result": 142,
+      "unit": "mg/dL",
+      "reference_range": "<100",
+      "flag": "H",
+      "status": "Final"
+    },
+    {
+      "test_name": "HDL Cholesterol",
+      "result": 45,
+      "unit": "mg/dL",
+      "reference_range": ">40",
+      "flag": null,
+      "status": "Final"
+    },
+    {
+      "test_name": "Triglycerides",
+      "result": 140,
+      "unit": "mg/dL",
+      "reference_range": "<150",
+      "flag": null,
+      "status": "Final"
+    },
+    {
+      "test_name": "Creatinine",
+      "result": 1.1,
+      "unit": "mg/dL",
+      "reference_range": "0.7-1.3",
+      "flag": null,
+      "status": "Final"
+    },
+    {
+      "test_name": "eGFR",
+      "result": 78,
+      "unit": "mL/min/1.73m2",
+      "reference_range": ">60",
+      "flag": null,
+      "status": "Final"
+    }
+  ],
+  "critical_values": [],
+  "comments": "Prediabetes range. Recommend dietary counseling and repeat in 3 months.",
+  "performing_lab": {
+    "name": "Quest Diagnostics",
+    "clia_number": "14D0646470",
+    "address": "500 Lab Drive, Chicago, IL 60601"
+  }
+}

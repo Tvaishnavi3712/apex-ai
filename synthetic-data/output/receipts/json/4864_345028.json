@@ -1,0 +1,38 @@
+{
+  "merchant": {
+    "name": "Hilton Garden Inn",
+    "category": "Hotel",
+    "address": {
+      "street": "100 Congress Ave",
+      "city": "Austin",
+      "state": "TX",
+      "zip": "78701"
+    },
+    "phone": "(805) 980-7111"
+  },
+  "transaction": {
+    "date": "2026-02-07",
+    "time": "08:17:58",
+    "receipt_number": "4864-345028"
+  },
+  "line_items": [
+    {
+      "description": "Cappuccino",
+      "quantity": 1,
+      "unit_price": 4.95,
+      "amount": 4.95
+    }
+  ],
+  "totals": {
+    "subtotal": 4.95,
+    "tax_rate": 0.0625,
+    "tax_amount": 0.31,
+    "tip": 0,
+    "total": 5.26
+  },
+  "payment": {
+    "method": "Credit Card",
+    "card_type": "Amex",
+    "last_four": "4090"
+  }
+}

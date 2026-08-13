@@ -1,0 +1,237 @@
+{
+  "blueprintName": "apex-medical-claim-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from medical claims (CMS-1500, UB-04) for claims processing",
+  "industry": "healthcare_payers",
+  "documentType": "medical_claim",
+  "documentSchema": {
+    "class": "ApexMedicalClaim",
+    "description": "Medical claim extraction for healthcare payer processing",
+    "definitions": {
+      "SERVICE_LINE": {
+        "properties": {
+          "line_number": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "date_of_service": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Date service was provided"
+          },
+          "place_of_service": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Place of service code"
+          },
+          "cpt_code": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "CPT/HCPCS procedure code"
+          },
+          "modifier": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "CPT modifier codes"
+          },
+          "diagnosis_pointer": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Pointer to diagnosis code (A, B, C, etc.)"
+          },
+          "units": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Number of units/days"
+          },
+          "charge_amount": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Billed charge amount"
+          },
+          "ndc_code": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "National Drug Code if applicable"
+          }
+        }
+      },
+      "DIAGNOSIS": {
+        "properties": {
+          "pointer": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "icd_code": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "ICD-10 diagnosis code"
+          }
+        }
+      }
+    },
+    "properties": {
+      "claim_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Unique claim identifier"
+      },
+      "claim_type": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Professional (CMS-1500) or Institutional (UB-04)"
+      },
+      "patient_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Patient full name"
+      },
+      "patient_dob": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Patient date of birth"
+      },
+      "patient_gender": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Patient gender (M/F)"
+      },
+      "patient_address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Patient address"
+      },
+      "member_id": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Insurance member/subscriber ID"
+      },
+      "group_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Insurance group number"
+      },
+      "subscriber_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Insurance subscriber name if different from patient"
+      },
+      "subscriber_relationship": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Patient relationship to subscriber"
+      },
+      "payer_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Insurance payer name"
+      },
+      "payer_id": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Payer ID number"
+      },
+      "provider_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Billing provider name"
+      },
+      "provider_npi": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Provider National Provider Identifier"
+      },
+      "provider_tax_id": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Provider Tax ID/EIN"
+      },
+      "provider_address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Billing provider address"
+      },
+      "rendering_provider_npi": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Rendering provider NPI if different"
+      },
+      "referring_provider_npi": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Referring provider NPI"
+      },
+      "facility_npi": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Service facility NPI"
+      },
+      "diagnoses": {
+        "type": "array",
+        "instruction": "All diagnosis codes",
+        "items": {
+          "$ref": "#/definitions/DIAGNOSIS"
+        }
+      },
+      "service_lines": {
+        "type": "array",
+        "instruction": "All service lines/procedures",
+        "items": {
+          "$ref": "#/definitions/SERVICE_LINE"
+        }
+      },
+      "total_charge": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Total billed charges"
+      },
+      "prior_auth_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Prior authorization number if applicable"
+      },
+      "admission_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Hospital admission date (institutional claims)"
+      },
+      "discharge_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Hospital discharge date (institutional claims)"
+      },
+      "type_of_bill": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Type of bill code (UB-04)"
+      },
+      "drg_code": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Diagnosis Related Group code"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "currencyFormat": "decimal",
+    "confidenceThreshold": 0.9
+  },
+  "validationRules": [
+    {
+      "name": "npi_format",
+      "description": "NPI must be 10 digits",
+      "expression": "provider_npi.length == 10"
+    },
+    {
+      "name": "total_validation",
+      "description": "Total should equal sum of line charges",
+      "expression": "(total_charge - service_lines.sum { |l| l.charge_amount }).abs < 0.01"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  }
+}

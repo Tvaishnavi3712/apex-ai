@@ -1,0 +1,140 @@
+{
+  "blueprintName": "apex-demand-forecast-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from demand forecast reports",
+  "industry": "supply_chain",
+  "documentType": "demand_forecast",
+  "documentSchema": {
+    "class": "ApexDemandForecast",
+    "description": "Demand forecast extraction for inventory planning",
+    "definitions": {
+      "FORECAST_ITEM": {
+        "properties": {
+          "sku": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "product_name": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "category": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "period": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "forecast_qty": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "lower_bound": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "upper_bound": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "confidence_level": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "historical_avg": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "yoy_change": {
+            "type": "number",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "forecast_id": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "report_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "forecast_horizon": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "forecast_period_start": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "forecast_period_end": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "model_type": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "region": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "channel": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "forecasts": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/FORECAST_ITEM"
+        }
+      },
+      "total_forecast_units": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "total_forecast_revenue": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "forecast_accuracy_target": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "last_period_accuracy": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "key_assumptions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "risk_factors": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "prepared_by": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "approved_by": {
+        "type": "string",
+        "inferenceType": "explicit"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.85
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  }
+}

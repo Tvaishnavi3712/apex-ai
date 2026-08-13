@@ -1,0 +1,32 @@
+{
+  "blueprint_id": "bp-cwfcu-board-resolution",
+  "name": "CWFCU Board Resolution",
+  "description": "Board of Directors resolution + signature tracking record.",
+  "industry": "credit_union",
+  "document_type": "board_resolution",
+  "version": "1.0",
+  "documentSchema": {
+    "documentClass": "CWFCU Board Resolution",
+    "description": "Board resolution schema covering motion, vote outcome, signatories, and effective date.",
+    "extractionInstructions": "Extract motion text and individual signatory acknowledgment status for each board member.",
+    "fields": {
+      "resolution_id":        { "type": "string", "description": "Resolution reference (BOARD-RES-YYYY-NN)", "required": true },
+      "title":                { "type": "string", "description": "Resolution title / subject", "required": true },
+      "meeting_date":         { "type": "date",   "description": "Board meeting date", "required": true },
+      "meeting_type":         { "type": "string", "description": "REGULAR / SPECIAL / EMERGENCY", "required": true },
+      "motion_text":          { "type": "string", "description": "Full motion text", "required": true },
+      "motion_proposed_by":   { "type": "string", "description": "Board member who proposed", "required": true },
+      "motion_seconded_by":   { "type": "string", "description": "Board member who seconded", "required": true },
+      "vote_yes":             { "type": "number", "description": "Yes votes", "required": true },
+      "vote_no":              { "type": "number", "description": "No votes", "required": true },
+      "vote_abstain":         { "type": "number", "description": "Abstentions", "required": true },
+      "effective_date":       { "type": "date",   "description": "Resolution effective date", "required": true },
+      "signatories_required": { "type": "array",  "description": "List of board members required to sign", "required": true },
+      "signatories_received": { "type": "array",  "description": "List with sig timestamp + method", "required": true },
+      "signatures_pending":   { "type": "array",  "description": "Board members still to sign", "required": false },
+      "target_completion_date": { "type": "date","description": "Deadline for all signatures", "required": false },
+      "policy_obligations_unlocked": { "type": "array", "description": "Downstream obligations the resolution enables", "required": false },
+      "ncua_exam_folder_path": { "type": "string","description": "NCUA exam folder index path", "required": true }
+    }
+  }
+}

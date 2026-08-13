@@ -1,0 +1,100 @@
+{
+  "vendor": {
+    "name": "TechPro Solutions",
+    "address": {
+      "street": "789 Industrial Way",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60601"
+    },
+    "tax_id": "56-6498449",
+    "phone": "(682) 502-6273",
+    "email": "billing@techprosol.com"
+  },
+  "invoice": {
+    "number": "SI2026-80722",
+    "date": "2026-02-14",
+    "due_date": "2026-03-31",
+    "po_number": "PO-917102",
+    "terms": "NET45"
+  },
+  "bill_to": {
+    "company_name": "Fabrikam Corp",
+    "address": {
+      "street": "123 Business Park Dr",
+      "city": "Austin",
+      "state": "TX",
+      "zip": "78701"
+    }
+  },
+  "line_items": [
+    {
+      "description": "Office Supplies - Bulk Order",
+      "quantity": 19,
+      "unit_price": 118.04,
+      "amount": 2242.76,
+      "item_code": "EYK-8367"
+    },
+    {
+      "description": "Technical Consulting - Hourly",
+      "quantity": 3,
+      "unit_price": 203.76,
+      "amount": 611.28,
+      "item_code": "LAE-4830"
+    },
+    {
+      "description": "Professional Software License - Annual",
+      "quantity": 18,
+      "unit_price": 1918.19,
+      "amount": 34527.42,
+      "item_code": "BDG-7895"
+    },
+    {
+      "description": "Training Services - Per Person",
+      "quantity": 5,
+      "unit_price": 299.78,
+      "amount": 1498.9,
+      "item_code": "ZZU-7216"
+    },
+    {
+      "description": "Cloud Hosting Services - Monthly",
+      "quantity": 16,
+      "unit_price": 606.88,
+      "amount": 9710.08,
+      "item_code": "HHS-4250"
+    },
+    {
+      "description": "Technical Consulting - Hourly",
+      "quantity": 19,
+      "unit_price": 151.82,
+      "amount": 2884.58,
+      "item_code": "KHT-9835"
+    },
+    {
+      "description": "Network Equipment - Enterprise",
+      "quantity": 17,
+      "unit_price": 1050.71,
+      "amount": 17862.07,
+      "item_code": "LRP-5052"
+    },
+    {
+      "description": "Cloud Hosting Services - Monthly",
+      "quantity": 9,
+      "unit_price": 469.31,
+      "amount": 4223.79,
+      "item_code": "SUJ-1139"
+    }
+  ],
+  "totals": {
+    "subtotal": 73560.88,
+    "tax_rate": 0.0825,
+    "tax_amount": 6068.77,
+    "shipping": 0,
+    "total": 79629.65
+  },
+  "payment": {
+    "bank_name": "First National Bank",
+    "account_number": "****1234",
+    "routing_number": "021000089"
+  }
+}

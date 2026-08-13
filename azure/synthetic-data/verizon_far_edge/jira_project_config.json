@@ -1,0 +1,43 @@
+{
+  "project_key":  "APEXVZ",
+  "project_name": "APEX Verizon Far Edge Certification",
+  "owner":        "james.patchett@verizon.com",
+  "issue_types": {
+    "certification_failure": {
+      "type": "Bug",
+      "priority_mapping": {
+        "latency_threshold_breach": "P1",
+        "schema_drift_breaking":    "P1",
+        "regression_failure":       "P2",
+        "investigate":              "P3"
+      },
+      "required_fields": [
+        "device_type",
+        "firmware_version",
+        "test_case_id",
+        "root_cause_hypothesis",
+        "redfish_endpoint_affected",
+        "scripts_impacted"
+      ],
+      "auto_assign_rules": {
+        "schema_drift":   "automation-team",
+        "latency_breach": "vendor-engineering",
+        "regression":     "cert-team-lead",
+        "investigate":    "cert-team-lead"
+      }
+    },
+    "schema_drift_epic": {
+      "type": "Epic",
+      "default_assignee": "automation-team-lead",
+      "fields": ["schema_version_from", "schema_version_to", "breaking_changes_count", "scripts_impacted_count"]
+    }
+  },
+  "labels": [
+    "apex-auto-generated",
+    "far-edge",
+    "certification",
+    "do-not-close-without-apex-review"
+  ],
+  "webhook_url": "https://verizon-apex-poc.atlassian.net/rest/api/3/issue",
+  "_demo_note":  "For POC: use Jira Cloud free tier sandbox. For production: connect to Verizon's internal Jira via API token in Vault."
+}

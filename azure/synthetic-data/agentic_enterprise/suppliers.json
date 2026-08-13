@@ -1,0 +1,57 @@
+{
+  "_description": "Approved supplier catalog for the Agentic Enterprise Supply Chain Orchestrator demo. SUP-321 is the recommended fast path for SKU-892 (3-day lead, 99.4% on-time, zero defects YTD).",
+  "as_of": "2026-05-04T07:00:00Z",
+  "suppliers": [
+    {
+      "supplier_id": "SUP-321",
+      "name": "Pacific Components Ltd.",
+      "country": "Vietnam",
+      "ships_from": "Ho Chi Minh City",
+      "lead_time_days": 3,
+      "lead_time_mode": "AIR",
+      "on_time_pct": 99.4,
+      "defect_rate_ytd": 0.0,
+      "credit_terms": "Net 45",
+      "approved_skus": ["SKU-892", "SKU-104", "SKU-577"],
+      "unit_cost": { "SKU-892": 38.50 },
+      "min_order_qty": 100,
+      "preferred": true,
+      "performance_tier": "A",
+      "notes": "Fastest qualified supplier for SKU-892. Air freight pre-paid via INCOTERM DDP."
+    },
+    {
+      "supplier_id": "SUP-117",
+      "name": "Shenzhen Mobile Devices Co.",
+      "country": "China",
+      "ships_from": "Shenzhen",
+      "lead_time_days": 14,
+      "lead_time_mode": "OCEAN",
+      "on_time_pct": 92.1,
+      "defect_rate_ytd": 0.8,
+      "credit_terms": "Net 60",
+      "approved_skus": ["SKU-892", "SKU-301"],
+      "unit_cost": { "SKU-892": 31.20 },
+      "min_order_qty": 500,
+      "preferred": false,
+      "performance_tier": "B",
+      "notes": "Cheapest unit cost but 14-day lead — too slow for the Dallas window."
+    },
+    {
+      "supplier_id": "SUP-208",
+      "name": "TexAudio Manufacturing (Dallas)",
+      "country": "USA",
+      "ships_from": "Dallas, TX",
+      "lead_time_days": 7,
+      "lead_time_mode": "GROUND",
+      "on_time_pct": 96.7,
+      "defect_rate_ytd": 0.4,
+      "credit_terms": "Net 30",
+      "approved_skus": ["SKU-892"],
+      "unit_cost": { "SKU-892": 44.80 },
+      "min_order_qty": 250,
+      "preferred": false,
+      "performance_tier": "B",
+      "notes": "Domestic alternate. Slower than SUP-321 but 'Made in USA' option for branding-sensitive lanes."
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+# CBTS Apex AI Platform - Baggage Reconciliation Runbook
+name: baggage_reconciliation
+version: "1.0.0"
+description: "Automated baggage claim processing and reconciliation"
+industry: airlines
+category: customer_service
+
+intent: |
+  Process baggage claims by extracting claim details, tracking bag locations,
+  coordinating recovery, calculating compensation, and managing customer
+  communications throughout the resolution process.
+
+output:
+  - name: claim_record
+    type: structured_data
+    schema:
+      claim_number: string
+      status: string
+      bag_location: string
+      eta_delivery: string
+  - name: compensation_decision
+    type: payment
+    schema:
+      amount: number
+      type: string
+      method: string
+
+context:
+  business_rules:
+    - "Delayed bags: $50/day interim expenses"
+    - "Lost bags: Max liability per DOT regulations"
+    - "Priority delivery for elite status members"
+    - "Update customer every 12 hours"
+
+  sla_requirements:
+    initial_response: "2 hours"
+    location_update: "12 hours"
+    delayed_delivery_target: "24 hours"
+    lost_declaration: "21 days"
+
+  compensation_limits:
+    domestic_max: 3800
+    international_max: 1780
+    interim_expense_daily: 50
+
+actions:
+  - name: claim_extract
+    action_id: airlines.claim_extract
+    required: true
+  - name: bag_trace
+    action_id: airlines.worldtracer_lookup
+    required: true
+  - name: delivery_schedule
+    action_id: airlines.delivery_schedule
+    required: false
+  - name: compensation_calculate
+    action_id: airlines.compensation_calculate
+    required: false
+  - name: customer_notify
+    action_id: core.send_notification
+    required: false
+
+recipe: |
+  ## Baggage Reconciliation Workflow
+
+  ### Step 1: Claim Processing
+  1. Use `claim_extract` to capture claim details
+  2. Validate bag tag numbers
+  3. Verify flight itinerary
+  4. Check passenger loyalty status
+
+  ### Step 2: Bag Tracing
+  1. Use `bag_trace` to query WorldTracer
+  2. Check last scan location
+  3. Identify misrouting point
+  4. Predict current location
+
+  ### Step 3: Recovery Coordination
+  If bag located:
+  1. Arrange forward routing to destination
+  2. Use `delivery_schedule` for home delivery
+  3. Prioritize by status and days delayed
+  4. Coordinate with ground handlers
+
+  ### Step 4: Customer Communication
+  1. Use `customer_notify` with status updates
+  2. Provide tracking link
+  3. Offer interim expense allowance
+  4. Set expectations for delivery
+
+  ### Step 5: Compensation
+  If bag declared lost (21+ days):
+  1. Use `compensation_calculate` with contents
+  2. Apply depreciation rules
+  3. Process payment
+  4. Close claim
+
+triggers:
+  - type: api
+    endpoint: /api/v1/baggage-claim
+  - type: blob_event
+    bucket: apex-airlines-claims
+    prefix: baggage/
+
+worker:
+  queue: apex-baggage-queue
+  concurrency: 30
+  timeout_seconds: 180
+
+metadata:
+  tags: [baggage, airlines, customer-service, worldtracer]

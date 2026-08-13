@@ -1,0 +1,91 @@
+playbook_id: pb-cwfcu-8
+name: ncua_exam_readiness
+version: "1.0.0"
+description: "⭐ Cross-agent NCUA exam folder assembly playbook — the playbook that ties all 5 agents together."
+industry: credit_union
+category: compliance
+
+intent: |
+  This is the orchestrating playbook that demonstrates the connected
+  CWFCU story arc. It runs continuously and assembles the NCUA exam
+  folder from ALL five agents' outputs into a single exam-ready bundle.
+  It tracks the overall NCUA Exam Readiness score (currently 87%,
+  target 97% by July 21, 2026 exam window), surfaces the specific
+  blockers, and drives every agent to close its respective gap.
+
+  The five folder contributions:
+    1. CIP records folder           ← Member Onboarding Agent (100%)
+    2. BSA/AML folder               ← Compliance Agent          (96%)
+    3. Credit risk folder           ← Loan Document Agent       (91%)
+    4. Third-party risk folder      ← Vendor & Contract Agent   (82%)
+    5. HR / Policy folder           ← Policy & HR Agent         (88%)
+
+  At any moment, the playbook can produce a fully-indexed, exam-ready
+  NCUA bundle that a CWFCU officer (Margaret Rodriguez, VP Operations)
+  can hand to the NCUA examiner on Day 1 of the exam.
+
+output:
+  - name: ncua_exam_folder
+    type: bundle
+    description: "Complete NCUA exam folder bundled and indexed"
+  - name: readiness_score
+    type: structured_data
+    description: "Overall + per-section readiness scores"
+  - name: blockers
+    type: structured_data
+    description: "Itemized list of specific blockers per section"
+  - name: trajectory_forecast
+    type: structured_data
+    description: "Projected readiness % at exam date based on current pace"
+
+context:
+  business_rules:
+    - "All folder sections must be ≥ 95% on exam day"
+    - "Cross-agent dependencies: BSA training (Policy) blocks Compliance section"
+    - "Board attestation (Policy) blocks Vendor section completion"
+    - "Every blocker has a designated owner and target close date"
+
+actions:
+  - name: aggregate_folder_scores
+    action_id: credit_union.ncua_aggregate_scores
+    description: "Pull current % from each of the 5 folder sections"
+    required: true
+  - name: identify_blockers
+    action_id: credit_union.ncua_identify_blockers
+    description: "Surface specific blockers per section"
+    required: true
+  - name: forecast_trajectory
+    action_id: credit_union.ncua_forecast_trajectory
+    description: "Forecast readiness % at exam date based on current pace"
+    required: true
+  - name: assemble_bundle
+    action_id: credit_union.ncua_assemble_bundle
+    description: "On demand: assemble exam-ready bundle"
+    required: false
+
+recipe: |
+  Continuous job (runs every 15 min):
+  1. Pull current readiness % from each of the 5 folder sections:
+     - CIP records (Onboarding Agent)
+     - BSA/AML (Compliance Agent)
+     - Credit risk (Loan Document Agent)
+     - Third-party risk (Vendor & Contract Agent)
+     - HR / Policy (Policy & HR Agent)
+  2. Calculate overall readiness as a weighted aggregate.
+  3. Identify specific blockers per section:
+     - Items below confidence floor (need re-review)
+     - Missing required documents
+     - Open HITL items
+     - Cross-agent dependencies not yet satisfied
+  4. Each blocker is assigned to the owning agent for closure.
+  5. Forecast trajectory: based on closure rate of last 30 days,
+     project the readiness % at exam date.
+  6. On-demand: assemble a complete exam bundle (PDFs, JSON metadata,
+     immutable audit trail of every decision) ready for examiner
+     handoff. Estimated bundle size: 1.4GB.
+
+triggers:
+  - type: schedule
+    cron: "*/15 * * * *"   # every 15 min
+  - type: on_demand
+    role: vp_operations

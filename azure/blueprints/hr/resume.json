@@ -1,0 +1,213 @@
+{
+  "blueprintName": "apex-resume-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from resumes and CVs for talent acquisition",
+  "industry": "hr",
+  "documentType": "resume",
+  "documentSchema": {
+    "class": "ApexResume",
+    "description": "Apex AI Platform resume extraction blueprint for recruitment",
+    "definitions": {
+      "EXPERIENCE": {
+        "properties": {
+          "company": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Company or organization name"
+          },
+          "title": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Job title or position"
+          },
+          "start_date": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Employment start date"
+          },
+          "end_date": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Employment end date (or 'Present' if current)"
+          },
+          "location": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Work location (city, state/country)"
+          },
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Job responsibilities and achievements"
+          }
+        }
+      },
+      "EDUCATION": {
+        "properties": {
+          "institution": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "School, university, or institution name"
+          },
+          "degree": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Degree type (e.g., Bachelor's, Master's, PhD)"
+          },
+          "field_of_study": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Major or field of study"
+          },
+          "graduation_date": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Graduation date or expected graduation"
+          },
+          "gpa": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "GPA if listed"
+          },
+          "honors": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Academic honors or distinctions"
+          }
+        }
+      },
+      "CERTIFICATION": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Certification name"
+          },
+          "issuing_organization": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Organization that issued the certification"
+          },
+          "date_obtained": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Date certification was obtained"
+          },
+          "expiration_date": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Expiration date if applicable"
+          },
+          "credential_id": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Credential or certification ID"
+          }
+        }
+      }
+    },
+    "properties": {
+      "full_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Candidate's full name"
+      },
+      "email": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Email address"
+      },
+      "phone": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Phone number"
+      },
+      "location": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Current location (city, state/country)"
+      },
+      "linkedin_url": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "LinkedIn profile URL"
+      },
+      "portfolio_url": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Portfolio or personal website URL"
+      },
+      "summary": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Professional summary or objective statement"
+      },
+      "experience": {
+        "type": "array",
+        "instruction": "Work experience history in chronological order",
+        "items": {
+          "$ref": "#/definitions/EXPERIENCE"
+        }
+      },
+      "education": {
+        "type": "array",
+        "instruction": "Educational background",
+        "items": {
+          "$ref": "#/definitions/EDUCATION"
+        }
+      },
+      "skills": {
+        "type": "array",
+        "instruction": "List of skills mentioned in the resume",
+        "items": {
+          "type": "string"
+        }
+      },
+      "certifications": {
+        "type": "array",
+        "instruction": "Professional certifications",
+        "items": {
+          "$ref": "#/definitions/CERTIFICATION"
+        }
+      },
+      "languages": {
+        "type": "array",
+        "instruction": "Languages spoken with proficiency levels",
+        "items": {
+          "type": "string"
+        }
+      },
+      "total_years_experience": {
+        "type": "number",
+        "inferenceType": "inferred",
+        "instruction": "Total years of professional experience"
+      },
+      "highest_degree": {
+        "type": "string",
+        "inferenceType": "inferred",
+        "instruction": "Highest educational degree attained"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "flexible",
+    "confidenceThreshold": 0.8
+  },
+  "validationRules": [
+    {
+      "name": "email_format",
+      "description": "Validate email format",
+      "expression": "email =~ /^[^@]+@[^@]+\\.[^@]+$/"
+    },
+    {
+      "name": "phone_format",
+      "description": "Validate phone number exists",
+      "expression": "phone != null && phone.length > 0"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  }
+}

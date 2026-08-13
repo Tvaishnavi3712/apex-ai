@@ -1,0 +1,568 @@
+# =============================================================================
+# APEX AI Platform - Product Design Assistant Playbook
+# =============================================================================
+# Aerospace & Defense: AI-assisted product design analysis and guidance.
+# FUTURE STATE / ART OF THE POSSIBLE - Demonstrates platform extensibility.
+# =============================================================================
+
+playbook:
+  name: product_design_assistant
+  version: "1.0.0"
+  industry: aerospace_defense
+  category: engineering
+  description: "AI-assisted product design analysis, DFM review, and material selection"
+  compliance: ["ITAR", "AS9100", "MIL-STD"]
+  status: future_capability  # Flag as future state demo
+
+  # ---------------------------------------------------------------------------
+  # LLM Configuration
+  # ---------------------------------------------------------------------------
+  llm_config:
+    design_analysis_model:
+      provider: azure_openai
+      model_id: anthropic.claude-opus-4-6
+      region: us-gov-west-1
+      parameters:
+        temperature: 0.1
+        max_tokens: 8000
+
+    recommendation_model:
+      provider: azure_openai
+      model_id: anthropic.claude-opus-4-6
+      region: us-gov-west-1
+      parameters:
+        temperature: 0.2
+        max_tokens: 4000
+
+  # ---------------------------------------------------------------------------
+  # INTENT
+  # ---------------------------------------------------------------------------
+  intent: |
+    Assist engineers with product design decisions (AI assists, engineer decides):
+    1. Analyze designs for manufacturability (DFM) - flag difficult features
+    2. Search for similar parts in PDM to leverage existing knowledge
+    3. Recommend materials based on requirements and trade-offs
+    4. Validate designs against program specifications
+    5. Estimate manufacturing costs from design geometry
+    6. Surface relevant engineering standards and specifications
+
+    NOTE: This is ASSISTANCE, not autonomous design creation.
+    The engineer makes all final design decisions.
+
+  # ---------------------------------------------------------------------------
+  # OUTPUT
+  # ---------------------------------------------------------------------------
+  output:
+    schema:
+      type: object
+      properties:
+        dfm_analysis:
+          type: object
+          description: "Design-for-manufacturability findings"
+        similar_parts:
+          type: array
+          description: "Similar parts from PDM with manufacturing history"
+        material_recommendations:
+          type: array
+          description: "Recommended materials with trade-offs"
+        design_validation:
+          type: object
+          description: "Validation against specifications"
+        cost_estimate:
+          type: object
+          description: "Rough cost estimate from geometry"
+        engineering_references:
+          type: array
+          description: "Relevant standards and specs"
+
+  # ===========================================================================
+  # CONTEXT SECTION
+  # ===========================================================================
+  context:
+    # -------------------------------------------------------------------------
+    # Data Sources (READ)
+    # -------------------------------------------------------------------------
+    data_sources:
+      solidworks_pdm:
+        type: sql_database
+        connection: "${SOLIDWORKS_PDM_CONNECTION}"
+        mode: read_only
+        description: "SolidWorks PDM Vault - CAD data and history"
+        tables:
+          parts: "dbo.Parts"
+          assemblies: "dbo.Assemblies"
+          drawings: "dbo.Drawings"
+          revisions: "dbo.Revisions"
+          properties: "dbo.CustomProperties"
+          bom: "dbo.BillOfMaterials"
+          configurations: "dbo.Configurations"
+
+      material_database:
+        type: sql_database
+        connection: "${MATERIAL_DB_CONNECTION}"
+        mode: read_only
+        description: "Material specifications and properties"
+        tables:
+          materials: "dbo.Materials"
+          specifications: "dbo.MaterialSpecs"
+          properties: "dbo.MaterialProperties"
+          certifications: "dbo.MaterialCerts"
+
+      manufacturing_history:
+        type: sql_database
+        connection: "${MFG_HISTORY_CONNECTION}"
+        mode: read_only
+        description: "Historical manufacturing data"
+        tables:
+          machining_times: "dbo.MachiningTimes"
+          tooling_used: "dbo.ToolingHistory"
+          quality_data: "dbo.QualityMetrics"
+          cost_actuals: "dbo.CostActuals"
+
+      standards_library:
+        type: sharepoint
+        tenant: "${M365_GCC_TENANT}"
+        mode: read_only
+        description: "Engineering standards and specifications"
+        sites:
+          engineering: "/sites/Engineering/Standards"
+          mil_specs: "/sites/Engineering/MIL-STD"
+          customer_specs: "/sites/Engineering/CustomerSpecs"
+
+      program_requirements:
+        type: sql_database
+        connection: "${PROGRAM_DB_CONNECTION}"
+        mode: read_only
+        description: "Program-specific requirements"
+        tables:
+          requirements: "dbo.ProgramRequirements"
+          specifications: "dbo.ProgramSpecs"
+          drawings_list: "dbo.ApprovedDrawings"
+
+    # -------------------------------------------------------------------------
+    # Output Destinations (WRITE)
+    # -------------------------------------------------------------------------
+    output_destinations:
+      design_reports:
+        type: s3
+        bucket: "apex-${APEX_ENVIRONMENT}-design-analysis"
+        prefix: "reports/"
+        mode: write
+        description: "Design analysis reports"
+
+      audit_log:
+        type: cosmos_db
+        table: "apex-${APEX_ENVIRONMENT}-audit-log"
+        mode: write
+
+    # -------------------------------------------------------------------------
+    # DFM Rules - Manufacturability Guidelines
+    # -------------------------------------------------------------------------
+    dfm_rules:
+      milling:
+        min_internal_radius:
+          warning: 0.125  # inches
+          critical: 0.0625
+          message: "Internal corner radius too small for standard end mills"
+
+        max_depth_to_width:
+          warning: 4.0
+          critical: 6.0
+          message: "Deep pocket may require special tooling or EDM"
+
+        min_wall_thickness:
+          aluminum:
+            warning: 0.060
+            critical: 0.030
+          titanium:
+            warning: 0.080
+            critical: 0.050
+          steel:
+            warning: 0.070
+            critical: 0.040
+          message: "Thin wall may cause deflection during machining"
+
+        min_hole_diameter:
+          warning: 0.0625
+          critical: 0.03125
+          message: "Small hole diameter may require EDM or special drilling"
+
+      tolerances:
+        standard_achievable:
+          milling: 0.005
+          turning: 0.002
+          grinding: 0.0005
+
+        tight_tolerance_features:
+          warning_threshold: 0.002
+          critical_threshold: 0.0005
+          message: "Tight tolerance will increase cost and inspection requirements"
+
+      surface_finish:
+        standard_milling: 125  # Ra microinches
+        precision_milling: 63
+        grinding_required: 32
+        lapping_required: 16
+        message: "Fine surface finish may require secondary operations"
+
+    # -------------------------------------------------------------------------
+    # Material Selection Criteria
+    # -------------------------------------------------------------------------
+    material_criteria:
+      aerospace_alloys:
+        "Ti-6Al-4V":
+          strengths: ["High strength-to-weight", "Corrosion resistant", "High temp capability"]
+          weaknesses: ["Difficult to machine", "Expensive", "Work hardens"]
+          typical_applications: ["Structural components", "Engine parts", "Fasteners"]
+          ams_specs: ["AMS-4911", "AMS-4928", "AMS-4930"]
+          machinability_rating: 0.3  # vs 1.0 for free-machining steel
+          relative_cost: 8.0
+
+        "7075-T6":
+          strengths: ["High strength", "Good machinability", "Cost effective"]
+          weaknesses: ["Poor corrosion resistance", "Not weldable", "Stress corrosion"]
+          typical_applications: ["Structural frames", "Fittings", "Brackets"]
+          ams_specs: ["AMS-4045", "AMS-4078"]
+          machinability_rating: 0.8
+          relative_cost: 1.5
+
+        "15-5 PH":
+          strengths: ["High strength", "Corrosion resistant", "Good toughness"]
+          weaknesses: ["Moderate machinability", "Heat treatment required"]
+          typical_applications: ["Shafts", "Gears", "Valve components"]
+          ams_specs: ["AMS-5659", "AMS-5862"]
+          machinability_rating: 0.5
+          relative_cost: 3.0
+
+        "Inconel 718":
+          strengths: ["Extreme temp capability", "Oxidation resistant", "High strength"]
+          weaknesses: ["Very difficult to machine", "Expensive", "Work hardens severely"]
+          typical_applications: ["Turbine components", "High-temp exhaust", "Fasteners"]
+          ams_specs: ["AMS-5662", "AMS-5663"]
+          machinability_rating: 0.15
+          relative_cost: 12.0
+
+        "A286":
+          strengths: ["High temp strength", "Oxidation resistant", "Non-magnetic option"]
+          weaknesses: ["Difficult to machine", "Limited availability"]
+          typical_applications: ["Fasteners", "Turbine components", "Exhaust systems"]
+          ams_specs: ["AMS-5525", "AMS-5726"]
+          machinability_rating: 0.25
+          relative_cost: 6.0
+
+    # -------------------------------------------------------------------------
+    # Cost Estimation Factors
+    # -------------------------------------------------------------------------
+    cost_estimation:
+      material_factors:
+        buy_to_fly_ratios:
+          simple_prismatic: 2.0
+          moderate_complexity: 4.0
+          complex_geometry: 8.0
+          near_net_shape: 1.5
+
+      machining_rates:
+        3_axis_milling: 85.00
+        5_axis_milling: 125.00
+        turning: 75.00
+        grinding: 95.00
+        edm: 110.00
+        inspection: 78.00
+
+      complexity_multipliers:
+        simple: 1.0
+        moderate: 1.5
+        complex: 2.5
+        very_complex: 4.0
+
+      setup_hours:
+        3_axis: 2.0
+        5_axis: 4.0
+        turning: 1.5
+        secondary_ops: 1.0
+
+  # ===========================================================================
+  # RECIPE
+  # ===========================================================================
+  recipe: |
+    ## Product Design Assistant Workflow
+
+    **IMPORTANT**: This agent ASSISTS the engineer. All recommendations require
+    human review and approval. The engineer makes final design decisions.
+
+    ### Phase 1: Design Intake
+    1. Receive design input (CAD file, drawing, or description)
+    2. Extract key features:
+       - Overall dimensions and envelope
+       - Critical features (holes, pockets, surfaces)
+       - Tolerances and surface finish requirements
+       - Material callout if specified
+    3. Identify target program if applicable
+    4. Log request to audit trail
+
+    ### Phase 2: Similar Part Search (READ)
+    Query context.data_sources.solidworks_pdm:
+    1. Search for parts with similar:
+       - Geometry characteristics
+       - Material type
+       - Size envelope
+       - Feature types
+    2. Retrieve manufacturing history from context.data_sources.manufacturing_history
+    3. Return top 5 similar parts with:
+       - How they were manufactured
+       - Actual vs estimated costs
+       - Quality metrics
+       - Lessons learned
+
+    ### Phase 3: DFM Analysis
+    Using context.llm_config.design_analysis_model (GPT-5.4):
+    1. Analyze design against context.dfm_rules:
+       - Check internal radii
+       - Evaluate pocket depths
+       - Assess wall thicknesses
+       - Review hole sizes
+       - Evaluate tolerance stack-ups
+    2. Flag issues by severity:
+       - CRITICAL: May not be manufacturable as designed
+       - WARNING: Will increase cost/time significantly
+       - INFO: Suggestion for improvement
+    3. For each issue, provide:
+       - What the problem is
+       - Why it matters
+       - Suggested modification (if applicable)
+
+    ### Phase 4: Material Recommendation
+    If material not specified or alternatives requested:
+    1. Analyze requirements:
+       - Strength/weight needs
+       - Temperature environment
+       - Corrosion exposure
+       - Cost constraints
+    2. Compare against context.material_criteria.aerospace_alloys
+    3. Recommend materials with trade-off analysis:
+       - Primary recommendation with rationale
+       - Alternative options
+       - Cost and machinability impacts
+
+    ### Phase 5: Design Validation
+    If program specified:
+    1. Query context.data_sources.program_requirements
+    2. Check design against:
+       - Program-specific material requirements
+       - Required callouts (ITAR markings, etc.)
+       - Customer specifications
+       - Applicable MIL-STDs
+    3. Flag any compliance gaps
+
+    ### Phase 6: Cost Estimation
+    Using context.cost_estimation factors:
+    1. Estimate material cost:
+       - Calculate buy-to-fly ratio
+       - Apply material cost factor
+    2. Estimate machining time:
+       - Assess complexity
+       - Calculate setup and run time
+       - Apply appropriate rates
+    3. Add inspection and overhead
+    4. Provide rough ROM estimate with confidence level
+
+    NOTE: This is a ROUGH estimate for planning only.
+    Actual quoting requires detailed process planning.
+
+    ### Phase 7: Response Generation
+    1. Compile comprehensive design analysis:
+       - DFM findings with recommendations
+       - Similar parts and learnings
+       - Material recommendations
+       - Validation results
+       - Cost estimate
+    2. Include references to standards
+    3. Save report to context.output_destinations.design_reports
+    4. Log completion to audit trail
+
+  # ===========================================================================
+  # FACTORY CHAIN
+  # ===========================================================================
+  factory_chain:
+    chainId: design_assistant_chain
+    description: "AI-assisted design analysis and recommendations"
+    factories:
+      - id: design_intake
+        action: design_intake
+        context_keys: [dfm_rules]
+        timeout_seconds: 60
+
+      - id: similar_part_search
+        action: pdm_search
+        depends_on: [design_intake]
+        context_keys: [data_sources.solidworks_pdm, data_sources.manufacturing_history]
+        mode: read
+        timeout_seconds: 45
+
+      - id: dfm_analysis
+        action: dfm_analyze
+        depends_on: [design_intake]
+        context_keys: [llm_config.design_analysis_model, dfm_rules]
+        ai_enhanced: true
+        model: anthropic.claude-opus-4-6
+        timeout_seconds: 120
+
+      - id: material_lookup
+        action: material_query
+        depends_on: [design_intake]
+        context_keys: [data_sources.material_database, material_criteria]
+        mode: read
+        timeout_seconds: 30
+
+      - id: material_recommendation
+        action: material_recommend
+        depends_on: [design_intake, material_lookup]
+        context_keys: [llm_config.recommendation_model, material_criteria]
+        ai_enhanced: true
+        timeout_seconds: 60
+
+      - id: standards_lookup
+        action: standards_search
+        depends_on: [design_intake]
+        context_keys: [data_sources.standards_library]
+        mode: read
+        timeout_seconds: 30
+
+      - id: program_validation
+        action: program_validate
+        depends_on: [design_intake]
+        context_keys: [data_sources.program_requirements]
+        mode: read
+        conditional: "program_specified == true"
+        timeout_seconds: 30
+
+      - id: cost_estimate
+        action: cost_estimate
+        depends_on: [design_intake, material_recommendation, dfm_analysis]
+        context_keys: [cost_estimation]
+        timeout_seconds: 45
+
+      - id: report_generate
+        action: design_report_generate
+        depends_on: [dfm_analysis, similar_part_search, material_recommendation, cost_estimate, program_validation]
+        context_keys: [output_destinations.design_reports]
+        mode: write
+        timeout_seconds: 60
+
+      - id: audit_log
+        action: audit_log_write
+        depends_on: [report_generate]
+        context_keys: [output_destinations.audit_log]
+        mode: write
+        timeout_seconds: 15
+
+  # ===========================================================================
+  # ACTIONS
+  # ===========================================================================
+  actions:
+    - id: design_intake
+      handler: aerospace_defense.design_intake
+      description: "Parse and analyze design input"
+
+    - id: pdm_search
+      handler: aerospace_defense.pdm_search
+      description: "Search SolidWorks PDM for similar parts (READ)"
+      mode: read
+
+    - id: dfm_analyze
+      handler: aerospace_defense.dfm_analyze
+      description: "AI-powered DFM analysis"
+
+    - id: material_query
+      handler: aerospace_defense.material_query
+      description: "Query material database (READ)"
+      mode: read
+
+    - id: material_recommend
+      handler: aerospace_defense.material_recommend
+      description: "AI-powered material recommendation"
+
+    - id: standards_search
+      handler: aerospace_defense.standards_search
+      description: "Search engineering standards (READ)"
+      mode: read
+
+    - id: program_validate
+      handler: aerospace_defense.program_validate
+      description: "Validate against program requirements (READ)"
+      mode: read
+
+    - id: cost_estimate
+      handler: aerospace_defense.cost_estimate
+      description: "Estimate manufacturing cost"
+
+    - id: design_report_generate
+      handler: aerospace_defense.design_report_generate
+      description: "Generate design analysis report (WRITE)"
+      mode: write
+
+    - id: audit_log_write
+      handler: core.audit_log
+      description: "Write audit record (WRITE)"
+      mode: write
+
+  # ===========================================================================
+  # CONNECTORS
+  # ===========================================================================
+  connectors:
+    # READ
+    - id: solidworks_pdm
+      type: sql_server
+      mode: read
+      description: "SolidWorks PDM - CAD data and history"
+
+    - id: material_db
+      type: sql_server
+      mode: read
+      description: "Material specifications database"
+
+    - id: manufacturing_history
+      type: sql_server
+      mode: read
+      description: "Historical manufacturing data"
+
+    - id: standards_library
+      type: sharepoint
+      mode: read
+      description: "Engineering standards library"
+
+    # WRITE
+    - id: design_reports
+      type: s3
+      mode: write
+      description: "Design analysis reports"
+
+  # ===========================================================================
+  # TRIGGERS
+  # ===========================================================================
+  triggers:
+    - type: agent_hub
+      agent_id: "DesignBot"
+      description: "Natural language design assistance"
+
+    - type: api
+      path: "/api/v1/aerospace-defense/design-assistant"
+      methods: ["POST"]
+      auth: azure_ad
+
+  # ===========================================================================
+  # METADATA
+  # ===========================================================================
+  metadata:
+    created_by: apex-platform
+    created_at: "2026-03-30"
+    status: future_capability
+    demo_positioning: "Art of the Possible - Phase 2 Capability"
+    version_notes: "v1.0.0 - Future state demonstration for Essex Industries"
+    tags:
+      - aerospace
+      - design
+      - dfm
+      - engineering
+      - future-state
+      - claude-opus-4-6

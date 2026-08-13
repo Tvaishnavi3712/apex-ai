@@ -1,0 +1,230 @@
+# CBTS Apex AI Platform - Vendor Onboarding Runbook
+# Natural Language Runbook following Sema4.ai pattern
+
+name: vendor_onboarding
+version: "1.0.0"
+description: "Automated vendor onboarding and validation workflow"
+industry: financial_services
+category: vendor_management
+
+# =============================================================================
+# INTENT
+# =============================================================================
+intent: |
+  Onboard new vendors by collecting required documentation, validating business
+  information, performing compliance screening, and creating approved vendor
+  records in the master database.
+
+# =============================================================================
+# OUTPUT
+# =============================================================================
+output:
+  - name: vendor_record
+    type: structured_data
+    description: "Created vendor master record"
+    schema:
+      vendor_id: string
+      company_name: string
+      status: string
+      compliance_status: string
+
+  - name: validation_results
+    type: validation_report
+    description: "All validation and screening results"
+    schema:
+      tax_id_verified: boolean
+      address_verified: boolean
+      bank_verified: boolean
+      sanctions_clear: boolean
+
+  - name: required_documents
+    type: document_checklist
+    description: "Status of required documentation"
+    schema:
+      w9_received: boolean
+      insurance_cert: boolean
+      banking_info: boolean
+
+# =============================================================================
+# CONTEXT
+# =============================================================================
+context:
+  business_rules:
+    - "All vendors must provide valid W9 or W8-BEN form"
+    - "Vendors must pass OFAC sanctions screening"
+    - "Insurance certificate required for service providers"
+    - "Bank account must be verified before first payment"
+    - "New vendors require procurement manager approval"
+
+  required_documents:
+    domestic:
+      - W9 Form
+      - Certificate of Insurance
+      - Banking Information
+      - Business License (if applicable)
+    international:
+      - W8-BEN or W8-BEN-E Form
+      - Certificate of Insurance
+      - Banking Information (SWIFT/IBAN)
+      - Import/Export License (if applicable)
+
+  screening_requirements:
+    - ofac_check: true
+    - duns_verification: true
+    - credit_check: true
+    - reference_check: optional
+
+# =============================================================================
+# DATA SOURCES
+# =============================================================================
+data_sources:
+  - name: vendor_application
+    type: form_submission
+    description: "Vendor self-service application data"
+
+  - name: vendor_documents
+    type: s3_documents
+    bucket: apex-vendor-documents
+    description: "Uploaded vendor documentation"
+
+  - name: sanctions_database
+    type: external_api
+    provider: ofac
+    description: "OFAC sanctions list for screening"
+
+  - name: vendor_master
+    type: cosmos_db
+    table: apex-vendors
+    description: "Vendor master database"
+
+# =============================================================================
+# ACTIONS
+# =============================================================================
+actions:
+  - name: extract_w9
+    action_id: financial_services.document_extract
+    description: "Extract data from W9 form"
+    blueprint: w9-extraction
+
+  - name: verify_tax_id
+    action_id: financial_services.tax_id_verify
+    description: "Verify tax ID with IRS TIN matching"
+
+  - name: sanctions_screening
+    action_id: financial_services.sanctions_check
+    description: "Screen against OFAC and other sanctions lists"
+
+  - name: verify_bank_account
+    action_id: financial_services.bank_verify
+    description: "Verify bank account ownership"
+
+  - name: create_vendor
+    action_id: financial_services.vendor_create
+    description: "Create vendor record in master database"
+
+  - name: send_notification
+    action_id: core.send_notification
+    description: "Send status notifications"
+
+  - name: human_review
+    action_id: core.human_review
+    description: "Request human review for exceptions"
+
+# =============================================================================
+# RECIPE
+# =============================================================================
+recipe: |
+  ## Vendor Onboarding Workflow
+
+  ### Step 1: Application Receipt
+  When a vendor application is submitted:
+  1. Validate all required fields are completed
+  2. Generate a unique vendor application ID
+  3. Create work item for tracking
+  4. Send acknowledgment email to vendor contact
+
+  ### Step 2: Document Collection
+  Process uploaded vendor documents:
+  1. Check that all required documents are uploaded
+  2. Use `extract_w9` to extract W9 form data
+  3. Validate document dates are current (within 1 year)
+  4. If documents missing, send reminder to vendor
+  5. Allow 5 business days for document completion
+
+  ### Step 3: Tax ID Verification
+  Verify the vendor's tax information:
+  1. Extract Tax ID (EIN/SSN) from W9 document
+  2. Use `verify_tax_id` to validate with IRS TIN matching
+  3. Verify company name matches tax records
+  4. If mismatch, request corrected documentation
+
+  ### Step 4: Compliance Screening
+  Perform required compliance checks:
+  1. Use `sanctions_screening` to check OFAC, SDN lists
+  2. Screen all company principals and beneficial owners
+  3. Check for adverse media or legal issues
+  4. If any hits found, escalate to compliance team
+  5. Document all screening results for audit
+
+  ### Step 5: Bank Account Verification
+  Verify payment information:
+  1. Extract banking details from submitted documents
+  2. Use `verify_bank_account` to confirm account ownership
+  3. For international vendors, validate SWIFT/IBAN format
+  4. Store encrypted banking information
+
+  ### Step 6: Approval & Activation
+  Complete the onboarding process:
+  1. Compile all verification results
+  2. If all checks pass, auto-approve for amounts < $50,000
+  3. For larger potential spend, route to procurement manager
+  4. Use `create_vendor` to add to vendor master
+  5. Send welcome email with vendor portal access
+  6. Notify requesting department that vendor is active
+
+  ### Exception Handling
+  - Tax ID verification fails: Request corrected W9
+  - Sanctions hit: Immediate escalation to compliance
+  - Bank verification fails: Request alternate payment method
+  - Document expiration: Request updated documents
+
+# =============================================================================
+# TRIGGERS
+# =============================================================================
+triggers:
+  - type: form_submission
+    form_id: vendor-application
+    description: "New vendor application submitted"
+
+  - type: api
+    endpoint: /api/v1/onboard-vendor
+    method: POST
+    description: "Manual vendor onboarding request"
+
+  - type: workflow
+    source_runbook: invoice_processing
+    event: vendor_not_found
+    description: "Triggered from invoice processing for unknown vendor"
+
+# =============================================================================
+# WORKER CONFIGURATION
+# =============================================================================
+worker:
+  queue: apex-vendor-onboarding-queue
+  concurrency: 5
+  timeout_seconds: 600
+  retry_policy:
+    max_attempts: 3
+    backoff_multiplier: 2
+
+# =============================================================================
+# METADATA
+# =============================================================================
+metadata:
+  created_by: apex-platform
+  created_at: "2024-01-15"
+  tags:
+    - vendor-management
+    - onboarding
+    - compliance
+    - financial-services

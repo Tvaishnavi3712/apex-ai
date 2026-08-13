@@ -1,0 +1,41 @@
+═══════════════════════════════════════════════════════════════════════════════
+                            INVOICE
+═══════════════════════════════════════════════════════════════════════════════
+
+VENDOR:                                      BILL TO:
+---------------------------------           ---------------------------------
+QuickPrint Solutions                        Apex Financial Corp
+1234 Commerce Drive                         500 Enterprise Way
+Austin, TX 78701                            San Francisco, CA 94105
+Tax ID: 87-1234567
+Phone: (512) 555-0123
+Email: billing@quickprint.com
+
+═══════════════════════════════════════════════════════════════════════════════
+Invoice Number:    QPS-2024-0156
+Invoice Date:      March 10, 2024
+Due Date:          April 9, 2024
+PO Number:         PO-2024-0089
+Payment Terms:     Net 30
+═══════════════════════════════════════════════════════════════════════════════
+
+DESCRIPTION                          QTY      UNIT PRICE      AMOUNT
+-------------------------------------------------------------------------------
+Business cards (500 ct)               2         $45.00         $90.00
+Letterhead paper (ream)               5         $28.00        $140.00
+Company brochures (100 ct)            3         $85.00        $255.00
+Envelope printing (box)               2         $62.00        $124.00
+-------------------------------------------------------------------------------
+
+                                              Subtotal:       $609.00
+                                              Tax (8.25%):     $50.24
+                                              ─────────────────────────
+                                              TOTAL DUE:      $659.24
+
+═══════════════════════════════════════════════════════════════════════════════
+                    Thank you for your business!
+          Payment can be made via ACH, wire transfer, or check.
+═══════════════════════════════════════════════════════════════════════════════
+
+TEST SCENARIO: Auto-Approve (Amount under $1,000)
+Expected Result: AUTO-APPROVED - No approval required

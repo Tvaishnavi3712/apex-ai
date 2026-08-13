@@ -1,0 +1,90 @@
+# CBTS Apex AI Platform - Patient Registration Runbook
+name: patient_registration
+version: "1.0.0"
+description: "Automated patient registration with insurance verification and scheduling"
+industry: healthcare_providers
+category: patient_access
+
+intent: |
+  Process patient intake forms by extracting demographics, verifying insurance
+  eligibility, creating or updating patient records, and preparing for scheduled
+  appointments.
+
+output:
+  - name: patient_record
+    type: structured_data
+    schema:
+      mrn: string
+      demographics: object
+      insurance: object
+      eligibility_status: string
+  - name: appointment_prep
+    type: work_item
+    schema:
+      copay_amount: number
+      prior_auth_status: string
+      forms_needed: array
+
+context:
+  business_rules:
+    - "Verify insurance eligibility before appointment"
+    - "Collect copay at time of service"
+    - "Update demographics at each visit"
+    - "HIPAA consent required annually"
+
+actions:
+  - name: intake_extract
+    action_id: healthcare_providers.intake_extract
+    required: true
+  - name: patient_match
+    action_id: healthcare_providers.patient_match
+    required: true
+  - name: eligibility_verify
+    action_id: healthcare_payers.eligibility_check
+    required: true
+  - name: benefits_lookup
+    action_id: healthcare_providers.benefits_lookup
+    required: true
+
+recipe: |
+  ## Patient Registration Workflow
+
+  ### Step 1: Intake Form Processing
+  1. Use `intake_extract` to capture patient demographics
+  2. Validate required fields: name, DOB, insurance info
+  3. Check for allergies and current medications
+  4. Capture consent signatures
+
+  ### Step 2: Patient Matching
+  1. Use `patient_match` to find existing records
+  2. Match by: name + DOB, SSN last 4, insurance ID
+  3. If existing patient, update demographics
+  4. If new patient, create MRN
+
+  ### Step 3: Insurance Verification
+  1. Use `eligibility_verify` with insurance details
+  2. Confirm active coverage
+  3. Identify copay/coinsurance amounts
+  4. Check deductible status
+  5. Verify provider is in-network
+
+  ### Step 4: Appointment Preparation
+  1. Calculate patient responsibility
+  2. Check if prior auth needed for service
+  3. Generate pre-visit checklist
+  4. Send appointment reminder with prep instructions
+
+triggers:
+  - type: blob_event
+    bucket: apex-patient-intake
+    prefix: intake-forms/
+  - type: api
+    endpoint: /api/v1/patient-registration
+
+worker:
+  queue: apex-patient-registration-queue
+  concurrency: 20
+  timeout_seconds: 180
+
+metadata:
+  tags: [patient-access, registration, eligibility, healthcare-providers]

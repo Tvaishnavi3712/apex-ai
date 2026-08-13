@@ -1,0 +1,21 @@
+{
+  "generated_at": "2026-02-19T10:22:59.059172",
+  "output_directory": "/Users/babbu/Documents/CBTS/Accelerator/apex-ai-platform/synthetic-data/output",
+  "documents": {
+    "invoices": {
+      "count": 10,
+      "directory": "invoices",
+      "manifest": "invoices/manifest.json"
+    },
+    "receipts": {
+      "count": 15,
+      "directory": "receipts",
+      "manifest": "receipts/manifest.json"
+    },
+    "statements": {
+      "count": 4,
+      "directory": "statements",
+      "manifest": "statements/manifest.json"
+    }
+  }
+}

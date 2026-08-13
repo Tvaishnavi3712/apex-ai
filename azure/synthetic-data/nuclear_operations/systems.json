@@ -1,0 +1,72 @@
+[
+  {
+    "system_id": "RCS",
+    "unit_id": "U1",
+    "name": "Reactor Coolant System",
+    "ANSI_class": 1,
+    "description": "Reactor Coolant System for South Texas Project Unit 1"
+  },
+  {
+    "system_id": "RHR",
+    "unit_id": "U1",
+    "name": "Residual Heat Removal",
+    "ANSI_class": 2,
+    "description": "Residual Heat Removal for South Texas Project Unit 1"
+  },
+  {
+    "system_id": "ESW",
+    "unit_id": "U1",
+    "name": "Essential Service Water",
+    "ANSI_class": 2,
+    "description": "Essential Service Water for South Texas Project Unit 1"
+  },
+  {
+    "system_id": "CCW",
+    "unit_id": "U1",
+    "name": "Component Cooling Water",
+    "ANSI_class": 2,
+    "description": "Component Cooling Water for South Texas Project Unit 1"
+  },
+  {
+    "system_id": "MFW",
+    "unit_id": "U1",
+    "name": "Main Feedwater",
+    "ANSI_class": 3,
+    "description": "Main Feedwater for South Texas Project Unit 1"
+  },
+  {
+    "system_id": "AFW",
+    "unit_id": "U1",
+    "name": "Auxiliary Feedwater",
+    "ANSI_class": 2,
+    "description": "Auxiliary Feedwater for South Texas Project Unit 1"
+  },
+  {
+    "system_id": "EDG",
+    "unit_id": "U1",
+    "name": "Emergency Diesel Generator",
+    "ANSI_class": 2,
+    "description": "Emergency Diesel Generator for South Texas Project Unit 1"
+  },
+  {
+    "system_id": "CVCS",
+    "unit_id": "U1",
+    "name": "Chemical & Volume Control",
+    "ANSI_class": 2,
+    "description": "Chemical & Volume Control for South Texas Project Unit 1"
+  },
+  {
+    "system_id": "RCS",
+    "unit_id": "U2",
+    "name": "Reactor Coolant System",
+    "ANSI_class": 1,
+    "description": "Reactor Coolant System for South Texas Project Unit 2"
+  },
+  {
+    "system_id": "RHR",
+    "unit_id": "U2",
+    "name": "Residual Heat Removal",
+    "ANSI_class": 2,
+    "description": "Residual Heat Removal for South Texas Project Unit 2"
+  }
+]

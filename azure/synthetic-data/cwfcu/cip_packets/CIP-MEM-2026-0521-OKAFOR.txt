@@ -1,0 +1,88 @@
+CUSTOMER IDENTIFICATION PROGRAM (CIP) PACKET
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+═══════════════════════════════════════════════════════════════
+
+Application ID:        CIP-MEM-2026-0521-OKAFOR
+Submission Channel:    CWAnyWhere mobile app + In-Branch
+Submitted:             May 21, 2026 · 08:11:24 ET
+Branch of Record:      South Bend Main · 1610 Lincolnway W
+Branch Officer:        Diane Okafor (Member Services Lead)
+Processing Agent:      Member Onboarding Agent · v2.4.1
+
+──────── APPLICANT INFORMATION ────────
+Legal Name:            OKAFOR ENTERPRISES LLC (Business Member)
+Account Signer:        OKAFOR, Adaeze Chioma  (sole member of LLC)
+Date of Birth:         1981-06-15  (age 44)
+SSN (signer):          XXX-XX-7811
+EIN (entity):          XX-3947112
+Address (business):    442 W Washington St, Suite 280, South Bend, IN 46601
+Address (signer):      1118 N Frances St, South Bend, IN 46617
+Phone:                 (574) 555-4421  (business landline · CenturyLink)
+Email:                 adaeze@okafor-enterprises.com
+Entity Type:           Indiana LLC (formed 2022-03-08)
+Entity Activity:       Healthcare staffing agency
+Annual Revenue:        $1.4M (2024 K-1)
+Years in Operation:    4
+
+──────── GOVERNMENT ID (Account Signer) ────────
+ID Type:               Indiana Driver License
+ID Number:             IN-7740-2241-91
+Issued:                2020-06-15
+Expires:               2028-06-15
+DLDV API Check:        VERIFIED
+Photo Match:           98.1% confidence
+Document Authenticity: GENUINE
+
+──────── BUSINESS DOCUMENTATION ────────
+IRS Form SS-4:         Filed 2022-03-08 (EIN confirmation letter)
+Articles of Org:       Indiana SOS filing 2022-03-08
+Operating Agreement:   On file (single-member LLC)
+2024 Tax Return:       Form 1065 + K-1 verified
+Business License:      Indiana Healthcare Staffing License #HCSI-44829
+
+──────── SCREENING RESULTS ────────
+OFAC SDN List:         CLEAR (entity + signer)
+OFAC Consolidated:     CLEAR
+FinCEN 314(a):         CLEAR
+PEP Screening:         NEGATIVE
+Adverse Media:         CLEAR
+ChexSystems (signer):  CLEAR
+Dun & Bradstreet:      D&B score 78 (Low risk · Established)
+
+──────── RISK ASSESSMENT ────────
+Inherent Risk Tier:    LOW
+Risk Factors:
+  ─ Established business (4 years)
+  ─ Healthcare sector (regulated, low BSA risk)
+  ─ Single beneficial owner (no ownership obfuscation)
+  ─ Clean signer history
+  ─ Strong D&B score
+EDD Required:          NO (standard CDD)
+Annual CDD Refresh:    YES (next: 2027-05-21)
+
+──────── BENEFICIAL OWNERSHIP RULE ────────
+Beneficial Owner(s):   Adaeze Chioma Okafor (100% ownership)
+Control Prong:         Adaeze Chioma Okafor (Manager-Member)
+Certification:         FinCEN Form CTR certification on file
+
+──────── DECISION ────────
+Account Type Opened:   Business Share-Draft (checking) + Business Money Market
+Opening Deposit:       $15,000 (commercial check from prior bank — Lakeside Bank)
+Account Numbers:       XXXXXXXX-77881 (checking)
+                       XXXXXXXX-77882 (money market)
+Member Since:          2026-05-21
+
+Approved:              Diane Okafor (Member Services Lead) at 08:39:18 ET
+Approval Method:       Agent-assisted (HITL touch: 23 min for entity docs)
+
+──────── NCUA EXAM FOLDER INDEX ────────
+Folder Path:           ncua-exam-2026/cip_records/2026-05/
+Beneficial Ownership:  ncua-exam-2026/cdd_records/beneficial_owner_certs/
+Immutable Audit ID:    AUDIT-2026-05-21-08:11:24-CIP-77881
+Linked SARs:           None
+Linked CTRs:           None
+Linked Loans:          None
+
+[Exemplar business-member CIP packet. All 31 CFR § 1010.230 beneficial
+ ownership requirements verifiably satisfied. NCUA examiner-ready.]

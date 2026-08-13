@@ -1,0 +1,127 @@
+================================================================================
+                  MASTER CONSTRUCTION AGREEMENT - MSA-KIEWIT-2024-07
+                       PIPELINE CONSTRUCTION & HOT-TAP SERVICES
+================================================================================
+
+This MASTER CONSTRUCTION AGREEMENT ("Agreement") is entered into and effective
+as of July 1, 2024 (the "Effective Date") between:
+
+    ENTERPRISE PRODUCTS OPERATING LLC ("Company")
+    1100 Louisiana Street, Houston, Texas 77002
+
+    KIEWIT ENERGY GROUP INC. ("Contractor")
+    3555 Farnam Street, Omaha, Nebraska 68131
+
+The Parties agree as follows.
+
+--------------------------------------------------------------------------------
+ARTICLE 1 - TERM
+--------------------------------------------------------------------------------
+Initial Term: five (5) years from the Effective Date, expiring June 30, 2029.
+Optional one-year extensions (up to two) at Company's election with 90-day
+written notice.
+
+--------------------------------------------------------------------------------
+ARTICLE 2 - SCOPE OF WORK
+--------------------------------------------------------------------------------
+Contractor may, pursuant to individual Work Releases or Purchase Orders, perform
+any of the following on EPROD's NGL, crude, refined products, and natural gas
+systems:
+    a) Cross-country pipeline construction (4" through 42" diameter)
+    b) Hot-tap and stopple services on live pipelines
+    c) Station-yard piping, manifold builds, pig launcher/receiver installs
+    d) Horizontal directional drilling (HDD), bore crossings, river crossings
+    e) Tie-ins, valve replacements, pig launcher modifications
+    f) Hydrostatic testing support, dewatering, drying, commissioning
+    g) Emergency response and repair construction services
+
+All work performed in accordance with ASME B31.4 / B31.8, API 1104, applicable
+PHMSA regulations 49 CFR 192/195, and EPROD Engineering Standards Manual.
+
+--------------------------------------------------------------------------------
+ARTICLE 3 - PRICING STRUCTURE
+--------------------------------------------------------------------------------
+
+3.1 LUMP-SUM PROJECT RATES (Mainline construction, indicative)
+
+    Diameter / Wall                Per-Mile Lump Sum (open ROW, normal terrain)
+    -----------------------       -------------------------------------------
+    8"  Gr X-52,  .188" wall      $   1,180,000 / mile
+    12" Gr X-65,  .250" wall      $   1,580,000 / mile
+    16" Gr X-65,  .312" wall      $   2,020,000 / mile
+    20" Gr X-65,  .344" wall      $   2,480,000 / mile
+    24" Gr X-70,  .375" wall      $   2,950,000 / mile
+    30" Gr X-70,  .438" wall      $   3,720,000 / mile
+
+Lump sums include clearing, grading, stringing, bending, welding (100% AUT),
+coating, lowering-in, backfill, ROW restoration, and standard tie-ins. Subject
+to adjustment for terrain class (rock, wetland, urban), bore crossings, and
+fuel/escalation indices per Exhibit C.
+
+3.2 HOT-TAP SERVICES (lump-sum per tap)
+    Up to 6"  on 12"  or smaller carrier         $  78,000
+    8"-12"   on 16"-24" carrier                  $ 142,000
+    16"      on 30"-36" carrier                  $ 218,000
+    24"      on 36"-42" carrier                  $ 365,000
+    Stopple isolation premium (per stopple)      $ 195,000
+
+3.3 MULTI-TIER HOURLY RATES (T&M work releases)
+
+    Labor Class             ST $/hr   OT $/hr   DT $/hr
+    --------------------    -------   -------   -------
+    Laborer                  68.50    102.75    137.00
+    Operator (light eqpt)    92.00    138.00    184.00
+    Operator (heavy eqpt)   118.50    177.75    237.00
+    Welder (CWB-cert)       142.00    213.00    284.00
+    Welder Helper            85.00    127.50    170.00
+    Pipefitter              128.00    192.00    256.00
+    Foreman                 155.00    232.50    310.00
+    Superintendent          198.00    297.00    396.00
+    Project Manager         245.00    367.50    490.00
+
+Equipment rates per Exhibit D (Blue Book + 18%). Per-diem $185/day where
+applicable.
+
+--------------------------------------------------------------------------------
+ARTICLE 4 - SCHEDULE AND LIQUIDATED DAMAGES
+--------------------------------------------------------------------------------
+Schedule set in each Work Release. Liquidated Damages: $25,000/day after agreed
+Mechanical Completion +30 days grace, capped at 5% of Work Release value.
+
+--------------------------------------------------------------------------------
+ARTICLE 5 - PERFORMANCE & PAYMENT BONDS
+--------------------------------------------------------------------------------
+For Work Releases exceeding $5,000,000, Contractor provides Performance and
+Payment Bonds at 50% and 50% of contract value respectively, surety A.M. Best
+A- or better.
+
+--------------------------------------------------------------------------------
+ARTICLE 6 - INSURANCE
+--------------------------------------------------------------------------------
+Same minima as MSA-HAL-2024-03 Section 5, plus Builders Risk for active
+construction projects ($10M project value minimum).
+
+--------------------------------------------------------------------------------
+ARTICLE 7 - INVOICING / PAYMENT
+--------------------------------------------------------------------------------
+Progress billing via AIA G702/G703 forms, monthly. Retainage: 10%, released at
+Substantial Completion (50%) and Final Acceptance (balance). Net 30 from
+receipt of corrected invoice.
+
+--------------------------------------------------------------------------------
+ARTICLE 8 - SAFETY
+--------------------------------------------------------------------------------
+Contractor's TRIR must remain at or below 1.0 trailing 12-month basis to
+maintain MSA in good standing.
+
+--------------------------------------------------------------------------------
+ARTICLE 9 - INDEMNITY / GOVERNING LAW
+--------------------------------------------------------------------------------
+Knock-for-knock; Texas law; arbitration AAA Construction Industry Rules,
+Harris County, TX.
+
+Signed:
+    Company: D. Patel, VP E&C            Contractor: J. McAllister, EVP Energy
+    _____________________________        ______________________________
+    Date: ____________                   Date: ____________
+================================================================================

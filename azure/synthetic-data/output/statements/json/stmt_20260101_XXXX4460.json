@@ -1,0 +1,378 @@
+{
+  "bank": {
+    "name": "Bank of America",
+    "routing_number": "026009593"
+  },
+  "account": {
+    "holder_name": "Adventure Works Ltd",
+    "account_number": "****4460",
+    "account_type": "Business Checking"
+  },
+  "statement_period": {
+    "start_date": "2026-01-01",
+    "end_date": "2026-01-31"
+  },
+  "balances": {
+    "beginning_balance": 428999.17,
+    "ending_balance": 403145.8
+  },
+  "summary": {
+    "total_deposits": 289757.03,
+    "total_withdrawals": 315540.42,
+    "total_fees": 69.98,
+    "transaction_count": 39
+  },
+  "transactions": [
+    {
+      "date": "2026-01-01",
+      "description": "ACH DEBIT - PAYROLL",
+      "type": "Withdrawal",
+      "debit": 14535.28,
+      "credit": 0,
+      "balance": 414463.89,
+      "reference": "REF860629587"
+    },
+    {
+      "date": "2026-01-02",
+      "description": "ACH DEPOSIT - CUSTOMER PAYMENT",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 16661.66,
+      "balance": 431125.55,
+      "reference": "REF415830831"
+    },
+    {
+      "date": "2026-01-06",
+      "description": "MONTHLY SERVICE FEE",
+      "type": "Fee",
+      "debit": 30.4,
+      "credit": 0,
+      "balance": 431095.15,
+      "reference": "REF739121794"
+    },
+    {
+      "date": "2026-01-07",
+      "description": "DEBIT CARD PURCHASE",
+      "type": "Withdrawal",
+      "debit": 6354.59,
+      "credit": 0,
+      "balance": 424740.56,
+      "reference": "REF189869424"
+    },
+    {
+      "date": "2026-01-09",
+      "description": "CHECK DEPOSIT",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 12480.54,
+      "balance": 437221.1,
+      "reference": "REF706480692"
+    },
+    {
+      "date": "2026-01-09",
+      "description": "MERCHANT SERVICES DEPOSIT",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 6150.44,
+      "balance": 443371.54,
+      "reference": "REF449200629"
+    },
+    {
+      "date": "2026-01-09",
+      "description": "ACH DEBIT - PAYROLL",
+      "type": "Withdrawal",
+      "debit": 688.26,
+      "credit": 0,
+      "balance": 442683.28,
+      "reference": "REF902406693"
+    },
+    {
+      "date": "2026-01-10",
+      "description": "CHECK #9145",
+      "type": "Withdrawal",
+      "debit": 21722.46,
+      "credit": 0,
+      "balance": 420960.82,
+      "reference": "REF347576976"
+    },
+    {
+      "date": "2026-01-10",
+      "description": "WIRE TRANSFER OUT",
+      "type": "Withdrawal",
+      "debit": 7078.5,
+      "credit": 0,
+      "balance": 413882.32,
+      "reference": "REF227168422"
+    },
+    {
+      "date": "2026-01-10",
+      "description": "WIRE TRANSFER IN",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 38357.82,
+      "balance": 452240.14,
+      "reference": "REF177386721"
+    },
+    {
+      "date": "2026-01-11",
+      "description": "ACH DEBIT - UTILITY PAYMENT",
+      "type": "Withdrawal",
+      "debit": 3459.21,
+      "credit": 0,
+      "balance": 448780.93,
+      "reference": "REF675603336"
+    },
+    {
+      "date": "2026-01-13",
+      "description": "WIRE TRANSFER - VENDOR REFUND",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 39135.18,
+      "balance": 487916.11,
+      "reference": "REF583334311"
+    },
+    {
+      "date": "2026-01-15",
+      "description": "ACH DEBIT - UTILITY PAYMENT",
+      "type": "Withdrawal",
+      "debit": 22598.32,
+      "credit": 0,
+      "balance": 465317.79,
+      "reference": "REF954868029"
+    },
+    {
+      "date": "2026-01-15",
+      "description": "ACH DEBIT - INSURANCE PREMIUM",
+      "type": "Withdrawal",
+      "debit": 23369.64,
+      "credit": 0,
+      "balance": 441948.15,
+      "reference": "REF508132682"
+    },
+    {
+      "date": "2026-01-15",
+      "description": "ACH DEBIT - INSURANCE PREMIUM",
+      "type": "Withdrawal",
+      "debit": 5889.41,
+      "credit": 0,
+      "balance": 436058.74,
+      "reference": "REF133253082"
+    },
+    {
+      "date": "2026-01-15",
+      "description": "DEBIT CARD PURCHASE",
+      "type": "Withdrawal",
+      "debit": 8947.71,
+      "credit": 0,
+      "balance": 427111.03,
+      "reference": "REF909163170"
+    },
+    {
+      "date": "2026-01-16",
+      "description": "MERCHANT SERVICES DEPOSIT",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 34637.68,
+      "balance": 461748.71,
+      "reference": "REF626110698"
+    },
+    {
+      "date": "2026-01-16",
+      "description": "DEBIT CARD PURCHASE",
+      "type": "Withdrawal",
+      "debit": 17921.72,
+      "credit": 0,
+      "balance": 443826.99,
+      "reference": "REF110879677"
+    },
+    {
+      "date": "2026-01-17",
+      "description": "ACH DEBIT - PAYROLL",
+      "type": "Withdrawal",
+      "debit": 15147.52,
+      "credit": 0,
+      "balance": 428679.47,
+      "reference": "REF234059016"
+    },
+    {
+      "date": "2026-01-17",
+      "description": "ACH CREDIT - ACCOUNTS RECEIVABLE",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 28489.1,
+      "balance": 457168.57,
+      "reference": "REF476704569"
+    },
+    {
+      "date": "2026-01-17",
+      "description": "ACH DEPOSIT - CUSTOMER PAYMENT",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 10877.63,
+      "balance": 468046.2,
+      "reference": "REF584935399"
+    },
+    {
+      "date": "2026-01-18",
+      "description": "WIRE TRANSFER - VENDOR PAYMENT",
+      "type": "Withdrawal",
+      "debit": 5111.44,
+      "credit": 0,
+      "balance": 462934.76,
+      "reference": "REF620588484"
+    },
+    {
+      "date": "2026-01-20",
+      "description": "ACH DEBIT - INSURANCE PREMIUM",
+      "type": "Withdrawal",
+      "debit": 23706.29,
+      "credit": 0,
+      "balance": 439228.47,
+      "reference": "REF956075298"
+    },
+    {
+      "date": "2026-01-22",
+      "description": "WIRE TRANSFER OUT",
+      "type": "Withdrawal",
+      "debit": 691.9,
+      "credit": 0,
+      "balance": 438536.57,
+      "reference": "REF193338804"
+    },
+    {
+      "date": "2026-01-23",
+      "description": "ACH CREDIT - ACCOUNTS RECEIVABLE",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 34595.16,
+      "balance": 473131.73,
+      "reference": "REF999599901"
+    },
+    {
+      "date": "2026-01-23",
+      "description": "ACH DEBIT - UTILITY PAYMENT",
+      "type": "Withdrawal",
+      "debit": 20268.54,
+      "credit": 0,
+      "balance": 452863.19,
+      "reference": "REF590737979"
+    },
+    {
+      "date": "2026-01-24",
+      "description": "ACH DEPOSIT - CUSTOMER PAYMENT",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 13737.09,
+      "balance": 466600.28,
+      "reference": "REF771208849"
+    },
+    {
+      "date": "2026-01-26",
+      "description": "CHECK DEPOSIT",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 19735.88,
+      "balance": 486336.16,
+      "reference": "REF936732789"
+    },
+    {
+      "date": "2026-01-26",
+      "description": "CHECK #3435",
+      "type": "Withdrawal",
+      "debit": 13717.26,
+      "credit": 0,
+      "balance": 472618.9,
+      "reference": "REF124732433"
+    },
+    {
+      "date": "2026-01-26",
+      "description": "ACH DEBIT - UTILITY PAYMENT",
+      "type": "Withdrawal",
+      "debit": 10122.12,
+      "credit": 0,
+      "balance": 462496.78,
+      "reference": "REF802846810"
+    },
+    {
+      "date": "2026-01-26",
+      "description": "ACH DEBIT - PAYROLL",
+      "type": "Withdrawal",
+      "debit": 19072.09,
+      "credit": 0,
+      "balance": 443424.69,
+      "reference": "REF408740482"
+    },
+    {
+      "date": "2026-01-27",
+      "description": "OVERDRAFT FEE",
+      "type": "Fee",
+      "debit": 39.58,
+      "credit": 0,
+      "balance": 443385.11,
+      "reference": "REF254598280"
+    },
+    {
+      "date": "2026-01-29",
+      "description": "DEBIT CARD PURCHASE",
+      "type": "Withdrawal",
+      "debit": 1170.15,
+      "credit": 0,
+      "balance": 442214.96,
+      "reference": "REF924921146"
+    },
+    {
+      "date": "2026-01-29",
+      "description": "CHECK #3126",
+      "type": "Withdrawal",
+      "debit": 2483.88,
+      "credit": 0,
+      "balance": 439731.08,
+      "reference": "REF707446462"
+    },
+    {
+      "date": "2026-01-29",
+      "description": "ACH DEBIT - INSURANCE PREMIUM",
+      "type": "Withdrawal",
+      "debit": 17685.03,
+      "credit": 0,
+      "balance": 422046.05,
+      "reference": "REF754103429"
+    },
+    {
+      "date": "2026-01-29",
+      "description": "ACH DEPOSIT - CUSTOMER PAYMENT",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 34898.85,
+      "balance": 456944.9,
+      "reference": "REF389018804"
+    },
+    {
+      "date": "2026-01-30",
+      "description": "ACH DEBIT - PAYROLL",
+      "type": "Withdrawal",
+      "debit": 9955.27,
+      "credit": 0,
+      "balance": 446989.63,
+      "reference": "REF916811982"
+    },
+    {
+      "date": "2026-01-31",
+      "description": "WIRE TRANSFER OUT",
+      "type": "Withdrawal",
+      "debit": 22044.59,
+      "credit": 0,
+      "balance": 424945.04,
+      "reference": "REF476028423"
+    },
+    {
+      "date": "2026-01-31",
+      "description": "ACH DEBIT - PAYROLL",
+      "type": "Withdrawal",
+      "debit": 21799.24,
+      "credit": 0,
+      "balance": 403145.8,
+      "reference": "REF338806947"
+    }
+  ]
+}

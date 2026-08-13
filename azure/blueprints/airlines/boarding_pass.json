@@ -1,0 +1,109 @@
+{
+  "blueprintName": "apex-boarding-pass-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from airline boarding passes",
+  "industry": "airlines",
+  "documentType": "boarding_pass",
+  "documentSchema": {
+    "class": "ApexBoardingPass",
+    "description": "Boarding pass extraction for airline operations",
+    "properties": {
+      "passenger_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "booking_reference": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "PNR or confirmation code"
+      },
+      "ticket_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "frequent_flyer_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "frequent_flyer_status": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "flight_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "airline_code": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "departure_city": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "departure_airport": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "arrival_city": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "arrival_airport": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "flight_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "departure_time": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "boarding_time": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "gate": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "seat_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "cabin_class": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "boarding_group": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "sequence_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "barcode_data": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "tsa_precheck": {
+        "type": "boolean",
+        "inferenceType": "explicit"
+      },
+      "ssss_selected": {
+        "type": "boolean",
+        "inferenceType": "explicit"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "DDMMMYY",
+    "confidenceThreshold": 0.9
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  }
+}

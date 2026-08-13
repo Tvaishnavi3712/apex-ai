@@ -1,0 +1,188 @@
+[
+  {
+    "run_id": "RUN-20260421-091030-001",
+    "agent_id": "logisticsbot",
+    "user_id": "marcus.webb@cbb.com",
+    "trigger": "RSK-001 view playbook",
+    "started_at": "2026-04-21T09:10:30Z",
+    "completed_at": "2026-04-21T09:10:34Z",
+    "steps": [
+      {
+        "step": 1,
+        "timestamp": "2026-04-21T09:10:30.100Z",
+        "kind": "read",
+        "action": "ingest_gsm_alert",
+        "detail": "Loaded GSM alert SC-ALERT-2026-0441",
+        "confidence": 0.99
+      },
+      {
+        "step": 2,
+        "timestamp": "2026-04-21T09:10:30.420Z",
+        "kind": "action",
+        "action": "bom_graph_traverse",
+        "detail": "Traversed 847 BOM nodes via Athena",
+        "confidence": 0.98
+      },
+      {
+        "step": 3,
+        "timestamp": "2026-04-21T09:10:31.180Z",
+        "kind": "action",
+        "action": "predict_financial_impact",
+        "detail": "3 plants affected, $1,090,000 exposure",
+        "confidence": 0.99
+      },
+      {
+        "step": 4,
+        "timestamp": "2026-04-21T09:10:32.610Z",
+        "kind": "action",
+        "action": "generate_reroute_options",
+        "detail": "Ranked Oxy Vinyls, Resequence GA, Formosa air-freight",
+        "confidence": 0.94
+      },
+      {
+        "step": 5,
+        "timestamp": "2026-04-21T09:10:33.540Z",
+        "kind": "decide",
+        "action": "escalate_decision",
+        "detail": "VaR $1.09M > $500k threshold \u2192 escalate to Marcus Webb",
+        "confidence": 0.99
+      },
+      {
+        "step": 6,
+        "timestamp": "2026-04-21T09:10:34.010Z",
+        "kind": "notify",
+        "action": "teams_alert",
+        "detail": "Posted to #supply-chain-leadership with 3 options",
+        "confidence": 0.99
+      }
+    ],
+    "final_decision": "ESCALATED",
+    "value_at_risk_usd": 1090000,
+    "cost_avoided_usd": 1090000,
+    "manual_hours_saved": 47.9
+  },
+  {
+    "run_id": "RUN-20260421-061542-002",
+    "agent_id": "qcbot",
+    "user_id": "sarah.jenkins@cbb.com",
+    "trigger": "QC_Batch_2141 upload",
+    "started_at": "2026-04-21T06:15:42Z",
+    "completed_at": "2026-04-21T06:15:46Z",
+    "steps": [
+      {
+        "step": 1,
+        "timestamp": "2026-04-21T06:15:42.110Z",
+        "kind": "read",
+        "action": "unzip_archive",
+        "detail": "Extracted 50 QC certificate PDFs",
+        "confidence": 1.0
+      },
+      {
+        "step": 2,
+        "timestamp": "2026-04-21T06:15:42.790Z",
+        "kind": "action",
+        "action": "bda_document_extract",
+        "detail": "BDA: 18 fields \u00d7 50 certs, avg conf 99.1%",
+        "confidence": 0.991
+      },
+      {
+        "step": 3,
+        "timestamp": "2026-04-21T06:15:44.040Z",
+        "kind": "action",
+        "action": "fabric_tolerance_check",
+        "detail": "48 PASS \u00b7 LOT-A44 tensile -3.8% \u00b7 LOT-B12 color \u0394E 2.7 FAIL",
+        "confidence": 0.99
+      },
+      {
+        "step": 4,
+        "timestamp": "2026-04-21T06:15:44.820Z",
+        "kind": "decide",
+        "action": "auto_hold_decision",
+        "detail": "partial_hold=true, quarantined $32,550",
+        "confidence": 0.99
+      },
+      {
+        "step": 5,
+        "timestamp": "2026-04-21T06:15:45.210Z",
+        "kind": "action",
+        "action": "erp_inventory_hold",
+        "detail": "SAP S/4HANA holds placed: ERP-HOLD-7741, 7742",
+        "confidence": 0.99
+      },
+      {
+        "step": 6,
+        "timestamp": "2026-04-21T06:15:45.930Z",
+        "kind": "notify",
+        "action": "teams_alert",
+        "detail": "Notified #ohio-plant-7-qc + procurement@cbb.com",
+        "confidence": 1.0
+      }
+    ],
+    "final_decision": "PARTIAL_HOLD",
+    "value_at_risk_usd": 32550,
+    "cost_avoided_usd": 32550,
+    "manual_hours_saved": 1.95
+  },
+  {
+    "run_id": "RUN-20260421-091200-003",
+    "agent_id": "customerops",
+    "user_id": "auto-trigger",
+    "trigger": "CBB-ORD-1044 modification request",
+    "started_at": "2026-04-21T09:12:00Z",
+    "completed_at": "2026-04-21T09:12:04Z",
+    "steps": [
+      {
+        "step": 1,
+        "timestamp": "2026-04-21T09:12:00.050Z",
+        "kind": "read",
+        "action": "email_intake",
+        "detail": "Parsed PDF attachment from orders@midwestwindow.com",
+        "confidence": 0.98
+      },
+      {
+        "step": 2,
+        "timestamp": "2026-04-21T09:12:00.910Z",
+        "kind": "action",
+        "action": "bda_document_extract",
+        "detail": "Order Modification Form v2.1: 12 fields \u00b7 97.4%",
+        "confidence": 0.974
+      },
+      {
+        "step": 3,
+        "timestamp": "2026-04-21T09:12:01.720Z",
+        "kind": "action",
+        "action": "athena_federated_query",
+        "detail": "Original order lookup via apex_db.cbb_orders",
+        "confidence": 0.99
+      },
+      {
+        "step": 4,
+        "timestamp": "2026-04-21T09:12:02.340Z",
+        "kind": "decide",
+        "action": "engineering_constraint",
+        "detail": "height variance +3.3% within 5% tolerance \u2192 auto-approve",
+        "confidence": 0.97
+      },
+      {
+        "step": 5,
+        "timestamp": "2026-04-21T09:12:02.980Z",
+        "kind": "action",
+        "action": "crm_order_update",
+        "detail": "Microsoft Dynamics CRM-CONF-CBB-ORD-1044 issued",
+        "confidence": 0.99
+      },
+      {
+        "step": 6,
+        "timestamp": "2026-04-21T09:12:03.610Z",
+        "kind": "notify",
+        "action": "email_send",
+        "detail": "Confirmation sent to orders@midwestwindow.com",
+        "confidence": 1.0
+      }
+    ],
+    "final_decision": "AUTO_APPROVED",
+    "value_at_risk_usd": 0,
+    "cost_avoided_usd": 4800,
+    "manual_hours_saved": 1.98
+  }
+]

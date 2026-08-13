@@ -1,0 +1,158 @@
+# CBTS Apex AI Platform - Invoice from Email Playbook
+# Small Factory chain for automated invoice processing
+name: invoice_from_email
+version: "1.0.0"
+description: "Process invoices from email attachments using Small Factory pattern"
+industry: financial_services
+category: accounts_payable
+
+intent: |
+  Automate invoice processing from email by extracting attachments,
+  matching vendors, reconciling against POs, routing for approval,
+  and preparing for ERP posting.
+
+output:
+  - name: invoice_data
+    type: invoice
+    schema:
+      invoice_number: string
+      vendor_name: string
+      total_amount: number
+      po_matched: boolean
+  - name: processing_decision
+    type: decision
+    schema:
+      approval_level: string
+      auto_approved: boolean
+      erp_ready: boolean
+
+context:
+  business_rules:
+    - "Auto-approve invoices under $500 with matching PO"
+    - "Route invoices over $5,000 to department director"
+    - "Flag new vendors for vendor management review"
+    - "Variance over 5% requires procurement approval"
+
+  approval_matrix:
+    auto_approve: 500
+    manager: 5000
+    director: 25000
+    vp: 100000
+    cfo: unlimited
+
+factory_chain: invoice_from_email
+
+actions:
+  - name: email_parse
+    factory_id: email_parse
+    required: true
+    config:
+      extract_body: true
+      classify_attachments: true
+
+  - name: document_classify
+    factory_id: document_classify
+    required: true
+    depends_on: [email_parse]
+    config:
+      expected_types: [invoice, purchase_order, receipt]
+
+  - name: invoice_extract
+    factory_id: invoice_extract
+    required: true
+    depends_on: [document_classify]
+    config:
+      extract_line_items: true
+      ocr_confidence_threshold: 0.8
+
+  - name: vendor_match
+    factory_id: vendor_match
+    required: true
+    depends_on: [email_parse, invoice_extract]
+    config:
+      confidence_threshold: 0.7
+      create_if_missing: false
+
+  - name: po_reconcile
+    factory_id: po_reconcile
+    required: true
+    depends_on: [invoice_extract, vendor_match]
+    config:
+      tolerance: 0.05
+      require_po: true
+
+  - name: approval_route
+    factory_id: approval_route
+    required: true
+    depends_on: [invoice_extract, vendor_match, po_reconcile]
+
+  - name: erp_post
+    factory_id: erp_post
+    required: true
+    depends_on: [approval_route]
+    config:
+      erp_system: quickbooks
+      auto_post: false
+
+recipe: |
+  ## Invoice from Email Processing
+
+  This playbook automates invoice processing from email through a
+  7-factory chain for touchless AP automation.
+
+  ### Factory Chain Flow
+
+  ```
+  [Email Received]
+       │
+       ▼
+  ┌─────────────┐
+  │ Email Parse │──────────────────┐
+  └─────────────┘                   │
+       │                            │
+       ▼                            │
+  ┌──────────────────┐              │
+  │ Document Classify│              │
+  └──────────────────┘              │
+       │                            │
+       ▼                            │
+  ┌─────────────────┐               │
+  │ Invoice Extract │               │
+  └─────────────────┘               │
+       │                            │
+       ├────────────────────────────┤
+       ▼                            ▼
+  ┌──────────────┐          ┌──────────────┐
+  │ Vendor Match │          │ PO Reconcile │
+  └──────────────┘          └──────────────┘
+       │                            │
+       └────────────┬───────────────┘
+                    ▼
+            ┌───────────────┐
+            │ Approval Route│
+            └───────────────┘
+                    │
+                    ▼
+              ┌──────────┐
+              │ ERP Post │
+              └──────────┘
+  ```
+
+triggers:
+  - type: email
+    mailbox: invoices@company.com
+  - type: api
+    endpoint: /api/v1/invoices/upload
+  - type: blob_event
+    bucket: apex-invoices
+    prefix: incoming/
+
+worker:
+  queue: apex-invoice-processing-queue
+  concurrency: 20
+  timeout_seconds: 120
+
+metadata:
+  tags: [invoice, ap, automation, email, erp]
+  owner: finance_team
+  created_at: "2026-03-16"

@@ -1,0 +1,152 @@
+{
+  "blueprintName": "apex-case-notes-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from customer service case notes",
+  "industry": "contact_center",
+  "documentType": "case_notes",
+  "documentSchema": {
+    "class": "ApexCaseNotes",
+    "description": "Case notes extraction for customer service tracking",
+    "definitions": {
+      "CASE_ACTIVITY": {
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "agent": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "action_taken": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "notes": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "case_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "created_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "last_updated": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "status": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "priority": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "customer_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "customer_account": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "customer_email": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "customer_phone": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "category": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "subcategory": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "subject": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "description": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "root_cause": {
+        "type": "string",
+        "inferenceType": "inferred"
+      },
+      "resolution": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "activities": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/CASE_ACTIVITY"
+        }
+      },
+      "assigned_to": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "assigned_team": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "escalated": {
+        "type": "boolean",
+        "inferenceType": "explicit"
+      },
+      "escalation_level": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "sla_status": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "first_response_time": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "resolution_time": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "customer_satisfaction": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "related_cases": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "knowledge_articles_used": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.8
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  }
+}

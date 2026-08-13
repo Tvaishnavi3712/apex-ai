@@ -1,0 +1,5104 @@
+[
+  {
+    "wo_id": "WO-2025-03311",
+    "equipment_id": "P-3A",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2025-08-12T08:00:00Z",
+    "closed": "2025-08-15T17:00:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [
+      {
+        "part_id": "PRT-RCP-BRG-INB",
+        "qty": 1,
+        "cost": 18500
+      }
+    ],
+    "hours_charged": 24.0,
+    "narrative": "Replaced inboard journal bearing on P-3A; vibration returned to 0.18 in/s post-maintenance."
+  },
+  {
+    "wo_id": "WO-2025-03987",
+    "equipment_id": "P-3A",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2025-12-04T09:30:00Z",
+    "closed": "2025-12-06T16:00:00Z",
+    "technician_ids": [
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [
+      {
+        "part_id": "PRT-RCP-BRG-INB",
+        "qty": 1,
+        "cost": 18500
+      }
+    ],
+    "hours_charged": 24.0,
+    "narrative": "Investigated rising P-3A vibration; replaced thrust bearing per 0PMP-RCS-7B; root cause: lube oil contamination."
+  },
+  {
+    "wo_id": "WO-2026-00188",
+    "equipment_id": "P-3A",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2026-01-22T07:00:00Z",
+    "closed": "2026-01-24T18:00:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [
+      {
+        "part_id": "PRT-RCP-BRG-INB",
+        "qty": 1,
+        "cost": 18500
+      }
+    ],
+    "hours_charged": 24.0,
+    "narrative": "Bearing replacement following 2025-12 event; oil chemistry corrective action implemented."
+  },
+  {
+    "wo_id": "WO-2026-00871",
+    "equipment_id": "P-3A",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2026-03-18T08:00:00Z",
+    "closed": "2026-03-18T14:30:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.5,
+    "narrative": "Scheduled PM-7B bearing inspection per 0PMP-RCS-7B; all acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2024-04211",
+    "equipment_id": "EDG-2",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2024-09-05T08:00:00Z",
+    "closed": "2024-09-05T15:00:00Z",
+    "technician_ids": [
+      "EMP-0871"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.5,
+    "narrative": "Tony Garcia performed EDG-2 cooling water flow verification per 0PMP-EDG-3A; results within spec."
+  },
+  {
+    "wo_id": "WO-2021-00001",
+    "equipment_id": "H-129",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2021-11-09T12:02:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2036",
+      "EMP-2009",
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.8,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2022-00001",
+    "equipment_id": "M-111",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-07-09T17:58:00Z",
+    "closed": "2022-07-13T14:58:00Z",
+    "technician_ids": [
+      "EMP-2035",
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 7.4,
+    "narrative": "Investigated equipment alarm. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2023-00001",
+    "equipment_id": "T-135",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2023-07-17T10:32:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2006"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 5.7,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2025-00001",
+    "equipment_id": "P-126",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2025-07-22T05:24:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 1.7,
+    "narrative": "Investigated equipment alarm. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2023-00002",
+    "equipment_id": "H-174",
+    "status": "in_progress",
+    "type": "surveillance",
+    "opened": "2023-01-20T11:33:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2037"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.7,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2021-00002",
+    "equipment_id": "M-138",
+    "status": "cancelled",
+    "type": "surveillance",
+    "opened": "2021-01-05T21:45:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2038",
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 16.3,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2025-00002",
+    "equipment_id": "V-148",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2025-05-25T14:41:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2018",
+      "EMP-2035",
+      "EMP-2030"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "design_deficiency",
+    "parts_used": [],
+    "hours_charged": 11.7,
+    "narrative": "Root cause documented in attached evaluation. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2022-00002",
+    "equipment_id": "T-135",
+    "status": "closed",
+    "type": "modification",
+    "opened": "2022-03-23T01:12:00Z",
+    "closed": "2022-03-24T19:12:00Z",
+    "technician_ids": [
+      "EMP-2036",
+      "EMP-2024",
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.2,
+    "narrative": "Field walkdown verified configuration. Implemented engineering change package."
+  },
+  {
+    "wo_id": "WO-2021-00003",
+    "equipment_id": "T-150",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2021-07-11T07:00:00Z",
+    "closed": "2021-07-14T21:00:00Z",
+    "technician_ids": [
+      "EMP-2243",
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 5.3,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2022-00003",
+    "equipment_id": "P-126",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2022-08-16T20:51:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 11.6,
+    "narrative": "No abnormal conditions observed. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2021-00004",
+    "equipment_id": "M-147",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2021-12-27T19:14:00Z",
+    "closed": "2021-12-31T02:14:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2031",
+      "EMP-2009"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.6,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2025-00003",
+    "equipment_id": "V-142",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2025-05-17T20:10:00Z",
+    "closed": "2025-05-18T21:10:00Z",
+    "technician_ids": [
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 23.3,
+    "narrative": "Investigated equipment alarm. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2026-00001",
+    "equipment_id": "M-153",
+    "status": "in_progress",
+    "type": "preventive",
+    "opened": "2026-05-01T17:17:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031",
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 3.3,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2025-00004",
+    "equipment_id": "HX-22A",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2025-11-05T04:08:00Z",
+    "closed": "2025-11-07T12:08:00Z",
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2013"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 5.3,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2023-00003",
+    "equipment_id": "V-155",
+    "status": "in_progress",
+    "type": "preventive",
+    "opened": "2023-04-21T08:23:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.9,
+    "narrative": "All acceptance criteria met. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2022-00004",
+    "equipment_id": "H-160",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-11-23T11:41:00Z",
+    "closed": "2022-11-27T04:41:00Z",
+    "technician_ids": [
+      "EMP-2243",
+      "EMP-2009",
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": "seismic",
+    "parts_used": [],
+    "hours_charged": 4.7,
+    "narrative": "Replaced suspect component. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2022-00005",
+    "equipment_id": "T-115",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-09-29T07:10:00Z",
+    "closed": "2022-10-01T07:10:00Z",
+    "technician_ids": [
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 4.3,
+    "narrative": "Root cause documented in attached evaluation. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2024-00001",
+    "equipment_id": "S-141",
+    "status": "closed",
+    "type": "modification",
+    "opened": "2024-03-25T12:37:00Z",
+    "closed": "2024-03-26T03:37:00Z",
+    "technician_ids": [
+      "EMP-2028",
+      "EMP-2004",
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 3.2,
+    "narrative": "Implemented engineering change package. Field walkdown verified configuration."
+  },
+  {
+    "wo_id": "WO-2021-00005",
+    "equipment_id": "V-136",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2021-05-13T21:59:00Z",
+    "closed": "2021-05-15T20:59:00Z",
+    "technician_ids": [
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 14.2,
+    "narrative": "Replaced suspect component. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2026-00002",
+    "equipment_id": "E-165",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2026-09-29T12:59:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031",
+      "EMP-2023",
+      "EMP-2035"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.3,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2024-00002",
+    "equipment_id": "MOV-7B",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-08-08T01:11:00Z",
+    "closed": "2024-08-11T08:11:00Z",
+    "technician_ids": [
+      "EMP-2031",
+      "EMP-2013"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 5.1,
+    "narrative": "Replaced suspect component. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2025-00005",
+    "equipment_id": "P-171",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2025-11-08T20:23:00Z",
+    "closed": "2025-11-11T23:23:00Z",
+    "technician_ids": [
+      "EMP-2037",
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 14.8,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2026-00003",
+    "equipment_id": "V-152",
+    "status": "open",
+    "type": "corrective",
+    "opened": "2026-11-10T23:11:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2010",
+      "EMP-2009",
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 5.7,
+    "narrative": "Root cause documented in attached evaluation. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2025-00006",
+    "equipment_id": "E-118",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2025-08-27T06:34:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 13.8,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2024-00003",
+    "equipment_id": "H-175",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-02-20T03:50:00Z",
+    "closed": "2024-02-20T16:50:00Z",
+    "technician_ids": [
+      "EMP-2028",
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": "design_deficiency",
+    "parts_used": [],
+    "hours_charged": 16.4,
+    "narrative": "Replaced suspect component. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2025-00007",
+    "equipment_id": "S-107",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2025-10-30T15:36:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 15.1,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2025-00008",
+    "equipment_id": "M-120",
+    "status": "closed",
+    "type": "modification",
+    "opened": "2025-01-15T06:54:00Z",
+    "closed": "2025-01-16T21:54:00Z",
+    "technician_ids": [
+      "EMP-2006",
+      "EMP-2037"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 7.9,
+    "narrative": "Implemented engineering change package. Field walkdown verified configuration."
+  },
+  {
+    "wo_id": "WO-2024-00004",
+    "equipment_id": "V-112",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2024-02-19T06:44:00Z",
+    "closed": "2024-02-21T01:44:00Z",
+    "technician_ids": [
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 16.7,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2026-00004",
+    "equipment_id": "E-159",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2026-06-17T06:49:00Z",
+    "closed": "2026-06-20T01:49:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.0,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2022-00006",
+    "equipment_id": "M-120",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2022-12-25T15:30:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031",
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 11.1,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2025-00009",
+    "equipment_id": "H-146",
+    "status": "cancelled",
+    "type": "modification",
+    "opened": "2025-05-31T03:27:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2006",
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.9,
+    "narrative": "Field walkdown verified configuration. Implemented engineering change package."
+  },
+  {
+    "wo_id": "WO-2021-00006",
+    "equipment_id": "P-170",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2021-09-03T04:31:00Z",
+    "closed": "2021-09-05T21:31:00Z",
+    "technician_ids": [
+      "EMP-2030"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 8.5,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2026-00005",
+    "equipment_id": "S-134",
+    "status": "cancelled",
+    "type": "modification",
+    "opened": "2026-09-07T09:08:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2006"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 9.8,
+    "narrative": "Implemented engineering change package. Field walkdown verified configuration."
+  },
+  {
+    "wo_id": "WO-2026-00006",
+    "equipment_id": "T-164",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2026-09-28T03:57:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2036",
+      "EMP-2013"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.0,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2021-00007",
+    "equipment_id": "E-106",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2021-12-27T15:58:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2004"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": "design_deficiency",
+    "parts_used": [],
+    "hours_charged": 10.5,
+    "narrative": "Investigated equipment alarm. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2025-00010",
+    "equipment_id": "V-155",
+    "status": "cancelled",
+    "type": "surveillance",
+    "opened": "2025-01-27T06:01:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2004"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.9,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2026-00007",
+    "equipment_id": "V-142",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2026-11-21T23:11:00Z",
+    "closed": "2026-11-23T03:11:00Z",
+    "technician_ids": [
+      "EMP-2031",
+      "EMP-2010",
+      "EMP-2035"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 10.3,
+    "narrative": "Verified post-maintenance functional test. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2023-00004",
+    "equipment_id": "P-126",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2023-01-30T12:58:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.8,
+    "narrative": "All acceptance criteria met. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2026-00008",
+    "equipment_id": "P-171",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2026-10-22T02:17:00Z",
+    "closed": "2026-10-23T23:17:00Z",
+    "technician_ids": [
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 11.4,
+    "narrative": "No abnormal conditions observed. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2024-00005",
+    "equipment_id": "S-134",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-08-27T21:22:00Z",
+    "closed": "2024-08-28T23:22:00Z",
+    "technician_ids": [
+      "EMP-2032"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 13.3,
+    "narrative": "Verified post-maintenance functional test. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2023-00005",
+    "equipment_id": "E-118",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2023-12-03T01:45:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2032",
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 9.6,
+    "narrative": "All acceptance criteria met. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2026-00009",
+    "equipment_id": "E-132",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2026-08-10T13:10:00Z",
+    "closed": "2026-08-13T01:10:00Z",
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2013"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 7.8,
+    "narrative": "Investigated equipment alarm. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2025-00011",
+    "equipment_id": "P-133",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2025-04-17T02:37:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2030",
+      "EMP-2028",
+      "EMP-2009"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 4.0,
+    "narrative": "Replaced suspect component. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2024-00006",
+    "equipment_id": "S-149",
+    "status": "in_progress",
+    "type": "preventive",
+    "opened": "2024-12-26T08:10:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 11.8,
+    "narrative": "All acceptance criteria met. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2025-00012",
+    "equipment_id": "P-3B",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2025-06-04T17:08:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": "thermal_cycling",
+    "parts_used": [],
+    "hours_charged": 10.9,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2024-00007",
+    "equipment_id": "M-111",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-11-12T17:20:00Z",
+    "closed": "2024-11-14T23:20:00Z",
+    "technician_ids": [
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": "seal_leak",
+    "parts_used": [],
+    "hours_charged": 5.0,
+    "narrative": "Root cause documented in attached evaluation. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2022-00007",
+    "equipment_id": "S-125",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-06-18T21:50:00Z",
+    "closed": "2022-06-19T22:50:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2030"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 6.0,
+    "narrative": "Replaced suspect component. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2021-00008",
+    "equipment_id": "S-156",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2021-06-27T10:09:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2010",
+      "EMP-2013",
+      "EMP-2030"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": "seismic",
+    "parts_used": [],
+    "hours_charged": 4.7,
+    "narrative": "Investigated equipment alarm. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2021-00009",
+    "equipment_id": "V-148",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2021-04-30T04:52:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2024",
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 10.0,
+    "narrative": "Root cause documented in attached evaluation. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2023-00006",
+    "equipment_id": "S-168",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2023-11-17T04:49:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2035",
+      "EMP-2028",
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": "seismic",
+    "parts_used": [],
+    "hours_charged": 1.1,
+    "narrative": "Investigated equipment alarm. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2024-00008",
+    "equipment_id": "V-136",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2024-08-07T23:43:00Z",
+    "closed": "2024-08-08T01:43:00Z",
+    "technician_ids": [
+      "EMP-2024",
+      "EMP-2243",
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.0,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2025-00013",
+    "equipment_id": "H-160",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2025-04-26T15:30:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 0.9,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2026-00010",
+    "equipment_id": "S-177",
+    "status": "in_progress",
+    "type": "preventive",
+    "opened": "2026-03-01T12:31:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031",
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 11.3,
+    "narrative": "No abnormal conditions observed. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2024-00009",
+    "equipment_id": "T-143",
+    "status": "in_progress",
+    "type": "surveillance",
+    "opened": "2024-10-24T12:03:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2035",
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 15.3,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2025-00014",
+    "equipment_id": "S-149",
+    "status": "open",
+    "type": "corrective",
+    "opened": "2025-07-10T07:51:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "vendor_quality",
+    "parts_used": [],
+    "hours_charged": 1.9,
+    "narrative": "Investigated equipment alarm. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2024-00010",
+    "equipment_id": "E-106",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2024-12-08T06:33:00Z",
+    "closed": "2024-12-11T16:33:00Z",
+    "technician_ids": [
+      "EMP-2035",
+      "EMP-2031",
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.9,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2022-00008",
+    "equipment_id": "P-116",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2022-11-03T03:23:00Z",
+    "closed": "2022-11-03T14:23:00Z",
+    "technician_ids": [
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.0,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2024-00011",
+    "equipment_id": "T-164",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2024-09-02T03:37:00Z",
+    "closed": "2024-09-03T13:37:00Z",
+    "technician_ids": [
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 10.6,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2021-00010",
+    "equipment_id": "M-153",
+    "status": "open",
+    "type": "corrective",
+    "opened": "2021-02-08T20:30:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2010",
+      "EMP-2038",
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 2.7,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2025-00015",
+    "equipment_id": "P-144",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2025-05-17T13:39:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 3.7,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2025-00016",
+    "equipment_id": "S-107",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2025-08-14T15:18:00Z",
+    "closed": "2025-08-14T21:18:00Z",
+    "technician_ids": [
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 8.0,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2022-00009",
+    "equipment_id": "M-131",
+    "status": "in_progress",
+    "type": "modification",
+    "opened": "2022-01-20T06:21:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2023",
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.7,
+    "narrative": "Field walkdown verified configuration. Implemented engineering change package."
+  },
+  {
+    "wo_id": "WO-2026-00011",
+    "equipment_id": "M-131",
+    "status": "open",
+    "type": "corrective",
+    "opened": "2026-01-30T12:48:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2243",
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "thermal_cycling",
+    "parts_used": [],
+    "hours_charged": 7.8,
+    "narrative": "Root cause documented in attached evaluation. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2023-00007",
+    "equipment_id": "M-120",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2023-11-25T14:31:00Z",
+    "closed": "2023-11-27T00:31:00Z",
+    "technician_ids": [
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.5,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2026-00012",
+    "equipment_id": "V-112",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2026-05-13T15:44:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2032"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.1,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2023-00008",
+    "equipment_id": "S-169",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2023-05-18T11:16:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2006",
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 4.5,
+    "narrative": "Replaced suspect component. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2024-00012",
+    "equipment_id": "H-162",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2024-03-30T15:40:00Z",
+    "closed": "2024-03-31T08:40:00Z",
+    "technician_ids": [
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 13.0,
+    "narrative": "All acceptance criteria met. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2022-00010",
+    "equipment_id": "P-3A",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2022-08-11T14:31:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2014",
+      "EMP-2010",
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 21.7,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2025-00017",
+    "equipment_id": "S-127",
+    "status": "cancelled",
+    "type": "surveillance",
+    "opened": "2025-08-13T20:58:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031",
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.8,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2021-00011",
+    "equipment_id": "P-109",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2021-02-09T15:21:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2036",
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.1,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2024-00013",
+    "equipment_id": "E-118",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2024-12-19T22:35:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2032"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.7,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2023-00009",
+    "equipment_id": "V-148",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2023-01-26T21:10:00Z",
+    "closed": "2023-01-30T07:10:00Z",
+    "technician_ids": [
+      "EMP-2010",
+      "EMP-2013"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 9.6,
+    "narrative": "Investigated equipment alarm. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2023-00010",
+    "equipment_id": "M-111",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2023-07-30T02:03:00Z",
+    "closed": "2023-07-30T11:03:00Z",
+    "technician_ids": [
+      "EMP-2010"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.0,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2025-00018",
+    "equipment_id": "E-123",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2025-08-16T04:34:00Z",
+    "closed": "2025-08-17T11:34:00Z",
+    "technician_ids": [
+      "EMP-2028",
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.4,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2023-00011",
+    "equipment_id": "P-170",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2023-11-21T05:14:00Z",
+    "closed": "2023-11-23T03:14:00Z",
+    "technician_ids": [
+      "EMP-2032"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 12.4,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2021-00012",
+    "equipment_id": "V-110",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2021-06-28T15:44:00Z",
+    "closed": "2021-07-01T12:44:00Z",
+    "technician_ids": [
+      "EMP-2038",
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": "seismic",
+    "parts_used": [],
+    "hours_charged": 17.7,
+    "narrative": "Root cause documented in attached evaluation. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2026-00013",
+    "equipment_id": "P-126",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2026-04-11T06:47:00Z",
+    "closed": "2026-04-15T01:47:00Z",
+    "technician_ids": [
+      "EMP-2006",
+      "EMP-2243",
+      "EMP-2032"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 12.1,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2024-00014",
+    "equipment_id": "H-129",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-12-30T20:48:00Z",
+    "closed": "2024-12-31T09:48:00Z",
+    "technician_ids": [
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": "seismic",
+    "parts_used": [],
+    "hours_charged": 4.8,
+    "narrative": "Replaced suspect component. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2023-00012",
+    "equipment_id": "P-166",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2023-04-28T09:00:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2037",
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "seismic",
+    "parts_used": [],
+    "hours_charged": 12.4,
+    "narrative": "Replaced suspect component. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2022-00011",
+    "equipment_id": "P-3C",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-11-29T05:33:00Z",
+    "closed": "2022-12-02T17:33:00Z",
+    "technician_ids": [
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 6.9,
+    "narrative": "Investigated equipment alarm. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2025-00019",
+    "equipment_id": "V-142",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2025-09-08T08:33:00Z",
+    "closed": "2025-09-08T16:33:00Z",
+    "technician_ids": [
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "seal_leak",
+    "parts_used": [],
+    "hours_charged": 13.6,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2025-00020",
+    "equipment_id": "V-108",
+    "status": "in_progress",
+    "type": "surveillance",
+    "opened": "2025-04-10T04:38:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2014",
+      "EMP-2030",
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 14.8,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2026-00014",
+    "equipment_id": "T-150",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2026-07-15T03:17:00Z",
+    "closed": "2026-07-16T06:17:00Z",
+    "technician_ids": [
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 3.5,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2021-00013",
+    "equipment_id": "H-175",
+    "status": "open",
+    "type": "corrective",
+    "opened": "2021-01-31T03:02:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2014",
+      "EMP-2035",
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 10.3,
+    "narrative": "Replaced suspect component. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2025-00021",
+    "equipment_id": "M-153",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2025-04-08T12:57:00Z",
+    "closed": "2025-04-10T11:57:00Z",
+    "technician_ids": [
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 12.7,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2026-00015",
+    "equipment_id": "T-164",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2026-07-23T18:17:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2028",
+      "EMP-2032"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 11.5,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2024-00015",
+    "equipment_id": "S-168",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-03-31T07:45:00Z",
+    "closed": "2024-04-01T02:45:00Z",
+    "technician_ids": [
+      "EMP-2037",
+      "EMP-2117",
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": "seismic",
+    "parts_used": [],
+    "hours_charged": 4.7,
+    "narrative": "Verified post-maintenance functional test. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2023-00013",
+    "equipment_id": "E-173",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2023-01-08T05:22:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2030"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 4.2,
+    "narrative": "Root cause documented in attached evaluation. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2025-00022",
+    "equipment_id": "P-116",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2025-11-19T14:57:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.1,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2021-00014",
+    "equipment_id": "T-115",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2021-05-09T04:30:00Z",
+    "closed": "2021-05-12T12:30:00Z",
+    "technician_ids": [
+      "EMP-2010",
+      "EMP-2024",
+      "EMP-2037"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 17.5,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2023-00014",
+    "equipment_id": "T-135",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2023-04-16T04:34:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2018",
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 5.6,
+    "narrative": "No abnormal conditions observed. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2025-00023",
+    "equipment_id": "M-122",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2025-02-11T10:07:00Z",
+    "closed": "2025-02-11T23:07:00Z",
+    "technician_ids": [
+      "EMP-2036",
+      "EMP-2013"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 11.2,
+    "narrative": "Investigated equipment alarm. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2025-00024",
+    "equipment_id": "V-148",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2025-05-03T00:41:00Z",
+    "closed": "2025-05-05T14:41:00Z",
+    "technician_ids": [
+      "EMP-2243",
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": "thermal_cycling",
+    "parts_used": [],
+    "hours_charged": 0.7,
+    "narrative": "Investigated equipment alarm. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2025-00025",
+    "equipment_id": "S-117",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2025-08-03T20:31:00Z",
+    "closed": "2025-08-03T22:31:00Z",
+    "technician_ids": [
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": "design_deficiency",
+    "parts_used": [],
+    "hours_charged": 0.9,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2021-00015",
+    "equipment_id": "E-106",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2021-11-23T07:28:00Z",
+    "closed": "2021-11-26T05:28:00Z",
+    "technician_ids": [
+      "EMP-2036",
+      "EMP-2014",
+      "EMP-2035"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 12.9,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2024-00016",
+    "equipment_id": "M-131",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-11-01T01:54:00Z",
+    "closed": "2024-11-02T15:54:00Z",
+    "technician_ids": [
+      "EMP-2028",
+      "EMP-2032"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 8.9,
+    "narrative": "Root cause documented in attached evaluation. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2026-00016",
+    "equipment_id": "S-141",
+    "status": "in_progress",
+    "type": "surveillance",
+    "opened": "2026-04-14T14:43:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2018",
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 7.1,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2023-00015",
+    "equipment_id": "M-130",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2023-05-04T07:42:00Z",
+    "closed": "2023-05-05T03:42:00Z",
+    "technician_ids": [
+      "EMP-2006",
+      "EMP-2009"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.0,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2024-00017",
+    "equipment_id": "S-161",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2024-09-28T18:35:00Z",
+    "closed": "2024-09-30T13:35:00Z",
+    "technician_ids": [
+      "EMP-2037"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 15.9,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2024-00018",
+    "equipment_id": "E-132",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-03-24T19:50:00Z",
+    "closed": "2024-03-25T02:50:00Z",
+    "technician_ids": [
+      "EMP-2037",
+      "EMP-2035",
+      "EMP-2010"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 4.3,
+    "narrative": "Replaced suspect component. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2024-00019",
+    "equipment_id": "P-3B",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2024-11-19T14:51:00Z",
+    "closed": "2024-11-20T12:51:00Z",
+    "technician_ids": [
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.4,
+    "narrative": "No abnormal conditions observed. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2021-00016",
+    "equipment_id": "P-133",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2021-11-05T21:50:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": "vendor_quality",
+    "parts_used": [],
+    "hours_charged": 17.3,
+    "narrative": "Replaced suspect component. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2026-00017",
+    "equipment_id": "V-142",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2026-08-03T23:07:00Z",
+    "closed": "2026-08-07T01:07:00Z",
+    "technician_ids": [
+      "EMP-2018",
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 6.0,
+    "narrative": "Root cause documented in attached evaluation. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2026-00018",
+    "equipment_id": "V-108",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2026-11-29T05:50:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2024",
+      "EMP-2004"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "thermal_cycling",
+    "parts_used": [],
+    "hours_charged": 10.8,
+    "narrative": "Verified post-maintenance functional test. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2023-00016",
+    "equipment_id": "V-148",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2023-02-28T23:51:00Z",
+    "closed": "2023-03-02T23:51:00Z",
+    "technician_ids": [
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 3.7,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2026-00019",
+    "equipment_id": "E-145",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2026-11-10T03:05:00Z",
+    "closed": "2026-11-12T08:05:00Z",
+    "technician_ids": [
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 17.1,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2024-00020",
+    "equipment_id": "M-138",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-11-18T10:39:00Z",
+    "closed": "2024-11-21T06:39:00Z",
+    "technician_ids": [
+      "EMP-2010",
+      "EMP-2243",
+      "EMP-2004"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": "vendor_quality",
+    "parts_used": [],
+    "hours_charged": 12.5,
+    "narrative": "Replaced suspect component. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2021-00017",
+    "equipment_id": "S-113",
+    "status": "in_progress",
+    "type": "surveillance",
+    "opened": "2021-04-19T04:26:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2035"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.5,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2022-00012",
+    "equipment_id": "T-164",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-12-30T07:57:00Z",
+    "closed": "2023-01-03T03:57:00Z",
+    "technician_ids": [
+      "EMP-2028",
+      "EMP-2037",
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": "seal_leak",
+    "parts_used": [],
+    "hours_charged": 6.7,
+    "narrative": "Root cause documented in attached evaluation. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2026-00020",
+    "equipment_id": "S-167",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2026-02-13T04:07:00Z",
+    "closed": "2026-02-14T21:07:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 3.0,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2023-00017",
+    "equipment_id": "M-120",
+    "status": "open",
+    "type": "corrective",
+    "opened": "2023-06-28T14:33:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2030",
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 2.0,
+    "narrative": "Investigated equipment alarm. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2026-00021",
+    "equipment_id": "P-3B",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2026-06-29T01:31:00Z",
+    "closed": "2026-07-02T11:31:00Z",
+    "technician_ids": [
+      "EMP-2010"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 5.0,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2023-00018",
+    "equipment_id": "P-3C",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2023-06-29T00:06:00Z",
+    "closed": "2023-06-29T10:06:00Z",
+    "technician_ids": [
+      "EMP-2004"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": "design_deficiency",
+    "parts_used": [],
+    "hours_charged": 12.6,
+    "narrative": "Investigated equipment alarm. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2025-00026",
+    "equipment_id": "EDG-2",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2025-04-07T06:42:00Z",
+    "closed": "2025-04-07T14:42:00Z",
+    "technician_ids": [
+      "EMP-2023",
+      "EMP-2004"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 9.8,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2024-00021",
+    "equipment_id": "E-173",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2024-12-14T08:54:00Z",
+    "closed": "2024-12-18T02:54:00Z",
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2031",
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 17.6,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2024-00022",
+    "equipment_id": "S-169",
+    "status": "in_progress",
+    "type": "surveillance",
+    "opened": "2024-12-22T01:07:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2036",
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 5.2,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2022-00013",
+    "equipment_id": "S-176",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2022-10-12T19:57:00Z",
+    "closed": "2022-10-14T01:57:00Z",
+    "technician_ids": [
+      "EMP-2035",
+      "EMP-2010",
+      "EMP-2037"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 13.3,
+    "narrative": "No abnormal conditions observed. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2025-00027",
+    "equipment_id": "S-149",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2025-09-09T16:24:00Z",
+    "closed": "2025-09-10T02:24:00Z",
+    "technician_ids": [
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.0,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2021-00018",
+    "equipment_id": "MOV-7B",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2021-05-28T17:44:00Z",
+    "closed": "2021-05-30T21:44:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2009"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": "seismic",
+    "parts_used": [],
+    "hours_charged": 4.1,
+    "narrative": "Replaced suspect component. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2022-00014",
+    "equipment_id": "S-168",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2022-06-22T14:20:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2035",
+      "EMP-2013",
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 21.3,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2024-00023",
+    "equipment_id": "H-178",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-03-04T16:29:00Z",
+    "closed": "2024-03-07T22:29:00Z",
+    "technician_ids": [
+      "EMP-2018",
+      "EMP-2243",
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "vendor_quality",
+    "parts_used": [],
+    "hours_charged": 0.2,
+    "narrative": "Replaced suspect component. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2025-00028",
+    "equipment_id": "M-153",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2025-01-20T07:57:00Z",
+    "closed": "2025-01-24T06:57:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2009"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 13.9,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2021-00019",
+    "equipment_id": "P-3C",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2021-02-23T00:34:00Z",
+    "closed": "2021-02-26T00:34:00Z",
+    "technician_ids": [
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 8.2,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2026-00022",
+    "equipment_id": "T-150",
+    "status": "open",
+    "type": "corrective",
+    "opened": "2026-10-13T22:09:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2028",
+      "EMP-2024",
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 3.3,
+    "narrative": "Investigated equipment alarm. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2022-00015",
+    "equipment_id": "S-113",
+    "status": "in_progress",
+    "type": "surveillance",
+    "opened": "2022-07-14T11:59:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.9,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2024-00024",
+    "equipment_id": "T-151",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-10-11T04:44:00Z",
+    "closed": "2024-10-11T21:44:00Z",
+    "technician_ids": [
+      "EMP-2032",
+      "EMP-2009",
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "seal_leak",
+    "parts_used": [],
+    "hours_charged": 4.1,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2021-00020",
+    "equipment_id": "H-178",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2021-04-24T19:10:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2023",
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": "thermal_cycling",
+    "parts_used": [],
+    "hours_charged": 3.7,
+    "narrative": "Replaced suspect component. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2022-00016",
+    "equipment_id": "H-174",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2022-10-16T20:20:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2013"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": "thermal_cycling",
+    "parts_used": [],
+    "hours_charged": 7.3,
+    "narrative": "Replaced suspect component. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2022-00017",
+    "equipment_id": "E-165",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2022-12-24T02:20:00Z",
+    "closed": "2022-12-25T01:20:00Z",
+    "technician_ids": [
+      "EMP-2010",
+      "EMP-2013",
+      "EMP-2009"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.2,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2024-00025",
+    "equipment_id": "V-112",
+    "status": "open",
+    "type": "surveillance",
+    "opened": "2024-07-03T15:20:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2013",
+      "EMP-2037",
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.8,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2024-00026",
+    "equipment_id": "S-121",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-05-20T20:55:00Z",
+    "closed": "2024-05-24T08:55:00Z",
+    "technician_ids": [
+      "EMP-2038",
+      "EMP-2028",
+      "EMP-2013"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 1.6,
+    "narrative": "Root cause documented in attached evaluation. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2025-00029",
+    "equipment_id": "P-144",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2025-05-21T05:02:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2030",
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.4,
+    "narrative": "All acceptance criteria met. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2024-00027",
+    "equipment_id": "P-133",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-05-18T03:02:00Z",
+    "closed": "2024-05-19T18:02:00Z",
+    "technician_ids": [
+      "EMP-2013",
+      "EMP-2030",
+      "EMP-2035"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 0.8,
+    "narrative": "Verified post-maintenance functional test. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2021-00021",
+    "equipment_id": "S-121",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2021-04-23T11:41:00Z",
+    "closed": "2021-04-23T18:41:00Z",
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2038",
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 7.7,
+    "narrative": "All acceptance criteria met. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2022-00018",
+    "equipment_id": "P-133",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2022-12-11T12:16:00Z",
+    "closed": "2022-12-12T17:16:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 9.8,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2022-00019",
+    "equipment_id": "M-138",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2022-02-10T11:25:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2004"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": "thermal_cycling",
+    "parts_used": [],
+    "hours_charged": 3.5,
+    "narrative": "Root cause documented in attached evaluation. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2021-00022",
+    "equipment_id": "S-168",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2021-06-02T03:10:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2006",
+      "EMP-2023",
+      "EMP-2004"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.0,
+    "narrative": "All acceptance criteria met. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2026-00023",
+    "equipment_id": "P-166",
+    "status": "closed",
+    "type": "modification",
+    "opened": "2026-07-24T23:25:00Z",
+    "closed": "2026-07-26T12:25:00Z",
+    "technician_ids": [
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 9.7,
+    "narrative": "Field walkdown verified configuration. Implemented engineering change package."
+  },
+  {
+    "wo_id": "WO-2022-00020",
+    "equipment_id": "P-3A",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2022-09-28T01:51:00Z",
+    "closed": "2022-10-01T09:51:00Z",
+    "technician_ids": [
+      "EMP-2036",
+      "EMP-2009"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.5,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2021-00023",
+    "equipment_id": "S-149",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2021-11-17T14:59:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2006",
+      "EMP-2009"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 13.8,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2024-00028",
+    "equipment_id": "E-137",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-03-03T18:06:00Z",
+    "closed": "2024-03-07T08:06:00Z",
+    "technician_ids": [
+      "EMP-2028",
+      "EMP-2117",
+      "EMP-2035"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": "seal_leak",
+    "parts_used": [],
+    "hours_charged": 4.4,
+    "narrative": "Investigated equipment alarm. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2023-00019",
+    "equipment_id": "H-139",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2023-05-11T09:56:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 6.6,
+    "narrative": "Root cause documented in attached evaluation. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2022-00021",
+    "equipment_id": "P-179",
+    "status": "in_progress",
+    "type": "surveillance",
+    "opened": "2022-08-23T18:22:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 9.8,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2022-00022",
+    "equipment_id": "P-3C",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2022-10-18T02:48:00Z",
+    "closed": "2022-10-19T03:48:00Z",
+    "technician_ids": [
+      "EMP-2030",
+      "EMP-2243",
+      "EMP-2010"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 8.6,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2024-00029",
+    "equipment_id": "S-177",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2024-08-24T18:22:00Z",
+    "closed": "2024-08-26T21:22:00Z",
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2028",
+      "EMP-2035"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 9.5,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2022-00023",
+    "equipment_id": "T-164",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2022-05-28T04:58:00Z",
+    "closed": "2022-05-31T00:58:00Z",
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 12.3,
+    "narrative": "All acceptance criteria met. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2022-00024",
+    "equipment_id": "M-111",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2022-06-02T03:51:00Z",
+    "closed": "2022-06-02T05:51:00Z",
+    "technician_ids": [
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.4,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2026-00024",
+    "equipment_id": "P-3C",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2026-06-26T07:51:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2024",
+      "EMP-2035",
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.8,
+    "narrative": "No abnormal conditions observed. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2026-00025",
+    "equipment_id": "M-122",
+    "status": "open",
+    "type": "surveillance",
+    "opened": "2026-05-11T13:35:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2035",
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.8,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2025-00030",
+    "equipment_id": "S-127",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2025-08-10T16:14:00Z",
+    "closed": "2025-08-14T08:14:00Z",
+    "technician_ids": [
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 5.9,
+    "narrative": "Root cause documented in attached evaluation. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2021-00024",
+    "equipment_id": "S-114",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2021-10-05T00:24:00Z",
+    "closed": "2021-10-06T06:24:00Z",
+    "technician_ids": [
+      "EMP-2013",
+      "EMP-2117",
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.8,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2022-00025",
+    "equipment_id": "E-118",
+    "status": "in_progress",
+    "type": "surveillance",
+    "opened": "2022-05-17T20:22:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2036",
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 9.1,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2023-00020",
+    "equipment_id": "S-107",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2023-10-16T16:27:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 13.7,
+    "narrative": "No abnormal conditions observed. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2024-00030",
+    "equipment_id": "P-170",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2024-10-18T13:37:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2032"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": "design_deficiency",
+    "parts_used": [],
+    "hours_charged": 6.3,
+    "narrative": "Investigated equipment alarm. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2025-00031",
+    "equipment_id": "M-138",
+    "status": "in_progress",
+    "type": "preventive",
+    "opened": "2025-06-21T16:12:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2036",
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 9.2,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2021-00025",
+    "equipment_id": "T-151",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2021-11-05T02:44:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2037",
+      "EMP-2243",
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 4.8,
+    "narrative": "Replaced suspect component. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2025-00032",
+    "equipment_id": "E-173",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2025-08-22T17:59:00Z",
+    "closed": "2025-08-24T10:59:00Z",
+    "technician_ids": [
+      "EMP-2018",
+      "EMP-2004",
+      "EMP-2035"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "seismic",
+    "parts_used": [],
+    "hours_charged": 22.4,
+    "narrative": "Verified post-maintenance functional test. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2024-00031",
+    "equipment_id": "M-122",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2024-04-09T08:59:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2004"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": "vendor_quality",
+    "parts_used": [],
+    "hours_charged": 15.7,
+    "narrative": "Investigated equipment alarm. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2024-00032",
+    "equipment_id": "S-127",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2024-04-09T05:04:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2030"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 9.4,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2026-00026",
+    "equipment_id": "V-142",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2026-03-18T10:07:00Z",
+    "closed": "2026-03-21T10:07:00Z",
+    "technician_ids": [
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.7,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2025-00033",
+    "equipment_id": "V-155",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2025-04-01T03:58:00Z",
+    "closed": "2025-04-01T22:58:00Z",
+    "technician_ids": [
+      "EMP-2013",
+      "EMP-2028",
+      "EMP-2035"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.7,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2023-00021",
+    "equipment_id": "S-161",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2023-10-03T20:20:00Z",
+    "closed": "2023-10-05T01:20:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2006",
+      "EMP-2030"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": "vendor_quality",
+    "parts_used": [],
+    "hours_charged": 5.0,
+    "narrative": "Verified post-maintenance functional test. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2024-00033",
+    "equipment_id": "E-124",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-01-11T11:39:00Z",
+    "closed": "2024-01-12T05:39:00Z",
+    "technician_ids": [
+      "EMP-2030"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": "design_deficiency",
+    "parts_used": [],
+    "hours_charged": 12.0,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2024-00034",
+    "equipment_id": "H-129",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-07-24T03:52:00Z",
+    "closed": "2024-07-27T10:52:00Z",
+    "technician_ids": [
+      "EMP-2013",
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 10.7,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2024-00035",
+    "equipment_id": "M-130",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2024-03-23T21:06:00Z",
+    "closed": "2024-03-25T02:06:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.2,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2023-00022",
+    "equipment_id": "V-148",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2023-04-12T00:26:00Z",
+    "closed": "2023-04-15T08:26:00Z",
+    "technician_ids": [
+      "EMP-2006"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.9,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2021-00026",
+    "equipment_id": "T-151",
+    "status": "in_progress",
+    "type": "preventive",
+    "opened": "2021-04-24T10:57:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2014",
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.7,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2022-00026",
+    "equipment_id": "E-132",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2022-11-21T07:01:00Z",
+    "closed": "2022-11-23T08:01:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.4,
+    "narrative": "No abnormal conditions observed. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2024-00036",
+    "equipment_id": "H-178",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-06-08T22:04:00Z",
+    "closed": "2024-06-11T22:04:00Z",
+    "technician_ids": [
+      "EMP-2010",
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 28.4,
+    "narrative": "Replaced suspect component. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2021-00027",
+    "equipment_id": "H-174",
+    "status": "in_progress",
+    "type": "preventive",
+    "opened": "2021-02-01T16:59:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2035",
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 10.4,
+    "narrative": "All acceptance criteria met. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2026-00027",
+    "equipment_id": "E-118",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2026-01-29T20:43:00Z",
+    "closed": "2026-01-31T08:43:00Z",
+    "technician_ids": [
+      "EMP-2024",
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.4,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2022-00027",
+    "equipment_id": "T-128",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-03-30T21:19:00Z",
+    "closed": "2022-04-01T10:19:00Z",
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "vendor_quality",
+    "parts_used": [],
+    "hours_charged": 13.6,
+    "narrative": "Verified post-maintenance functional test. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2026-00028",
+    "equipment_id": "H-158",
+    "status": "in_progress",
+    "type": "surveillance",
+    "opened": "2026-01-17T22:13:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2024",
+      "EMP-2032",
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 24.0,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2022-00028",
+    "equipment_id": "M-140",
+    "status": "in_progress",
+    "type": "preventive",
+    "opened": "2022-01-01T15:35:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2030",
+      "EMP-2035",
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 10.6,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2025-00034",
+    "equipment_id": "S-134",
+    "status": "cancelled",
+    "type": "surveillance",
+    "opened": "2025-09-20T14:50:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.1,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2022-00029",
+    "equipment_id": "E-165",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-02-12T01:49:00Z",
+    "closed": "2022-02-14T13:49:00Z",
+    "technician_ids": [
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 26.7,
+    "narrative": "Root cause documented in attached evaluation. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2023-00023",
+    "equipment_id": "S-149",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2023-10-12T17:10:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2038",
+      "EMP-2004",
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.1,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2023-00024",
+    "equipment_id": "P-3C",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2023-01-26T14:26:00Z",
+    "closed": "2023-01-28T15:26:00Z",
+    "technician_ids": [
+      "EMP-2035",
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 3.6,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2021-00028",
+    "equipment_id": "M-140",
+    "status": "in_progress",
+    "type": "preventive",
+    "opened": "2021-06-04T19:01:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2037"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 8.5,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2022-00030",
+    "equipment_id": "S-156",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2022-10-02T17:31:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 14.7,
+    "narrative": "Replaced suspect component. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2026-00029",
+    "equipment_id": "S-113",
+    "status": "open",
+    "type": "corrective",
+    "opened": "2026-09-05T09:57:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2010",
+      "EMP-2037",
+      "EMP-2013"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": "seal_leak",
+    "parts_used": [],
+    "hours_charged": 6.9,
+    "narrative": "Verified post-maintenance functional test. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2025-00035",
+    "equipment_id": "M-130",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2025-08-13T23:15:00Z",
+    "closed": "2025-08-14T14:15:00Z",
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2014",
+      "EMP-2037"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 7.7,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2025-00036",
+    "equipment_id": "S-161",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2025-05-20T04:10:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2037"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 5.6,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2021-00029",
+    "equipment_id": "H-175",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2021-02-07T02:53:00Z",
+    "closed": "2021-02-09T07:53:00Z",
+    "technician_ids": [
+      "EMP-2243",
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.5,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2025-00037",
+    "equipment_id": "T-151",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2025-06-21T09:16:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2038",
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 10.5,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2025-00038",
+    "equipment_id": "V-142",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2025-05-13T23:13:00Z",
+    "closed": "2025-05-17T19:13:00Z",
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2037",
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 7.7,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2024-00037",
+    "equipment_id": "S-167",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-01-25T21:02:00Z",
+    "closed": "2024-01-26T19:02:00Z",
+    "technician_ids": [
+      "EMP-2010",
+      "EMP-2004",
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": "seal_leak",
+    "parts_used": [],
+    "hours_charged": 9.7,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2025-00039",
+    "equipment_id": "S-177",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2025-11-15T11:40:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.3,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2023-00025",
+    "equipment_id": "M-140",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2023-11-30T07:34:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2018",
+      "EMP-2004"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 8.8,
+    "narrative": "Root cause documented in attached evaluation. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2024-00038",
+    "equipment_id": "E-106",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2024-10-11T20:17:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 10.3,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2025-00040",
+    "equipment_id": "V-172",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2025-06-14T17:39:00Z",
+    "closed": "2025-06-15T10:39:00Z",
+    "technician_ids": [
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 12.1,
+    "narrative": "No abnormal conditions observed. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2021-00030",
+    "equipment_id": "P-119",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2021-07-12T23:36:00Z",
+    "closed": "2021-07-15T00:36:00Z",
+    "technician_ids": [
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "vendor_quality",
+    "parts_used": [],
+    "hours_charged": 5.6,
+    "narrative": "Replaced suspect component. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2025-00041",
+    "equipment_id": "V-172",
+    "status": "open",
+    "type": "corrective",
+    "opened": "2025-02-26T10:02:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": "thermal_cycling",
+    "parts_used": [],
+    "hours_charged": 7.7,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2022-00031",
+    "equipment_id": "P-179",
+    "status": "open",
+    "type": "surveillance",
+    "opened": "2022-04-09T18:28:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 5.2,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2026-00030",
+    "equipment_id": "M-120",
+    "status": "in_progress",
+    "type": "surveillance",
+    "opened": "2026-05-06T13:27:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2032"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.1,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2026-00031",
+    "equipment_id": "H-162",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2026-04-05T12:23:00Z",
+    "closed": "2026-04-08T22:23:00Z",
+    "technician_ids": [
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.5,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2022-00032",
+    "equipment_id": "P-116",
+    "status": "closed",
+    "type": "modification",
+    "opened": "2022-12-02T01:07:00Z",
+    "closed": "2022-12-04T18:07:00Z",
+    "technician_ids": [
+      "EMP-2018",
+      "EMP-2013",
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 25.3,
+    "narrative": "Implemented engineering change package. Field walkdown verified configuration."
+  },
+  {
+    "wo_id": "WO-2024-00039",
+    "equipment_id": "S-169",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-08-16T04:34:00Z",
+    "closed": "2024-08-17T01:34:00Z",
+    "technician_ids": [
+      "EMP-2243",
+      "EMP-2024",
+      "EMP-2009"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 2.9,
+    "narrative": "Verified post-maintenance functional test. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2024-00040",
+    "equipment_id": "P-171",
+    "status": "open",
+    "type": "corrective",
+    "opened": "2024-07-22T00:00:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2031",
+      "EMP-2030"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": "design_deficiency",
+    "parts_used": [],
+    "hours_charged": 12.4,
+    "narrative": "Root cause documented in attached evaluation. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2024-00041",
+    "equipment_id": "T-143",
+    "status": "in_progress",
+    "type": "preventive",
+    "opened": "2024-09-20T16:57:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2028",
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 9.1,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2021-00031",
+    "equipment_id": "M-138",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2021-10-21T10:27:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "seismic",
+    "parts_used": [],
+    "hours_charged": 6.9,
+    "narrative": "Replaced suspect component. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2022-00033",
+    "equipment_id": "P-144",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-08-02T21:52:00Z",
+    "closed": "2022-08-04T07:52:00Z",
+    "technician_ids": [
+      "EMP-2004"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 3.1,
+    "narrative": "Root cause documented in attached evaluation. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2021-00032",
+    "equipment_id": "E-124",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2021-12-04T12:45:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2243",
+      "EMP-2014",
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": "design_deficiency",
+    "parts_used": [],
+    "hours_charged": 1.8,
+    "narrative": "Investigated equipment alarm. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2022-00034",
+    "equipment_id": "S-134",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2022-07-14T11:18:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2036",
+      "EMP-2038",
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 11.5,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2022-00035",
+    "equipment_id": "S-168",
+    "status": "in_progress",
+    "type": "preventive",
+    "opened": "2022-06-01T09:23:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2036",
+      "EMP-2006"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 8.9,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2026-00032",
+    "equipment_id": "M-147",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2026-07-24T07:43:00Z",
+    "closed": "2026-07-27T06:43:00Z",
+    "technician_ids": [
+      "EMP-2006",
+      "EMP-2036",
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 11.2,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2021-00033",
+    "equipment_id": "M-122",
+    "status": "closed",
+    "type": "modification",
+    "opened": "2021-03-06T23:51:00Z",
+    "closed": "2021-03-09T00:51:00Z",
+    "technician_ids": [
+      "EMP-2023",
+      "EMP-2030"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 14.1,
+    "narrative": "Field walkdown verified configuration. Implemented engineering change package."
+  },
+  {
+    "wo_id": "WO-2021-00034",
+    "equipment_id": "H-178",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2021-11-19T09:27:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2036",
+      "EMP-2038",
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.1,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2021-00035",
+    "equipment_id": "E-124",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2021-04-13T05:03:00Z",
+    "closed": "2021-04-13T10:03:00Z",
+    "technician_ids": [
+      "EMP-2024",
+      "EMP-2035",
+      "EMP-2037"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.8,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2021-00036",
+    "equipment_id": "T-164",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2021-12-22T20:03:00Z",
+    "closed": "2021-12-24T13:03:00Z",
+    "technician_ids": [
+      "EMP-2010",
+      "EMP-2028",
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 7.7,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2025-00042",
+    "equipment_id": "V-172",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2025-09-14T16:25:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 22.8,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2023-00026",
+    "equipment_id": "M-111",
+    "status": "open",
+    "type": "surveillance",
+    "opened": "2023-12-04T16:06:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2035",
+      "EMP-2006"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.4,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2023-00027",
+    "equipment_id": "S-161",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2023-09-07T07:11:00Z",
+    "closed": "2023-09-08T23:11:00Z",
+    "technician_ids": [
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 2.1,
+    "narrative": "Verified post-maintenance functional test. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2022-00036",
+    "equipment_id": "V-108",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-07-15T05:15:00Z",
+    "closed": "2022-07-15T23:15:00Z",
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2243",
+      "EMP-2006"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "design_deficiency",
+    "parts_used": [],
+    "hours_charged": 7.4,
+    "narrative": "Investigated equipment alarm. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2025-00043",
+    "equipment_id": "H-129",
+    "status": "in_progress",
+    "type": "preventive",
+    "opened": "2025-04-30T05:57:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2036",
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 13.1,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2026-00033",
+    "equipment_id": "HX-22A",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2026-06-11T15:50:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031",
+      "EMP-2006"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 18.3,
+    "narrative": "No abnormal conditions observed. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2025-00044",
+    "equipment_id": "H-162",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2025-04-07T05:02:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2006"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": "thermal_cycling",
+    "parts_used": [],
+    "hours_charged": 13.6,
+    "narrative": "Verified post-maintenance functional test. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2023-00028",
+    "equipment_id": "S-134",
+    "status": "open",
+    "type": "surveillance",
+    "opened": "2023-02-02T02:20:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2013",
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.0,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2021-00037",
+    "equipment_id": "S-167",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2021-03-30T21:34:00Z",
+    "closed": "2021-03-31T10:34:00Z",
+    "technician_ids": [
+      "EMP-2006",
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 20.7,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2021-00038",
+    "equipment_id": "P-166",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2021-09-29T06:14:00Z",
+    "closed": "2021-10-01T22:14:00Z",
+    "technician_ids": [
+      "EMP-2032",
+      "EMP-2035",
+      "EMP-2006"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 11.8,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2025-00045",
+    "equipment_id": "H-175",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2025-04-30T14:15:00Z",
+    "closed": "2025-05-04T03:15:00Z",
+    "technician_ids": [
+      "EMP-2004"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": "design_deficiency",
+    "parts_used": [],
+    "hours_charged": 1.8,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2026-00034",
+    "equipment_id": "V-148",
+    "status": "closed",
+    "type": "modification",
+    "opened": "2026-09-30T06:34:00Z",
+    "closed": "2026-10-04T05:34:00Z",
+    "technician_ids": [
+      "EMP-2010"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 15.5,
+    "narrative": "Field walkdown verified configuration. Implemented engineering change package."
+  },
+  {
+    "wo_id": "WO-2024-00042",
+    "equipment_id": "P-119",
+    "status": "in_progress",
+    "type": "surveillance",
+    "opened": "2024-09-09T12:10:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 7.0,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2023-00029",
+    "equipment_id": "E-137",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2023-02-09T20:06:00Z",
+    "closed": "2023-02-13T16:06:00Z",
+    "technician_ids": [
+      "EMP-2010"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.3,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2025-00046",
+    "equipment_id": "P-119",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2025-12-03T19:04:00Z",
+    "closed": "2025-12-05T11:04:00Z",
+    "technician_ids": [
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": "seal_leak",
+    "parts_used": [],
+    "hours_charged": 13.3,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2023-00030",
+    "equipment_id": "E-123",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2023-05-14T18:04:00Z",
+    "closed": "2023-05-17T11:04:00Z",
+    "technician_ids": [
+      "EMP-2037",
+      "EMP-2014",
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.5,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2024-00043",
+    "equipment_id": "T-143",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-09-24T03:06:00Z",
+    "closed": "2024-09-27T04:06:00Z",
+    "technician_ids": [
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "seismic",
+    "parts_used": [],
+    "hours_charged": 1.7,
+    "narrative": "Replaced suspect component. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2023-00031",
+    "equipment_id": "M-140",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2023-09-07T22:37:00Z",
+    "closed": "2023-09-11T19:37:00Z",
+    "technician_ids": [
+      "EMP-2024",
+      "EMP-2013"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 7.5,
+    "narrative": "Verified post-maintenance functional test. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2022-00037",
+    "equipment_id": "S-127",
+    "status": "in_progress",
+    "type": "modification",
+    "opened": "2022-04-15T01:29:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2004"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 10.9,
+    "narrative": "Implemented engineering change package. Field walkdown verified configuration."
+  },
+  {
+    "wo_id": "WO-2021-00039",
+    "equipment_id": "P-166",
+    "status": "open",
+    "type": "surveillance",
+    "opened": "2021-05-24T13:41:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 12.9,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2022-00038",
+    "equipment_id": "P-179",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-02-07T14:39:00Z",
+    "closed": "2022-02-07T19:39:00Z",
+    "technician_ids": [
+      "EMP-2024",
+      "EMP-2006"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "vendor_quality",
+    "parts_used": [],
+    "hours_charged": 3.6,
+    "narrative": "Root cause documented in attached evaluation. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2021-00040",
+    "equipment_id": "S-156",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2021-07-21T03:34:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2037",
+      "EMP-2004",
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": "vendor_quality",
+    "parts_used": [],
+    "hours_charged": 8.7,
+    "narrative": "Replaced suspect component. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2025-00047",
+    "equipment_id": "S-114",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2025-08-02T17:48:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2010",
+      "EMP-2006",
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 9.3,
+    "narrative": "All acceptance criteria met. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2023-00032",
+    "equipment_id": "V-136",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2023-12-11T14:40:00Z",
+    "closed": "2023-12-12T06:40:00Z",
+    "technician_ids": [
+      "EMP-2035",
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": "seal_leak",
+    "parts_used": [],
+    "hours_charged": 6.4,
+    "narrative": "Root cause documented in attached evaluation. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2022-00039",
+    "equipment_id": "S-125",
+    "status": "in_progress",
+    "type": "modification",
+    "opened": "2022-06-18T22:01:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2014"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 12.0,
+    "narrative": "Implemented engineering change package. Field walkdown verified configuration."
+  },
+  {
+    "wo_id": "WO-2023-00033",
+    "equipment_id": "T-164",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2023-09-11T04:31:00Z",
+    "closed": "2023-09-12T22:31:00Z",
+    "technician_ids": [
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 4.3,
+    "narrative": "No abnormal conditions observed. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2021-00041",
+    "equipment_id": "P-119",
+    "status": "open",
+    "type": "corrective",
+    "opened": "2021-06-21T16:28:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2038",
+      "EMP-2004"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 1.2,
+    "narrative": "Verified post-maintenance functional test. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2023-00034",
+    "equipment_id": "S-177",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2023-02-10T02:27:00Z",
+    "closed": "2023-02-13T03:27:00Z",
+    "technician_ids": [
+      "EMP-2036",
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.1,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2024-00044",
+    "equipment_id": "M-147",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2024-04-21T18:32:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 4.4,
+    "narrative": "Replaced suspect component. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2024-00045",
+    "equipment_id": "S-127",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2024-03-26T04:23:00Z",
+    "closed": "2024-03-26T18:23:00Z",
+    "technician_ids": [
+      "EMP-2006",
+      "EMP-2037"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 5.5,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2025-00048",
+    "equipment_id": "T-135",
+    "status": "open",
+    "type": "corrective",
+    "opened": "2025-02-26T02:53:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2009"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 10.2,
+    "narrative": "Verified post-maintenance functional test. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2025-00049",
+    "equipment_id": "V-110",
+    "status": "open",
+    "type": "corrective",
+    "opened": "2025-03-29T19:35:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2010"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 5.4,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2025-00050",
+    "equipment_id": "E-173",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2025-11-10T11:27:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2032",
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 11.0,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2025-00051",
+    "equipment_id": "P-166",
+    "status": "cancelled",
+    "type": "surveillance",
+    "opened": "2025-01-31T15:50:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2018",
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.4,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2023-00035",
+    "equipment_id": "P-116",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2023-03-23T23:08:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2004",
+      "EMP-2010"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.6,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2022-00040",
+    "equipment_id": "E-159",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-12-29T03:26:00Z",
+    "closed": "2022-12-29T06:26:00Z",
+    "technician_ids": [
+      "EMP-2006"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": "thermal_cycling",
+    "parts_used": [],
+    "hours_charged": 1.1,
+    "narrative": "Replaced suspect component. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2022-00041",
+    "equipment_id": "E-106",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-04-03T03:17:00Z",
+    "closed": "2022-04-06T20:17:00Z",
+    "technician_ids": [
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": "seal_leak",
+    "parts_used": [],
+    "hours_charged": 6.3,
+    "narrative": "Replaced suspect component. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2022-00042",
+    "equipment_id": "E-124",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2022-06-06T05:25:00Z",
+    "closed": "2022-06-08T19:25:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2014",
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 8.6,
+    "narrative": "All acceptance criteria met. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2023-00036",
+    "equipment_id": "S-169",
+    "status": "in_progress",
+    "type": "surveillance",
+    "opened": "2023-10-06T02:57:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 9.8,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2025-00052",
+    "equipment_id": "S-167",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2025-09-03T02:41:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 10.6,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2026-00035",
+    "equipment_id": "S-141",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2026-02-16T22:30:00Z",
+    "closed": "2026-02-20T17:30:00Z",
+    "technician_ids": [
+      "EMP-2117",
+      "EMP-2030"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 13.0,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2024-00046",
+    "equipment_id": "T-151",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2024-08-07T18:04:00Z",
+    "closed": "2024-08-09T19:04:00Z",
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2010"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.0,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2024-00047",
+    "equipment_id": "T-143",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2024-01-19T01:54:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2018",
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 12.9,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2024-00048",
+    "equipment_id": "E-123",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2024-09-11T14:28:00Z",
+    "closed": "2024-09-13T12:28:00Z",
+    "technician_ids": [
+      "EMP-2013",
+      "EMP-2243",
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 3.0,
+    "narrative": "Root cause documented in attached evaluation. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2023-00037",
+    "equipment_id": "M-153",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2023-02-06T18:03:00Z",
+    "closed": "2023-02-07T17:03:00Z",
+    "technician_ids": [
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 2.3,
+    "narrative": "Performed scheduled PM per applicable procedure. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2024-00049",
+    "equipment_id": "S-125",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2024-04-20T00:17:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031",
+      "EMP-2032"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": "design_deficiency",
+    "parts_used": [],
+    "hours_charged": 5.5,
+    "narrative": "Investigated equipment alarm. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2025-00053",
+    "equipment_id": "P-3B",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2025-10-12T09:09:00Z",
+    "closed": "2025-10-15T05:09:00Z",
+    "technician_ids": [
+      "EMP-2006",
+      "EMP-2023",
+      "EMP-2010"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 3.9,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2021-00042",
+    "equipment_id": "P-116",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2021-12-03T19:18:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2024",
+      "EMP-2037"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 2.9,
+    "narrative": "Replaced suspect component. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2024-00050",
+    "equipment_id": "M-147",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2024-04-03T08:37:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2010",
+      "EMP-2028",
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 2.9,
+    "narrative": "Replaced suspect component. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2026-00036",
+    "equipment_id": "T-150",
+    "status": "in_progress",
+    "type": "preventive",
+    "opened": "2026-01-24T05:12:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2010"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 10.0,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2026-00037",
+    "equipment_id": "M-130",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2026-01-18T02:04:00Z",
+    "closed": "2026-01-19T23:04:00Z",
+    "technician_ids": [
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": "thermal_cycling",
+    "parts_used": [],
+    "hours_charged": 3.5,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2021-00043",
+    "equipment_id": "S-167",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2021-07-27T02:12:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2024",
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 12.0,
+    "narrative": "Investigated equipment alarm. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2022-00043",
+    "equipment_id": "M-122",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-07-19T15:44:00Z",
+    "closed": "2022-07-22T02:44:00Z",
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2037",
+      "EMP-2035"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": "seal_leak",
+    "parts_used": [],
+    "hours_charged": 2.9,
+    "narrative": "Root cause documented in attached evaluation. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2026-00038",
+    "equipment_id": "EDG-2",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2026-05-07T09:47:00Z",
+    "closed": "2026-05-10T05:47:00Z",
+    "technician_ids": [
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "vendor_quality",
+    "parts_used": [],
+    "hours_charged": 15.4,
+    "narrative": "Root cause documented in attached evaluation. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2021-00044",
+    "equipment_id": "S-168",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2021-02-21T08:23:00Z",
+    "closed": "2021-02-23T23:23:00Z",
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2013",
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 5.3,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2022-00044",
+    "equipment_id": "V-142",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2022-01-28T22:46:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2024",
+      "EMP-2032"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": "age_wear",
+    "parts_used": [],
+    "hours_charged": 7.3,
+    "narrative": "Replaced suspect component. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2021-00045",
+    "equipment_id": "P-119",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2021-09-28T08:44:00Z",
+    "closed": "2021-10-01T05:44:00Z",
+    "technician_ids": [
+      "EMP-2032"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.5,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2022-00045",
+    "equipment_id": "T-164",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2022-07-30T21:11:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2004",
+      "EMP-2013"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 14.2,
+    "narrative": "Replaced suspect component. Root cause documented in attached evaluation."
+  },
+  {
+    "wo_id": "WO-2024-00051",
+    "equipment_id": "S-169",
+    "status": "cancelled",
+    "type": "corrective",
+    "opened": "2024-02-17T12:12:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": "design_deficiency",
+    "parts_used": [],
+    "hours_charged": 6.8,
+    "narrative": "Root cause documented in attached evaluation. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2025-00054",
+    "equipment_id": "E-173",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2025-02-18T01:19:00Z",
+    "closed": "2025-02-19T21:19:00Z",
+    "technician_ids": [
+      "EMP-2031",
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": "vendor_quality",
+    "parts_used": [],
+    "hours_charged": 14.4,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2024-00052",
+    "equipment_id": "E-132",
+    "status": "open",
+    "type": "surveillance",
+    "opened": "2024-12-23T05:36:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2014",
+      "EMP-2243",
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 3.9,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2023-00038",
+    "equipment_id": "V-110",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2023-11-08T21:43:00Z",
+    "closed": "2023-11-09T08:43:00Z",
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2009",
+      "EMP-2018"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": "thermal_cycling",
+    "parts_used": [],
+    "hours_charged": 5.1,
+    "narrative": "Root cause documented in attached evaluation. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2026-00039",
+    "equipment_id": "S-149",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2026-09-25T12:41:00Z",
+    "closed": "2026-09-26T19:41:00Z",
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2037",
+      "EMP-2035"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": "vendor_quality",
+    "parts_used": [],
+    "hours_charged": 14.6,
+    "narrative": "Replaced suspect component. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2021-00046",
+    "equipment_id": "T-115",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2021-07-27T07:24:00Z",
+    "closed": "2021-07-29T18:24:00Z",
+    "technician_ids": [
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.3,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2024-00053",
+    "equipment_id": "M-131",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2024-04-05T14:50:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 1.5,
+    "narrative": "Verified post-maintenance functional test. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2026-00040",
+    "equipment_id": "H-129",
+    "status": "in_progress",
+    "type": "preventive",
+    "opened": "2026-11-07T22:14:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2032",
+      "EMP-2004",
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 18.3,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2021-00047",
+    "equipment_id": "T-151",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2021-05-20T23:03:00Z",
+    "closed": "2021-05-23T11:03:00Z",
+    "technician_ids": [
+      "EMP-2032",
+      "EMP-2035",
+      "EMP-2010"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 3.4,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2022-00046",
+    "equipment_id": "H-158",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-03-28T04:56:00Z",
+    "closed": "2022-03-28T15:56:00Z",
+    "technician_ids": [
+      "EMP-2036",
+      "EMP-2028",
+      "EMP-2117"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": "vendor_quality",
+    "parts_used": [],
+    "hours_charged": 4.7,
+    "narrative": "Investigated equipment alarm. Verified post-maintenance functional test."
+  },
+  {
+    "wo_id": "WO-2026-00041",
+    "equipment_id": "S-168",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2026-09-04T17:58:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2024",
+      "EMP-2035"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 1.9,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2024-00054",
+    "equipment_id": "P-119",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2024-04-21T18:48:00Z",
+    "closed": "2024-04-25T08:48:00Z",
+    "technician_ids": [
+      "EMP-2243",
+      "EMP-2037"
+    ],
+    "lead_engineer_id": "EMP-1042",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 13.2,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2022-00047",
+    "equipment_id": "H-175",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-04-29T09:28:00Z",
+    "closed": "2022-05-02T23:28:00Z",
+    "technician_ids": [
+      "EMP-2031",
+      "EMP-2009",
+      "EMP-2023"
+    ],
+    "lead_engineer_id": "EMP-2033",
+    "root_cause_code": "seismic",
+    "parts_used": [],
+    "hours_charged": 2.6,
+    "narrative": "Verified post-maintenance functional test. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2021-00048",
+    "equipment_id": "M-122",
+    "status": "cancelled",
+    "type": "preventive",
+    "opened": "2021-12-12T17:25:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2018",
+      "EMP-2004",
+      "EMP-2032"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 18.7,
+    "narrative": "No abnormal conditions observed. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2026-00042",
+    "equipment_id": "S-176",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2026-06-13T07:39:00Z",
+    "closed": "2026-06-17T02:39:00Z",
+    "technician_ids": [
+      "EMP-2030",
+      "EMP-2018",
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 6.1,
+    "narrative": "Root cause documented in attached evaluation. Investigated equipment alarm."
+  },
+  {
+    "wo_id": "WO-2025-00055",
+    "equipment_id": "E-132",
+    "status": "in_progress",
+    "type": "corrective",
+    "opened": "2025-06-18T03:10:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2009",
+      "EMP-2024"
+    ],
+    "lead_engineer_id": "EMP-2011",
+    "root_cause_code": "operator_error",
+    "parts_used": [],
+    "hours_charged": 13.5,
+    "narrative": "Verified post-maintenance functional test. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2025-00056",
+    "equipment_id": "M-147",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2025-09-16T13:28:00Z",
+    "closed": "2025-09-18T02:28:00Z",
+    "technician_ids": [
+      "EMP-2009"
+    ],
+    "lead_engineer_id": "EMP-2008",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 7.7,
+    "narrative": "All acceptance criteria met. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2022-00048",
+    "equipment_id": "V-155",
+    "status": "closed",
+    "type": "corrective",
+    "opened": "2022-01-10T17:37:00Z",
+    "closed": "2022-01-14T12:37:00Z",
+    "technician_ids": [
+      "EMP-2037"
+    ],
+    "lead_engineer_id": "EMP-2025",
+    "root_cause_code": "bearing_wear",
+    "parts_used": [],
+    "hours_charged": 2.5,
+    "narrative": "Root cause documented in attached evaluation. Replaced suspect component."
+  },
+  {
+    "wo_id": "WO-2026-00043",
+    "equipment_id": "T-135",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2026-05-02T06:34:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2243"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 0.7,
+    "narrative": "All acceptance criteria met. No abnormal conditions observed."
+  },
+  {
+    "wo_id": "WO-2026-00044",
+    "equipment_id": "E-124",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2026-12-07T21:27:00Z",
+    "closed": "2026-12-09T11:27:00Z",
+    "technician_ids": [
+      "EMP-2010",
+      "EMP-2023",
+      "EMP-2013"
+    ],
+    "lead_engineer_id": "EMP-2029",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 7.9,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2023-00039",
+    "equipment_id": "E-132",
+    "status": "closed",
+    "type": "preventive",
+    "opened": "2023-04-10T22:18:00Z",
+    "closed": "2023-04-12T07:18:00Z",
+    "technician_ids": [
+      "EMP-2013",
+      "EMP-2023",
+      "EMP-2010"
+    ],
+    "lead_engineer_id": "EMP-2005",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 5.6,
+    "narrative": "All acceptance criteria met. Performed scheduled PM per applicable procedure."
+  },
+  {
+    "wo_id": "WO-2026-00045",
+    "equipment_id": "T-128",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2026-09-14T02:20:00Z",
+    "closed": "2026-09-14T07:20:00Z",
+    "technician_ids": [
+      "EMP-2024",
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 20.6,
+    "narrative": "Performed surveillance test per Tech Spec requirements. Acceptance criteria satisfied; equipment declared operable."
+  },
+  {
+    "wo_id": "WO-2023-00040",
+    "equipment_id": "H-146",
+    "status": "closed",
+    "type": "modification",
+    "opened": "2023-11-28T15:37:00Z",
+    "closed": "2023-12-01T07:37:00Z",
+    "technician_ids": [
+      "EMP-2004",
+      "EMP-2038"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 7.4,
+    "narrative": "Field walkdown verified configuration. Implemented engineering change package."
+  },
+  {
+    "wo_id": "WO-2022-00049",
+    "equipment_id": "M-130",
+    "status": "closed",
+    "type": "surveillance",
+    "opened": "2022-03-05T20:54:00Z",
+    "closed": "2022-03-06T14:54:00Z",
+    "technician_ids": [
+      "EMP-2028"
+    ],
+    "lead_engineer_id": "EMP-0871",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 10.5,
+    "narrative": "Acceptance criteria satisfied; equipment declared operable. Performed surveillance test per Tech Spec requirements."
+  },
+  {
+    "wo_id": "WO-2021-00049",
+    "equipment_id": "T-143",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2021-03-26T00:46:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2036"
+    ],
+    "lead_engineer_id": "EMP-2015",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 9.1,
+    "narrative": "Performed scheduled PM per applicable procedure. All acceptance criteria met."
+  },
+  {
+    "wo_id": "WO-2021-00050",
+    "equipment_id": "V-110",
+    "status": "open",
+    "type": "modification",
+    "opened": "2021-06-21T08:57:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2031",
+      "EMP-2030",
+      "EMP-2032"
+    ],
+    "lead_engineer_id": "EMP-2019",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 10.2,
+    "narrative": "Field walkdown verified configuration. Implemented engineering change package."
+  },
+  {
+    "wo_id": "WO-2026-00046",
+    "equipment_id": "V-142",
+    "status": "open",
+    "type": "preventive",
+    "opened": "2026-08-23T04:05:00Z",
+    "closed": null,
+    "technician_ids": [
+      "EMP-2013"
+    ],
+    "lead_engineer_id": "EMP-2017",
+    "root_cause_code": null,
+    "parts_used": [],
+    "hours_charged": 6.0,
+    "narrative": "No abnormal conditions observed. Performed scheduled PM per applicable procedure."
+  }
+]

@@ -1,0 +1,193 @@
+═══════════════════════════════════════════════════════════════════════════════
+VERIZON FAR EDGE OPERATIONS · CaaS NODE DEPLOYMENT & RECOVERY RUNBOOK
+Document ID:  VZ-RUNBOOK-CAAS-v24
+Revision:     Rev 6 · January 2026
+Owner:        Network Operations · HQ Planning
+Classification: VERIZON CONFIDENTIAL — INTERNAL USE ONLY
+═══════════════════════════════════════════════════════════════════════════════
+
+TABLE OF CONTENTS
+  1. Purpose and Applicability
+  2. References
+  3. Pre-Deployment Checklist
+  4. Wind River CaaS Boot Sequence
+  5. Redfish Interface Validation
+  6. Post-Boot Validation
+  7. Recovery Procedures
+  8. Rollback Steps
+  9. Sign-off and Audit Trail
+
+───────────────────────────────────────────────────────────────────────────────
+1. PURPOSE AND APPLICABILITY
+───────────────────────────────────────────────────────────────────────────────
+
+This runbook applies to all CaaS-Node-Type-A, Type-B, and Type-C far-edge
+devices running Wind River Linux 24.06 or later. It MUST be followed for every
+greenfield site deployment, every firmware upgrade affecting the boot chain,
+and every recovery from a non-graceful shutdown.
+
+This document is the canonical source of truth. If an Ansible playbook or
+ROBOT test deviates from the procedure below, the playbook or test is wrong,
+not the runbook. Open a CR to reconcile.
+
+───────────────────────────────────────────────────────────────────────────────
+2. REFERENCES
+───────────────────────────────────────────────────────────────────────────────
+
+  [R1] VZ-REDFISH-INTEGRATION-GUIDE-v3, §4 Authentication & TLS
+  [R2] Wind River Linux 24.12 Release Notes, §3.2 Redfish API Changes
+  [R3] Verizon Far Edge Site Readiness Procedure VZ-SITE-2204
+  [R4] DMTF Redfish Specification 1.16.0
+  [R5] OpenShift 4.16 Operator Health Guide
+
+───────────────────────────────────────────────────────────────────────────────
+3. PRE-DEPLOYMENT CHECKLIST
+───────────────────────────────────────────────────────────────────────────────
+
+Before initiating any deployment or upgrade, the on-site or remote operator
+MUST confirm the following:
+
+  3.1  Power and Environment
+       □ Site power feed verified at +48 VDC ±2%
+       □ Cabinet ambient temperature 18–27°C
+       □ Cabinet humidity 20–80% non-condensing
+       □ Cabinet door alarm reset and armed
+
+  3.2  Connectivity
+       □ Management interface eth_mgmt0 reaches Verizon HQ over IPsec tunnel
+       □ Redfish endpoint /redfish/v1/$metadata responds 200 OK
+       □ NTP sync within ±5 ms of stratum-1 reference
+
+  3.3  Software Pre-Conditions
+       □ Ansible control node version ≥ 2.14
+       □ OpenShift CLI (oc) version ≥ 4.14
+       □ ROBOT Framework runner image v6.1.1 pulled
+       □ Redfish baseline schema snapshot captured (see §5.1)
+
+  3.4  Approvals
+       □ Wave deployment authorization signed by Distinguished Engineer (HQ Planning)
+       □ Change ticket APEXVZ-* in 'Approved' state
+       □ Vendor support ticket open for premium-tier sites (24-hour escalation path)
+
+If ANY checkbox is unchecked, HALT the procedure and escalate to the
+certification team lead. No site has ever benefited from skipping pre-checks.
+
+───────────────────────────────────────────────────────────────────────────────
+4. WIND RIVER CaaS BOOT SEQUENCE
+───────────────────────────────────────────────────────────────────────────────
+
+The boot sequence below is the only authorized sequence. Any deviation requires
+explicit approval and a corresponding CR.
+
+  4.1  POST and firmware signature check (BMC-initiated, ~12 sec)
+       Expected: Signed-boot chain validation passes for U-Boot, kernel, initrd
+
+  4.2  Hand-off to Wind River bootloader (~3 sec)
+
+  4.3  Kernel load with RT patches applied (~8 sec)
+       Verify: dmesg | grep -i "PREEMPT_RT"   should return at least one line
+
+  4.4  systemd init (~12 sec)
+
+  4.5  containerd start (~6 sec)
+
+  4.6  CaaS-orchestrator pod scheduling (~14 sec)
+       Verify: oc get pods -n caas-system    all pods should reach Running
+
+  4.7  Redfish endpoint warm (~4 sec)
+       Verify: curl -s -k https://localhost/redfish/v1/Systems/1 | jq .Status
+       Expected for Wind River 24.12:  {"Health":"OK","State":"Enabled","PowerState":"On"}
+       NOTE: PowerState moved from top-level to Status.PowerState in Redfish
+       schema v1.16.0. Scripts assuming top-level PowerState will report a
+       false-negative failure on 24.12 nodes — see [R2] §3.2.1.
+
+  4.8  gNB-DU config push (~22 sec)
+
+  4.9  Total expected wall-clock boot: 81 ± 6 seconds.
+       If boot exceeds 95 seconds, treat as a P2 anomaly and engage diagnostics.
+
+───────────────────────────────────────────────────────────────────────────────
+5. REDFISH INTERFACE VALIDATION
+───────────────────────────────────────────────────────────────────────────────
+
+  5.1  Baseline schema capture
+       BEFORE applying any firmware update, capture the current device's
+       Redfish schema:
+         curl -s -k https://$DEVICE_IP/redfish/v1/$metadata > baseline.xml
+       Store under /data/schemas/<site_id>/<yyyy-mm-dd>_baseline.xml.
+       This baseline is the input for SchemaWatchAgent comparisons.
+
+  5.2  Authoritative endpoints (validate each)
+       /redfish/v1/Systems/1                       — system power and status
+       /redfish/v1/Chassis/1/Thermal               — temperatures and fans
+       /redfish/v1/Managers/1/EthernetInterfaces/1 — management interface
+       /redfish/v1/Systems/1/Storage/1             — local storage
+       /redfish/v1/UpdateService                   — firmware inventory
+
+  5.3  Breaking changes introduced in Wind River 24.12 / Redfish v1.16.0
+       See [R2] §3.2 for the full change list. Three changes are confirmed
+       breaking against the v1.14.0 baseline and require script remediation
+       BEFORE the certification cycle runs:
+
+         (a) /redfish/v1/Systems/1
+             PowerState relocated to Status.PowerState (path migration)
+             Impact: 6 Ansible playbooks reference the old path.
+
+         (b) /redfish/v1/Chassis/1/Thermal
+             FanSpeeds[] renamed to Fans[]; CurrentReading renamed to Reading.
+             Impact: 5 ROBOT tests and Ansible monitors reference the old names.
+
+         (c) /redfish/v1/Managers/1/EthernetInterfaces/1
+             IPv6Addresses elevated from optional to required.
+             Impact: 3 scripts construct interface payloads without it.
+
+       Run SchemaWatchAgent ≥ 6 days before the wave to receive a remediation
+       map listing every impacted script and the exact find-and-replace fix.
+
+───────────────────────────────────────────────────────────────────────────────
+6. POST-BOOT VALIDATION
+───────────────────────────────────────────────────────────────────────────────
+
+Execute the post-boot ROBOT suite (vz_far_edge_post_boot_v24.robot) and confirm
+the following anchor metrics:
+
+       Metric                                        Threshold        Source
+       ──────────────────────────────────────────    ─────────────    ───────────
+       CU-UP interface latency (P99)                 ≤ 5.0 ms          VerizonEdgeLib
+       CU-UP throughput (sustained, 60s)             ≥ 2.0 Gbps        VerizonEdgeLib
+       Redfish PowerState                            "On"              RedfishLibrary
+       CaaS pod readiness                            100%              OpenShiftLibrary
+       RT-kernel cyclictest P99 latency (Core 4)     ≤ 30 µs           RTKernelLib
+       OAM interface packet loss                     ≤ 0.1%            OAMLib
+       gNB-DU config diff vs. expected               0 lines           gNBLib
+
+If any metric breaches threshold by less than 10%, classify as P3 INVESTIGATE
+and monitor for one additional cycle. If any metric breaches by ≥ 10%, classify
+as P1 BLOCK and engage vendor engineering within 4 hours.
+
+───────────────────────────────────────────────────────────────────────────────
+9. SIGN-OFF AND AUDIT TRAIL
+───────────────────────────────────────────────────────────────────────────────
+
+Every execution of this runbook produces an immutable audit record in the
+APEX Audit Lens. The record MUST include:
+
+  • Site ID and device serial
+  • Firmware version from and to
+  • Operator and shift
+  • Pre-check completion status (each line item explicit)
+  • Boot sequence timing per step
+  • Redfish baseline schema hash
+  • Post-boot ROBOT suite results
+  • Any deviations from the procedure with the corresponding approver
+
+Lead Engineer Sign-off:    _____________________________
+Reviewing SRO:             _____________________________
+Date / Time:               _____________________________
+Apex Audit Lens Event ID:  AUDIT-VZ-{yyyy-mm-dd-hhmm}-{seq}
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF VZ-RUNBOOK-CAAS-v24 (excerpt)
+This is an excerpt; the full document is 48 pages. Sections 7 (Recovery
+Procedures) and 8 (Rollback Steps) are not reproduced here.
+═══════════════════════════════════════════════════════════════════════════════

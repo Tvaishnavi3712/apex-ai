@@ -1,0 +1,443 @@
+[
+  {
+    "employee_id": "EMP-1042",
+    "name": "Diane Okafor",
+    "role": "system_engineer",
+    "hire_date": "2008-03-01",
+    "retirement_eligible_date": "2038-03-01",
+    "certifications": [
+      "Senior Reactor Engineer",
+      "ASME Section XI Inspector"
+    ]
+  },
+  {
+    "employee_id": "EMP-2117",
+    "name": "Marcus Holloway",
+    "role": "mech_tech",
+    "hire_date": "2011-09-12",
+    "retirement_eligible_date": "2041-09-12",
+    "certifications": [
+      "Mechanical Maintenance II",
+      "Confined-Space Entry"
+    ]
+  },
+  {
+    "employee_id": "EMP-2243",
+    "name": "Jamal Greene",
+    "role": "mech_tech",
+    "hire_date": "2014-06-20",
+    "retirement_eligible_date": "2044-06-20",
+    "certifications": [
+      "Mechanical Maintenance II"
+    ]
+  },
+  {
+    "employee_id": "EMP-0871",
+    "name": "Tony Garcia",
+    "role": "system_engineer",
+    "hire_date": "1996-02-14",
+    "retirement_eligible_date": "2026-02-14",
+    "certifications": [
+      "EDG Specialist",
+      "ASME Section III"
+    ]
+  },
+  {
+    "employee_id": "EMP-2004",
+    "name": "Jennifer Martin",
+    "role": "mech_tech",
+    "hire_date": "1997-01-25",
+    "retirement_eligible_date": "2027-01-18",
+    "certifications": [
+      "EDG Specialist"
+    ]
+  },
+  {
+    "employee_id": "EMP-2005",
+    "name": "Karen Mitchell",
+    "role": "system_engineer",
+    "hire_date": "1996-09-04",
+    "retirement_eligible_date": "2026-08-28",
+    "certifications": [
+      "Reactor Operator",
+      "Mechanical Maintenance II",
+      "EDG Specialist"
+    ]
+  },
+  {
+    "employee_id": "EMP-2006",
+    "name": "John Flores",
+    "role": "IC_tech",
+    "hire_date": "1997-07-19",
+    "retirement_eligible_date": "2027-07-12",
+    "certifications": [
+      "Senior Reactor Operator",
+      "ASME Section III",
+      "Reactor Operator"
+    ]
+  },
+  {
+    "employee_id": "EMP-2007",
+    "name": "Michael Clark",
+    "role": "NSO",
+    "hire_date": "1997-03-30",
+    "retirement_eligible_date": "2027-03-23",
+    "certifications": [
+      "Confined-Space Entry",
+      "ASME Section XI Inspector"
+    ]
+  },
+  {
+    "employee_id": "EMP-2008",
+    "name": "Steven Green",
+    "role": "system_engineer",
+    "hire_date": "1998-03-14",
+    "retirement_eligible_date": "2028-03-06",
+    "certifications": [
+      "Welder Class II",
+      "Senior Reactor Operator",
+      "I&C Technician III"
+    ]
+  },
+  {
+    "employee_id": "EMP-2009",
+    "name": "George Johnson",
+    "role": "mech_tech",
+    "hire_date": "1996-10-13",
+    "retirement_eligible_date": "2026-10-06",
+    "certifications": [
+      "ASME Section XI Inspector",
+      "Welder Class II",
+      "Reactor Operator"
+    ]
+  },
+  {
+    "employee_id": "EMP-2010",
+    "name": "Elizabeth Nguyen",
+    "role": "IC_tech",
+    "hire_date": "1997-05-31",
+    "retirement_eligible_date": "2027-05-24",
+    "certifications": [
+      "ASME Section III"
+    ]
+  },
+  {
+    "employee_id": "EMP-2011",
+    "name": "Michelle Johnson",
+    "role": "system_engineer",
+    "hire_date": "1997-10-16",
+    "retirement_eligible_date": "2027-10-09",
+    "certifications": [
+      "ASME Section III",
+      "Welder Class II",
+      "Mechanical Maintenance II"
+    ]
+  },
+  {
+    "employee_id": "EMP-2012",
+    "name": "Michelle Moore",
+    "role": "NSO",
+    "hire_date": "1996-05-17",
+    "retirement_eligible_date": "2026-05-10",
+    "certifications": [
+      "Senior Reactor Operator"
+    ]
+  },
+  {
+    "employee_id": "EMP-2013",
+    "name": "Michelle Moore",
+    "role": "IC_tech",
+    "hire_date": "1997-05-12",
+    "retirement_eligible_date": "2027-05-05",
+    "certifications": [
+      "Confined-Space Entry"
+    ]
+  },
+  {
+    "employee_id": "EMP-2014",
+    "name": "Carol Nelson",
+    "role": "mech_tech",
+    "hire_date": "1998-02-08",
+    "retirement_eligible_date": "2028-02-01",
+    "certifications": [
+      "Mechanical Maintenance II"
+    ]
+  },
+  {
+    "employee_id": "EMP-2015",
+    "name": "Michael Lopez",
+    "role": "system_engineer",
+    "hire_date": "1997-09-10",
+    "retirement_eligible_date": "2027-09-03",
+    "certifications": [
+      "Reactor Operator"
+    ]
+  },
+  {
+    "employee_id": "EMP-2016",
+    "name": "Kenneth Hernandez",
+    "role": "NSO",
+    "hire_date": "1997-06-12",
+    "retirement_eligible_date": "2027-06-05",
+    "certifications": [
+      "EDG Specialist",
+      "ASME Section XI Inspector",
+      "Confined-Space Entry"
+    ]
+  },
+  {
+    "employee_id": "EMP-2017",
+    "name": "Matthew Hernandez",
+    "role": "system_engineer",
+    "hire_date": "1997-06-22",
+    "retirement_eligible_date": "2027-06-15",
+    "certifications": [
+      "Reactor Operator"
+    ]
+  },
+  {
+    "employee_id": "EMP-2018",
+    "name": "Anthony Anderson",
+    "role": "mech_tech",
+    "hire_date": "1998-04-15",
+    "retirement_eligible_date": "2028-04-07",
+    "certifications": [
+      "I&C Technician III",
+      "ASME Section XI Inspector"
+    ]
+  },
+  {
+    "employee_id": "EMP-2019",
+    "name": "Sarah Clark",
+    "role": "system_engineer",
+    "hire_date": "1996-05-08",
+    "retirement_eligible_date": "2026-05-01",
+    "certifications": [
+      "EDG Specialist",
+      "Senior Reactor Operator",
+      "Reactor Operator"
+    ]
+  },
+  {
+    "employee_id": "EMP-2020",
+    "name": "Patricia Brown",
+    "role": "NSO",
+    "hire_date": "1996-12-23",
+    "retirement_eligible_date": "2026-12-16",
+    "certifications": [
+      "Welder Class II",
+      "Confined-Space Entry"
+    ]
+  },
+  {
+    "employee_id": "EMP-2021",
+    "name": "Matthew Nguyen",
+    "role": "NSO",
+    "hire_date": "1998-04-16",
+    "retirement_eligible_date": "2028-04-08",
+    "certifications": [
+      "EDG Specialist",
+      "ASME Section XI Inspector"
+    ]
+  },
+  {
+    "employee_id": "EMP-2022",
+    "name": "Matthew Brown",
+    "role": "NSO",
+    "hire_date": "1997-01-13",
+    "retirement_eligible_date": "2027-01-06",
+    "certifications": [
+      "Welder Class II",
+      "Reactor Operator",
+      "ASME Section XI Inspector"
+    ]
+  },
+  {
+    "employee_id": "EMP-2023",
+    "name": "Joseph Smith",
+    "role": "IC_tech",
+    "hire_date": "1997-04-07",
+    "retirement_eligible_date": "2027-03-31",
+    "certifications": [
+      "Mechanical Maintenance II",
+      "Reactor Operator",
+      "Welder Class II"
+    ]
+  },
+  {
+    "employee_id": "EMP-2024",
+    "name": "Sharon Miller",
+    "role": "supervisor",
+    "hire_date": "1998-01-19",
+    "retirement_eligible_date": "2028-01-12",
+    "certifications": [
+      "Mechanical Maintenance II",
+      "I&C Technician III",
+      "Senior Reactor Operator"
+    ]
+  },
+  {
+    "employee_id": "EMP-2025",
+    "name": "Karen Moore",
+    "role": "system_engineer",
+    "hire_date": "1998-03-08",
+    "retirement_eligible_date": "2028-02-29",
+    "certifications": [
+      "ASME Section III",
+      "Mechanical Maintenance II",
+      "Welder Class II"
+    ]
+  },
+  {
+    "employee_id": "EMP-2026",
+    "name": "Andrew Roberts",
+    "role": "planner",
+    "hire_date": "1997-06-20",
+    "retirement_eligible_date": "2027-06-13",
+    "certifications": [
+      "I&C Technician III",
+      "Senior Reactor Operator"
+    ]
+  },
+  {
+    "employee_id": "EMP-2027",
+    "name": "Robert Young",
+    "role": "NSO",
+    "hire_date": "1997-11-09",
+    "retirement_eligible_date": "2027-11-02",
+    "certifications": [
+      "ASME Section III",
+      "Confined-Space Entry"
+    ]
+  },
+  {
+    "employee_id": "EMP-2028",
+    "name": "Dorothy Allen",
+    "role": "mech_tech",
+    "hire_date": "1998-02-08",
+    "retirement_eligible_date": "2028-02-01",
+    "certifications": [
+      "Senior Reactor Operator",
+      "ASME Section XI Inspector"
+    ]
+  },
+  {
+    "employee_id": "EMP-2029",
+    "name": "Charles Thomas",
+    "role": "system_engineer",
+    "hire_date": "1997-11-05",
+    "retirement_eligible_date": "2027-10-29",
+    "certifications": [
+      "EDG Specialist"
+    ]
+  },
+  {
+    "employee_id": "EMP-2030",
+    "name": "Andrew Allen",
+    "role": "supervisor",
+    "hire_date": "1996-07-28",
+    "retirement_eligible_date": "2026-07-21",
+    "certifications": [
+      "I&C Technician III",
+      "Confined-Space Entry"
+    ]
+  },
+  {
+    "employee_id": "EMP-2031",
+    "name": "Donna Green",
+    "role": "mech_tech",
+    "hire_date": "1997-10-24",
+    "retirement_eligible_date": "2027-10-17",
+    "certifications": [
+      "ASME Section XI Inspector",
+      "I&C Technician III",
+      "EDG Specialist"
+    ]
+  },
+  {
+    "employee_id": "EMP-2032",
+    "name": "Laura Johnson",
+    "role": "mech_tech",
+    "hire_date": "1997-12-16",
+    "retirement_eligible_date": "2027-12-09",
+    "certifications": [
+      "I&C Technician III"
+    ]
+  },
+  {
+    "employee_id": "EMP-2033",
+    "name": "Donna King",
+    "role": "system_engineer",
+    "hire_date": "2016-08-17",
+    "retirement_eligible_date": "2046-08-10",
+    "certifications": [
+      "Mechanical Maintenance II",
+      "Confined-Space Entry"
+    ]
+  },
+  {
+    "employee_id": "EMP-2034",
+    "name": "Charles Torres",
+    "role": "planner",
+    "hire_date": "1991-12-14",
+    "retirement_eligible_date": "2021-12-06",
+    "certifications": [
+      "ASME Section III"
+    ]
+  },
+  {
+    "employee_id": "EMP-2035",
+    "name": "Mark Green",
+    "role": "IC_tech",
+    "hire_date": "2003-07-02",
+    "retirement_eligible_date": "2033-06-24",
+    "certifications": [
+      "Mechanical Maintenance II",
+      "Confined-Space Entry",
+      "Welder Class II"
+    ]
+  },
+  {
+    "employee_id": "EMP-2036",
+    "name": "Michael Lopez",
+    "role": "supervisor",
+    "hire_date": "2017-12-09",
+    "retirement_eligible_date": "2047-12-02",
+    "certifications": [
+      "ASME Section XI Inspector"
+    ]
+  },
+  {
+    "employee_id": "EMP-2037",
+    "name": "Sarah Jackson",
+    "role": "supervisor",
+    "hire_date": "2006-10-31",
+    "retirement_eligible_date": "2036-10-23",
+    "certifications": [
+      "ASME Section XI Inspector"
+    ]
+  },
+  {
+    "employee_id": "EMP-2038",
+    "name": "Donald Hall",
+    "role": "IC_tech",
+    "hire_date": "2006-07-17",
+    "retirement_eligible_date": "2036-07-09",
+    "certifications": [
+      "ASME Section III",
+      "ASME Section XI Inspector",
+      "Reactor Operator"
+    ]
+  },
+  {
+    "employee_id": "EMP-2039",
+    "name": "Linda Moore",
+    "role": "planner",
+    "hire_date": "2012-03-10",
+    "retirement_eligible_date": "2042-03-03",
+    "certifications": [
+      "Welder Class II",
+      "Reactor Operator"
+    ]
+  }
+]

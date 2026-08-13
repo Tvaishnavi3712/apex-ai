@@ -1,0 +1,28 @@
+{
+  "blueprint_id": "bp-cwfcu-pep",
+  "name": "CWFCU PEP Disclosure",
+  "description": "Politically Exposed Person disclosure and ongoing monitoring record.",
+  "industry": "credit_union",
+  "document_type": "pep_disclosure",
+  "version": "1.0",
+  "documentSchema": {
+    "documentClass": "CWFCU PEP Disclosure",
+    "description": "PEP record schema with related individuals, risk tier, and monitoring schedule.",
+    "extractionInstructions": "Capture the PEP relationship (self / spouse / family / close associate), jurisdiction, role, and assigned risk tier.",
+    "fields": {
+      "pep_id":               { "type": "string", "description": "Internal PEP record ID", "required": true },
+      "member_id":            { "type": "string", "description": "Linked CWFCU member number", "required": true },
+      "pep_status":           { "type": "string", "description": "DOMESTIC_PEP / FOREIGN_PEP / SELF / FAMILY / CLOSE_ASSOCIATE", "required": true },
+      "related_individuals":  { "type": "array",  "description": "Names and relationships", "required": false },
+      "jurisdiction":         { "type": "string", "description": "Jurisdiction of PEP role", "required": true },
+      "role_or_position":     { "type": "string", "description": "Role / office held", "required": true },
+      "risk_tier":            { "type": "string", "description": "LOW / MEDIUM / HIGH", "required": true },
+      "screening_source":     { "type": "string", "description": "WorldCheck One / Dow Jones RiskCenter / etc.", "required": true },
+      "match_score_pct":      { "type": "number", "description": "Match score from screening engine", "required": false },
+      "disposition":          { "type": "string", "description": "ACCEPTED / DISMISSED / ESCALATED", "required": true },
+      "monitoring_frequency": { "type": "string", "description": "QUARTERLY / SEMI_ANNUAL / ANNUAL", "required": true },
+      "next_review_date":     { "type": "date",   "description": "Next CDD touch date", "required": true },
+      "ncua_exam_folder_path": { "type": "string","description": "NCUA exam folder index path", "required": true }
+    }
+  }
+}

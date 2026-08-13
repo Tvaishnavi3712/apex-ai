@@ -1,0 +1,68 @@
+{
+  "merchant": {
+    "name": "Chipotle Mexican Grill",
+    "category": "Restaurant",
+    "address": {
+      "street": "300 Michigan Ave",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60601"
+    },
+    "phone": "(474) 214-2526"
+  },
+  "transaction": {
+    "date": "2026-02-05",
+    "time": "16:39:55",
+    "receipt_number": "8875-454974"
+  },
+  "line_items": [
+    {
+      "description": "Filet Mignon",
+      "quantity": 1,
+      "unit_price": 45.99,
+      "amount": 45.99
+    },
+    {
+      "description": "Grilled Salmon",
+      "quantity": 1,
+      "unit_price": 28.99,
+      "amount": 28.99
+    },
+    {
+      "description": "Soft Drink",
+      "quantity": 3,
+      "unit_price": 2.99,
+      "amount": 8.97
+    },
+    {
+      "description": "Iced Tea",
+      "quantity": 1,
+      "unit_price": 2.99,
+      "amount": 2.99
+    },
+    {
+      "description": "Coffee",
+      "quantity": 3,
+      "unit_price": 3.99,
+      "amount": 11.97
+    },
+    {
+      "description": "Dessert - Cheesecake",
+      "quantity": 1,
+      "unit_price": 9.99,
+      "amount": 9.99
+    }
+  ],
+  "totals": {
+    "subtotal": 108.9,
+    "tax_rate": 0.07,
+    "tax_amount": 7.62,
+    "tip": 19.6,
+    "total": 136.12
+  },
+  "payment": {
+    "method": "Debit Card",
+    "card_type": "Visa",
+    "last_four": "3217"
+  }
+}

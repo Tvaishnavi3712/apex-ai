@@ -1,0 +1,82 @@
+{
+  "_metadata": {
+    "blueprint": "apex-product-spec-v1",
+    "document_type": "product_specification",
+    "extraction_date": "2024-01-18T09:00:00Z",
+    "confidence_score": 0.96,
+    "source_file": "product_spec_sheet.pdf"
+  },
+  "product_info": {
+    "product_name": "Organic Honey Granola",
+    "product_code": "GRN-HON-12OZ",
+    "upc": "012345678901",
+    "brand": "Nature's Best",
+    "category": "Breakfast Cereals",
+    "subcategory": "Granola"
+  },
+  "formulation": {
+    "version": "1.2",
+    "effective_date": "2024-01-01",
+    "ingredients": [
+      {"name": "Organic Rolled Oats", "percentage": 55.0, "origin": "USA"},
+      {"name": "Organic Honey", "percentage": 15.0, "origin": "USA"},
+      {"name": "Organic Sunflower Oil", "percentage": 10.0, "origin": "Argentina"},
+      {"name": "Organic Brown Sugar", "percentage": 8.0, "origin": "Brazil"},
+      {"name": "Organic Almonds", "percentage": 7.0, "origin": "USA"},
+      {"name": "Organic Coconut Flakes", "percentage": 3.0, "origin": "Philippines"},
+      {"name": "Sea Salt", "percentage": 1.0, "origin": "USA"},
+      {"name": "Natural Vanilla Extract", "percentage": 1.0, "origin": "Madagascar"}
+    ]
+  },
+  "nutrition_facts": {
+    "serving_size": "1/2 cup (55g)",
+    "servings_per_container": "about 6",
+    "calories": 240,
+    "total_fat_g": 9,
+    "saturated_fat_g": 2,
+    "trans_fat_g": 0,
+    "cholesterol_mg": 0,
+    "sodium_mg": 95,
+    "total_carbs_g": 36,
+    "dietary_fiber_g": 4,
+    "total_sugars_g": 12,
+    "added_sugars_g": 8,
+    "protein_g": 6,
+    "vitamin_d_mcg": 0,
+    "calcium_mg": 20,
+    "iron_mg": 2,
+    "potassium_mg": 150
+  },
+  "allergens": {
+    "contains": ["Tree Nuts (Almonds)"],
+    "may_contain": ["Peanuts", "Soy", "Wheat"],
+    "facility_allergens": ["Peanuts", "Soy", "Wheat", "Milk"]
+  },
+  "certifications": [
+    {"name": "USDA Organic", "certificate_number": "ORG-12345", "expiry": "2025-06-30"},
+    {"name": "Non-GMO Project Verified", "certificate_number": "NGP-67890", "expiry": "2025-03-15"},
+    {"name": "Kosher", "certifier": "OK Kosher", "symbol": "K"}
+  ],
+  "packaging": {
+    "primary": {
+      "type": "Stand-up pouch",
+      "material": "Recyclable LDPE",
+      "weight_oz": 12,
+      "dimensions": "8\" x 5\" x 3\""
+    },
+    "case": {
+      "units_per_case": 12,
+      "case_dimensions": "18\" x 12\" x 10\"",
+      "case_weight_lbs": 10
+    }
+  },
+  "shelf_life": {
+    "days": 365,
+    "storage_conditions": "Store in cool, dry place"
+  },
+  "regulatory": {
+    "fda_registration": "12345678901",
+    "target_markets": ["USA", "Canada"],
+    "label_languages": ["English", "French"]
+  }
+}

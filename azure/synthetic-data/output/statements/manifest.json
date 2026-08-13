@@ -1,0 +1,34 @@
+[
+  {
+    "statement_id": "stmt_20260201_XXXX2612",
+    "html_file": "html/stmt_20260201_XXXX2612.html",
+    "json_file": "json/stmt_20260201_XXXX2612.json",
+    "period": "2026-02-01 to 2026-02-28",
+    "ending_balance": 381062.55,
+    "account_holder": "Northwind Traders Inc"
+  },
+  {
+    "statement_id": "stmt_20260101_XXXX4460",
+    "html_file": "html/stmt_20260101_XXXX4460.html",
+    "json_file": "json/stmt_20260101_XXXX4460.json",
+    "period": "2026-01-01 to 2026-01-31",
+    "ending_balance": 403145.8,
+    "account_holder": "Adventure Works Ltd"
+  },
+  {
+    "statement_id": "stmt_20251201_XXXX1320",
+    "html_file": "html/stmt_20251201_XXXX1320.html",
+    "json_file": "json/stmt_20251201_XXXX1320.json",
+    "period": "2025-12-01 to 2025-12-31",
+    "ending_balance": 208702.16,
+    "account_holder": "Northwind Traders Inc"
+  },
+  {
+    "statement_id": "stmt_20251101_XXXX6393",
+    "html_file": "html/stmt_20251101_XXXX6393.html",
+    "json_file": "json/stmt_20251101_XXXX6393.json",
+    "period": "2025-11-01 to 2025-11-30",
+    "ending_balance": 253321.41,
+    "account_holder": "Adventure Works Ltd"
+  }
+]

@@ -1,0 +1,80 @@
+playbook_id: pb-boler-4
+name: je_generation_distribution
+version: "1.0.0"
+description: "Generate the consolidated JE, compute division splits, validate GL codes, produce per-division packets, and distribute to each division's S3 inbox."
+industry: manufacturing_multi_division
+category: benefits_operations
+
+intent: |
+  After Ziggy Kravitz signs off, generate the final consolidated
+  journal entry, split it across the 5 divisions with their correct
+  cost-center GL codes, validate every code against the chart of
+  accounts, produce a per-division distribution packet (encrypted
+  with that division's KMS key), and drop each packet in the
+  division's S3 inbox with an SNS notification to the division
+  controller.
+
+output:
+  - name: consolidated_je
+    type: structured_data
+    description: "Final consolidated JE — see bp-boler-journal-entry"
+  - name: division_packets
+    type: structured_data
+    description: "5 per-division distribution packets — see bp-boler-division-distribution-packet"
+  - name: distribution_receipts
+    type: report
+    description: "S3 delivery confirmations + SNS ack IDs"
+
+context:
+  business_rules:
+    - "Consolidated JE must balance to the penny — debits = credits"
+    - "Every per-division split must reconcile to the consolidated total"
+    - "Every GL code must exist in the chart of accounts"
+    - "Per-division packets use per-division KMS keys (no cross-division leakage)"
+    - "Distribution emits SNS notification to division controller email"
+
+actions:
+  - name: draft_journal_entry
+    action_id: manufacturing_multi_division.draft_journal_entry
+    description: "Draft the consolidated JE from approved allocations"
+    required: true
+  - name: compute_division_splits
+    action_id: manufacturing_multi_division.compute_division_splits
+    description: "Per-division split across 5 legal entities"
+    required: true
+  - name: validate_gl_codes
+    action_id: manufacturing_multi_division.validate_gl_codes
+    description: "Cross-check every GL code against the chart of accounts"
+    required: true
+  - name: generate_division_files
+    action_id: manufacturing_multi_division.generate_division_files
+    description: "Produce per-division distribution packets"
+    required: true
+  - name: distribute_to_division_s3
+    action_id: manufacturing_multi_division.distribute_to_division_s3
+    description: "Deliver per-division packets to S3 inboxes + SNS notify"
+    required: true
+
+recipe: |
+  1. Pull the approved consolidated allocation bundle. Draft the JE
+     using bp-boler-journal-entry. Populate line_items grouped by
+     GL code. Confirm debits = credits.
+  2. Compute the per-division splits. Each division gets its own
+     subset of line_items keyed by cost-center → GL code → amount.
+     Sum across divisions must reconcile to the consolidated total.
+  3. Validate every GL code against the company chart of accounts.
+     If any code is unknown, halt and route to Sarah Mitchell with
+     the offending row highlighted.
+  4. Generate a per-division distribution packet using
+     bp-boler-division-distribution-packet. Encrypt with the
+     division's KMS key alias (alias/boler-{division_code}).
+  5. For each division, write the packet to
+     https://apex-boler-division-inbox/{division_code}/YYYY-MM/.
+     Emit SNS notification to the division controller. Capture
+     ack ID + delivery timestamp.
+  6. Mark the consolidated JE status = DISTRIBUTED and commit final
+     audit trail entry.
+
+triggers:
+  - type: pipeline_complete
+    upstream: pb-boler-3

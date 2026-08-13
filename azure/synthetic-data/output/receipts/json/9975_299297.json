@@ -1,0 +1,68 @@
+{
+  "merchant": {
+    "name": "Chipotle Mexican Grill",
+    "category": "Restaurant",
+    "address": {
+      "street": "500 Peachtree St",
+      "city": "Atlanta",
+      "state": "GA",
+      "zip": "30308"
+    },
+    "phone": "(985) 942-5248"
+  },
+  "transaction": {
+    "date": "2026-01-28",
+    "time": "08:38:09",
+    "receipt_number": "9975-299297"
+  },
+  "line_items": [
+    {
+      "description": "Grilled Salmon",
+      "quantity": 1,
+      "unit_price": 28.99,
+      "amount": 28.99
+    },
+    {
+      "description": "Caesar Salad",
+      "quantity": 1,
+      "unit_price": 12.99,
+      "amount": 12.99
+    },
+    {
+      "description": "Pasta Primavera",
+      "quantity": 1,
+      "unit_price": 18.99,
+      "amount": 18.99
+    },
+    {
+      "description": "Chicken Parmesan",
+      "quantity": 1,
+      "unit_price": 22.99,
+      "amount": 22.99
+    },
+    {
+      "description": "Appetizer - Calamari",
+      "quantity": 1,
+      "unit_price": 14.99,
+      "amount": 14.99
+    },
+    {
+      "description": "Dessert - Cheesecake",
+      "quantity": 1,
+      "unit_price": 9.99,
+      "amount": 9.99
+    }
+  ],
+  "totals": {
+    "subtotal": 108.94,
+    "tax_rate": 0.0625,
+    "tax_amount": 6.81,
+    "tip": 16.34,
+    "total": 132.09
+  },
+  "payment": {
+    "method": "Debit Card",
+    "card_type": "MasterCard",
+    "last_four": "9145"
+  }
+}

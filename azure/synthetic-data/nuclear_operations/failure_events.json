@@ -1,0 +1,152 @@
+[
+  {
+    "event_id": "FE-2025-04",
+    "equipment_id": "P-3A",
+    "occurred_at": "2025-08-12T05:42:00Z",
+    "failure_mode": "FM-001",
+    "downtime_hours": 12,
+    "cost_usd": 95000,
+    "root_cause": "lube oil contamination",
+    "repair_wo_id": "WO-2025-03311"
+  },
+  {
+    "event_id": "FE-2025-09",
+    "equipment_id": "P-3A",
+    "occurred_at": "2025-12-04T07:15:00Z",
+    "failure_mode": "FM-001",
+    "downtime_hours": 18,
+    "cost_usd": 142000,
+    "root_cause": "thrust bearing fatigue",
+    "repair_wo_id": "WO-2025-03987"
+  },
+  {
+    "event_id": "FE-2026-01",
+    "equipment_id": "P-3A",
+    "occurred_at": "2026-01-22T04:00:00Z",
+    "failure_mode": "FM-007",
+    "downtime_hours": 14,
+    "cost_usd": 110000,
+    "root_cause": "vibration excursion (recurrence)",
+    "repair_wo_id": "WO-2026-00188"
+  },
+  {
+    "event_id": "FE-2025-41",
+    "equipment_id": "P-116",
+    "occurred_at": "2026-12-31T09:50:00Z",
+    "failure_mode": "FM-017",
+    "downtime_hours": 26,
+    "cost_usd": 139762,
+    "root_cause": "design deficiency",
+    "repair_wo_id": "WO-2021-00037"
+  },
+  {
+    "event_id": "FE-2022-20",
+    "equipment_id": "S-113",
+    "occurred_at": "2026-07-13T20:14:00Z",
+    "failure_mode": "FM-007",
+    "downtime_hours": 67,
+    "cost_usd": 89609,
+    "root_cause": "thermal cycling",
+    "repair_wo_id": "WO-2024-00049"
+  },
+  {
+    "event_id": "FE-2022-61",
+    "equipment_id": "S-127",
+    "occurred_at": "2021-04-25T02:27:00Z",
+    "failure_mode": "FM-003",
+    "downtime_hours": 18,
+    "cost_usd": 155341,
+    "root_cause": "vendor quality",
+    "repair_wo_id": "WO-2023-00012"
+  },
+  {
+    "event_id": "FE-2022-08",
+    "equipment_id": "P-170",
+    "occurred_at": "2024-04-10T10:44:00Z",
+    "failure_mode": "FM-011",
+    "downtime_hours": 14,
+    "cost_usd": 286679,
+    "root_cause": "seal leak",
+    "repair_wo_id": "WO-2022-00018"
+  },
+  {
+    "event_id": "FE-2023-83",
+    "equipment_id": "P-3B",
+    "occurred_at": "2024-03-04T20:08:00Z",
+    "failure_mode": "FM-012",
+    "downtime_hours": 57,
+    "cost_usd": 83791,
+    "root_cause": "seal leak",
+    "repair_wo_id": "WO-2023-00015"
+  },
+  {
+    "event_id": "FE-2024-78",
+    "equipment_id": "T-135",
+    "occurred_at": "2021-04-19T11:06:00Z",
+    "failure_mode": "FM-010",
+    "downtime_hours": 39,
+    "cost_usd": 83792,
+    "root_cause": "thermal cycling",
+    "repair_wo_id": "WO-2025-00052"
+  },
+  {
+    "event_id": "FE-2026-15",
+    "equipment_id": "S-114",
+    "occurred_at": "2023-07-14T04:21:00Z",
+    "failure_mode": "FM-016",
+    "downtime_hours": 70,
+    "cost_usd": 298178,
+    "root_cause": "design deficiency",
+    "repair_wo_id": "WO-2024-00032"
+  },
+  {
+    "event_id": "FE-2024-15",
+    "equipment_id": "P-3B",
+    "occurred_at": "2025-02-14T13:26:00Z",
+    "failure_mode": "FM-011",
+    "downtime_hours": 2,
+    "cost_usd": 168924,
+    "root_cause": "thermal cycling",
+    "repair_wo_id": "WO-2021-00032"
+  },
+  {
+    "event_id": "FE-2024-55",
+    "equipment_id": "S-177",
+    "occurred_at": "2023-11-26T04:49:00Z",
+    "failure_mode": "FM-012",
+    "downtime_hours": 26,
+    "cost_usd": 71066,
+    "root_cause": "vendor quality",
+    "repair_wo_id": "WO-2025-00055"
+  },
+  {
+    "event_id": "FE-2026-29",
+    "equipment_id": "E-173",
+    "occurred_at": "2022-11-05T07:09:00Z",
+    "failure_mode": "FM-006",
+    "downtime_hours": 37,
+    "cost_usd": 144320,
+    "root_cause": "design deficiency",
+    "repair_wo_id": "WO-2021-00049"
+  },
+  {
+    "event_id": "FE-2026-89",
+    "equipment_id": "V-155",
+    "occurred_at": "2026-12-02T17:58:00Z",
+    "failure_mode": "FM-013",
+    "downtime_hours": 56,
+    "cost_usd": 71368,
+    "root_cause": "design deficiency",
+    "repair_wo_id": "WO-2022-00001"
+  },
+  {
+    "event_id": "FE-2024-68",
+    "equipment_id": "E-137",
+    "occurred_at": "2021-06-19T20:06:00Z",
+    "failure_mode": "FM-001",
+    "downtime_hours": 5,
+    "cost_usd": 71252,
+    "root_cause": "design deficiency",
+    "repair_wo_id": "WO-2025-03987"
+  }
+]

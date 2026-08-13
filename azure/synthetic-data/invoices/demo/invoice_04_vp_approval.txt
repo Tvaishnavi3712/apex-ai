@@ -1,0 +1,44 @@
+═══════════════════════════════════════════════════════════════════════════════
+                            INVOICE
+═══════════════════════════════════════════════════════════════════════════════
+
+VENDOR:                                      BILL TO:
+---------------------------------           ---------------------------------
+Global Cloud Partners LLC                   Apex Financial Corp
+One Cloud Center, Suite 4500                500 Enterprise Way
+New York, NY 10001                          San Francisco, CA 94105
+Tax ID: 13-7777999
+Phone: (212) 555-0999
+Email: enterprise@globalcloud.com
+
+═══════════════════════════════════════════════════════════════════════════════
+Invoice Number:    GCP-2024-0088
+Invoice Date:      March 12, 2024
+Due Date:          April 11, 2024
+PO Number:         PO-2024-1001
+Payment Terms:     Net 30
+═══════════════════════════════════════════════════════════════════════════════
+
+DESCRIPTION                          QTY      UNIT PRICE      AMOUNT
+-------------------------------------------------------------------------------
+Enterprise Cloud Platform License     1     $45,000.00     $45,000.00
+  - 500 user seats, annual
+Premium Support Package               1     $12,000.00     $12,000.00
+  - 24/7 support, dedicated TAM
+Data Migration Services               1      $8,500.00      $8,500.00
+Security & Compliance Add-on          1      $6,500.00      $6,500.00
+Training (40 hours)                   1      $4,000.00      $4,000.00
+-------------------------------------------------------------------------------
+
+                                              Subtotal:    $76,000.00
+                                              Tax (8.25%):  $6,270.00
+                                              ─────────────────────────
+                                              TOTAL DUE:   $82,270.00
+
+═══════════════════════════════════════════════════════════════════════════════
+              Contract Term: 12 months from activation date
+                  Auto-renewal unless cancelled 60 days prior
+═══════════════════════════════════════════════════════════════════════════════
+
+TEST SCENARIO: VP Finance Approval (Amount over $50,000)
+Expected Result: Routed to VP FINANCE for approval + elevated review

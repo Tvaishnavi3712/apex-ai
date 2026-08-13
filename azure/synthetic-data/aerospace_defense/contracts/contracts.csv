@@ -1,0 +1,15 @@
+contract_number,modification,program,prime_contractor,award_date,total_value,itar_controlled,security_classification
+W912HN-23-D-0047,P00003,F-35,Lockheed Martin,2023-06-15,4250000.00,true,CUI
+W912HN-23-D-0047,P00002,F-35,Lockheed Martin,2023-03-01,3800000.00,true,CUI
+W912HN-23-D-0047,P00001,F-35,Lockheed Martin,2022-12-15,3500000.00,true,CUI
+W912HN-23-D-0047,,F-35,Lockheed Martin,2022-09-15,3200000.00,true,CUI
+W912HN-22-D-0089,,F-35,Lockheed Martin,2022-09-01,3150000.00,true,CUI
+W912HN-22-D-0089,P00001,F-35,Lockheed Martin,2023-01-15,3400000.00,true,CUI
+W912HN-21-D-0156,,F-35,Lockheed Martin,2021-06-01,2800000.00,true,CUI
+W56HZV-24-C-0012,,UH-60,Sikorsky,2024-01-15,2800000.00,true,Unclassified
+W56HZV-23-C-0089,,UH-60,Sikorsky,2023-05-01,2450000.00,true,Unclassified
+W56HZV-22-C-0145,,UH-60,Sikorsky,2022-08-15,2200000.00,true,Unclassified
+FA8615-23-C-0034,,F-22,Lockheed Martin,2023-09-01,1850000.00,true,SECRET
+FA8615-22-C-0078,,F-22,Lockheed Martin,2022-04-01,1650000.00,true,SECRET
+W911W4-24-D-0023,,C-17,Boeing,2024-02-01,1200000.00,true,CUI
+W911W4-23-D-0056,,C-17,Boeing,2023-07-15,1100000.00,true,CUI

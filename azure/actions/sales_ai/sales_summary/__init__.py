@@ -1,0 +1,1 @@
+"""sales_summary factory"""

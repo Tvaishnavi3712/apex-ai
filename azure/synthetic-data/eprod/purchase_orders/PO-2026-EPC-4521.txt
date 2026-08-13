@@ -1,0 +1,61 @@
+================================================================================
+                          ENTERPRISE PRODUCTS OPERATING LLC
+                              1100 Louisiana Street
+                                Houston, TX 77002
+                                  (713) 381-6500
+================================================================================
+
+                              PURCHASE ORDER
+
+PO Number:         PO-2026-EPC-4521
+PO Date:           04/22/2026
+Buyer:             M. Reyes, Sr. Procurement Mgr - Major Projects
+Cost Center:       MTBV-FRAC-IX
+AFE Number:        AFE-MTBV-FRAC9-2026-01
+Project:           Mont Belvieu Fractionator IX (NGL Fractionator #9)
+MSA Reference:     MSA-KIEWIT-2024-07
+Total NTE:         USD 14,200,000.00
+Payment Terms:     Net 30, progress billing per Schedule of Values
+
+Vendor:                                    Ship/Site:
+    Kiewit Energy Group Inc.                   Enterprise Mont Belvieu Complex
+    3555 Farnam Street                         9701 Hatcherville Rd
+    Omaha, NE 68131                            Mont Belvieu, TX 77580
+    Vendor ID: V-001827
+
+--------------------------------------------------------------------------------
+LN  SCOPE / DESCRIPTION                          UOM     QTY      AMOUNT (USD)
+--------------------------------------------------------------------------------
+ 1  FEED Validation & Detailed Engineering -      LS     1.0     2,450,000.00
+    Frac IX, 150 MBPD design capacity
+ 2  Procurement Services (long-lead equipment     LS     1.0     1,150,000.00
+    expediting: deethanizer, depropanizer,
+    debutanizer towers)
+ 3  Mechanical Construction - Towers, drums,      LS     1.0     6,800,000.00
+    exchangers, piping, structural steel
+ 4  E&I Construction - cable tray, conduit,       LS     1.0     2,150,000.00
+    instrumentation, MCC tie-ins
+ 5  Commissioning & Startup Support, 90-day       LS     1.0       950,000.00
+    field engineering presence
+ 6  Site indirects, safety, QA/QC,                LS     1.0       700,000.00
+    project management
+--------------------------------------------------------------------------------
+                                              TOTAL PO:       14,200,000.00
+================================================================================
+
+Conditions:
+1. All work governed by MSA-KIEWIT-2024-07, Sections 1-22.
+2. Schedule: NTP 05/01/2026; Mechanical Completion 03/15/2027.
+3. Liquidated Damages: $25,000/day after MC target +30 days grace.
+4. Performance Bond required: 50% of PO value, Surety A.M. Best A- minimum.
+5. Owner-Furnished Equipment list per Attachment B (towers, BMS).
+6. Safety compliance: OSHA 1910/1926, EPROD Contractor Safety Manual Rev 9.
+7. Submittals via EPROD Aconex portal, project ID MTBV-FRAC9.
+
+Authorized by:  ____________________   Date: ________
+                M. Reyes - Buyer
+
+Approved:       ____________________   Date: ________
+                D. Patel - VP Major Projects
+
+================================================================================

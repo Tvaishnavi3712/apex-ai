@@ -1,0 +1,21 @@
+# APEX AI Platform - Integration Dependencies
+
+# Slack SDK
+slack-sdk>=3.21.0
+
+# Microsoft Bot Framework (for Teams)
+botbuilder-core>=4.14.0
+botbuilder-schema>=4.14.0
+
+# HTTP client
+httpx>=0.24.0
+
+# AWS SDK
+boto3>=1.28.0
+botocore>=1.31.0
+
+# Email parsing
+email-validator>=2.0.0
+
+# Utilities
+python-dateutil>=2.8.2

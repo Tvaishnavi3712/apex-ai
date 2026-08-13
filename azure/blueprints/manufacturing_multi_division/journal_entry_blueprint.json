@@ -1,0 +1,29 @@
+{
+  "blueprint_id": "bp-boler-journal-entry",
+  "name": "Boler Consolidated Journal Entry",
+  "description": "Monthly consolidated JE with per-division splits, GL codes, balance check, and CFO sign-off attestation.",
+  "industry": "manufacturing_multi_division",
+  "document_type": "journal_entry",
+  "version": "1.0",
+  "documentSchema": {
+    "documentClass": "Boler Consolidated Journal Entry",
+    "description": "The monthly benefits JE — must balance to the penny, must split across all 5 divisions with correct GL codes, must carry the two-stage approval chain (Benefits Manager + CFO).",
+    "extractionInstructions": "Debits must equal credits. Per-division splits must sum to the consolidated total. Every GL code must exist in the company chart-of-accounts. Approval chain must be complete before status can be POSTED.",
+    "fields": {
+      "je_id":             { "type": "string", "description": "JE-YYYY-MM-CONSOLIDATED", "required": true },
+      "period":            { "type": "string", "description": "Posting period (YYYY-MM)", "required": true },
+      "total_debit":       { "type": "number", "description": "Total $ debit", "required": true },
+      "total_credit":      { "type": "number", "description": "Total $ credit", "required": true },
+      "balanced":          { "type": "boolean","description": "Debits = Credits", "required": true },
+      "division_splits":   { "type": "array",  "description": "Per-division — { division_code, amount, gl_codes[] }", "required": true },
+      "line_items":        { "type": "array",  "description": "Per-line — { gl_code, description, debit, credit, division_code }", "required": true },
+      "carrier_invoices":  { "type": "array",  "description": "Source carrier invoice IDs", "required": true },
+      "exception_links":   { "type": "array",  "description": "Resolved exceptions reflected in this JE", "required": false },
+      "benefits_mgr_approver": { "type": "string", "description": "Stage-1 approver (Sarah Mitchell)", "required": false },
+      "benefits_mgr_signed_at": { "type": "date",   "description": "Stage-1 sign timestamp", "required": false },
+      "cfo_approver":      { "type": "string", "description": "Stage-2 approver (Ziggy Kravitz)", "required": false },
+      "cfo_signed_at":     { "type": "date",   "description": "Stage-2 sign timestamp", "required": false },
+      "status":            { "type": "string", "description": "DRAFT / PENDING_BENEFITS / PENDING_CFO / APPROVED / POSTED / DISTRIBUTED", "required": true }
+    }
+  }
+}

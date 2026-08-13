@@ -1,0 +1,119 @@
+{
+  "blueprintName": "apex-prescription-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from prescription/Rx documents",
+  "industry": "healthcare_clinical",
+  "documentType": "prescription",
+  "documentSchema": {
+    "class": "ApexPrescription",
+    "description": "Prescription extraction for pharmacy processing",
+    "properties": {
+      "rx_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "patient_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "patient_dob": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "patient_address": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "prescriber_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "prescriber_npi": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "prescriber_dea": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "prescriber_address": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "prescriber_phone": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "date_written": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "medication_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "medication_strength": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "medication_form": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "ndc_code": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "quantity": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "days_supply": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "sig": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Directions for use"
+      },
+      "refills": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "daw_code": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Dispense as written code"
+      },
+      "diagnosis_code": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "is_controlled_substance": {
+        "type": "boolean",
+        "inferenceType": "inferred"
+      },
+      "schedule": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "DEA schedule if controlled"
+      },
+      "prior_auth_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "prescriber_signature": {
+        "type": "boolean",
+        "inferenceType": "explicit"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.9
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  }
+}

@@ -1,0 +1,5 @@
+# Azure AI Foundry agent definition
+name: apex-intake-bot
+runtime: azure-ai-foundry
+model: ${AZURE_OPENAI_DEPLOYMENT}
+entrypoint: agent.py

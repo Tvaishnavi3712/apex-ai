@@ -1,0 +1,104 @@
+# PowerFlow SQL Replacement - Blob Storage + Synapse
+# Simulates Essex's contract and pricing database
+# Mode: READ only
+
+connector:
+  id: powerflow_contracts
+  name: "PowerFlow Contract Database"
+  description: "Contract and pricing data for defense programs (Demo: Synapse + Blob Storage)"
+  type: synapse
+  mode: read
+  industry: aerospace_defense
+  compliance:
+    - ITAR
+    - NIST-800-171
+
+  # Azure Configuration
+  aws:
+    region: us-east-1
+    s3_bucket: apex-demo-powerflow-data
+    s3_prefix: aerospace/contracts/
+    synapse_database: powerflow_demo
+    synapse_workgroup: apex-demo
+    synapse_output: s3://apex-demo-powerflow-data/synapse-results/
+
+  # Tables (created from CSV/JSON in Blob Storage)
+  tables:
+    contracts:
+      s3_path: s3://apex-demo-powerflow-data/aerospace/contracts/contracts.csv
+      schema:
+        - name: contract_number
+          type: string
+        - name: modification
+          type: string
+        - name: program
+          type: string
+        - name: prime_contractor
+          type: string
+        - name: award_date
+          type: date
+        - name: total_value
+          type: decimal
+        - name: itar_controlled
+          type: boolean
+        - name: security_classification
+          type: string
+
+    contract_line_items:
+      s3_path: s3://apex-demo-powerflow-data/aerospace/contracts/line_items.csv
+      schema:
+        - name: contract_number
+          type: string
+        - name: clin
+          type: string
+        - name: part_number
+          type: string
+        - name: description
+          type: string
+        - name: quantity
+          type: integer
+        - name: unit_price
+          type: decimal
+
+    pricing_history:
+      s3_path: s3://apex-demo-powerflow-data/aerospace/contracts/pricing_history.csv
+      schema:
+        - name: part_number
+          type: string
+        - name: contract_number
+          type: string
+        - name: award_date
+          type: date
+        - name: quantity
+          type: integer
+        - name: unit_price
+          type: decimal
+        - name: material
+          type: string
+        - name: program
+          type: string
+
+  # Sample Queries for Demo
+  sample_queries:
+    get_contracts_by_program: |
+      SELECT * FROM contracts
+      WHERE program = ?
+      ORDER BY award_date DESC
+
+    get_pricing_history: |
+      SELECT ph.*, c.prime_contractor, c.program
+      FROM pricing_history ph
+      JOIN contracts c ON ph.contract_number = c.contract_number
+      WHERE ph.part_number = ?
+      ORDER BY ph.award_date DESC
+
+    get_contract_details: |
+      SELECT c.*, cli.clin, cli.part_number, cli.description, cli.quantity, cli.unit_price
+      FROM contracts c
+      JOIN contract_line_items cli ON c.contract_number = cli.contract_number
+      WHERE c.contract_number = ?
+
+  # Authentication
+  authentication:
+    type: iam_role
+    managed_identity: <managed-identity>/apex-synapse-query

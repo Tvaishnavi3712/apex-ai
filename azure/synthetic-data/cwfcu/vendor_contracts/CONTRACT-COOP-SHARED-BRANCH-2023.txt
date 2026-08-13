@@ -1,0 +1,50 @@
+VENDOR CONTRACT · SHARED BRANCH NETWORK
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+═══════════════════════════════════════════════════════════════
+
+Contract ID:           VND-COOP-SHARED-2023
+Vendor:                CO-OP Financial Services  (Rancho Cucamonga, CA)
+Vendor Tier:           HIGH (Tier 2 · member-facing)
+Service Category:      Shared Branching Network + Card Processing
+Vendor Risk Score:     35 / 100 (LOW)
+
+────────  CONTRACT TERMS  ────────
+Effective:             2023-04-01
+Initial Term:          3 years (2023-04-01 → 2026-04-01)
+Auto-Renewal:          YES (1 year increments, opt-out 60d notice)
+Status:                AUTO-RENEWED on 2026-04-01 → 2027-04-01
+Annual Value:          $432,000 / yr
+Rate Escalator:        +2.5% / yr cap
+
+────────  SLA SUMMARY  ────────
+Uptime:                99.85%
+Card Auth Response:    ≤ 800 ms
+Performance Credits:   Standard CUSO terms
+
+────────  PERFORMANCE Q2 2026  ────────
+Uptime:                99.91% (target ✓)
+Card Auth (P95):       412 ms (target 800 ms ✓)
+Shared-branch txns:    11,800 / mo from CW members at other CUs
+Reciprocal txns:       9,200 / mo at CW branches from other CUs
+P1 Incidents:          1 (Jun 2 · 2-hr regional outage IN/MI · credit $850)
+SLA Breaches YTD:      1 (above incident)
+
+────────  RATE DRIFT MONITORING  ────────
+Contracted Rate:       +2.5% cap
+Q2 2026 Billed:        $36,800 / mo (was $36,000)
+Drift:                 +2.2% over baseline (within cap)
+Status:                ✓ COMPLIANT
+
+────────  POLICY OBLIGATIONS  ────────
+1. Annual Network Security Cert (§ 6.1) — 6 IT staff acks · COMPLETE
+2. PCI-DSS Attestation (§ 7.3) — annual · COMPLETE
+3. Disaster Recovery Joint Test (§ 11.4) — annual · last Mar 2026 (PASS)
+
+────────  HAND-OFF NOTES  ────────
+→ Policy & HR Agent:   Network sec cert + PCI acks current
+→ Loan Document Agent: No direct loan impact
+
+────────  NCUA EXAM FOLDER INDEX  ────────
+Folder Path:           ncua-exam-2026/third_party_risk/tier2_vendors/
+Immutable Audit ID:    AUDIT-2023-04-01-12:00:00-VND-COOP-SHARED

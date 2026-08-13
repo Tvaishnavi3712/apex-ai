@@ -1,0 +1,265 @@
+# CBTS Apex AI Platform - Quality Control Runbook
+# Natural Language Runbook for Manufacturing QC Operations
+# Intent -> Output -> Context -> Recipe
+
+name: quality_control
+version: "1.0.0"
+description: "Automated quality inspection processing with threshold validation and corrective action routing"
+industry: manufacturing
+category: quality_assurance
+
+# =============================================================================
+# INTENT - What the agent should accomplish
+# =============================================================================
+intent: |
+  Process quality inspection reports by extracting test results, validating
+  against specifications, determining lot disposition, routing exceptions
+  for corrective action, and maintaining quality metrics.
+
+# =============================================================================
+# OUTPUT - Expected deliverables from the runbook
+# =============================================================================
+output:
+  - name: inspection_record
+    type: structured_data
+    description: "Complete inspection record with results"
+    schema:
+      inspection_id: string
+      part_info: object
+      test_results: array
+      defects: array
+      disposition: string
+
+  - name: quality_decision
+    type: disposition_decision
+    description: "Lot disposition decision"
+    schema:
+      lot_number: string
+      disposition: string
+      quantity_accepted: number
+      quantity_rejected: number
+      hold_reason: string
+
+  - name: corrective_action
+    type: action_request
+    description: "Corrective action request if required"
+    schema:
+      car_number: string
+      issue_type: string
+      supplier: string
+      severity: string
+      due_date: string
+
+# =============================================================================
+# CONTEXT - Business rules and domain knowledge
+# =============================================================================
+context:
+  business_rules:
+    - "Critical defects require immediate lot rejection"
+    - "Major defects above AQL trigger supplier CAR"
+    - "Inspection data must be retained for 7 years"
+    - "All rejections require quality engineer review"
+    - "Re-inspection allowed once after rework"
+
+  quality_thresholds:
+    critical_defect_limit: 0
+    major_defect_aql: 1.0
+    minor_defect_aql: 2.5
+    confidence_threshold: 0.95
+
+  disposition_rules:
+    accept: "All tests pass, defects within AQL"
+    reject: "Critical defects or major defects above AQL"
+    conditional: "Minor issues, requires deviation approval"
+    hold: "Pending additional testing or review"
+    rework: "Reworkable defects identified"
+
+  escalation_paths:
+    critical: "quality_manager"
+    major: "quality_engineer"
+    minor: "inspector_supervisor"
+    supplier_issue: "supplier_quality"
+
+# =============================================================================
+# DATA SOURCES - Where to retrieve information
+# =============================================================================
+data_sources:
+  - name: inspection_document
+    type: s3_document
+    description: "Quality inspection report document"
+    input_parameter: document_s3_uri
+
+  - name: specifications_db
+    type: cosmos_db
+    table: apex-specifications
+    description: "Part specifications and tolerances"
+
+  - name: quality_history
+    type: cosmos_db
+    table: apex-quality-history
+    description: "Historical quality data by part/supplier"
+
+  - name: supplier_data
+    type: cosmos_db
+    table: apex-vendors
+    description: "Supplier quality metrics"
+
+# =============================================================================
+# ACTIONS - Available tools for the agent
+# =============================================================================
+actions:
+  - name: inspection_extract
+    action_id: manufacturing.inspection_extract
+    description: "Extract data from quality inspection report"
+    required: true
+
+  - name: spec_lookup
+    action_id: manufacturing.spec_lookup
+    description: "Look up part specifications"
+    required: true
+
+  - name: quality_threshold
+    action_id: manufacturing.quality_threshold
+    description: "Validate results against quality thresholds"
+    required: true
+
+  - name: history_lookup
+    action_id: manufacturing.quality_history
+    description: "Get quality history for part/supplier"
+    required: false
+
+  - name: create_car
+    action_id: manufacturing.create_car
+    description: "Create corrective action request"
+    required: false
+
+  - name: update_metrics
+    action_id: manufacturing.update_quality_metrics
+    description: "Update supplier quality metrics"
+    required: false
+
+  - name: send_notification
+    action_id: core.send_notification
+    description: "Send quality notifications"
+    required: false
+
+  - name: create_work_item
+    action_id: core.create_work_item
+    description: "Create work item for review"
+    required: false
+
+# =============================================================================
+# RECIPE - Natural language instructions for the agent
+# =============================================================================
+recipe: |
+  ## Quality Control Workflow
+
+  ### Step 1: Inspection Data Extraction
+  When a quality inspection report is received:
+  1. Use `inspection_extract` to extract inspection data
+  2. Validate key fields: inspection number, part number, lot, test results
+  3. If extraction confidence below 95%, flag for manual review
+  4. Verify inspector credentials are valid
+  5. Check for duplicate inspection reports
+
+  ### Step 2: Specification Validation
+  Validate against part specifications:
+  1. Use `spec_lookup` to retrieve current specifications
+  2. Verify part revision matches inspection revision
+  3. Compare each test result against specification limits
+  4. Classify any out-of-spec results by severity
+  5. Calculate process capability (Cp, Cpk) if applicable
+
+  ### Step 3: Threshold Analysis
+  Apply quality thresholds:
+  1. Use `quality_threshold` with test results and defect data
+  2. Count defects by severity (critical, major, minor)
+  3. Compare against AQL limits
+  4. Check for any critical defects (zero tolerance)
+  5. Calculate overall pass/fail rate
+
+  ### Step 4: Quality History Check
+  Review historical performance:
+  1. Use `history_lookup` for this part and supplier
+  2. Check for recurring defect patterns
+  3. Compare to supplier quality baseline
+  4. Identify if this is an isolated issue or trend
+  5. Factor history into disposition decision
+
+  ### Step 5: Lot Disposition
+  Determine lot disposition:
+  1. Apply disposition rules based on findings
+  2. For ACCEPT: Record acceptance, release to inventory
+  3. For REJECT: Quarantine lot, create rejection record
+  4. For CONDITIONAL: Create deviation request, hold pending
+  5. For REWORK: Create rework order, schedule re-inspection
+  6. For HOLD: Quarantine pending additional review
+
+  ### Step 6: Corrective Action (If Required)
+  When quality issues identified:
+  1. Determine if CAR is required based on severity
+  2. Use `create_car` for supplier quality issues
+  3. Assign appropriate due date based on severity
+  4. Route to supplier quality engineer for major issues
+  5. Include defect details and supporting evidence
+
+  ### Step 7: Notifications & Updates
+  Complete processing:
+  1. Use `update_metrics` to update supplier scorecard
+  2. Send notification to production planning for accepted lots
+  3. Notify quality manager for rejections
+  4. Update material status in inventory system
+  5. Log complete inspection record for compliance
+
+  ### Step 8: Exception Escalation
+  Handle escalations:
+  1. Critical defects: Immediate notification to quality manager
+  2. Repeat failures: Trigger supplier review meeting
+  3. Safety concerns: Escalate to safety officer
+  4. Trend violations: Alert process engineering
+  5. Create work items for follow-up actions
+
+# =============================================================================
+# TRIGGERS - How this runbook is activated
+# =============================================================================
+triggers:
+  - type: blob_event
+    bucket: apex-documents-incoming
+    prefix: quality/
+    events: ["s3:ObjectCreated:*"]
+    description: "Triggered when inspection report uploaded"
+
+  - type: api
+    endpoint: /api/v1/process-inspection
+    method: POST
+    description: "Manual inspection submission"
+
+  - type: event
+    source: receiving_workflow
+    event_type: material_received
+    description: "Triggered when material received requiring inspection"
+
+# =============================================================================
+# WORKER CONFIGURATION
+# =============================================================================
+worker:
+  queue: apex-quality-control-queue
+  concurrency: 10
+  timeout_seconds: 240
+  retry_policy:
+    max_attempts: 3
+    backoff_multiplier: 2
+
+# =============================================================================
+# METADATA
+# =============================================================================
+metadata:
+  created_by: apex-platform
+  created_at: "2024-01-15"
+  last_updated: "2024-01-15"
+  tags:
+    - quality
+    - inspection
+    - manufacturing
+    - compliance
+    - supplier-quality

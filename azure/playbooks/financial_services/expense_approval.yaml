@@ -1,0 +1,253 @@
+# CBTS Apex AI Platform - Expense Approval Runbook
+# Natural Language Runbook following Sema4.ai pattern
+
+name: expense_approval
+version: "1.0.0"
+description: "Automated expense report processing and approval workflow"
+industry: financial_services
+category: expense_management
+
+# =============================================================================
+# INTENT
+# =============================================================================
+intent: |
+  Process employee expense reports by extracting receipt data, validating
+  against expense policies, checking budget availability, and routing for
+  appropriate approval based on amount and category.
+
+# =============================================================================
+# OUTPUT
+# =============================================================================
+output:
+  - name: expense_report
+    type: structured_data
+    description: "Processed expense report with all line items"
+    schema:
+      report_id: string
+      employee_id: string
+      total_amount: number
+      line_items: array
+      status: string
+
+  - name: approval_decision
+    type: routing_decision
+    description: "Approval routing decision"
+    schema:
+      approved: boolean
+      approver: string
+      approval_level: string
+
+  - name: policy_violations
+    type: validation_report
+    description: "Any expense policy violations found"
+    schema:
+      violations: array
+      warnings: array
+      requires_justification: array
+
+# =============================================================================
+# CONTEXT
+# =============================================================================
+context:
+  expense_policies:
+    meals:
+      breakfast: 25
+      lunch: 35
+      dinner: 75
+      team_meal_per_person: 100
+    travel:
+      mileage_rate: 0.67
+      hotel_max_per_night: 250
+      flight_class: economy
+      flight_class_international: "premium economy"
+    equipment:
+      requires_approval_above: 500
+      requires_asset_tag_above: 1000
+    entertainment:
+      requires_business_purpose: true
+      requires_attendee_list: true
+      max_per_person: 150
+
+  approval_thresholds:
+    auto_approve: 250
+    manager: 2500
+    director: 10000
+    vp: 25000
+
+  documentation_requirements:
+    receipt_required_above: 25
+    itemized_receipt_above: 75
+    business_purpose_required: ["entertainment", "gifts", "travel"]
+
+# =============================================================================
+# DATA SOURCES
+# =============================================================================
+data_sources:
+  - name: expense_submission
+    type: form_submission
+    description: "Employee expense report submission"
+
+  - name: receipts
+    type: s3_documents
+    bucket: apex-expense-receipts
+    description: "Uploaded receipt images"
+
+  - name: employee_data
+    type: cosmos_db
+    table: apex-employees
+    description: "Employee records and org structure"
+
+  - name: budget_data
+    type: cosmos_db
+    table: apex-department-budgets
+    description: "Department budget allocations"
+
+  - name: expense_history
+    type: cosmos_db
+    table: apex-expense-reports
+    description: "Historical expense data"
+
+# =============================================================================
+# ACTIONS
+# =============================================================================
+actions:
+  - name: extract_receipt
+    action_id: financial_services.receipt_extract
+    description: "Extract data from receipt images"
+
+  - name: validate_expense
+    action_id: financial_services.expense_validate
+    description: "Validate expense against policies"
+
+  - name: check_budget
+    action_id: financial_services.budget_check
+    description: "Check department budget availability"
+
+  - name: get_approver
+    action_id: financial_services.approval_route
+    description: "Determine expense approver"
+
+  - name: categorize_expense
+    action_id: financial_services.expense_categorize
+    description: "Auto-categorize expense based on merchant/description"
+
+  - name: duplicate_check
+    action_id: financial_services.duplicate_expense_check
+    description: "Check for duplicate expense submissions"
+
+  - name: send_notification
+    action_id: core.send_notification
+    description: "Send approval/rejection notifications"
+
+# =============================================================================
+# RECIPE
+# =============================================================================
+recipe: |
+  ## Expense Approval Workflow
+
+  ### Step 1: Expense Report Receipt
+  When an expense report is submitted:
+  1. Validate employee ID and department
+  2. Generate expense report ID
+  3. Create work item for tracking
+  4. Check that all required fields are completed
+
+  ### Step 2: Receipt Processing
+  For each receipt in the expense report:
+  1. Use `extract_receipt` to extract merchant, date, amount, items
+  2. Match extracted data to submitted expense line
+  3. Verify receipt date matches expense date (±3 days tolerance)
+  4. Flag any receipts with low extraction confidence for review
+  5. Check for itemized receipt if required by amount
+
+  ### Step 3: Expense Categorization
+  Categorize and validate each expense:
+  1. Use `categorize_expense` to suggest category based on merchant
+  2. Verify employee-selected category is appropriate
+  3. Apply category-specific limits (meal caps, hotel max, etc.)
+  4. Flag expenses exceeding category limits
+  5. Request business purpose for required categories
+
+  ### Step 4: Policy Validation
+  Check all expenses against company policy:
+  1. Use `validate_expense` with policy rules from context
+  2. Check meal expenses against per-meal limits
+  3. Verify travel expenses have required approvals
+  4. Ensure entertainment has attendee list and purpose
+  5. Flag personal expenses for rejection
+  6. Compile list of violations and warnings
+
+  ### Step 5: Duplicate Detection
+  Check for potential duplicates:
+  1. Use `duplicate_check` against last 90 days of expenses
+  2. Match on date, amount, merchant
+  3. Flag potential duplicates for manual review
+  4. Check for same expense on corporate card and reimbursement
+
+  ### Step 6: Budget Verification
+  Verify budget availability:
+  1. Use `check_budget` for employee's department
+  2. Check expense category-specific budgets
+  3. If budget exceeded, flag for director approval
+  4. Track YTD spending against annual allocation
+
+  ### Step 7: Approval Routing
+  Route for appropriate approval:
+  1. Calculate total expense report amount
+  2. Use `get_approver` with amount thresholds
+  3. If violations exist, escalate approval level
+  4. For auto-approve amounts with no issues, approve immediately
+  5. Send approval request to appropriate manager
+
+  ### Step 8: Notification & Completion
+  Finalize the expense processing:
+  1. Send notification to approver with expense summary
+  2. If approved, queue for payment processing
+  3. Send confirmation to employee
+  4. Update expense tracking records
+
+  ### Exception Handling
+  - Missing receipt: Request from employee, hold for 3 days
+  - Over policy limit: Require manager justification
+  - Duplicate detected: Hold pending investigation
+  - Budget exceeded: Route to finance for exception approval
+
+# =============================================================================
+# TRIGGERS
+# =============================================================================
+triggers:
+  - type: form_submission
+    form_id: expense-report
+    description: "Employee expense report submission"
+
+  - type: api
+    endpoint: /api/v1/submit-expense
+    method: POST
+    description: "API submission of expense report"
+
+  - type: email
+    address: expenses@company.com
+    description: "Email-forwarded receipts"
+
+# =============================================================================
+# WORKER CONFIGURATION
+# =============================================================================
+worker:
+  queue: apex-expense-processing-queue
+  concurrency: 20
+  timeout_seconds: 180
+  retry_policy:
+    max_attempts: 3
+    backoff_multiplier: 2
+
+# =============================================================================
+# METADATA
+# =============================================================================
+metadata:
+  created_by: apex-platform
+  created_at: "2024-01-15"
+  tags:
+    - expense-management
+    - approval-workflow
+    - employee-reimbursement
+    - financial-services

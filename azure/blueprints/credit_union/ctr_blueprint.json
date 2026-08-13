@@ -1,0 +1,39 @@
+{
+  "blueprint_id": "bp-cwfcu-ctr",
+  "name": "CWFCU CTR Filing (FinCEN Form 112)",
+  "description": "Currency Transaction Report — FinCEN Form 112 — for cash transactions ≥ $10,000 at CommunityWide FCU.",
+  "industry": "credit_union",
+  "document_type": "ctr_filing",
+  "version": "1.0",
+  "documentSchema": {
+    "documentClass": "CWFCU CTR Filing",
+    "description": "CTR schema — institution, transaction, person conducting, person on whose behalf, ancillary flags.",
+    "extractionInstructions": "Auto-draft on any single cash transaction ≥ $10,000 or related multi-transaction aggregation. Filing deadline 15 days from transaction date.",
+    "fields": {
+      "ctr_id":               { "type": "string", "description": "Internal CTR reference", "required": true },
+      "fincen_id":            { "type": "string", "description": "FinCEN-assigned ID (post-submission)", "required": false },
+      "filing_status":        { "type": "string", "description": "DRAFT / PENDING / FILED / ACKNOWLEDGED", "required": true },
+      "transaction_date":     { "type": "date",   "description": "Date of cash transaction", "required": true },
+      "transaction_type":     { "type": "string", "description": "cash_deposit / cash_withdrawal / inbound_wire / outbound_wire / currency_exchange", "required": true },
+      "amount":               { "type": "number", "description": "USD amount", "required": true },
+      "currency":             { "type": "string", "description": "ISO currency code", "required": true },
+      "branch":               { "type": "string", "description": "Branch where transaction occurred", "required": true },
+      "teller_id":            { "type": "string", "description": "Teller / officer who processed", "required": true },
+      "subject_member_id":    { "type": "string", "description": "Member number (person on whose behalf)", "required": true },
+      "subject_legal_name":   { "type": "string", "description": "Subject legal name", "required": true },
+      "subject_dob":          { "type": "date",   "description": "Subject DOB", "required": true },
+      "subject_address":      { "type": "string", "description": "Subject address", "required": true },
+      "subject_occupation":   { "type": "string", "description": "Subject occupation", "required": true },
+      "conductor_same_as_subject": { "type": "boolean", "description": "Whether the person conducting is same as person on whose behalf", "required": true },
+      "multiple_transactions": { "type": "boolean", "description": "Aggregated multi-transaction filing flag", "required": true },
+      "currency_exchange":    { "type": "boolean", "description": "Currency exchange flag", "required": true },
+      "armored_car":          { "type": "boolean", "description": "Armored car service flag", "required": true },
+      "atm_transaction":      { "type": "boolean", "description": "ATM transaction flag", "required": true },
+      "source_of_funds":      { "type": "string", "description": "Stated source of funds", "required": false },
+      "filing_deadline":      { "type": "date",   "description": "Transaction date + 15 days", "required": true },
+      "filing_latency_hours": { "type": "number", "description": "Actual filing latency (hrs)", "required": false },
+      "drafted_by":           { "type": "string", "description": "Agent or person who drafted", "required": true },
+      "ncua_exam_folder_path": { "type": "string","description": "NCUA exam folder index path", "required": true }
+    }
+  }
+}

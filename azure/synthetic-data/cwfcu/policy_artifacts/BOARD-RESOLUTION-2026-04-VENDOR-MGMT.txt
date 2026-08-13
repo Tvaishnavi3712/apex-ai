@@ -1,0 +1,87 @@
+BOARD RESOLUTION — VENDOR MANAGEMENT POLICY ADOPTION
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+Board of Directors · Resolution Reference: BOARD-RES-2026-04
+═══════════════════════════════════════════════════════════════
+
+Tracking Source:       APEX Policy & HR Agent · v2.4.1
+Indexed:               2026-04-18 (board meeting date)
+NCUA Exam Folder:      ncua-exam-2026/hr_policy/board_resolutions/
+
+──────── RESOLUTION TEXT ────────
+WHEREAS, the Board of Directors of CommunityWide Federal Credit Union
+("CommunityWide FCU" or the "Credit Union") has reviewed proposed
+updates to the Credit Union's Vendor Management Policy ("Policy") to
+align with NCUA's 2026 Supervisory Priorities Letter, FFIEC IT Examination
+Handbook (June 2024 update), and the Credit Union's expanded use of
+third-party AI agents for compliance support; and
+
+WHEREAS, the proposed Policy has been reviewed by the Credit Union's
+Audit Committee, Legal Counsel, and Compliance Officer; and
+
+WHEREAS, the proposed Policy strengthens third-party risk management
+through APEX-supported continuous monitoring, automated SLA reporting,
+quarterly Tier 1 vendor reviews, and annual board attestation of all
+Tier 1 and Tier 2 vendor risk assessments;
+
+NOW THEREFORE BE IT RESOLVED, that the Board of Directors hereby:
+
+  1. ADOPTS the updated Vendor Management Policy (the "2026 Vendor
+     Management Policy"), effective May 1, 2026;
+
+  2. AUTHORIZES the Chief Executive Officer to designate the Director
+     of Compliance as Vendor Risk Officer responsible for execution
+     of the Policy;
+
+  3. DIRECTS that APEX Vendor & Contract Agent maintain continuous
+     monitoring of all 47 active vendor contracts, with quarterly
+     scorecards delivered to the Audit Committee;
+
+  4. REQUIRES annual board attestation of Tier 1 vendor risk dossiers
+     (currently: Fiserv, CO-OP, Diebold, Eltropy) before NCUA exam
+     window opens each year;
+
+  5. RATIFIES the use of APEX agent-generated SAR narratives,
+     CTR auto-filings, and CDD reviews, with the understanding that
+     final filing decisions remain with the BSA Officer.
+
+──────── BOARD SIGNATORIES ────────
+Required (7 board members):
+  ✓ Hernandez, R.       Board Chair                 SIGNED 2026-04-19
+  ✓ Coleman, T.         Vice Chair                  SIGNED 2026-04-19
+  ✓ Wexler, P.          Treasurer                   SIGNED 2026-04-20
+  ✓ Lin, K.             Secretary                   SIGNED 2026-04-21
+  ✓ Chen, A.            Director (Member)           SIGNED 2026-04-22
+  ✗ Patel, S.           Director (At-large)         PENDING
+  ✗ Whitmore, E.        Director (Community Rep)    PENDING
+
+Status:                5 of 7 signatures collected
+Target Completion:     Jun 17, 2026 board meeting (next regular)
+
+──────── REMINDER STATUS ────────
+Cycle 1 sent:          2026-04-22 (DocuSign)
+Cycle 2 sent:          2026-05-29 (DocuSign + email + phone)
+Cycle 3 sent:          2026-06-01 (escalation to Board Chair)
+Forecast completion:   By Jun 17, 2026 meeting (confirmed by Chair)
+
+──────── NCUA EXAM IMPACT ────────
+Policy & HR contribution: This resolution closes 2 NCUA attention items:
+  ─ Updated vendor risk management policy (NCUA 2026 priority #4)
+  ─ Board-level attestation of Tier 1 vendor reviews
+
+Critical: Must be fully executed before NCUA exam window opens Jul 21.
+
+──────── HAND-OFF NOTES ────────
+→ Vendor Agent:       Resolution adoption confirmed · executing per § 3
+→ Compliance Agent:   APEX usage in BSA workflow ratified (per § 5)
+                      Indexed to BSA/AML folder
+→ Board Chair:        Reminded to circulate at Jun 17 meeting
+
+──────── AUDIT TRAIL ────────
+Resolution drafted:    2026-04-12 by Legal Counsel (Bryant, N.)
+Board meeting:         2026-04-18 (in-person, South Bend HQ)
+Motion proposed:       Coleman, T. (Vice Chair)
+Motion seconded:       Wexler, P. (Treasurer)
+Vote outcome:          7 yes · 0 no · 0 abstain
+Effective:             2026-05-01
+Immutable Audit ID:    AUDIT-2026-04-18-14:42:08-BOARD-RES-04

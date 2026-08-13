@@ -1,0 +1,134 @@
+{
+  "blueprintName": "apex-invoice-processing-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Invoice processing output schema for email-to-ERP automation",
+  "industry": "financial_services",
+  "documentType": "invoice",
+  "processingType": "small_factory_chain",
+  "chainId": "invoice_from_email",
+  "documentSchema": {
+    "class": "ApexInvoiceProcessing",
+    "description": "Invoice processing chain output schema",
+    "definitions": {
+      "ATTACHMENT": {
+        "properties": {
+          "filename": {"type": "string"},
+          "content_type": {"type": "string"},
+          "classification": {"type": "string"},
+          "s3_uri": {"type": "string"}
+        }
+      },
+      "LINE_ITEM": {
+        "properties": {
+          "description": {"type": "string"},
+          "quantity": {"type": "number"},
+          "unit_price": {"type": "number"},
+          "total": {"type": "number"},
+          "gl_code": {"type": "string"}
+        }
+      },
+      "APPROVER": {
+        "properties": {
+          "role": {"type": "string"},
+          "sequence": {"type": "number"},
+          "required": {"type": "boolean"}
+        }
+      }
+    },
+    "properties": {
+      "job_id": {"type": "string"},
+      "processing_status": {"type": "string", "enum": ["completed", "partial", "failed"]},
+
+      "email_parse": {
+        "type": "object",
+        "properties": {
+          "metadata": {"type": "object"},
+          "attachments": {"type": "array", "items": {"$ref": "#/definitions/ATTACHMENT"}},
+          "primary_document": {"$ref": "#/definitions/ATTACHMENT"},
+          "sender_domain": {"type": "string"}
+        }
+      },
+
+      "invoice_extract": {
+        "type": "object",
+        "properties": {
+          "invoice_number": {"type": "string"},
+          "invoice_date": {"type": "string"},
+          "due_date": {"type": "string"},
+          "vendor_name": {"type": "string"},
+          "total_amount": {"type": "number"},
+          "currency": {"type": "string"},
+          "line_items": {"type": "array", "items": {"$ref": "#/definitions/LINE_ITEM"}},
+          "po_number": {"type": "string"}
+        }
+      },
+
+      "vendor_match": {
+        "type": "object",
+        "properties": {
+          "matched": {"type": "boolean"},
+          "vendor_id": {"type": "string"},
+          "vendor_name": {"type": "string"},
+          "confidence": {"type": "number"},
+          "new_vendor": {"type": "boolean"},
+          "payment_terms": {"type": "string"}
+        }
+      },
+
+      "po_reconcile": {
+        "type": "object",
+        "properties": {
+          "reconciled": {"type": "boolean"},
+          "po_number": {"type": "string"},
+          "variance": {
+            "type": "object",
+            "properties": {
+              "amount": {"type": "number"},
+              "percent": {"type": "number"},
+              "within_tolerance": {"type": "boolean"}
+            }
+          },
+          "approval_required": {"type": "boolean"}
+        }
+      },
+
+      "approval_route": {
+        "type": "object",
+        "properties": {
+          "approval_level": {"type": "string"},
+          "approvers": {"type": "array", "items": {"$ref": "#/definitions/APPROVER"}},
+          "auto_approved": {"type": "boolean"},
+          "workflow_id": {"type": "string"},
+          "sla_hours": {"type": "number"}
+        }
+      },
+
+      "erp_post": {
+        "type": "object",
+        "properties": {
+          "erp_system": {"type": "string"},
+          "posting_status": {"type": "string"},
+          "document_number": {"type": "string"},
+          "ready_to_post": {"type": "boolean"},
+          "payment_due_date": {"type": "string"}
+        }
+      }
+    }
+  },
+  "extractionRules": {
+    "confidenceThreshold": 0.8,
+    "processingTimeout": 120
+  },
+  "factoryChain": {
+    "chainId": "invoice_from_email",
+    "factories": [
+      {"id": "email_parse", "action": "email_parse"},
+      {"id": "document_classify", "action": "document_classify"},
+      {"id": "invoice_extract", "action": "invoice_extract"},
+      {"id": "vendor_match", "action": "vendor_match"},
+      {"id": "po_reconcile", "action": "po_reconcile"},
+      {"id": "approval_route", "action": "approval_route"},
+      {"id": "erp_post", "action": "erp_post"}
+    ]
+  }
+}

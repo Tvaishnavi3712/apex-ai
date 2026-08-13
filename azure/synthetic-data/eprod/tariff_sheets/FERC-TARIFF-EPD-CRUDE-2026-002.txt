@@ -1,0 +1,141 @@
+================================================================================
+                    FEDERAL ENERGY REGULATORY COMMISSION
+                          F.E.R.C. NO. 26.4.0
+                  Cancels F.E.R.C. NO. 26.3.0 (Original Sheet)
+
+                     ENTERPRISE CRUDE PIPELINE LLC
+                  JOINT LOCAL AND PROPORTIONAL TARIFF
+                APPLYING TO THE TRANSPORTATION OF
+                    CRUDE PETROLEUM (TEXAS SYSTEM)
+================================================================================
+
+Issued by:            M.J. Friedl
+                      Vice President, Commercial - Crude Pipelines
+                      Enterprise Products Operating LLC, Operator
+                      1100 Louisiana Street, Houston, Texas 77002
+
+Issued:               March 1, 2026
+Effective Date:       April 1, 2026
+Cancels:              Original Sheet No. 26.3.0 issued November 15, 2025
+
+                              SUMMARY OF CHANGES
+
+(i)   Rate adjustment in accordance with FERC Oil Pipeline Index (PPI-FG +
+      0.78%), effective April 1, 2026.
+(ii)  Addition of Reeves County Receipt Point RC-021 (Pecos River Terminal).
+(iii) Quality bank revisions reflecting updated WTI-Midland and DSW
+      specifications per Item 60.
+(iv)  Establishment of a new Cushing-Terminus Sub-Path with separate Common
+      Stream A and Common Stream B handling.
+
+================================================================================
+ITEM 10 - APPLICATION OF TARIFF
+================================================================================
+
+This tariff applies to the through transportation of crude petroleum
+originating at any Receipt Point identified herein for delivery to any
+Delivery Point in this Tariff, subject to the General Rules and Regulations,
+49 CFR Part 195, and Commission orders.
+
+================================================================================
+ITEM 50 - TRANSPORTATION RATES (ORIGIN / DESTINATION PAIRS)
+================================================================================
+
+Rates in U.S. Dollars per Barrel, for transportation from indicated Origin to
+indicated Destination, subject to Item 60 Quality and Item 80 Pro-rationing
+provisions.
+
+PRINCIPAL ORIGINS:
+    MID  - Midland Basin Aggregation Pt (Midland Co., TX)
+    RC   - Reeves County Receipt Pt RC-021 (Pecos River) *NEW*
+    LOV  - Loving County Receipt Pt LOV-04
+    GLA  - Glasscock County Receipt Pt GLA-12
+    RVR  - Sealy Receiving Stn (Austin Co., TX)
+
+PRINCIPAL DESTINATIONS:
+    ECHO - ECHO Terminal, Houston (Harris County, TX)
+    GEN  - Genoa Junction (Galveston County, TX)
+    SEA  - Sea Robin Terminal (Beaumont, TX)
+    CUSH - Cushing, OK (Joint movement via interconnect, see Item 70)
+
+                       Common Stream A (WTI-Midland)
+                  -------------------------------------
+                  ECHO       GEN        SEA        CUSH
+                  ------     ------     ------     ------
+    MID    -->    $1.92      $2.04      $2.36      $3.18
+    LOV    -->    $2.18      $2.30      $2.62      $3.42
+    GLA    -->    $1.84      $1.96      $2.28      $3.10
+    RC     -->    $2.42      $2.54      $2.86      $3.66
+
+                       Common Stream B (DSW / Mixed Sweet)
+                  -------------------------------------
+                  ECHO       GEN        SEA        CUSH
+                  ------     ------     ------     ------
+    MID    -->    $2.05      $2.18      $2.50      $3.28
+    LOV    -->    $2.32      $2.45      $2.77      $3.55
+
+Local injections at RVR Sealy Station: $0.65/bbl flat charge to any
+Destination on this Tariff.
+
+================================================================================
+ITEM 60 - QUALITY BANK RULES (COMMON-STREAM ADJUSTMENTS)
+================================================================================
+
+Common Stream A (WTI-Midland nominal specifications):
+    API Gravity:           40.0 deg minimum, 44.0 deg target
+    Sulfur:                0.42% mass max
+    RVP:                   9.5 psi max
+    Pour Point:            -10 deg F max
+    BS&W:                  0.5% vol max
+
+Common Stream B (Domestic Sweet "DSW" nominal):
+    API Gravity:           38.0 - 42.0 deg
+    Sulfur:                0.45% mass max
+    RVP:                   9.5 psi max
+
+Quality Bank methodology: Each shipper's monthly receipts are debited or
+credited to the common pool based on weighted component value (light ends,
+naphtha, middle distillate, gas oil, residuum). Component values referenced
+to prior-month Argus / OPIS postings per Appendix B.
+
+Pipeline reserves right to segregate ("batch") any tender exceeding 50,000
+bbl that materially exceeds specifications; batch fee $0.18/bbl applies.
+
+================================================================================
+ITEM 70 - JOINT MOVEMENTS / INTERCONNECT RATES
+================================================================================
+
+Through-rates to Cushing OK include interconnect charges with Plains Pipeline
+Basin System; allocation of through-rate per Joint Movement Agreement dated
+01/15/2024. Shipper need only nominate at originating EPROD point; downstream
+nomination handled by Carrier.
+
+================================================================================
+ITEM 80 - PRO-RATIONING
+================================================================================
+
+If nominations exceed available capacity at any segment, capacity is
+allocated:
+    Step 1:   Contract / Term Shipper minimum commitments honored in full
+    Step 2:   Remaining capacity allocated pro-rata to non-Term nominations
+              based on 12-month rolling historical shipments
+    Step 3:   New shippers without history receive minimum 5% of remaining
+              capacity at Carrier's discretion
+
+================================================================================
+ITEM 90 - LOSS ALLOWANCE
+================================================================================
+
+Carrier retains in-kind 0.25% of all volumes received as common loss
+allowance, applied per Appendix C.
+
+================================================================================
+ITEM 200 - GENERAL
+================================================================================
+
+All transportation subject to General Rules and Regulations of this Tariff
+and FERC Form 6 reporting. Carrier reserves the right to refuse, segregate,
+or batch any tender not meeting Item 60 specifications.
+
+                              -- END OF TARIFF F.E.R.C. NO. 26.4.0 --
+================================================================================

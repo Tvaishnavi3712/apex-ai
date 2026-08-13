@@ -1,0 +1,50 @@
+{
+  "merchant": {
+    "name": "Morton's Steakhouse",
+    "category": "Restaurant",
+    "address": {
+      "street": "300 Michigan Ave",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60601"
+    },
+    "phone": "(306) 534-3179"
+  },
+  "transaction": {
+    "date": "2026-02-17",
+    "time": "16:58:55",
+    "receipt_number": "7181-743883"
+  },
+  "line_items": [
+    {
+      "description": "Filet Mignon",
+      "quantity": 1,
+      "unit_price": 45.99,
+      "amount": 45.99
+    },
+    {
+      "description": "Chicken Parmesan",
+      "quantity": 1,
+      "unit_price": 22.99,
+      "amount": 22.99
+    },
+    {
+      "description": "Coffee",
+      "quantity": 3,
+      "unit_price": 3.99,
+      "amount": 11.97
+    }
+  ],
+  "totals": {
+    "subtotal": 80.95,
+    "tax_rate": 0.0825,
+    "tax_amount": 6.68,
+    "tip": 16.19,
+    "total": 103.82
+  },
+  "payment": {
+    "method": "Credit Card",
+    "card_type": "Visa",
+    "last_four": "7645"
+  }
+}

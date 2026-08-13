@@ -1,0 +1,120 @@
+# CBTS Apex AI Platform - Supplier Performance Runbook
+name: supplier_performance
+version: "1.0.0"
+description: "Automated supplier performance monitoring and scorecard generation"
+industry: supply_chain
+category: procurement
+
+intent: |
+  Monitor supplier performance by tracking delivery metrics, quality scores,
+  cost compliance, and responsiveness, then generate scorecards and
+  recommendations for supplier development or sourcing changes.
+
+output:
+  - name: supplier_scorecard
+    type: assessment
+    schema:
+      vendor_id: string
+      overall_score: number
+      metrics: object
+      trend: string
+  - name: action_recommendations
+    type: work_item
+    schema:
+      vendor_id: string
+      action_type: string
+      priority: string
+
+context:
+  business_rules:
+    - "Score below 70 triggers performance review"
+    - "Score below 60 for 3 months triggers sourcing"
+    - "Quality issues require corrective action"
+    - "On-time delivery target: 95%"
+
+  scorecard_weights:
+    quality: 0.30
+    delivery: 0.25
+    cost: 0.20
+    responsiveness: 0.15
+    compliance: 0.10
+
+  performance_thresholds:
+    excellent: 90
+    good: 80
+    acceptable: 70
+    needs_improvement: 60
+    critical: 0
+
+actions:
+  - name: delivery_metrics
+    action_id: supply_chain.delivery_metrics
+    required: true
+  - name: quality_metrics
+    action_id: supply_chain.quality_metrics
+    required: true
+  - name: cost_analysis
+    action_id: supply_chain.cost_analysis
+    required: true
+  - name: scorecard_generate
+    action_id: supply_chain.scorecard_generate
+    required: true
+  - name: improvement_plan
+    action_id: supply_chain.improvement_plan
+    required: false
+
+recipe: |
+  ## Supplier Performance Workflow
+
+  ### Step 1: Delivery Performance
+  1. Use `delivery_metrics` to calculate
+  2. On-time delivery percentage
+  3. Lead time accuracy
+  4. Complete shipment rate
+  5. Documentation accuracy
+
+  ### Step 2: Quality Performance
+  1. Use `quality_metrics` to assess
+  2. Incoming quality rate
+  3. PPM (parts per million) defects
+  4. Corrective action closure rate
+  5. Certification compliance
+
+  ### Step 3: Cost Performance
+  1. Use `cost_analysis` to evaluate
+  2. Price variance vs. contract
+  3. Total cost of ownership
+  4. Cost reduction initiatives
+  5. Invoice accuracy
+
+  ### Step 4: Scorecard Generation
+  1. Use `scorecard_generate` with all metrics
+  2. Apply weights per category
+  3. Calculate overall score
+  4. Compare to previous periods
+  5. Rank among peer suppliers
+
+  ### Step 5: Action Planning
+  For underperforming suppliers:
+  1. Use `improvement_plan` to create SCAR
+  2. Define corrective actions
+  3. Set improvement timeline
+  4. Schedule review meeting
+
+triggers:
+  - type: schedule
+    cron: "0 6 1 * *"
+    description: "Monthly scorecard generation"
+  - type: event
+    source: quality_system
+    event_type: nonconformance_created
+  - type: api
+    endpoint: /api/v1/supplier-performance
+
+worker:
+  queue: apex-supplier-performance-queue
+  concurrency: 5
+  timeout_seconds: 600
+
+metadata:
+  tags: [supplier, performance, scorecard, procurement, supply-chain]

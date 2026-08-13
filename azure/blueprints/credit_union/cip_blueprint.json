@@ -1,0 +1,40 @@
+{
+  "blueprint_id": "bp-cwfcu-cip",
+  "name": "CWFCU CIP Member Packet",
+  "description": "Customer Identification Program (CIP) packet — 31 CFR § 1020.220 — for new member onboarding at CommunityWide FCU.",
+  "industry": "credit_union",
+  "document_type": "cip_packet",
+  "version": "1.0",
+  "documentSchema": {
+    "documentClass": "CWFCU CIP Member Packet",
+    "description": "CIP packet covering applicant identity, government ID, beneficial ownership (entities), screening results, and risk tier.",
+    "extractionInstructions": "Extract every CIP-required identity field. Validate against AAMVA DLDV API for state DLs and SSA SSNVS for SSNs. Beneficial-ownership block only applies to legal entities (LLC, corp, partnership).",
+    "fields": {
+      "application_id":       { "type": "string", "description": "Internal CIP application reference (CIP-MEM-YYYY-MM-DD-LASTNAME)", "required": true },
+      "legal_name":           { "type": "string", "description": "Applicant full legal name", "required": true },
+      "date_of_birth":        { "type": "date",   "description": "Applicant DOB (must establish age ≥ 18)", "required": true },
+      "ssn_last4":            { "type": "string", "description": "Last 4 of SSN (full SSN never persisted)", "required": true },
+      "physical_address":     { "type": "string", "description": "Physical (non-PO-Box) residential address", "required": true },
+      "address_dpv_status":   { "type": "string", "description": "USPS DPV code (D1, D2, etc.)", "required": true },
+      "phone":                { "type": "string", "description": "Primary phone", "required": true },
+      "email":                { "type": "string", "description": "Primary email (verified)", "required": true },
+      "occupation":           { "type": "string", "description": "Stated occupation", "required": true },
+      "annual_income":        { "type": "number", "description": "Stated or verified annual income", "required": false },
+      "id_type":              { "type": "string", "description": "Government ID type (state DL, US Passport, state ID, military ID)", "required": true },
+      "id_number_last4":      { "type": "string", "description": "Last 4 of ID number", "required": true },
+      "id_expiration":        { "type": "date",   "description": "ID expiration date (must be unexpired)", "required": true },
+      "id_verification_method": { "type": "string", "description": "DLDV API / DOS verification / Mitek scan / manual", "required": true },
+      "ofac_result":          { "type": "string", "description": "OFAC SDN screen result (CLEAR / NEAR-MATCH / TRUE-MATCH)", "required": true },
+      "pep_result":           { "type": "string", "description": "PEP screen result (NEGATIVE / NEAR-MATCH / POSITIVE)", "required": true },
+      "adverse_media":        { "type": "string", "description": "Adverse media screen result", "required": true },
+      "chexsystems_result":   { "type": "string", "description": "ChexSystems history (CLEAR / PRIOR_CLOSURE / OPEN_ALERT)", "required": true },
+      "risk_tier":            { "type": "string", "description": "Calculated risk tier (LOW / MEDIUM / HIGH)", "required": true },
+      "edd_required":         { "type": "boolean","description": "Whether Enhanced Due Diligence applies", "required": true },
+      "is_entity":            { "type": "boolean","description": "Whether applicant is a legal entity (vs individual)", "required": true },
+      "beneficial_owners":    { "type": "array",  "description": "For entities — list of beneficial owners ≥ 25% ownership + control prong", "required": false },
+      "approval_status":      { "type": "string", "description": "APPROVED / PENDING / REJECTED", "required": true },
+      "approving_officer":    { "type": "string", "description": "Name of approving member-services officer", "required": false },
+      "ncua_exam_folder_path": { "type": "string", "description": "NCUA exam folder index path", "required": true }
+    }
+  }
+}

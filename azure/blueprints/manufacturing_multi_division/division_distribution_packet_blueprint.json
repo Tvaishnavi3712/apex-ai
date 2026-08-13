@@ -1,0 +1,29 @@
+{
+  "blueprint_id": "bp-boler-division-distribution-packet",
+  "name": "Boler Per-Division Distribution Packet",
+  "description": "S3-delivered per-division packet — division-specific JE, supporting carrier breakdown, KMS-encrypted, addressed to division controller.",
+  "industry": "manufacturing_multi_division",
+  "document_type": "division_distribution_packet",
+  "version": "1.0",
+  "documentSchema": {
+    "documentClass": "Boler Per-Division Distribution Packet",
+    "description": "What lands in each division controller's S3 inbox at month-end. Per-division KMS key. SNS notification to division CFO.",
+    "extractionInstructions": "Each packet is single-division scope. It contains the division's slice of the consolidated JE plus the supporting evidence. No cross-division data leaks.",
+    "fields": {
+      "packet_id":         { "type": "string", "description": "DIST-YYYY-MM-DIV", "required": true },
+      "division":          { "type": "string", "description": "Division name", "required": true },
+      "division_code":     { "type": "string", "description": "HTS / BLH / CEQ / RHO / HEN", "required": true },
+      "period":            { "type": "string", "description": "Posting period (YYYY-MM)", "required": true },
+      "consolidated_je_id":{ "type": "string", "description": "Parent consolidated JE ID", "required": true },
+      "division_total":    { "type": "number", "description": "Division allocation $", "required": true },
+      "line_items":        { "type": "array",  "description": "Division-specific GL line items", "required": true },
+      "carrier_breakdown": { "type": "array",  "description": "Per-carrier $ for this division", "required": true },
+      "s3_uri":            { "type": "string", "description": "Encrypted S3 destination", "required": true },
+      "kms_key_alias":     { "type": "string", "description": "Per-division KMS key alias", "required": true },
+      "recipient_controller":{ "type": "string", "description": "Division controller email", "required": true },
+      "sns_topic_arn":     { "type": "string", "description": "Notification topic", "required": true },
+      "delivery_status":   { "type": "string", "description": "QUEUED / DELIVERED / ACKED", "required": true },
+      "delivered_at":      { "type": "date",   "description": "Delivery timestamp", "required": false }
+    }
+  }
+}

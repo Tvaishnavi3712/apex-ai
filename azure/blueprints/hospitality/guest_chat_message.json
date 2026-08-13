@@ -1,0 +1,65 @@
+{
+  "blueprintName": "apex-hosp-guest-chat-message-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Agentic Enterprise UC-2 — normalizes an inbound guest chat message (web widget, mobile app, or voice transcript) into the structured payload the Cruise Concierge playbook consumes (booking_id, intent_hint, sentiment_seed, message_text).",
+  "industry": "hospitality",
+  "documentType": "guest_chat_message",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "message_id": {
+        "type": "string",
+        "description": "Source-channel id for the inbound message."
+      },
+      "channel": {
+        "type": "string",
+        "enum": ["web_widget", "mobile_app", "voice_transcript", "sms", "whatsapp", "email"],
+        "description": "Channel the message arrived on."
+      },
+      "guest_id": {
+        "type": "string",
+        "description": "Internal guest identifier (e.g. 'G-78821') if recognized via auth context or loyalty card."
+      },
+      "booking_id": {
+        "type": "string",
+        "description": "Booking reference if the guest has an active booking attached to the session (e.g. 'CSC-2026-04412')."
+      },
+      "loyalty_tier": {
+        "type": "string",
+        "enum": ["None", "Silver", "Gold", "Platinum", "Diamond"],
+        "description": "Loyalty tier — used to prioritize handoff and customize tone."
+      },
+      "language": {
+        "type": "string",
+        "description": "Detected language of the message (BCP 47 tag, e.g. 'en-US')."
+      },
+      "intent_hint": {
+        "type": "string",
+        "enum": ["booking_modify", "cancellation", "faq", "complaint", "handoff_request", "other"],
+        "description": "Best-guess intent — the agent's intent_classify will refine this, but the seed helps routing."
+      },
+      "sentiment_seed": {
+        "type": "number",
+        "description": "Initial sentiment score in [-1.0, +1.0] from any inline channel sentiment (e.g. NPS rating attached to the message)."
+      },
+      "message_text": {
+        "type": "string",
+        "description": "Verbatim message body. Preserved exactly so the agent can re-classify or quote."
+      },
+      "received_at": {
+        "type": "string",
+        "format": "date-time",
+        "description": "ISO 8601 timestamp the message was received."
+      }
+    },
+    "required": ["message_id", "channel", "message_text"]
+  },
+  "extractionRules": {
+    "preserveVerbatimText": true,
+    "verbatimFields": ["message_text"],
+    "dateFormat": "ISO8601",
+    "confidenceThreshold": 0.6,
+    "lowConfidenceAction": "default_to_concierge_agent"
+  },
+  "extractionInstructions": "This blueprint normalizes any inbound guest message regardless of channel. Preserve the verbatim message_text — the ConciergeAgent re-classifies intent server-side; the intent_hint here is a routing seed only, not authoritative."
+}

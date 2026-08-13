@@ -1,0 +1,84 @@
+CUSTOMER IDENTIFICATION PROGRAM (CIP) PACKET
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+═══════════════════════════════════════════════════════════════
+
+Application ID:        CIP-MEM-2026-0428-NGUYEN
+Submission Channel:    In-Branch (Mishawaka)
+Submitted:             April 28, 2026 · 11:42:07 ET
+Branch of Record:      Mishawaka Branch · 4406 Grape Rd
+Branch Officer:        Marcus Holloway (Senior Member Rep)
+Processing Agent:      Member Onboarding Agent · v2.4.1
+
+──────── APPLICANT INFORMATION ────────
+Legal Name:            NGUYEN, Tuan Khoa
+Date of Birth:         1979-03-14  (age 47)
+Place of Birth:        Ho Chi Minh City, Vietnam (Naturalized US Citizen 2008)
+SSN:                   XXX-XX-8814  (validated via SSA SSNVS)
+Address:               7218 N Logan St, Mishawaka, IN 46545
+                       USPS DPV: D1 (deliverable, primary)
+                       Address tenure: 9 months (verified via LexisNexis)
+Phone:                 (574) 555-3344  (mobile · AT&T · OK)
+Email:                 tuan.nguyen.cpa@outlook.com (verified)
+Occupation:            Self-employed CPA · Nguyen Tax Services LLC
+Annual Income:         $146,800 (Schedule C · 2024 tax return)
+Marital Status:        Married
+
+──────── GOVERNMENT ID ────────
+ID Type:               US Passport
+ID Number:             58XXXXX42
+Issued:                2019-11-08
+Expires:               2029-11-08
+DOS Verification:      VERIFIED (passport matches name + DOB)
+Photo Match:           94.1% confidence
+Document Authenticity: GENUINE
+
+──────── SCREENING RESULTS ────────
+OFAC SDN List:         CLEAR
+OFAC Consolidated:     CLEAR
+FinCEN 314(a):         CLEAR
+PEP Screening:         NEAR-MATCH (88% similarity)
+                       ─ Match: "T. Nguyen" · former county commissioner
+                       ─ Different jurisdiction (Texas vs Indiana)
+                       ─ Different DOB by 8 years
+                       ─ DISMISSED BY REVIEWER (Holloway, M.)
+Adverse Media:         CLEAR
+ChexSystems:           CLEAR
+
+──────── RISK ASSESSMENT ────────
+Inherent Risk Tier:    MEDIUM
+Risk Factors:
+  ─ Self-employed (income complexity)
+  ─ Cash-intensive business possible (tax services)
+  ─ PEP near-match (dismissed but flagged for awareness)
+  ─ Stable US citizenship + clean ChexSystems
+  ─ Short address tenure (9mo)
+EDD Required:          NO (standard CDD with quarterly refresh)
+Annual CDD Refresh:    YES (next: 2027-04-28)
+Enhanced Monitoring:   YES (cash deposit threshold $5,000 vs default $10,000)
+
+──────── BENEFICIAL OWNERSHIP ────────
+Account Type:          Consumer + Business sub-application linked
+Business Entity:       Nguyen Tax Services LLC (Indiana SOS 2019)
+Beneficial Owner Rule: Single beneficial owner (100%) — applicant himself
+
+──────── DECISION ────────
+Account Type Opened:   Share-Savings + Share-Draft (checking) + Business Sub
+Opening Deposit:       $250.00
+Account Numbers:       XXXXXXXX-29402 (personal)
+                       XXXXXXXX-29403 (business)
+Member Since:          2026-04-28
+
+Approved:              Marcus Holloway (Senior Member Rep) at 11:58:33 ET
+Approval Method:       Agent-assisted with HITL escalation (PEP near-match)
+HITL Touch Time:       47 seconds (PEP dismissal documentation)
+
+──────── NCUA EXAM FOLDER INDEX ────────
+Folder Path:           ncua-exam-2026/cip_records/2026-04/
+Immutable Audit ID:    AUDIT-2026-04-28-11:42:07-CIP-29402
+PEP Dismissal Log:     AUDIT-2026-04-28-11:51:14-PEP-DISMISS-29402
+Linked SARs:           None
+Linked CTRs:           None  (monitoring threshold reduced to $5K)
+Linked Loans:          None
+
+[Enhanced monitoring flag persists on this account. Quarterly CDD touch.]

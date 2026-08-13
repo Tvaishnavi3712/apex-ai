@@ -1,0 +1,57 @@
+{
+  "blueprintName": "apex-stp-procedure-doc-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from STP plant operating (0POP-) and preventive-maintenance (0PMP-) procedure documents",
+  "industry": "nuclear_operations",
+  "documentType": "procedure",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "header": {
+        "type": "object",
+        "properties": {
+          "doc_number": {"type": "string", "description": "Procedure id, e.g. 0POP-AB-1234 or 0PMP-RCS-7B",
+                          "pattern": "^0P[OM]P-[A-Z]+-?[A-Z0-9]+$"},
+          "title":      {"type": "string"},
+          "revision":   {"type": "string"},
+          "effective_date": {"type": "string", "format": "date"},
+          "owner":      {"type": "string", "description": "e.g. Operations / RCS or Maintenance / Mechanical"},
+          "applies_to": {"type": "array", "items": {"type": "string"},
+                         "description": "Equipment ids or system ids the procedure applies to"},
+          "frequency_days": {"type": "integer", "description": "PM frequency, if a 0PMP doc"},
+          "regulatory_basis": {"type": "string", "description": "TS / SR citation backing this procedure"},
+          "nrc_classification": {"type": "string"}
+        },
+        "required": ["doc_number", "title", "effective_date"]
+      },
+      "scope": {"type": "string", "description": "Section 1 — scope statement"},
+      "prerequisites": {"type": "array", "items": {"type": "string"}},
+      "steps": {
+        "type": "array",
+        "description": "Numbered procedure steps with sign-off blocks",
+        "items": {
+          "type": "object",
+          "properties": {
+            "step_number":    {"type": "string"},
+            "instruction":    {"type": "string"},
+            "expected_state": {"type": "string"},
+            "performer_role": {"type": "string"},
+            "verifier_role":  {"type": "string"},
+            "performer_signoff_present": {"type": "boolean"},
+            "verifier_signoff_present":  {"type": "boolean"}
+          },
+          "required": ["step_number", "instruction"]
+        }
+      },
+      "acceptance_criteria": {"type": "array", "items": {"type": "string"}},
+      "attachments": {"type": "array", "items": {"type": "string"}}
+    },
+    "required": ["header", "steps"]
+  },
+  "extractionRules": {
+    "preserveVerbatimText": true,
+    "stepNumberDetection": true,
+    "signoffBlockDetection": true,
+    "confidenceThreshold": 0.88
+  }
+}

@@ -1,0 +1,109 @@
+playbook_id: pb-eprod-2
+name: po_to_contract_validation
+version: "1.0.0"
+description: "Pre-pay PO line-item validation against MSA scope, contracted rates, and tax codes. Validation cycle weeks → minutes."
+industry: oil_gas_midstream
+category: procurement
+
+intent: |
+  Validate every purchase order at issuance, not at audit. For each PO line,
+  confirm the item falls within the vendor MSA's Schedule B scope, validate
+  unit pricing against contracted rates with ±5% tolerance, and confirm the
+  tax code matches the asset's classification (TX-E exempt vs TX-I
+  industrial). Flag rate mismatches, scope-out items, and tax-code errors.
+  Push exceptions to the procurement_exceptions queue within minutes — no
+  PO leaves intake without a contract-compliance verdict.
+
+output:
+  - name: po_validation_report
+    type: structured_data
+    description: "Per-line scope / rate / tax validation with verdict"
+  - name: exception_list
+    type: structured_data
+    description: "Line items requiring procurement review"
+  - name: approval_routing
+    type: routing_decision
+    description: "auto_approve | procurement_review | director_review"
+  - name: audit_lens_event
+    type: audit_event
+    description: "Audit trail with vendor, MSA, scope match, rate variance"
+
+context:
+  business_rules:
+    - "Every PO line must map to an MSA Schedule B scope category"
+    - "Rate variance vs MSA > 5% blocks auto-approval"
+    - "Tax code must match asset classification (TX-E vs TX-I)"
+    - "PO > $250K requires director approval regardless of compliance"
+    - "Out-of-scope items must be escalated to procurement exceptions"
+
+actions:
+  - name: extract_po_lines
+    action_id: oil_gas_midstream.extract_po_lines
+    description: "BDA extraction of PO header + line items + asset codes"
+    required: true
+  - name: lookup_msa_scope
+    action_id: oil_gas_midstream.lookup_msa_scope
+    description: "Resolve vendor MSA + Schedule B scope categories"
+    required: true
+  - name: validate_rate_variance
+    action_id: oil_gas_midstream.validate_rate_variance
+    description: "Per-line rate comparison vs contracted MSA rates (±5%)"
+    required: true
+  - name: check_tax_code
+    action_id: oil_gas_midstream.check_tax_code
+    description: "Validate tax code matches asset classification"
+    required: true
+  - name: check_approval_threshold
+    action_id: oil_gas_midstream.check_approval_threshold
+    description: "Compare PO total vs vendor delegation-of-authority limits"
+    required: true
+  - name: route_exception
+    action_id: oil_gas_midstream.route_exception
+    description: "Push flagged lines to procurement_exceptions SQS queue"
+    required: true
+  - name: audit_lens_log
+    action_id: oil_gas_midstream.audit_lens_log
+    description: "Immutable validation event for compliance reporting"
+    required: true
+
+recipe: |
+  ## EPROD PO-to-Contract Validation Recipe
+
+  ### Step 1 · EXTRACT — extract_po_lines
+  - Source: SAP MM PO release event or PO PDF drop
+  - Capture: vendor, msa_ref, asset_code, line items[], tax_code
+
+  ### Step 2 · LOOKUP — lookup_msa_scope
+  - Resolve vendor → active MSA → Schedule B scope categories
+  - Build lookup map: asset_code → in_scope?
+
+  ### Step 3 · VALIDATE — validate_rate_variance
+  - For each line: compare unit_price vs msa_rate_for_asset_code
+  - Flag if abs(variance) > 5%
+
+  ### Step 4 · VALIDATE — check_tax_code
+  - Map asset_code → expected tax_code (TX-E exempt vs TX-I industrial)
+  - Flag mismatches
+
+  ### Step 5 · DECIDE — check_approval_threshold
+  - PO total vs vendor DOA limit
+  - > $250K → director_review regardless
+
+  ### Step 6 · ROUTE — route_exception
+  - Any flag → procurement_exceptions queue with reason codes
+  - All clean → auto_approve event
+
+  ### Step 7 · AUDIT — audit_lens_log
+  - Persist validation event for compliance reports
+
+triggers:
+  - type: eventbridge
+    bus: apex-eprod-events
+    detail_type: "SAP.PO.Released"
+  - type: api
+    endpoint: /api/v1/eprod/po/validate
+    method: POST
+
+metadata:
+  created_by: apex-platform
+  tags: [eprod, oil_gas_midstream, procurement, msa_validation]

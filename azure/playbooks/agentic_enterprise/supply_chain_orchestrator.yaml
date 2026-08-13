@@ -1,0 +1,87 @@
+name: supply_chain_orchestrator
+version: "1.0.0"
+description: "Agentic Enterprise UC-1 — multi-agent supply chain orchestrator that detects an inventory shortage, finds an alternate supplier, drafts a purchase order, and routes it to a human approver."
+industry: supply_chain_orchestrator
+category: agentic_orchestration
+
+intent: |
+  When an operator says "we are short of <SKU> for the <campaign>",
+  the OrchestratorAgent autonomously executes a four-step plan:
+    1. check_inventory(sku) — confirm the shortage across warehouses
+    2. find_alternative_supplier(sku) — rank approved suppliers by lead
+       time + on-time + defect-rate, return the best match
+    3. draft_purchase_order(supplier_id, sku, quantity) — generate a
+       PO payload with line items, totals, and INCOTERMS
+    4. submit_for_approval(po_id, approver) — route to a human in the
+       Agent Hub work queue
+
+  Example operator prompts the playbook resolves:
+    "We are short 500 units of SKU-892 for the upcoming Dallas
+     promotion. Resolve this."
+    "Stockout on SKU-892 — get me a fast supplier and draft the PO."
+    "Source 500 SKU-892 for Dallas before May 15."
+
+  The Reasoning Log surfaces every tool call so reviewers can trace
+  the agent's decision. A human approver must click "Submit for
+  Approval" before any external action occurs (no auto-purchase).
+
+output:
+  - name: shortage_assessment
+    type: structured_data
+    description: "{ sku, total_available, warehouses_checked[], shortfall_units, demand_window }"
+  - name: supplier_recommendation
+    type: structured_data
+    description: "{ supplier_id, name, lead_time_days, on_time_pct, unit_cost_usd, rationale }"
+  - name: drafted_purchase_order
+    type: structured_data
+    description: "{ po_number, supplier_id, sku, quantity, unit_cost, total_usd, incoterm, requested_delivery, status='DRAFT' }"
+  - name: review_queue_item_id
+    type: identifier
+    description: "Work-queue id for the human-in-the-loop approval step"
+
+context:
+  business_rules:
+    - "Lead with the shortage facts (warehouses checked + total available + shortfall) before recommending a supplier."
+    - "Prefer suppliers with lead time within the demand window even if unit cost is higher — meeting the campaign date matters more than 5% of unit price."
+    - "Always show the supplier's on-time-percent and defect-rate-YTD when justifying the recommendation. Reviewers won't approve a black-box choice."
+    - "Never submit the PO automatically. The drafted PO MUST land in the human-review queue with status='DRAFT' and require explicit approval."
+    - "Surface every tool call in the Reasoning Log — this is the demo's wow factor and the audit-trail requirement."
+    - "If no supplier can meet the demand window, return the closest miss + escalate to merchandising@example.com instead of force-fitting."
+
+actions:
+  - name: check_inventory
+    action_id: supply_chain_orchestrator.check_inventory
+    description: "Look up on-hand / available units for a SKU across all warehouses. Returns the total available + per-warehouse breakdown + the demand_forecast for context."
+    required: true
+  - name: find_alternative_supplier
+    action_id: supply_chain_orchestrator.find_alternative_supplier
+    description: "Rank approved suppliers for the SKU by (lead_time_within_window, on_time_pct, defect_rate_ytd, unit_cost). Returns the top recommendation + 1-2 alternates."
+    required: true
+  - name: draft_purchase_order
+    action_id: supply_chain_orchestrator.draft_purchase_order
+    description: "Generate a PO payload from (supplier_id, sku, quantity). Computes totals, sets INCOTERM from supplier preference, fills requested_delivery from the demand_forecast."
+    required: true
+  - name: submit_for_approval
+    action_id: supply_chain_orchestrator.submit_for_approval
+    description: "Push the drafted PO to the human-review queue with severity HIGH if total > $25k. Returns the work-queue id."
+    required: true
+
+recipe: |
+  Step 1 — Acknowledge the operator's intent and restate the shortage.
+  Step 2 — Call check_inventory(sku) and surface the result. If
+           total_available >= shortfall_units, halt and report no shortage.
+  Step 3 — Call find_alternative_supplier(sku). Show the top supplier
+           with rationale (lead time, on-time, defect rate). Mention
+           the alternates briefly.
+  Step 4 — Call draft_purchase_order(supplier_id, sku, quantity). Show
+           the PO line items, totals, and requested delivery date.
+  Step 5 — Call submit_for_approval(po_id). Return the queue id and
+           the user-facing line: "Drafted PO {po_number} sent to
+           Merchandising for approval. Queue id: {review_queue_item_id}."
+  Step 6 — End with the audit-log marker: [TRACE: SCO-{run_id}].
+
+triggers:
+  - type: chat
+    surface: agent_hub
+  - type: api
+    endpoint: /api/v1/agents/orchestrator/invoke

@@ -1,0 +1,72 @@
+{
+  "vendor": {
+    "name": "Acme Corporation",
+    "address": {
+      "street": "456 Commerce Blvd",
+      "city": "Seattle",
+      "state": "WA",
+      "zip": "98101"
+    },
+    "tax_id": "85-6670851",
+    "phone": "(837) 897-4662",
+    "email": "billing@acmecorpor.com"
+  },
+  "invoice": {
+    "number": "IV2026-46905",
+    "date": "2026-02-10",
+    "due_date": "2026-03-27",
+    "po_number": "PO-553536",
+    "terms": "NET45"
+  },
+  "bill_to": {
+    "company_name": "Tailspin Toys",
+    "address": {
+      "street": "321 Tech Center Ln",
+      "city": "San Jose",
+      "state": "CA",
+      "zip": "95110"
+    }
+  },
+  "line_items": [
+    {
+      "description": "Network Equipment - Enterprise",
+      "quantity": 12,
+      "unit_price": 2505.61,
+      "amount": 30067.32,
+      "item_code": "CUF-7038"
+    },
+    {
+      "description": "Data Migration Services",
+      "quantity": 16,
+      "unit_price": 19430.64,
+      "amount": 310890.24,
+      "item_code": "IDQ-7297"
+    },
+    {
+      "description": "Technical Consulting - Hourly",
+      "quantity": 17,
+      "unit_price": 187.99,
+      "amount": 3195.83,
+      "item_code": "DGR-8177"
+    },
+    {
+      "description": "Maintenance Support - Annual",
+      "quantity": 17,
+      "unit_price": 8949.86,
+      "amount": 152147.62,
+      "item_code": "OGD-1392"
+    }
+  ],
+  "totals": {
+    "subtotal": 496301.01,
+    "tax_rate": 0.1,
+    "tax_amount": 49630.1,
+    "shipping": 29.09,
+    "total": 545960.2
+  },
+  "payment": {
+    "bank_name": "First National Bank",
+    "account_number": "****1234",
+    "routing_number": "021000089"
+  }
+}

@@ -1,0 +1,666 @@
+# =============================================================================
+# APEX AI Platform - Invoice Processing Playbook v2.0
+# =============================================================================
+# Context-Driven Architecture: All business rules live in context section.
+# Actions read from context instead of using hardcoded values.
+# =============================================================================
+
+playbook:
+  name: invoice_processing_v2
+  version: "2.0.0"
+  industry: financial_services
+  category: accounts_payable
+  description: "Production-ready invoice processing with context-driven rules"
+
+  # ---------------------------------------------------------------------------
+  # Configuration Inheritance
+  # ---------------------------------------------------------------------------
+  inherits:
+    - config/base_configuration.yaml
+
+  # ---------------------------------------------------------------------------
+  # INTENT
+  # ---------------------------------------------------------------------------
+  intent: |
+    Process incoming vendor invoices through a complete workflow:
+    1. Extract structured data using AI with confidence thresholds from context
+    2. Validate vendor against approved vendor database with compliance rules
+    3. Match to purchase orders using tolerance rules from context
+    4. Apply compliance checks using OFAC and business rules from context
+    5. Route for approval based on amount thresholds defined in context
+    6. Process payment or escalate based on context-driven rules
+
+  # ---------------------------------------------------------------------------
+  # OUTPUT
+  # ---------------------------------------------------------------------------
+  output:
+    schema:
+      type: object
+      properties:
+        invoice_id:
+          type: string
+        extraction_results:
+          type: object
+        vendor_validation:
+          type: object
+        po_match_status:
+          type: object
+        compliance_status:
+          type: object
+        approval_decision:
+          type: object
+        processing_metadata:
+          type: object
+
+  # ===========================================================================
+  # CONTEXT SECTION - ALL BUSINESS RULES LIVE HERE
+  # ===========================================================================
+  context:
+    # -------------------------------------------------------------------------
+    # AWS Resources (environment-parameterized)
+    # -------------------------------------------------------------------------
+    aws_resources:
+      s3_buckets:
+        incoming: "apex-${APEX_ENVIRONMENT}-documents-incoming"
+        processed: "apex-${APEX_ENVIRONMENT}-documents-processed"
+        archive: "apex-${APEX_ENVIRONMENT}-documents-archive"
+      cosmos_containers:
+        vendors: "apex-${APEX_ENVIRONMENT}-vendors"
+        purchase_orders: "apex-${APEX_ENVIRONMENT}-purchase-orders"
+        invoices: "apex-${APEX_ENVIRONMENT}-invoices"
+        audit_log: "apex-${APEX_ENVIRONMENT}-audit-log"
+      sqs_queues:
+        processing: "apex-${APEX_ENVIRONMENT}-invoice-processing-queue"
+        dlq: "apex-${APEX_ENVIRONMENT}-invoice-processing-dlq"
+
+    # -------------------------------------------------------------------------
+    # Vendor Database Schema
+    # -------------------------------------------------------------------------
+    # Defines expected vendor record structure for validation
+    # -------------------------------------------------------------------------
+    vendor_schema:
+      required_fields:
+        - vendor_id
+        - legal_name
+        - tax_id
+        - payment_terms
+        - status
+      optional_fields:
+        - dba_name
+        - address
+        - bank_account
+        - contact_email
+      statuses:
+        active: "Approved for transactions"
+        pending: "Awaiting approval/documentation"
+        suspended: "Temporarily blocked"
+        blocked: "Permanently blocked"
+
+    # -------------------------------------------------------------------------
+    # Extraction Configuration
+    # -------------------------------------------------------------------------
+    extraction_config:
+      blueprint_id: "apex-invoice-extraction-v2"
+      confidence_thresholds:
+        high: 95
+        acceptable: 85
+        review_required: 70
+        reject: 60
+
+      required_fields:
+        invoice_number:
+          type: string
+          validation: "alphanumeric, 4-50 chars"
+          confidence_min: 90
+        invoice_date:
+          type: date
+          format: "YYYY-MM-DD"
+          validation: "within 180 days"
+        due_date:
+          type: date
+          format: "YYYY-MM-DD"
+          validation: "after invoice_date"
+        vendor_name:
+          type: string
+          confidence_min: 85
+        vendor_tax_id:
+          type: string
+          pattern: "^\\d{2}-\\d{7}$"
+          confidence_min: 90
+        subtotal:
+          type: currency
+          confidence_min: 90
+        tax_amount:
+          type: currency
+          confidence_min: 85
+        total_amount:
+          type: currency
+          confidence_min: 95
+          validation: "equals subtotal + tax_amount"
+        line_items:
+          type: array
+          min_items: 1
+
+      line_item_fields:
+        description:
+          type: string
+          required: true
+        quantity:
+          type: number
+          required: true
+          min: 0
+        unit_price:
+          type: currency
+          required: true
+        line_total:
+          type: currency
+          required: true
+          validation: "equals quantity * unit_price"
+
+    # -------------------------------------------------------------------------
+    # Vendor Validation Rules
+    # -------------------------------------------------------------------------
+    vendor_validation:
+      # Required documentation
+      required_documents:
+        w9:
+          required: true
+          max_age_days: 365
+          description: "IRS Form W-9"
+        certificate_of_insurance:
+          required_above: 50000
+          max_age_days: 365
+        bank_verification:
+          required: true
+          description: "Verified bank account"
+
+      # Status rules
+      allowed_statuses: ["active"]
+
+      # Name matching
+      name_match:
+        algorithm: "fuzzy"
+        min_score: 85
+        check_aliases: true
+
+      # Tax ID validation
+      tax_id_validation:
+        format: "XX-XXXXXXX"
+        must_match_w9: true
+        tin_verification: true
+
+    # -------------------------------------------------------------------------
+    # Purchase Order Matching Rules
+    # -------------------------------------------------------------------------
+    po_matching:
+      # When PO matching is required
+      required_threshold: 1000
+
+      # Tolerance rules
+      tolerance:
+        amount:
+          percent: 5
+          max_absolute: 500
+        quantity:
+          percent: 10
+        description:
+          match_algorithm: "fuzzy"
+          min_score: 75
+
+      # PO status requirements
+      allowed_po_statuses: ["open", "partially_received"]
+
+      # Budget validation
+      budget_check:
+        enforce: true
+        allow_overrun_percent: 0
+        require_approval_for_overrun: true
+
+      # Multi-invoice support
+      multi_invoice:
+        allow: true
+        max_invoices_per_po: 12
+        track_cumulative: true
+
+    # -------------------------------------------------------------------------
+    # Compliance Rules
+    # -------------------------------------------------------------------------
+    compliance:
+      # OFAC/Sanctions screening
+      sanctions:
+        enabled: true
+        lists: ["OFAC_SDN", "OFAC_CONSOLIDATED", "EU_SANCTIONS"]
+        check_vendor_name: true
+        check_vendor_address: true
+        check_beneficial_owners: true
+
+      # Blocked countries (ISO codes)
+      blocked_countries:
+        - code: "KP"
+          name: "North Korea"
+          reason: "OFAC comprehensive sanctions"
+        - code: "IR"
+          name: "Iran"
+          reason: "OFAC comprehensive sanctions"
+        - code: "SY"
+          name: "Syria"
+          reason: "OFAC comprehensive sanctions"
+        - code: "CU"
+          name: "Cuba"
+          reason: "OFAC comprehensive sanctions"
+        - code: "RU"
+          name: "Russia"
+          reason: "OFAC sectoral sanctions"
+          exceptions: ["licensed_transactions"]
+
+      # Invoice age limits
+      invoice_age:
+        max_days: 90
+        warning_days: 60
+        extension_allowed: true
+        extension_requires_approval: "director"
+        max_extension_days: 30
+
+      # Duplicate detection
+      duplicate_detection:
+        enabled: true
+        check_fields: ["vendor_id", "invoice_number", "total_amount"]
+        lookback_days: 365
+        allow_same_vendor_same_day: false
+
+      # Amount limits
+      transaction_limits:
+        max_single_invoice: 1000000
+        max_vendor_daily: 2000000
+        max_vendor_monthly: 10000000
+        require_wire_above: 100000
+
+      # Audit requirements
+      audit:
+        log_all_decisions: true
+        retain_days: 2555
+        pii_masking: true
+        required_fields: ["user_id", "timestamp", "action", "decision", "reason"]
+
+    # -------------------------------------------------------------------------
+    # Approval Workflow Configuration
+    # -------------------------------------------------------------------------
+    approval_workflow:
+      # Amount-based routing
+      thresholds:
+        auto_approve:
+          max_amount: 10000
+          conditions:
+            confidence_min: 95
+            vendor_status: "active"
+            po_matched: true
+            no_compliance_issues: true
+            no_exceptions: true
+
+        team_lead:
+          max_amount: 25000
+          approvers: ["team_lead", "supervisor"]
+          sla_hours: 24
+          escalate_after: 48
+
+        manager:
+          max_amount: 50000
+          approvers: ["manager", "accounts_payable_manager"]
+          sla_hours: 48
+          escalate_after: 72
+
+        director:
+          max_amount: 100000
+          approvers: ["director", "controller"]
+          sla_hours: 72
+          escalate_after: 96
+
+        vp_finance:
+          max_amount: 500000
+          approvers: ["vp_finance"]
+          sla_hours: 96
+          dual_approval: false
+
+        cfo:
+          max_amount: 1000000
+          approvers: ["cfo"]
+          sla_hours: 120
+          dual_approval: true
+
+        board:
+          max_amount: null
+          approvers: ["cfo", "ceo"]
+          sla_hours: 168
+          dual_approval: true
+          require_documentation: true
+
+      # Dual approval rules
+      dual_approval:
+        required_above: 100000
+        cannot_be_same_department: true
+        time_between_approvals_min: 0
+
+      # Escalation
+      escalation:
+        enabled: true
+        method: "next_level"
+        notify_original_approver: true
+        max_escalations: 3
+
+      # Delegation
+      delegation:
+        allowed: true
+        max_delegation_depth: 1
+        notification_required: true
+
+    # -------------------------------------------------------------------------
+    # Payment Terms Configuration
+    # -------------------------------------------------------------------------
+    payment_terms:
+      standard:
+        net_30:
+          days: 30
+          discount_percent: 0
+        net_45:
+          days: 45
+          discount_percent: 0
+        net_60:
+          days: 60
+          discount_percent: 0
+        "2_10_net_30":
+          days: 30
+          early_discount_percent: 2
+          early_discount_days: 10
+        "1_10_net_45":
+          days: 45
+          early_discount_percent: 1
+          early_discount_days: 10
+
+      # Early payment discount rules
+      early_payment:
+        auto_take_discount: true
+        min_discount_percent: 1.5
+        require_approval_below: 1.0
+
+      # Late payment
+      late_payment:
+        grace_period_days: 5
+        interest_rate_annual: 0
+        flag_for_review: true
+
+    # -------------------------------------------------------------------------
+    # Notification Configuration
+    # -------------------------------------------------------------------------
+    notifications:
+      channels:
+        email:
+          enabled: true
+          templates_path: "templates/email/invoice/"
+        slack:
+          enabled: true
+          channel: "#accounts-payable"
+        sms:
+          enabled: false
+
+      events:
+        extraction_complete:
+          channels: ["email"]
+          recipients: ["submitter"]
+
+        validation_failed:
+          channels: ["email", "slack"]
+          recipients: ["submitter", "ap_team"]
+          include_errors: true
+
+        approval_required:
+          channels: ["email"]
+          recipients: ["approver"]
+          include_invoice_summary: true
+
+        approval_reminder:
+          channels: ["email", "slack"]
+          trigger_hours: [24, 48]
+
+        approved:
+          channels: ["email"]
+          recipients: ["submitter", "vendor"]
+
+        rejected:
+          channels: ["email", "slack"]
+          recipients: ["submitter", "ap_team"]
+          include_reason: true
+
+        payment_scheduled:
+          channels: ["email"]
+          recipients: ["submitter"]
+
+    # -------------------------------------------------------------------------
+    # Integration Configuration
+    # -------------------------------------------------------------------------
+    integrations:
+      erp:
+        enabled: true
+        system: "SAP"
+        sync_on_approval: true
+        fields_to_sync:
+          - vendor_id
+          - invoice_number
+          - amount
+          - gl_codes
+          - cost_centers
+
+      banking:
+        enabled: true
+        payment_methods: ["ACH", "Wire", "Check"]
+        default_method: "ACH"
+        wire_threshold: 100000
+
+      tax:
+        enabled: true
+        calculate_use_tax: true
+        tax_engine: "Avalara"
+
+  # ===========================================================================
+  # RECIPE
+  # ===========================================================================
+  recipe: |
+    ## Invoice Processing Workflow (Context-Driven)
+
+    ### Phase 1: Document Intake
+    1. Receive invoice from context.aws_resources.s3_buckets.incoming
+    2. Validate file format and size per context.extraction_config
+    3. Generate unique invoice_id for tracking
+    4. Log intake to context.aws_resources.cosmos_containers.audit_log
+
+    ### Phase 2: Data Extraction
+    1. Use blueprint context.extraction_config.blueprint_id
+    2. Extract all fields from context.extraction_config.required_fields
+    3. Apply confidence thresholds from context.extraction_config.confidence_thresholds
+    4. If confidence < context.extraction_config.confidence_thresholds.acceptable:
+       - Flag for human review
+    5. Validate line items match total per context.extraction_config.line_item_fields
+
+    ### Phase 3: Vendor Validation
+    1. Lookup vendor in context.aws_resources.cosmos_containers.vendors
+    2. Match vendor name using context.vendor_validation.name_match rules
+    3. Verify tax ID format per context.vendor_validation.tax_id_validation
+    4. Check vendor status is in context.vendor_validation.allowed_statuses
+    5. Verify required documents per context.vendor_validation.required_documents
+
+    ### Phase 4: PO Matching
+    If total_amount > context.po_matching.required_threshold:
+    1. Search PO in context.aws_resources.cosmos_containers.purchase_orders
+    2. Apply amount tolerance from context.po_matching.tolerance.amount
+    3. Apply quantity tolerance from context.po_matching.tolerance.quantity
+    4. Verify PO status in context.po_matching.allowed_po_statuses
+    5. Check budget per context.po_matching.budget_check rules
+
+    ### Phase 5: Compliance Checks
+    1. Run sanctions screening per context.compliance.sanctions
+    2. Check vendor country against context.compliance.blocked_countries
+    3. Validate invoice age against context.compliance.invoice_age.max_days
+    4. Run duplicate detection per context.compliance.duplicate_detection
+    5. Verify amount limits per context.compliance.transaction_limits
+
+    ### Phase 6: Approval Routing
+    1. Determine approval level using context.approval_workflow.thresholds
+    2. Check auto_approve conditions from context.approval_workflow.thresholds.auto_approve
+    3. If auto-approve conditions met and amount <= threshold: auto-approve
+    4. Otherwise route to appropriate approver per threshold tier
+    5. Apply dual approval rules from context.approval_workflow.dual_approval if required
+
+    ### Phase 7: Payment Processing
+    1. Determine payment terms from context.payment_terms.standard
+    2. Calculate early payment discount per context.payment_terms.early_payment
+    3. Select payment method per context.integrations.banking rules
+    4. Sync to ERP if context.integrations.erp.enabled
+
+    ### Phase 8: Completion
+    1. Archive document to context.aws_resources.s3_buckets.archive
+    2. Send notifications per context.notifications.events
+    3. Update audit log per context.compliance.audit
+
+  # ===========================================================================
+  # FACTORY CHAIN
+  # ===========================================================================
+  factory_chain:
+    chainId: invoice_processing_chain
+    description: "Context-driven invoice processing factory chain"
+    factories:
+      - id: document_intake
+        action: document_intake
+        context_keys: [aws_resources, extraction_config]
+        timeout_seconds: 60
+
+      - id: data_extraction
+        action: invoice_extract
+        depends_on: [document_intake]
+        context_keys: [extraction_config]
+        ai_enhanced: true
+        timeout_seconds: 120
+
+      - id: vendor_validation
+        action: vendor_lookup
+        depends_on: [data_extraction]
+        context_keys: [vendor_validation, aws_resources]
+        timeout_seconds: 30
+
+      - id: po_matching
+        action: po_match
+        depends_on: [data_extraction, vendor_validation]
+        context_keys: [po_matching, aws_resources]
+        timeout_seconds: 30
+
+      - id: compliance_check
+        action: compliance_check
+        depends_on: [vendor_validation]
+        context_keys: [compliance]
+        timeout_seconds: 45
+
+      - id: approval_routing
+        action: approval_route
+        depends_on: [po_matching, compliance_check]
+        context_keys: [approval_workflow]
+        timeout_seconds: 30
+
+      - id: payment_processing
+        action: payment_process
+        depends_on: [approval_routing]
+        context_keys: [payment_terms, integrations]
+        timeout_seconds: 60
+
+      - id: notification
+        action: send_notification
+        depends_on: [approval_routing]
+        context_keys: [notifications]
+        timeout_seconds: 30
+
+      - id: completion
+        action: completion
+        depends_on: [payment_processing, notification]
+        context_keys: [aws_resources, compliance]
+        timeout_seconds: 30
+
+  # ===========================================================================
+  # ACTIONS
+  # ===========================================================================
+  actions:
+    - id: document_intake
+      handler: core.document_intake
+      description: "Receive and validate incoming invoice document"
+
+    - id: invoice_extract
+      handler: financial_services.invoice_extract
+      description: "Extract structured data from invoice using AI"
+
+    - id: vendor_lookup
+      handler: financial_services.vendor_lookup
+      description: "Validate vendor against approved vendor database"
+
+    - id: po_match
+      handler: financial_services.po_match
+      description: "Match invoice to purchase order"
+
+    - id: compliance_check
+      handler: financial_services.compliance_check
+      description: "Run compliance and sanctions checks"
+
+    - id: approval_route
+      handler: financial_services.approval_route
+      description: "Route for appropriate approval level"
+
+    - id: payment_process
+      handler: financial_services.payment_process
+      description: "Process payment through banking integration"
+
+    - id: send_notification
+      handler: core.send_notification
+      description: "Send notifications to relevant parties"
+
+    - id: completion
+      handler: core.completion
+      description: "Archive and complete processing"
+
+  # ===========================================================================
+  # TRIGGERS
+  # ===========================================================================
+  triggers:
+    - type: s3
+      bucket: "${aws_resources.s3_buckets.incoming}"
+      prefix: "financial_services/invoices/"
+      events: ["s3:ObjectCreated:*"]
+
+    - type: api
+      path: "/api/v2/financial-services/invoice"
+      methods: ["POST"]
+
+    - type: email
+      address: "invoices@${APEX_DOMAIN}"
+      parser: "attachment_extractor"
+
+  # ===========================================================================
+  # WORKER
+  # ===========================================================================
+  worker:
+    queue: "${aws_resources.sqs_queues.processing}"
+    dead_letter_queue: "${aws_resources.sqs_queues.dlq}"
+    concurrency: 10
+    timeout_seconds: 300
+    visibility_timeout: 60
+    max_retries: 3
+    batch_size: 1
+
+  # ===========================================================================
+  # METADATA
+  # ===========================================================================
+  metadata:
+    created_by: apex-platform
+    created_at: "2024-01-15"
+    updated_at: "2025-03-19"
+    version_notes: "v2.0.0 - Context-driven architecture"
+    tags:
+      - accounts-payable
+      - invoice
+      - automation
+      - financial-services
+      - context-driven

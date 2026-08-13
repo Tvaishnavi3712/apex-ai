@@ -1,0 +1,62 @@
+name: playbook_gap_analysis
+version: "1.0.0"
+description: "PlaybookAgent cross-references live firmware test results against the BMC Ansible playbook and produces a formal change-spec for a new platform — current code → required change → reason → risk per role. A PROPOSAL only; nothing is applied until a human approves."
+industry: telecommunications
+category: automation_engineering
+
+intent: |
+  Given PROPOSED-* test results for a new platform (e.g. HPE EL140 / iLO7),
+  cross-reference them against the live BMC playbook (commit 5ff15f7028) and
+  produce a change-spec: which roles need changes, which do not, which need
+  verification — each with a diff, reason, and risk. Surface cross-platform
+  findings (deviations that also affect iLO6) and net-new role gaps.
+
+  Example prompts that resolve to this playbook:
+    "Generate the change-spec for the HPE EL140 iLO7"
+    "How many Ansible roles need changes for iLO7 support?"
+    "What new role does the EL140 require?"
+
+output:
+  - name: change_spec
+    type: structured_data
+    description: "Per-role assessment: CHANGE/NO-CHANGE/VERIFY, diff, reason, risk, PROPOSED ref"
+  - name: pr_draft
+    type: identifier
+    description: "Draft branch/PR with the proposed changes (opened only after HITL approval)"
+
+context:
+  business_rules:
+    - "Every CHANGE maps to a PROPOSED test result as evidence"
+    - "Output is a PROPOSAL — no commit/PR until a human approves"
+    - "Flag deviations that also affect existing platforms (iLO6) to broaden scope"
+    - "Flag net-new role gaps (e.g. security-hardening) separately from modifications"
+
+actions:
+  - name: analyze_playbook_gaps
+    action_id: telecommunications.analyze_playbook_gaps
+    description: "Cross-reference results vs the live playbook; assess each role"
+    required: true
+  - name: draft_playbook_change
+    action_id: telecommunications.draft_playbook_change
+    description: "Draft a single role change with diff + reason + risk"
+    required: true
+  - name: apply_playbook_change
+    action_id: telecommunications.apply_playbook_change
+    description: "Commit approved changes + open PR (direct action, HITL-gated)"
+    required: false
+
+recipe: |
+  1. Inventory existing PROPOSED-* result files for the platform. [correlate]
+  2. For each playbook role, compare observed iLO7 behavior to current Ansible. [correlate]
+  3. Assess: CHANGE REQUIRED / NO CHANGE / VERIFY REQUIRED. [correlate]
+  4. Draft each required change — current code, required change, reason, risk. [correlate]
+  5. Identify net-new role gaps (security-hardening) + compliance notes (NEBS). [correlate]
+  6. Emit the change-spec (7 CHANGE · 7 NO-CHANGE · 1 VERIFY for EL140). [correlate]
+  7. HITL GATE — human approves the changes.
+  8. Commit + open PR for the automation team. [action]
+
+triggers:
+  - type: pipeline_complete
+    upstream: new_platform_onboarding
+  - type: chat_message
+    routed_by: verizon_router

@@ -1,0 +1,124 @@
+================================================================================
+                       MASTER SERVICE AGREEMENT - MSA-HAL-2024-03
+                             PIPELINE INTEGRITY SERVICES
+================================================================================
+
+This MASTER SERVICE AGREEMENT ("Agreement") is entered into effective March 18,
+2024 (the "Effective Date") by and between:
+
+    ENTERPRISE PRODUCTS OPERATING LLC, a Texas limited liability company with
+    offices at 1100 Louisiana Street, Houston, TX 77002 ("Company"); and
+
+    HALLIBURTON ENERGY SERVICES, INC., a Delaware corporation with offices at
+    3000 N. Sam Houston Parkway East, Houston, TX 77032 ("Contractor").
+
+Company and Contractor each a "Party" and collectively the "Parties".
+
+RECITALS
+
+WHEREAS Company owns and operates interstate and intrastate liquid and gas
+pipelines including NGL, crude, and natural gas systems across Texas, New
+Mexico, Oklahoma, Louisiana, and other states; and
+
+WHEREAS Contractor is engaged in providing pipeline integrity, inspection,
+non-destructive testing, and related engineering services; and
+
+WHEREAS the Parties desire to establish the terms and conditions under which
+Contractor will perform such services from time to time on a call-off basis;
+
+NOW THEREFORE, the Parties agree as follows.
+
+--------------------------------------------------------------------------------
+SECTION 1 - TERM
+--------------------------------------------------------------------------------
+1.1 Initial Term: three (3) years from the Effective Date, expiring March 17,
+    2027.
+1.2 Renewal: two (2) successive one-year renewal periods at Company's sole
+    option exercised by written notice 60 days prior to expiration.
+1.3 Termination for Convenience: either Party may terminate on 60 days written
+    notice; pending Releases continue to completion.
+
+--------------------------------------------------------------------------------
+SECTION 2 - SCOPE OF SERVICES
+--------------------------------------------------------------------------------
+Services may include but are not limited to:
+    (a) Inline Inspection (ILI) - MFL, UT, geometry, caliper, IMU
+    (b) Hydrostatic pressure testing per 49 CFR 195 and 192
+    (c) Non-Destructive Testing - UT, MT, PT, RT, AUT
+    (d) External & Internal Corrosion Direct Assessment (ECDA / ICDA)
+    (e) Integrity assessments, dig reports, fitness-for-service evaluations
+    (f) Cathodic protection surveys (CIS, DCVG, ACVG)
+    (g) Engineering deliverables consistent with API 1163, NACE SP-0102,
+        ASME B31.4 / B31.8
+
+--------------------------------------------------------------------------------
+SECTION 3 - RATE SCHEDULE (EXHIBIT A SUMMARY)
+--------------------------------------------------------------------------------
+ILI Services (per mile, includes mobilization on jobs >50 mi):
+    8-inch to 12-inch MFL High-Resolution           $   780.00 / mile
+    16-inch to 24-inch MFL High-Resolution          $   870.00 / mile
+    30-inch to 36-inch MFL High-Resolution          $ 1,020.00 / mile
+    Geometry / IMU combo tool (any diameter)        $   340.00 / mile
+    UT Wall-Thickness Tool                          $ 1,150.00 / mile
+
+Personnel (straight-time hourly, OT 1.5x, DT 2x):
+    NDT Level II Technician                         $   165.00 / hr
+    NDT Level III Technician                        $   235.00 / hr
+    Integrity Engineer                              $   245.00 / hr
+    Sr. Integrity Engineer / Project Lead           $   295.00 / hr
+    Crew Foreman                                    $   195.00 / hr
+
+Lump-Sum Deliverables:
+    Standard Integrity Assessment Report            $ 42,500.00 / segment
+    ECDA Workup (4-step process complete)           $ 38,000.00 / segment
+    Fitness-for-Service Calc (API 579 Level 2)      $ 22,500.00 / location
+
+Mobilization / Demobilization: $7,400 per crew per event (waived if continuous
+work exceeds 14 days on a single segment).
+
+Rates fixed for first 24 months; CPI-U adjustment thereafter, capped at 4%/yr.
+
+--------------------------------------------------------------------------------
+SECTION 4 - PAYMENT TERMS
+--------------------------------------------------------------------------------
+4.1 Invoicing: monthly, with detailed timesheets and material backup.
+4.2 Payment: Net 45 days from receipt of correct invoice.
+4.3 Disputed amounts: paid portion not in dispute due on regular schedule;
+    disputed portion resolved within 30 days.
+
+--------------------------------------------------------------------------------
+SECTION 5 - INSURANCE
+--------------------------------------------------------------------------------
+Contractor shall maintain Worker's Comp (statutory), Employer's Liability ($1M),
+Commercial General Liability ($5M occurrence / $10M aggregate), Auto Liability
+($5M), Pollution Legal Liability ($10M), Umbrella ($25M). Company named as
+additional insured (except WC). Waivers of subrogation reciprocal.
+
+--------------------------------------------------------------------------------
+SECTION 6 - INDEMNITY AND LIABILITY
+--------------------------------------------------------------------------------
+Knock-for-knock indemnity per Texas Oilfield Anti-Indemnity Act. Each Party
+indemnifies the other for its own personnel and property regardless of fault,
+to fullest extent permitted by Tex. Civ. Prac. & Rem. Code Ch. 127.
+
+--------------------------------------------------------------------------------
+SECTION 7 - SAFETY, COMPLIANCE, AUDIT
+--------------------------------------------------------------------------------
+Contractor complies with EPROD Contractor Safety Manual Rev 9, OSHA 1910/1926,
+49 CFR Parts 192/195, and all applicable PHMSA regulations. Company audit
+rights with 10 business days notice.
+
+--------------------------------------------------------------------------------
+SECTION 8 - GOVERNING LAW / DISPUTE RESOLUTION
+--------------------------------------------------------------------------------
+Texas law. Disputes resolved per AAA Commercial Arbitration Rules in Harris
+County, TX. Senior-executive negotiation precedent (30 days).
+
+IN WITNESS WHEREOF the Parties have executed this Agreement as of the Effective
+Date.
+
+ENTERPRISE PRODUCTS OPERATING LLC          HALLIBURTON ENERGY SERVICES, INC.
+By: ___________________________            By: ___________________________
+Name: D. Patel                             Name: S. Bhattacharya
+Title: VP - Engineering & Construction     Title: VP - North America Pipeline
+================================================================================

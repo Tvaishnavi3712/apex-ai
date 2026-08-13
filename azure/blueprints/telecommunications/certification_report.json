@@ -1,0 +1,181 @@
+{
+  "blueprintName": "certification-report-generator",
+  "blueprintVersion": "1.0.0",
+  "description": "Output blueprint \u2014 defines the structured certification report produced by CertificationAgent at the end of a full certification cycle. Used as the canonical artifact shared with HQ Planning and downstream wave-ops.",
+  "industry": "telecommunications",
+  "documentType": "certification_report_output",
+  "documentSchema": {
+    "class": "ApexCertificationReport",
+    "description": "End-of-cycle certification report for a CaaS node",
+    "definitions": {
+      "FAILURE_RECORD": {
+        "properties": {
+          "test_id": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "category": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "latency_threshold_breach / schema_drift_failure / regression_failure / investigate"
+          },
+          "severity": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "P1 / P2 / P3"
+          },
+          "root_cause": {
+            "type": "string"
+          },
+          "recommendation": {
+            "type": "string"
+          },
+          "jira_ticket": {
+            "type": "string"
+          },
+          "kb_match": {
+            "type": "string",
+            "inferenceType": "inferred",
+            "instruction": "KB article ID if a known-issue match was found"
+          }
+        }
+      }
+    },
+    "properties": {
+      "header": {
+        "type": "object",
+        "properties": {
+          "device_name": {
+            "type": "string"
+          },
+          "firmware_version": {
+            "type": "string"
+          },
+          "certification_date": {
+            "type": "string"
+          },
+          "overall_status": {
+            "type": "string",
+            "instruction": "PASS / CONDITIONAL_PASS / FAIL"
+          },
+          "generated_by": {
+            "type": "string"
+          },
+          "generation_time_seconds": {
+            "type": "number"
+          }
+        }
+      },
+      "executive_summary": {
+        "type": "object",
+        "properties": {
+          "total_tests": {
+            "type": "number"
+          },
+          "pass_count": {
+            "type": "number"
+          },
+          "fail_count": {
+            "type": "number"
+          },
+          "investigate_count": {
+            "type": "number"
+          },
+          "schema_drift_events": {
+            "type": "number"
+          },
+          "jira_tickets_opened": {
+            "type": "number"
+          },
+          "hours_saved_vs_manual": {
+            "type": "number"
+          }
+        }
+      },
+      "failure_analysis": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/FAILURE_RECORD"
+        }
+      },
+      "schema_drift_summary": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "endpoint": {
+              "type": "string"
+            },
+            "change_type": {
+              "type": "string"
+            },
+            "scripts_impacted": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "remediation_steps": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "deployment_recommendation": {
+        "type": "object",
+        "properties": {
+          "overall_recommendation": {
+            "type": "string",
+            "instruction": "proceed / conditional / hold"
+          },
+          "conditions_to_proceed": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "estimated_remediation_days": {
+            "type": "number"
+          }
+        }
+      },
+      "governance_trail": {
+        "type": "object",
+        "properties": {
+          "agent_actions_log": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "human_approvals_required": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "human_approvals_received": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "audit_lens_event_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "outputConfiguration": {
+    "formats": [
+      "pdf",
+      "json"
+    ],
+    "includeConfidenceScores": true,
+    "includeRawText": false
+  }
+}

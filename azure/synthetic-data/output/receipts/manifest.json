@@ -1,0 +1,122 @@
+[
+  {
+    "receipt_number": "7181-743883",
+    "html_file": "html/7181_743883.html",
+    "json_file": "json/7181_743883.json",
+    "total": 103.82,
+    "merchant": "Morton's Steakhouse",
+    "category": "Restaurant"
+  },
+  {
+    "receipt_number": "7715-402450",
+    "html_file": "html/7715_402450.html",
+    "json_file": "json/7715_402450.json",
+    "total": 27.92,
+    "merchant": "Panera Bread",
+    "category": "Restaurant"
+  },
+  {
+    "receipt_number": "9975-299297",
+    "html_file": "html/9975_299297.html",
+    "json_file": "json/9975_299297.json",
+    "total": 132.09,
+    "merchant": "Chipotle Mexican Grill",
+    "category": "Restaurant"
+  },
+  {
+    "receipt_number": "4527-651767",
+    "html_file": "html/4527_651767.html",
+    "json_file": "json/4527_651767.json",
+    "total": 112.55,
+    "merchant": "Best Buy",
+    "category": "Retail"
+  },
+  {
+    "receipt_number": "8875-454974",
+    "html_file": "html/8875_454974.html",
+    "json_file": "json/8875_454974.json",
+    "total": 136.12,
+    "merchant": "Chipotle Mexican Grill",
+    "category": "Restaurant"
+  },
+  {
+    "receipt_number": "9747-376285",
+    "html_file": "html/9747_376285.html",
+    "json_file": "json/9747_376285.json",
+    "total": 147.09,
+    "merchant": "Morton's Steakhouse",
+    "category": "Restaurant"
+  },
+  {
+    "receipt_number": "1366-247839",
+    "html_file": "html/1366_247839.html",
+    "json_file": "json/1366_247839.json",
+    "total": 37.44,
+    "merchant": "Staples",
+    "category": "Office Supplies"
+  },
+  {
+    "receipt_number": "9826-487808",
+    "html_file": "html/9826_487808.html",
+    "json_file": "json/9826_487808.json",
+    "total": 111.52,
+    "merchant": "Office Depot",
+    "category": "Office Supplies"
+  },
+  {
+    "receipt_number": "1149-671622",
+    "html_file": "html/1149_671622.html",
+    "json_file": "json/1149_671622.json",
+    "total": 6.27,
+    "merchant": "Lyft",
+    "category": "Ground Transportation"
+  },
+  {
+    "receipt_number": "4864-345028",
+    "html_file": "html/4864_345028.html",
+    "json_file": "json/4864_345028.json",
+    "total": 5.26,
+    "merchant": "Hilton Garden Inn",
+    "category": "Hotel"
+  },
+  {
+    "receipt_number": "5833-309700",
+    "html_file": "html/5833_309700.html",
+    "json_file": "json/5833_309700.json",
+    "total": 6.11,
+    "merchant": "Enterprise Rent-A-Car",
+    "category": "Ground Transportation"
+  },
+  {
+    "receipt_number": "9114-421869",
+    "html_file": "html/9114_421869.html",
+    "json_file": "json/9114_421869.json",
+    "total": 19.21,
+    "merchant": "BP",
+    "category": "Gas Station"
+  },
+  {
+    "receipt_number": "8493-505568",
+    "html_file": "html/8493_505568.html",
+    "json_file": "json/8493_505568.json",
+    "total": 8.93,
+    "merchant": "Marriott Hotel",
+    "category": "Hotel"
+  },
+  {
+    "receipt_number": "4282-727308",
+    "html_file": "html/4282_727308.html",
+    "json_file": "json/4282_727308.json",
+    "total": 19.21,
+    "merchant": "Enterprise Rent-A-Car",
+    "category": "Ground Transportation"
+  },
+  {
+    "receipt_number": "8098-252061",
+    "html_file": "html/8098_252061.html",
+    "json_file": "json/8098_252061.json",
+    "total": 7.65,
+    "merchant": "Shell",
+    "category": "Gas Station"
+  }
+]

@@ -1,0 +1,6 @@
+# Apex agent — Azure AI Foundry runtime
+azure-identity>=1.19.0
+azure-ai-projects>=1.0.0
+openai>=2.40,<3
+fastapi>=0.109.0
+uvicorn>=0.27.0

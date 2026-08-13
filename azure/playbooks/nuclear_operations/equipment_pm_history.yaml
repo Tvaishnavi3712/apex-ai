@@ -1,0 +1,75 @@
+name: equipment_pm_history
+version: "1.0.0"
+description: "ChatSTP UC-2 — answer 'when was the last PM on X and who worked on it?' with Oracle PMHISTORY data + engineer attribution."
+industry: nuclear_operations
+category: maintenance_intelligence
+
+intent: |
+  When the user names a specific piece of equipment and asks about its
+  preventive-maintenance history, query Oracle PMHISTORY for the most
+  recent completed PM, attribute the work to specific technicians, and
+  surface the next-due date plus a link to the work-package PDF.
+
+  Example user prompts the playbook resolves:
+    "When was the last PM on Pump-3A and who worked on it?"
+    "Show me Tony Garcia's recent EDG-2 work."
+    "What's the next PM due for MOV-7B?"
+
+output:
+  - name: pm_history
+    type: structured_data
+    description: "{ last_pm_date, wo_id, technicians[], lead_engineer, next_pm_due, regulatory_basis }"
+  - name: work_package_link
+    type: document_link
+    description: "S3 link to the cited WO's work-package PDF"
+
+context:
+  business_rules:
+    - "Always attribute by name AND role — 'Marcus Holloway (mech_tech)' not just 'EMP-2117'."
+    - "Surface the regulatory_basis (TS / SR) when present — STP engineers expect that anchor."
+    - "If equipment_id is ambiguous ('the pump'), the agent must ask for clarification, not guess."
+
+actions:
+  - name: intent_classify
+    action_id: nuclear_operations.intent_classify
+    description: "Classify intent and extract equipment_id from the query."
+    required: true
+  - name: oracle_pm_lookup
+    action_id: nuclear_operations.oracle_pm_lookup
+    description: "Pull last PM + recent corrective history + next-due date."
+    required: true
+  - name: engineer_attribution
+    action_id: nuclear_operations.engineer_attribution
+    description: "Attach technician names, roles and hours to the cited WO."
+    required: true
+  - name: wp_attachment_fetch
+    action_id: nuclear_operations.wp_attachment_fetch
+    description: "Resolve the work-package PDF URL for the cited WO."
+    required: false
+
+recipe: |
+  1. Run `intent_classify`. Confirm intent == "maintenance_history".
+     If entities_extracted.equipment_ids is empty, ask user to clarify.
+  2. Call `oracle_pm_lookup` with the resolved equipment_id.
+  3. Call `engineer_attribution` with the returned last_pm_wo_id to
+     get full technician + lead engineer roster.
+  4. Call `wp_attachment_fetch` (best-effort) for the same wo_id to
+     attach the PDF link.
+  5. Format the response:
+       Last PM on <equipment_id>: <last_pm_date> (<wo_id>)
+       Performed by: <lead_engineer.name> with <technician names>
+       Procedure: <pm_template_id> per <regulatory_basis>
+       Next PM due: <next_pm_due>
+       [📎 Work Package PDF](<s3_url>)
+
+triggers:
+  - type: chat_message
+    routed_by: chatstp_router
+  - type: api_invoke
+    endpoint: /api/v1/agents/MaintenanceAgent/invoke
+
+foundry_agent: apex-stp-maintenance-agent
+governance:
+  audit_log: true
+  human_review_threshold: 0.0
+  citation_required: true

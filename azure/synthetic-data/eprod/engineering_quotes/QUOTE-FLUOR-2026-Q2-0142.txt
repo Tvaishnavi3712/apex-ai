@@ -1,0 +1,117 @@
+================================================================================
+                              FLUOR ENTERPRISES, INC.
+                                  6700 Las Colinas Blvd.
+                                  Irving, TX 75039-2900
+                                    (469) 398-7000
+================================================================================
+
+                              ENGINEERING QUOTATION
+
+Quote Number:         QUOTE-FLUOR-2026-Q2-0142
+Date Issued:          05/06/2026
+Validity:             90 days from issue (expires 08/04/2026)
+Subject:              Feasibility Study - Permian-to-Mont Belvieu
+                      NGL Pipeline Lateral, 280 miles, 16" diameter
+Prepared For:         Enterprise Products Operating LLC
+                      Attn: M. Reyes, Sr. Procurement Manager
+                      1100 Louisiana Street, Houston TX 77002
+
+Reference RFP:        RFP-EPD-FEAS-2026-007
+Fluor Project No:     14-8821-FEAS
+
+--------------------------------------------------------------------------------
+EXECUTIVE SUMMARY
+--------------------------------------------------------------------------------
+Fluor proposes to perform a Class 4 (AACE) feasibility study for a new 280-mile
+16" Y-grade NGL lateral originating at Enterprise's Midland gathering complex
+(Midland County, TX) and terminating at the Mont Belvieu fractionation hub
+(Chambers County, TX). Design throughput: 230,000 BPD at 1,440 psig MAOP.
+The study will deliver routing alternatives, cost estimate (-30%/+50%),
+permitting strategy, and execution roadmap to support EPROD's FID decision.
+
+--------------------------------------------------------------------------------
+SCOPE OF WORK
+--------------------------------------------------------------------------------
+Phase A - Routing & Constructability (10 weeks)
+  - Three corridor alternatives w/ GIS modeling
+  - Land-cover, wetlands, T&E species screen
+  - Stakeholder/landowner density analysis
+  - Constructability ranking & preferred route
+
+Phase B - Process & Hydraulics (8 weeks)
+  - Steady-state and transient hydraulic models
+  - Pump station siting (preliminary, 3 locations)
+  - MAOP class analysis, surge study
+  - Pig launcher/receiver siting
+
+Phase C - Permitting Strategy (6 weeks, in parallel with B)
+  - Federal: USACE 404, FERC jurisdictional review
+  - State: TCEQ, RRC, GLO crossings
+  - County and municipal permits inventory
+  - Tribal/cultural resource preliminary survey
+
+Phase D - Cost & Schedule (8 weeks)
+  - AACE Class 4 estimate (-30%/+50%)
+  - Level-3 schedule, FID through ISD
+  - Risk register and Monte Carlo schedule risk
+
+Phase E - Final Report & FID Package (4 weeks)
+  - Integrated feasibility report
+  - Board-quality executive presentation
+  - Recommended path-forward & next-phase scope
+
+--------------------------------------------------------------------------------
+DELIVERABLES
+--------------------------------------------------------------------------------
+D-1   Routing Alternatives Report w/ GIS shapefiles      Wk 10
+D-2   Preliminary P&IDs and Hydraulic Model Workbook     Wk 18
+D-3   Permitting Strategy Memorandum                     Wk 16
+D-4   Class 4 Cost Estimate & Basis-of-Estimate          Wk 26
+D-5   Level-3 Project Schedule (Primavera P6 .xer)       Wk 26
+D-6   Final Integrated Feasibility Report (PDF + .docx)  Wk 30
+D-7   FID-quality executive presentation deck            Wk 30
+
+--------------------------------------------------------------------------------
+COMMERCIAL TERMS
+--------------------------------------------------------------------------------
+Total Fixed Price:    USD 3,400,000.00 (Three Million Four Hundred Thousand)
+
+Payment Milestones:
+    M-1  Contract execution / NTP                      15%   $   510,000
+    M-2  Phase A complete (Wk 10)                      20%   $   680,000
+    M-3  Phases B/C complete (Wk 18)                   25%   $   850,000
+    M-4  Phase D complete (Wk 26)                      25%   $   850,000
+    M-5  Final report acceptance (Wk 30)               15%   $   510,000
+
+Payment Terms:        Net 30 from invoice receipt.
+Currency:             USD; price firm through validity period.
+Exclusions:           Field survey (Lidar, civil), geotechnical borings,
+                      detailed environmental field studies (Phase 2),
+                      easement acquisition. Available as separate quote.
+
+Assumptions:
+  - EPROD provides all available existing GIS data, prior route studies,
+    landowner records, and operating data within 10 business days of NTP.
+  - Two in-person workshops in Houston (Fluor travel included).
+  - Up to two estimate revisions included; further revisions T&M per
+    Exhibit A rate schedule.
+
+--------------------------------------------------------------------------------
+PROPOSED PROJECT TEAM
+--------------------------------------------------------------------------------
+Project Director:     A. Krishnamurthy, P.E. (28 years midstream)
+Lead Process Engr:    M. Tellez, P.E.
+Lead Pipeline Engr:   R. Vidrine, P.E.
+Permitting Lead:      C. Yamamoto
+
+--------------------------------------------------------------------------------
+ACCEPTANCE
+--------------------------------------------------------------------------------
+This quotation may be accepted by signature below or by issuance of a Purchase
+Order referencing QUOTE-FLUOR-2026-Q2-0142.
+
+For Fluor Enterprises Inc.:                For Enterprise Products:
+By: ___________________________            By: ___________________________
+A. Krishnamurthy                           Date: ____________
+Project Director
+================================================================================

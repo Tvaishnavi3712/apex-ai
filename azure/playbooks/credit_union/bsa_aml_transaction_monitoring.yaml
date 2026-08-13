@@ -1,0 +1,88 @@
+playbook_id: pb-cwfcu-2
+name: bsa_aml_transaction_monitoring
+version: "1.0.0"
+description: "Continuous BSA/AML transaction monitoring with auto-draft SAR narrative on detected pattern. Structuring, layering, rapid movement, funnel-account patterns."
+industry: credit_union
+category: compliance
+
+intent: |
+  Monitor every transaction (cash, wire, ACH, P2P) flowing through CWFCU
+  member accounts against the BSA/AML pattern library — structuring,
+  layering, rapid movement, funnel accounts, jurisdiction risk. When a
+  pattern fires, auto-draft a FinCEN-compliant SAR narrative with the
+  statutory cite (31 U.S.C. § 5324 etc.), full transaction detail, and
+  routing context. Never auto-file — the BSA Officer must sign off
+  before submission to FinCEN. Every drafted SAR is indexed into the
+  NCUA exam BSA/AML folder immediately.
+
+output:
+  - name: sar_filing
+    type: structured_data
+    description: "Fully drafted SAR conforming to FinCEN Form 111"
+  - name: pattern_detection
+    type: structured_data
+    description: "Pattern type, statistical confidence, transactions in pattern"
+  - name: routing_decision
+    type: routing_decision
+    description: "auto_draft (always) → bsa_officer_review (always)"
+
+context:
+  business_rules:
+    - "SARs are NEVER auto-filed — BSA Officer must approve before FinCEN submission"
+    - "Detection date + 30 days = SAR filing deadline (statutory)"
+    - "Pattern confidence < 75% routes to investigation but no SAR draft"
+    - "Subjects with prior SAR history get expedited review queue placement"
+  pattern_library:
+    structuring: "31 U.S.C. § 5324 — cash deposits clustered just under $10K threshold"
+    layering: "Multi-stage routing through ≥ 3 unrelated intermediaries"
+    funnel: "In-and-out cycling with net retention < 10%"
+    rapid_movement: "Wire dwell time < 24 hrs across multiple recipients"
+
+actions:
+  - name: monitor_transactions
+    action_id: credit_union.monitor_transactions
+    description: "Continuous transaction monitoring against pattern library"
+    required: true
+  - name: detect_pattern
+    action_id: credit_union.detect_pattern
+    description: "Score against pattern library + return matching pattern + confidence"
+    required: true
+  - name: pull_member_context
+    action_id: credit_union.pull_member_context
+    description: "Retrieve risk tier, CIP, occupation, prior SAR history"
+    required: true
+  - name: draft_sar_narrative
+    action_id: credit_union.draft_sar_narrative
+    description: "Auto-draft FinCEN-compliant Part IV narrative"
+    required: true
+  - name: index_to_ncua_folder
+    action_id: credit_union.ncua_folder_index
+    description: "Index SAR draft to NCUA exam BSA/AML folder"
+    required: true
+  - name: route_to_bsa_officer
+    action_id: credit_union.route_to_bsa_officer
+    description: "Route SAR draft to BSA Officer HITL queue"
+    required: true
+
+recipe: |
+  1. Continuously stream transaction events from the core (Fiserv).
+  2. For each event, score against the pattern library. Any pattern
+     match ≥ 75% confidence triggers a SAR draft.
+  3. Pull the member context: CIP packet, current risk tier, EDD
+     status, prior SAR history.
+  4. Draft the SAR narrative. Use the bp-cwfcu-sar blueprint structure.
+     Include statutory cite, transaction detail, pattern rationale, and
+     reference to any related CDD records.
+  5. Generate immutable audit ID. Index immediately to NCUA exam BSA/AML
+     folder so the SAR is exam-ready before BSA Officer sign-off.
+  6. Route to BSA Officer HITL queue. Priority HIGH if pattern confidence
+     ≥ 0.95 OR subject has prior SAR. Otherwise priority MEDIUM.
+  7. BSA Officer reviews, edits narrative if needed, and either files OR
+     declines. Both decisions logged to Audit Lens.
+  8. On file: submit to FinCEN via BSA E-Filing. Capture FinCEN
+     acknowledgment ID. Update folder index.
+
+triggers:
+  - type: stream
+    source: core_banking_events
+    pattern: cash_deposit | wire_in | wire_out | ach_credit | ach_debit | p2p_send

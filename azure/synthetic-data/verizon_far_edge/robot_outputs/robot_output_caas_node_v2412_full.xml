@@ -1,0 +1,1817 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Verizon Far Edge Certification Suite — CYCLE-20260115-CAAS-B-2412 -->
+<!-- Firmware: 24.12 · Run pattern: v2412_drift -->
+<robot generator="Robot 6.1.1 (Python 3.11)" generated="20260115 09:14:22.440">
+  <suite id="s1" name="Verizon Far Edge Certification Suite 24.12" source="/cert/suites/vz_far_edge.robot">
+    <metadata>
+      <item name="device_under_test">CaaS-Edge-Node-Type-B</item>
+      <item name="firmware_version">Wind River 24.12</item>
+      <item name="cycle_id">CYCLE-20260115-CAAS-B-2412</item>
+      <item name="region">Northeast</item>
+      <item name="operator">cert-eng-shift-day</item>
+    </metadata>
+
+  <test id="s1-t1" name="CU-UP Interface Interface Latency">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <arg>cu_up_interface_0</arg>
+      <arg>threshold_ms=5</arg>
+      <msg timestamp="20260115 09:14:23.440" level="INFO">Executing verification cu_up_interface_0</msg>
+      <msg timestamp="20260115 09:14:23.443" level="FAIL">Latency 8.3ms exceeds threshold 5ms on cu_up_interface_0</msg>
+      <status status="FAIL" starttime="20260115 09:14:23.440" endtime="20260115 09:14:23.443"/>
+    </kw>
+    <status status="FAIL" starttime="20260115 09:14:23.440" endtime="20260115 09:14:23.443"/>
+  </test>
+  <test id="s1-t2" name="CU-UP Interface Throughput Sustained 60s">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <arg>cu_up_interface_0</arg>
+      <arg>threshold_gbps=2</arg>
+      <msg timestamp="20260115 09:14:24.440" level="INFO">Executing verification cu_up_interface_0</msg>
+      <msg timestamp="20260115 09:14:24.443" level="FAIL">Throughput 1.8Gbps below threshold 2Gbps on cu_up_interface_0</msg>
+      <status status="FAIL" starttime="20260115 09:14:24.440" endtime="20260115 09:14:24.443"/>
+    </kw>
+    <status status="FAIL" starttime="20260115 09:14:24.440" endtime="20260115 09:14:24.443"/>
+  </test>
+  <test id="s1-w1" name="CU-UP Interface Jitter P99">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <arg>cu_up_interface_0</arg>
+      <arg>threshold_ms=1.0</arg>
+      <msg timestamp="20260115 09:14:25.440" level="WARN">P99 jitter 0.94ms — borderline, within tolerance, recommend monitor at next cycle</msg>
+      <status status="PASS" starttime="20260115 09:14:25.440" endtime="20260115 09:14:25.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:25.440" endtime="20260115 09:14:25.443"/>
+  </test>
+  <test id="s1-p1" name="CU-UP Interface Handover Latency">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:26.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:26.440" endtime="20260115 09:14:26.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:26.440" endtime="20260115 09:14:26.443"/>
+  </test>
+  <test id="s1-p2" name="CU-UP Interface Interface Re-establishment">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:27.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:27.440" endtime="20260115 09:14:27.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:27.440" endtime="20260115 09:14:27.443"/>
+  </test>
+  <test id="s1-p3" name="CU-UP Interface Packet Loss">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:28.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:28.440" endtime="20260115 09:14:28.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:28.440" endtime="20260115 09:14:28.443"/>
+  </test>
+  <test id="s1-p4" name="CU-UP Interface Buffer Status Report">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:29.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:29.440" endtime="20260115 09:14:29.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:29.440" endtime="20260115 09:14:29.443"/>
+  </test>
+  <test id="s1-p5" name="CU-UP Interface F1AP Setup">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:30.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:30.440" endtime="20260115 09:14:30.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:30.440" endtime="20260115 09:14:30.443"/>
+  </test>
+  <test id="s1-p6" name="CU-UP Interface E1AP Setup">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:31.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:31.440" endtime="20260115 09:14:31.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:31.440" endtime="20260115 09:14:31.443"/>
+  </test>
+  <test id="s1-p7" name="CU-UP Interface NG-U Tunnel">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:32.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:32.440" endtime="20260115 09:14:32.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:32.440" endtime="20260115 09:14:32.443"/>
+  </test>
+  <test id="s1-p8" name="CU-UP Interface NG-C Signaling">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:33.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:33.440" endtime="20260115 09:14:33.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:33.440" endtime="20260115 09:14:33.443"/>
+  </test>
+  <test id="s1-p9" name="CU-UP Interface CU-UP Idle Mode">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:34.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:34.440" endtime="20260115 09:14:34.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:34.440" endtime="20260115 09:14:34.443"/>
+  </test>
+  <test id="s1-p10" name="CU-UP Interface PDCP Reordering">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:35.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:35.440" endtime="20260115 09:14:35.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:35.440" endtime="20260115 09:14:35.443"/>
+  </test>
+  <test id="s1-p11" name="CU-UP Interface Active Bearer Count">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:36.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:36.440" endtime="20260115 09:14:36.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:36.440" endtime="20260115 09:14:36.443"/>
+  </test>
+  <test id="s1-p12" name="CU-UP Interface RACH Procedure">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:37.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:37.440" endtime="20260115 09:14:37.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:37.440" endtime="20260115 09:14:37.443"/>
+  </test>
+  <test id="s1-p13" name="CU-UP Interface Latency Burst Window">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:38.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:38.440" endtime="20260115 09:14:38.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:38.440" endtime="20260115 09:14:38.443"/>
+  </test>
+  <test id="s1-p14" name="CU-UP Interface Interface Latency">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:39.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:39.440" endtime="20260115 09:14:39.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:39.440" endtime="20260115 09:14:39.443"/>
+  </test>
+  <test id="s1-p15" name="CU-UP Interface Throughput Sustained 60s">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:40.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:40.440" endtime="20260115 09:14:40.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:40.440" endtime="20260115 09:14:40.443"/>
+  </test>
+  <test id="s1-p16" name="CU-UP Interface Jitter P99">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:41.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:41.440" endtime="20260115 09:14:41.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:41.440" endtime="20260115 09:14:41.443"/>
+  </test>
+  <test id="s1-p17" name="CU-UP Interface Handover Latency">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:42.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:42.440" endtime="20260115 09:14:42.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:42.440" endtime="20260115 09:14:42.443"/>
+  </test>
+  <test id="s1-p18" name="CU-UP Interface Interface Re-establishment">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:43.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:43.440" endtime="20260115 09:14:43.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:43.440" endtime="20260115 09:14:43.443"/>
+  </test>
+  <test id="s1-p19" name="CU-UP Interface Packet Loss">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:44.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:44.440" endtime="20260115 09:14:44.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:44.440" endtime="20260115 09:14:44.443"/>
+  </test>
+  <test id="s1-p20" name="CU-UP Interface Buffer Status Report">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:45.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:45.440" endtime="20260115 09:14:45.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:45.440" endtime="20260115 09:14:45.443"/>
+  </test>
+  <test id="s1-p21" name="CU-UP Interface F1AP Setup">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:46.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:46.440" endtime="20260115 09:14:46.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:46.440" endtime="20260115 09:14:46.443"/>
+  </test>
+  <test id="s1-p22" name="CU-UP Interface E1AP Setup">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:47.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:47.440" endtime="20260115 09:14:47.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:47.440" endtime="20260115 09:14:47.443"/>
+  </test>
+  <test id="s1-p23" name="CU-UP Interface NG-U Tunnel">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:48.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:48.440" endtime="20260115 09:14:48.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:48.440" endtime="20260115 09:14:48.443"/>
+  </test>
+  <test id="s1-p24" name="CU-UP Interface NG-C Signaling">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:49.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:49.440" endtime="20260115 09:14:49.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:49.440" endtime="20260115 09:14:49.443"/>
+  </test>
+  <test id="s1-p25" name="CU-UP Interface CU-UP Idle Mode">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:50.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:50.440" endtime="20260115 09:14:50.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:50.440" endtime="20260115 09:14:50.443"/>
+  </test>
+  <test id="s1-p26" name="CU-UP Interface PDCP Reordering">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:51.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:51.440" endtime="20260115 09:14:51.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:51.440" endtime="20260115 09:14:51.443"/>
+  </test>
+  <test id="s1-p27" name="CU-UP Interface Active Bearer Count">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:52.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:52.440" endtime="20260115 09:14:52.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:52.440" endtime="20260115 09:14:52.443"/>
+  </test>
+  <test id="s1-p28" name="CU-UP Interface RACH Procedure">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:53.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:53.440" endtime="20260115 09:14:53.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:53.440" endtime="20260115 09:14:53.443"/>
+  </test>
+  <test id="s1-p29" name="CU-UP Interface Latency Burst Window">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:54.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:54.440" endtime="20260115 09:14:54.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:54.440" endtime="20260115 09:14:54.443"/>
+  </test>
+  <test id="s1-p30" name="CU-UP Interface Interface Latency">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:55.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:55.440" endtime="20260115 09:14:55.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:55.440" endtime="20260115 09:14:55.443"/>
+  </test>
+  <test id="s1-p31" name="CU-UP Interface Throughput Sustained 60s">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:56.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:56.440" endtime="20260115 09:14:56.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:56.440" endtime="20260115 09:14:56.443"/>
+  </test>
+  <test id="s1-p32" name="CU-UP Interface Jitter P99">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:57.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:57.440" endtime="20260115 09:14:57.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:57.440" endtime="20260115 09:14:57.443"/>
+  </test>
+  <test id="s1-p33" name="CU-UP Interface Handover Latency">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:58.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:58.440" endtime="20260115 09:14:58.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:58.440" endtime="20260115 09:14:58.443"/>
+  </test>
+  <test id="s1-p34" name="CU-UP Interface Interface Re-establishment">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:14:59.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:14:59.440" endtime="20260115 09:14:59.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:14:59.440" endtime="20260115 09:14:59.443"/>
+  </test>
+  <test id="s1-p35" name="CU-UP Interface Packet Loss">
+    <kw name="Execute Verification" library="VerizonEdgeLib">
+      <msg timestamp="20260115 09:15:00.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:00.440" endtime="20260115 09:15:00.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:00.440" endtime="20260115 09:15:00.443"/>
+  </test>
+  <test id="s2-t1" name="Redfish API PowerState /Systems/1">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <arg>/redfish/v1/Systems/1</arg>
+      <arg>PowerState</arg>
+      <msg timestamp="20260115 09:15:01.440" level="INFO">Executing verification /redfish/v1/Systems/1</msg>
+      <msg timestamp="20260115 09:15:01.443" level="FAIL">Field 'PowerState' not found in /redfish/v1/Systems/1 — endpoint moved or deprecated</msg>
+      <status status="FAIL" starttime="20260115 09:15:01.440" endtime="20260115 09:15:01.443"/>
+    </kw>
+    <status status="FAIL" starttime="20260115 09:15:01.440" endtime="20260115 09:15:01.443"/>
+  </test>
+  <test id="s2-t2" name="Redfish API Thermal FanSpeeds /Chassis/1/Thermal">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <arg>/redfish/v1/Chassis/1/Thermal</arg>
+      <arg>FanSpeeds[].CurrentReading</arg>
+      <msg timestamp="20260115 09:15:02.440" level="INFO">Executing verification /redfish/v1/Chassis/1/Thermal</msg>
+      <msg timestamp="20260115 09:15:02.443" level="FAIL">Field 'FanSpeeds[].CurrentReading' deprecated, schema changed in v1.16.0</msg>
+      <status status="FAIL" starttime="20260115 09:15:02.440" endtime="20260115 09:15:02.443"/>
+    </kw>
+    <status status="FAIL" starttime="20260115 09:15:02.440" endtime="20260115 09:15:02.443"/>
+  </test>
+  <test id="s2-t3" name="Redfish API EthernetInterface IPv6Addresses /Managers/1/EthernetInterfaces/1">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <arg>/redfish/v1/Managers/1/EthernetInterfaces/1</arg>
+      <arg>IPv6Addresses</arg>
+      <msg timestamp="20260115 09:15:03.440" level="INFO">Executing verification /redfish/v1/Managers/1/EthernetInterfaces/1</msg>
+      <msg timestamp="20260115 09:15:03.443" level="FAIL">New required field 'IPv6Addresses' missing — endpoint schema changed</msg>
+      <status status="FAIL" starttime="20260115 09:15:03.440" endtime="20260115 09:15:03.443"/>
+    </kw>
+    <status status="FAIL" starttime="20260115 09:15:03.440" endtime="20260115 09:15:03.443"/>
+  </test>
+  <test id="s2-t4" name="Redfish API ChassisIntrusion regression">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <arg>/redfish/v1/Chassis/1</arg>
+      <arg>ChassisIntrusion</arg>
+      <msg timestamp="20260115 09:15:04.440" level="INFO">Executing verification /redfish/v1/Chassis/1</msg>
+      <msg timestamp="20260115 09:15:04.443" level="FAIL">Regression: previously passing assertion now fails. Baseline 24.06 returned 'Normal', current returns 'HardwareIntrusion'</msg>
+      <status status="FAIL" starttime="20260115 09:15:04.440" endtime="20260115 09:15:04.443"/>
+    </kw>
+    <status status="FAIL" starttime="20260115 09:15:04.440" endtime="20260115 09:15:04.443"/>
+  </test>
+  <test id="s2-t5" name="Redfish API StorageController health">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <arg>/redfish/v1/Systems/1/Storage/1</arg>
+      <arg>StorageControllers</arg>
+      <msg timestamp="20260115 09:15:05.440" level="INFO">Executing verification /redfish/v1/Systems/1/Storage/1</msg>
+      <msg timestamp="20260115 09:15:05.443" level="FAIL">Storage controller reports degraded — endpoint moved to /Systems/1/Storage/1/Controllers</msg>
+      <status status="FAIL" starttime="20260115 09:15:05.440" endtime="20260115 09:15:05.443"/>
+    </kw>
+    <status status="FAIL" starttime="20260115 09:15:05.440" endtime="20260115 09:15:05.443"/>
+  </test>
+  <test id="s2-t6" name="Redfish API BIOS Attribute SecureBoot">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <arg>/redfish/v1/Systems/1/Bios</arg>
+      <arg>SecureBoot</arg>
+      <msg timestamp="20260115 09:15:06.440" level="INFO">Executing verification /redfish/v1/Systems/1/Bios</msg>
+      <msg timestamp="20260115 09:15:06.443" level="FAIL">BIOS attribute schema changed: SecureBoot field renamed in v1.16.0</msg>
+      <status status="FAIL" starttime="20260115 09:15:06.440" endtime="20260115 09:15:06.443"/>
+    </kw>
+    <status status="FAIL" starttime="20260115 09:15:06.440" endtime="20260115 09:15:06.443"/>
+  </test>
+  <test id="s2-w1" name="Redfish API AccountService LDAP borderline">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <arg>ldap_bind</arg>
+      <arg>threshold_ms=500</arg>
+      <msg timestamp="20260115 09:15:07.440" level="WARN">LDAP bind latency 487ms — within tolerance but approaching 500ms threshold, recommend monitor</msg>
+      <status status="PASS" starttime="20260115 09:15:07.440" endtime="20260115 09:15:07.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:07.440" endtime="20260115 09:15:07.443"/>
+  </test>
+  <test id="s2-w2" name="Redfish API UpdateService firmware inventory borderline">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <arg>/redfish/v1/UpdateService</arg>
+      <arg>threshold_ms=1000</arg>
+      <msg timestamp="20260115 09:15:08.440" level="WARN">Firmware inventory enumeration borderline — P99 latency 928ms, within tolerance, monitor</msg>
+      <status status="PASS" starttime="20260115 09:15:08.440" endtime="20260115 09:15:08.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:08.440" endtime="20260115 09:15:08.443"/>
+  </test>
+  <test id="s2-p1" name="Redfish API UpdateService HTTP push">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:09.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:09.440" endtime="20260115 09:15:09.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:09.440" endtime="20260115 09:15:09.443"/>
+  </test>
+  <test id="s2-p2" name="Redfish API AccountService Local Users">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:10.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:10.440" endtime="20260115 09:15:10.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:10.440" endtime="20260115 09:15:10.443"/>
+  </test>
+  <test id="s2-p3" name="Redfish API SessionService keep-alive">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:11.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:11.440" endtime="20260115 09:15:11.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:11.440" endtime="20260115 09:15:11.443"/>
+  </test>
+  <test id="s2-p4" name="Redfish API EventService subscriptions">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:12.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:12.440" endtime="20260115 09:15:12.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:12.440" endtime="20260115 09:15:12.443"/>
+  </test>
+  <test id="s2-p5" name="Redfish API Manager NetworkProtocols">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:13.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:13.440" endtime="20260115 09:15:13.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:13.440" endtime="20260115 09:15:13.443"/>
+  </test>
+  <test id="s2-p6" name="Redfish API Manager SerialConsole">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:14.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:14.440" endtime="20260115 09:15:14.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:14.440" endtime="20260115 09:15:14.443"/>
+  </test>
+  <test id="s2-p7" name="Redfish API Manager TimeZone">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:15.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:15.440" endtime="20260115 09:15:15.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:15.440" endtime="20260115 09:15:15.443"/>
+  </test>
+  <test id="s2-p8" name="Redfish API CertificateService GET">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:16.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:16.440" endtime="20260115 09:15:16.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:16.440" endtime="20260115 09:15:16.443"/>
+  </test>
+  <test id="s2-p9" name="Redfish API PowerState /Systems/1">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:17.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:17.440" endtime="20260115 09:15:17.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:17.440" endtime="20260115 09:15:17.443"/>
+  </test>
+  <test id="s2-p10" name="Redfish API Thermal FanSpeeds /Chassis/1/Thermal">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:18.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:18.440" endtime="20260115 09:15:18.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:18.440" endtime="20260115 09:15:18.443"/>
+  </test>
+  <test id="s2-p11" name="Redfish API EthernetInterface IPv6Addresses /Managers/1/EthernetInterfaces/1">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:19.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:19.440" endtime="20260115 09:15:19.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:19.440" endtime="20260115 09:15:19.443"/>
+  </test>
+  <test id="s2-p12" name="Redfish API ChassisIntrusion regression">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:20.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:20.440" endtime="20260115 09:15:20.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:20.440" endtime="20260115 09:15:20.443"/>
+  </test>
+  <test id="s2-p13" name="Redfish API StorageController health">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:21.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:21.440" endtime="20260115 09:15:21.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:21.440" endtime="20260115 09:15:21.443"/>
+  </test>
+  <test id="s2-p14" name="Redfish API BIOS Attribute SecureBoot">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:22.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:22.440" endtime="20260115 09:15:22.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:22.440" endtime="20260115 09:15:22.443"/>
+  </test>
+  <test id="s2-p15" name="Redfish API AccountService LDAP borderline">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:23.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:23.440" endtime="20260115 09:15:23.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:23.440" endtime="20260115 09:15:23.443"/>
+  </test>
+  <test id="s2-p16" name="Redfish API UpdateService firmware inventory borderline">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:24.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:24.440" endtime="20260115 09:15:24.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:24.440" endtime="20260115 09:15:24.443"/>
+  </test>
+  <test id="s2-p17" name="Redfish API UpdateService HTTP push">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:25.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:25.440" endtime="20260115 09:15:25.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:25.440" endtime="20260115 09:15:25.443"/>
+  </test>
+  <test id="s2-p18" name="Redfish API AccountService Local Users">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:26.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:26.440" endtime="20260115 09:15:26.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:26.440" endtime="20260115 09:15:26.443"/>
+  </test>
+  <test id="s2-p19" name="Redfish API SessionService keep-alive">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:27.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:27.440" endtime="20260115 09:15:27.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:27.440" endtime="20260115 09:15:27.443"/>
+  </test>
+  <test id="s2-p20" name="Redfish API EventService subscriptions">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:28.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:28.440" endtime="20260115 09:15:28.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:28.440" endtime="20260115 09:15:28.443"/>
+  </test>
+  <test id="s2-p21" name="Redfish API Manager NetworkProtocols">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:29.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:29.440" endtime="20260115 09:15:29.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:29.440" endtime="20260115 09:15:29.443"/>
+  </test>
+  <test id="s2-p22" name="Redfish API Manager SerialConsole">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:30.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:30.440" endtime="20260115 09:15:30.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:30.440" endtime="20260115 09:15:30.443"/>
+  </test>
+  <test id="s2-p23" name="Redfish API Manager TimeZone">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:31.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:31.440" endtime="20260115 09:15:31.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:31.440" endtime="20260115 09:15:31.443"/>
+  </test>
+  <test id="s2-p24" name="Redfish API CertificateService GET">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:32.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:32.440" endtime="20260115 09:15:32.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:32.440" endtime="20260115 09:15:32.443"/>
+  </test>
+  <test id="s2-p25" name="Redfish API PowerState /Systems/1">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:33.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:33.440" endtime="20260115 09:15:33.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:33.440" endtime="20260115 09:15:33.443"/>
+  </test>
+  <test id="s2-p26" name="Redfish API Thermal FanSpeeds /Chassis/1/Thermal">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:34.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:34.440" endtime="20260115 09:15:34.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:34.440" endtime="20260115 09:15:34.443"/>
+  </test>
+  <test id="s2-p27" name="Redfish API EthernetInterface IPv6Addresses /Managers/1/EthernetInterfaces/1">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:35.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:35.440" endtime="20260115 09:15:35.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:35.440" endtime="20260115 09:15:35.443"/>
+  </test>
+  <test id="s2-p28" name="Redfish API ChassisIntrusion regression">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:36.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:36.440" endtime="20260115 09:15:36.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:36.440" endtime="20260115 09:15:36.443"/>
+  </test>
+  <test id="s2-p29" name="Redfish API StorageController health">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:37.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:37.440" endtime="20260115 09:15:37.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:37.440" endtime="20260115 09:15:37.443"/>
+  </test>
+  <test id="s2-p30" name="Redfish API BIOS Attribute SecureBoot">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:38.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:38.440" endtime="20260115 09:15:38.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:38.440" endtime="20260115 09:15:38.443"/>
+  </test>
+  <test id="s2-p31" name="Redfish API AccountService LDAP borderline">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:39.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:39.440" endtime="20260115 09:15:39.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:39.440" endtime="20260115 09:15:39.443"/>
+  </test>
+  <test id="s2-p32" name="Redfish API UpdateService firmware inventory borderline">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:40.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:40.440" endtime="20260115 09:15:40.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:40.440" endtime="20260115 09:15:40.443"/>
+  </test>
+  <test id="s2-p33" name="Redfish API UpdateService HTTP push">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:41.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:41.440" endtime="20260115 09:15:41.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:41.440" endtime="20260115 09:15:41.443"/>
+  </test>
+  <test id="s2-p34" name="Redfish API AccountService Local Users">
+    <kw name="Execute Verification" library="RedfishLibrary">
+      <msg timestamp="20260115 09:15:42.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:42.440" endtime="20260115 09:15:42.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:42.440" endtime="20260115 09:15:42.443"/>
+  </test>
+  <test id="s3-p1" name="OpenShift Operator Operator Health">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:43.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:43.440" endtime="20260115 09:15:43.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:43.440" endtime="20260115 09:15:43.443"/>
+  </test>
+  <test id="s3-p2" name="OpenShift Operator Pod Scheduling SLA">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:44.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:44.440" endtime="20260115 09:15:44.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:44.440" endtime="20260115 09:15:44.443"/>
+  </test>
+  <test id="s3-p3" name="OpenShift Operator Node Readiness">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:45.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:45.440" endtime="20260115 09:15:45.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:45.440" endtime="20260115 09:15:45.443"/>
+  </test>
+  <test id="s3-p4" name="OpenShift Operator CSI Driver Health">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:46.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:46.440" endtime="20260115 09:15:46.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:46.440" endtime="20260115 09:15:46.443"/>
+  </test>
+  <test id="s3-p5" name="OpenShift Operator Namespace Quotas">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:47.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:47.440" endtime="20260115 09:15:47.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:47.440" endtime="20260115 09:15:47.443"/>
+  </test>
+  <test id="s3-p6" name="OpenShift Operator Operator Lifecycle Manager">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:48.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:48.440" endtime="20260115 09:15:48.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:48.440" endtime="20260115 09:15:48.443"/>
+  </test>
+  <test id="s3-p7" name="OpenShift Operator OperatorHub Subscriptions">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:49.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:49.440" endtime="20260115 09:15:49.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:49.440" endtime="20260115 09:15:49.443"/>
+  </test>
+  <test id="s3-p8" name="OpenShift Operator PodSecurityPolicy Enforcement">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:50.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:50.440" endtime="20260115 09:15:50.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:50.440" endtime="20260115 09:15:50.443"/>
+  </test>
+  <test id="s3-p9" name="OpenShift Operator OAuth Server Health">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:51.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:51.440" endtime="20260115 09:15:51.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:51.440" endtime="20260115 09:15:51.443"/>
+  </test>
+  <test id="s3-p10" name="OpenShift Operator API Server Latency">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:52.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:52.440" endtime="20260115 09:15:52.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:52.440" endtime="20260115 09:15:52.443"/>
+  </test>
+  <test id="s3-p11" name="OpenShift Operator Etcd Member Sync">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:53.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:53.440" endtime="20260115 09:15:53.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:53.440" endtime="20260115 09:15:53.443"/>
+  </test>
+  <test id="s3-p12" name="OpenShift Operator Image Registry Health">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:54.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:54.440" endtime="20260115 09:15:54.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:54.440" endtime="20260115 09:15:54.443"/>
+  </test>
+  <test id="s3-p13" name="OpenShift Operator DNS Service">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:55.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:55.440" endtime="20260115 09:15:55.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:55.440" endtime="20260115 09:15:55.443"/>
+  </test>
+  <test id="s3-p14" name="OpenShift Operator Console Health">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:56.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:56.440" endtime="20260115 09:15:56.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:56.440" endtime="20260115 09:15:56.443"/>
+  </test>
+  <test id="s3-p15" name="OpenShift Operator Operator Health">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:57.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:57.440" endtime="20260115 09:15:57.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:57.440" endtime="20260115 09:15:57.443"/>
+  </test>
+  <test id="s3-p16" name="OpenShift Operator Pod Scheduling SLA">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:58.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:58.440" endtime="20260115 09:15:58.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:58.440" endtime="20260115 09:15:58.443"/>
+  </test>
+  <test id="s3-p17" name="OpenShift Operator Node Readiness">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:15:59.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:15:59.440" endtime="20260115 09:15:59.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:15:59.440" endtime="20260115 09:15:59.443"/>
+  </test>
+  <test id="s3-p18" name="OpenShift Operator CSI Driver Health">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:00.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:00.440" endtime="20260115 09:16:00.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:00.440" endtime="20260115 09:16:00.443"/>
+  </test>
+  <test id="s3-p19" name="OpenShift Operator Namespace Quotas">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:01.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:01.440" endtime="20260115 09:16:01.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:01.440" endtime="20260115 09:16:01.443"/>
+  </test>
+  <test id="s3-p20" name="OpenShift Operator Operator Lifecycle Manager">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:02.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:02.440" endtime="20260115 09:16:02.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:02.440" endtime="20260115 09:16:02.443"/>
+  </test>
+  <test id="s3-p21" name="OpenShift Operator OperatorHub Subscriptions">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:03.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:03.440" endtime="20260115 09:16:03.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:03.440" endtime="20260115 09:16:03.443"/>
+  </test>
+  <test id="s3-p22" name="OpenShift Operator PodSecurityPolicy Enforcement">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:04.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:04.440" endtime="20260115 09:16:04.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:04.440" endtime="20260115 09:16:04.443"/>
+  </test>
+  <test id="s3-p23" name="OpenShift Operator OAuth Server Health">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:05.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:05.440" endtime="20260115 09:16:05.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:05.440" endtime="20260115 09:16:05.443"/>
+  </test>
+  <test id="s3-p24" name="OpenShift Operator API Server Latency">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:06.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:06.440" endtime="20260115 09:16:06.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:06.440" endtime="20260115 09:16:06.443"/>
+  </test>
+  <test id="s3-p25" name="OpenShift Operator Etcd Member Sync">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:07.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:07.440" endtime="20260115 09:16:07.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:07.440" endtime="20260115 09:16:07.443"/>
+  </test>
+  <test id="s3-p26" name="OpenShift Operator Image Registry Health">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:08.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:08.440" endtime="20260115 09:16:08.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:08.440" endtime="20260115 09:16:08.443"/>
+  </test>
+  <test id="s3-p27" name="OpenShift Operator DNS Service">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:09.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:09.440" endtime="20260115 09:16:09.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:09.440" endtime="20260115 09:16:09.443"/>
+  </test>
+  <test id="s3-p28" name="OpenShift Operator Console Health">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:10.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:10.440" endtime="20260115 09:16:10.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:10.440" endtime="20260115 09:16:10.443"/>
+  </test>
+  <test id="s3-p29" name="OpenShift Operator Operator Health">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:11.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:11.440" endtime="20260115 09:16:11.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:11.440" endtime="20260115 09:16:11.443"/>
+  </test>
+  <test id="s3-p30" name="OpenShift Operator Pod Scheduling SLA">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:12.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:12.440" endtime="20260115 09:16:12.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:12.440" endtime="20260115 09:16:12.443"/>
+  </test>
+  <test id="s3-p31" name="OpenShift Operator Node Readiness">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:13.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:13.440" endtime="20260115 09:16:13.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:13.440" endtime="20260115 09:16:13.443"/>
+  </test>
+  <test id="s3-p32" name="OpenShift Operator CSI Driver Health">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:14.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:14.440" endtime="20260115 09:16:14.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:14.440" endtime="20260115 09:16:14.443"/>
+  </test>
+  <test id="s3-p33" name="OpenShift Operator Namespace Quotas">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:15.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:15.440" endtime="20260115 09:16:15.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:15.440" endtime="20260115 09:16:15.443"/>
+  </test>
+  <test id="s3-p34" name="OpenShift Operator Operator Lifecycle Manager">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:16.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:16.440" endtime="20260115 09:16:16.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:16.440" endtime="20260115 09:16:16.443"/>
+  </test>
+  <test id="s3-p35" name="OpenShift Operator OperatorHub Subscriptions">
+    <kw name="Execute Verification" library="OpenShiftLibrary">
+      <msg timestamp="20260115 09:16:17.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:17.440" endtime="20260115 09:16:17.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:17.440" endtime="20260115 09:16:17.443"/>
+  </test>
+  <test id="s4-w1" name="Wind River CaaS Boot Boot Sequence">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <arg>caas_boot_recovery</arg>
+      <arg>threshold_s=50</arg>
+      <msg timestamp="20260115 09:16:18.440" level="WARN">Boot recovery time 47s — borderline, within tolerance, monitor at next cycle</msg>
+      <status status="PASS" starttime="20260115 09:16:18.440" endtime="20260115 09:16:18.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:18.440" endtime="20260115 09:16:18.443"/>
+  </test>
+  <test id="s4-p1" name="Wind River CaaS Boot Boot Recovery After Reset">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:19.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:19.440" endtime="20260115 09:16:19.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:19.440" endtime="20260115 09:16:19.443"/>
+  </test>
+  <test id="s4-p2" name="Wind River CaaS Boot Container Runtime Containerd">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:20.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:20.440" endtime="20260115 09:16:20.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:20.440" endtime="20260115 09:16:20.443"/>
+  </test>
+  <test id="s4-p3" name="Wind River CaaS Boot CaaS Orchestrator Pod Scheduling">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:21.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:21.440" endtime="20260115 09:16:21.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:21.440" endtime="20260115 09:16:21.443"/>
+  </test>
+  <test id="s4-p4" name="Wind River CaaS Boot CRI-O Compatibility">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:22.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:22.440" endtime="20260115 09:16:22.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:22.440" endtime="20260115 09:16:22.443"/>
+  </test>
+  <test id="s4-p5" name="Wind River CaaS Boot Cgroup v2 Mount">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:23.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:23.440" endtime="20260115 09:16:23.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:23.440" endtime="20260115 09:16:23.443"/>
+  </test>
+  <test id="s4-p6" name="Wind River CaaS Boot Kernel Module Loader">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:24.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:24.440" endtime="20260115 09:16:24.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:24.440" endtime="20260115 09:16:24.443"/>
+  </test>
+  <test id="s4-p7" name="Wind River CaaS Boot IOMMU Initialization">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:25.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:25.440" endtime="20260115 09:16:25.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:25.440" endtime="20260115 09:16:25.443"/>
+  </test>
+  <test id="s4-p8" name="Wind River CaaS Boot TPM 2.0 PCR Validation">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:26.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:26.440" endtime="20260115 09:16:26.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:26.440" endtime="20260115 09:16:26.443"/>
+  </test>
+  <test id="s4-p9" name="Wind River CaaS Boot Boot Sequence">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:27.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:27.440" endtime="20260115 09:16:27.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:27.440" endtime="20260115 09:16:27.443"/>
+  </test>
+  <test id="s4-p10" name="Wind River CaaS Boot Boot Recovery After Reset">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:28.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:28.440" endtime="20260115 09:16:28.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:28.440" endtime="20260115 09:16:28.443"/>
+  </test>
+  <test id="s4-p11" name="Wind River CaaS Boot Container Runtime Containerd">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:29.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:29.440" endtime="20260115 09:16:29.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:29.440" endtime="20260115 09:16:29.443"/>
+  </test>
+  <test id="s4-p12" name="Wind River CaaS Boot CaaS Orchestrator Pod Scheduling">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:30.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:30.440" endtime="20260115 09:16:30.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:30.440" endtime="20260115 09:16:30.443"/>
+  </test>
+  <test id="s4-p13" name="Wind River CaaS Boot CRI-O Compatibility">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:31.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:31.440" endtime="20260115 09:16:31.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:31.440" endtime="20260115 09:16:31.443"/>
+  </test>
+  <test id="s4-p14" name="Wind River CaaS Boot Cgroup v2 Mount">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:32.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:32.440" endtime="20260115 09:16:32.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:32.440" endtime="20260115 09:16:32.443"/>
+  </test>
+  <test id="s4-p15" name="Wind River CaaS Boot Kernel Module Loader">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:33.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:33.440" endtime="20260115 09:16:33.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:33.440" endtime="20260115 09:16:33.443"/>
+  </test>
+  <test id="s4-p16" name="Wind River CaaS Boot IOMMU Initialization">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:34.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:34.440" endtime="20260115 09:16:34.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:34.440" endtime="20260115 09:16:34.443"/>
+  </test>
+  <test id="s4-p17" name="Wind River CaaS Boot TPM 2.0 PCR Validation">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:35.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:35.440" endtime="20260115 09:16:35.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:35.440" endtime="20260115 09:16:35.443"/>
+  </test>
+  <test id="s4-p18" name="Wind River CaaS Boot Boot Sequence">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:36.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:36.440" endtime="20260115 09:16:36.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:36.440" endtime="20260115 09:16:36.443"/>
+  </test>
+  <test id="s4-p19" name="Wind River CaaS Boot Boot Recovery After Reset">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:37.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:37.440" endtime="20260115 09:16:37.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:37.440" endtime="20260115 09:16:37.443"/>
+  </test>
+  <test id="s4-p20" name="Wind River CaaS Boot Container Runtime Containerd">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:38.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:38.440" endtime="20260115 09:16:38.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:38.440" endtime="20260115 09:16:38.443"/>
+  </test>
+  <test id="s4-p21" name="Wind River CaaS Boot CaaS Orchestrator Pod Scheduling">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:39.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:39.440" endtime="20260115 09:16:39.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:39.440" endtime="20260115 09:16:39.443"/>
+  </test>
+  <test id="s4-p22" name="Wind River CaaS Boot CRI-O Compatibility">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:40.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:40.440" endtime="20260115 09:16:40.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:40.440" endtime="20260115 09:16:40.443"/>
+  </test>
+  <test id="s4-p23" name="Wind River CaaS Boot Cgroup v2 Mount">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:41.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:41.440" endtime="20260115 09:16:41.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:41.440" endtime="20260115 09:16:41.443"/>
+  </test>
+  <test id="s4-p24" name="Wind River CaaS Boot Kernel Module Loader">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:42.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:42.440" endtime="20260115 09:16:42.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:42.440" endtime="20260115 09:16:42.443"/>
+  </test>
+  <test id="s4-p25" name="Wind River CaaS Boot IOMMU Initialization">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:43.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:43.440" endtime="20260115 09:16:43.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:43.440" endtime="20260115 09:16:43.443"/>
+  </test>
+  <test id="s4-p26" name="Wind River CaaS Boot TPM 2.0 PCR Validation">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:44.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:44.440" endtime="20260115 09:16:44.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:44.440" endtime="20260115 09:16:44.443"/>
+  </test>
+  <test id="s4-p27" name="Wind River CaaS Boot Boot Sequence">
+    <kw name="Execute Verification" library="WindRiverCaasLib">
+      <msg timestamp="20260115 09:16:45.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:45.440" endtime="20260115 09:16:45.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:45.440" endtime="20260115 09:16:45.443"/>
+  </test>
+  <test id="s5-p1" name="Ansible Playbook Idempotency power_check.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:16:46.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:46.440" endtime="20260115 09:16:46.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:46.440" endtime="20260115 09:16:46.443"/>
+  </test>
+  <test id="s5-p2" name="Ansible Playbook Idempotency node_health_check.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:16:47.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:47.440" endtime="20260115 09:16:47.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:47.440" endtime="20260115 09:16:47.443"/>
+  </test>
+  <test id="s5-p3" name="Ansible Playbook Idempotency pre_upgrade_validation.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:16:48.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:48.440" endtime="20260115 09:16:48.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:48.440" endtime="20260115 09:16:48.443"/>
+  </test>
+  <test id="s5-p4" name="Ansible Playbook Idempotency post_upgrade_validation.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:16:49.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:49.440" endtime="20260115 09:16:49.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:49.440" endtime="20260115 09:16:49.443"/>
+  </test>
+  <test id="s5-p5" name="Ansible Playbook Idempotency site_readiness_check.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:16:50.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:50.440" endtime="20260115 09:16:50.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:50.440" endtime="20260115 09:16:50.443"/>
+  </test>
+  <test id="s5-p6" name="Ansible Playbook Idempotency wave_deployment_preflight.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:16:51.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:51.440" endtime="20260115 09:16:51.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:51.440" endtime="20260115 09:16:51.443"/>
+  </test>
+  <test id="s5-p7" name="Ansible Playbook Idempotency power_check.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:16:52.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:52.440" endtime="20260115 09:16:52.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:52.440" endtime="20260115 09:16:52.443"/>
+  </test>
+  <test id="s5-p8" name="Ansible Playbook Idempotency node_health_check.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:16:53.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:53.440" endtime="20260115 09:16:53.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:53.440" endtime="20260115 09:16:53.443"/>
+  </test>
+  <test id="s5-p9" name="Ansible Playbook Idempotency pre_upgrade_validation.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:16:54.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:54.440" endtime="20260115 09:16:54.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:54.440" endtime="20260115 09:16:54.443"/>
+  </test>
+  <test id="s5-p10" name="Ansible Playbook Idempotency post_upgrade_validation.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:16:55.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:55.440" endtime="20260115 09:16:55.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:55.440" endtime="20260115 09:16:55.443"/>
+  </test>
+  <test id="s5-p11" name="Ansible Playbook Idempotency site_readiness_check.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:16:56.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:56.440" endtime="20260115 09:16:56.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:56.440" endtime="20260115 09:16:56.443"/>
+  </test>
+  <test id="s5-p12" name="Ansible Playbook Idempotency wave_deployment_preflight.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:16:57.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:57.440" endtime="20260115 09:16:57.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:57.440" endtime="20260115 09:16:57.443"/>
+  </test>
+  <test id="s5-p13" name="Ansible Playbook Idempotency power_check.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:16:58.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:58.440" endtime="20260115 09:16:58.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:58.440" endtime="20260115 09:16:58.443"/>
+  </test>
+  <test id="s5-p14" name="Ansible Playbook Idempotency node_health_check.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:16:59.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:16:59.440" endtime="20260115 09:16:59.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:16:59.440" endtime="20260115 09:16:59.443"/>
+  </test>
+  <test id="s5-p15" name="Ansible Playbook Idempotency pre_upgrade_validation.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:17:00.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:00.440" endtime="20260115 09:17:00.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:00.440" endtime="20260115 09:17:00.443"/>
+  </test>
+  <test id="s5-p16" name="Ansible Playbook Idempotency post_upgrade_validation.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:17:01.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:01.440" endtime="20260115 09:17:01.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:01.440" endtime="20260115 09:17:01.443"/>
+  </test>
+  <test id="s5-p17" name="Ansible Playbook Idempotency site_readiness_check.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:17:02.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:02.440" endtime="20260115 09:17:02.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:02.440" endtime="20260115 09:17:02.443"/>
+  </test>
+  <test id="s5-p18" name="Ansible Playbook Idempotency wave_deployment_preflight.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:17:03.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:03.440" endtime="20260115 09:17:03.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:03.440" endtime="20260115 09:17:03.443"/>
+  </test>
+  <test id="s5-p19" name="Ansible Playbook Idempotency power_check.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:17:04.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:04.440" endtime="20260115 09:17:04.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:04.440" endtime="20260115 09:17:04.443"/>
+  </test>
+  <test id="s5-p20" name="Ansible Playbook Idempotency node_health_check.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:17:05.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:05.440" endtime="20260115 09:17:05.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:05.440" endtime="20260115 09:17:05.443"/>
+  </test>
+  <test id="s5-p21" name="Ansible Playbook Idempotency pre_upgrade_validation.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:17:06.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:06.440" endtime="20260115 09:17:06.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:06.440" endtime="20260115 09:17:06.443"/>
+  </test>
+  <test id="s5-p22" name="Ansible Playbook Idempotency post_upgrade_validation.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:17:07.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:07.440" endtime="20260115 09:17:07.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:07.440" endtime="20260115 09:17:07.443"/>
+  </test>
+  <test id="s5-p23" name="Ansible Playbook Idempotency site_readiness_check.yml Idempotency">
+    <kw name="Execute Verification" library="AnsibleLib">
+      <msg timestamp="20260115 09:17:08.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:08.440" endtime="20260115 09:17:08.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:08.440" endtime="20260115 09:17:08.443"/>
+  </test>
+  <test id="s6-w1" name="RT Kernel Interrupt Latency Cyclictest P99 Core 0">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <arg>core_4_cyclictest</arg>
+      <arg>threshold_us=30</arg>
+      <msg timestamp="20260115 09:17:09.440" level="WARN">P99 latency 28us — borderline, threshold 30us, recommend monitor</msg>
+      <status status="PASS" starttime="20260115 09:17:09.440" endtime="20260115 09:17:09.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:09.440" endtime="20260115 09:17:09.443"/>
+  </test>
+  <test id="s6-p1" name="RT Kernel Interrupt Latency Cyclictest P99 Core 4">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:10.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:10.440" endtime="20260115 09:17:10.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:10.440" endtime="20260115 09:17:10.443"/>
+  </test>
+  <test id="s6-p2" name="RT Kernel Interrupt Latency Cyclictest P99 Core 8">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:11.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:11.440" endtime="20260115 09:17:11.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:11.440" endtime="20260115 09:17:11.443"/>
+  </test>
+  <test id="s6-p3" name="RT Kernel Interrupt Latency Cyclictest P99 Core 12">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:12.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:12.440" endtime="20260115 09:17:12.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:12.440" endtime="20260115 09:17:12.443"/>
+  </test>
+  <test id="s6-p4" name="RT Kernel Interrupt Latency Interrupt Latency Boot">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:13.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:13.440" endtime="20260115 09:17:13.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:13.440" endtime="20260115 09:17:13.443"/>
+  </test>
+  <test id="s6-p5" name="RT Kernel Interrupt Latency PREEMPT_RT Detection">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:14.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:14.440" endtime="20260115 09:17:14.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:14.440" endtime="20260115 09:17:14.443"/>
+  </test>
+  <test id="s6-p6" name="RT Kernel Interrupt Latency Sched RT Runtime Setting">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:15.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:15.440" endtime="20260115 09:17:15.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:15.440" endtime="20260115 09:17:15.443"/>
+  </test>
+  <test id="s6-p7" name="RT Kernel Interrupt Latency Cyclictest P99 Core 0">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:16.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:16.440" endtime="20260115 09:17:16.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:16.440" endtime="20260115 09:17:16.443"/>
+  </test>
+  <test id="s6-p8" name="RT Kernel Interrupt Latency Cyclictest P99 Core 4">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:17.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:17.440" endtime="20260115 09:17:17.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:17.440" endtime="20260115 09:17:17.443"/>
+  </test>
+  <test id="s6-p9" name="RT Kernel Interrupt Latency Cyclictest P99 Core 8">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:18.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:18.440" endtime="20260115 09:17:18.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:18.440" endtime="20260115 09:17:18.443"/>
+  </test>
+  <test id="s6-p10" name="RT Kernel Interrupt Latency Cyclictest P99 Core 12">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:19.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:19.440" endtime="20260115 09:17:19.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:19.440" endtime="20260115 09:17:19.443"/>
+  </test>
+  <test id="s6-p11" name="RT Kernel Interrupt Latency Interrupt Latency Boot">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:20.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:20.440" endtime="20260115 09:17:20.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:20.440" endtime="20260115 09:17:20.443"/>
+  </test>
+  <test id="s6-p12" name="RT Kernel Interrupt Latency PREEMPT_RT Detection">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:21.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:21.440" endtime="20260115 09:17:21.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:21.440" endtime="20260115 09:17:21.443"/>
+  </test>
+  <test id="s6-p13" name="RT Kernel Interrupt Latency Sched RT Runtime Setting">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:22.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:22.440" endtime="20260115 09:17:22.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:22.440" endtime="20260115 09:17:22.443"/>
+  </test>
+  <test id="s6-p14" name="RT Kernel Interrupt Latency Cyclictest P99 Core 0">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:23.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:23.440" endtime="20260115 09:17:23.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:23.440" endtime="20260115 09:17:23.443"/>
+  </test>
+  <test id="s6-p15" name="RT Kernel Interrupt Latency Cyclictest P99 Core 4">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:24.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:24.440" endtime="20260115 09:17:24.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:24.440" endtime="20260115 09:17:24.443"/>
+  </test>
+  <test id="s6-p16" name="RT Kernel Interrupt Latency Cyclictest P99 Core 8">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:25.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:25.440" endtime="20260115 09:17:25.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:25.440" endtime="20260115 09:17:25.443"/>
+  </test>
+  <test id="s6-p17" name="RT Kernel Interrupt Latency Cyclictest P99 Core 12">
+    <kw name="Execute Verification" library="RTKernelLib">
+      <msg timestamp="20260115 09:17:26.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:26.440" endtime="20260115 09:17:26.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:26.440" endtime="20260115 09:17:26.443"/>
+  </test>
+  <test id="s7-p1" name="Firmware Signature Validation Signature Validation Boot Chain">
+    <kw name="Execute Verification" library="FirmwareLib">
+      <msg timestamp="20260115 09:17:27.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:27.440" endtime="20260115 09:17:27.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:27.440" endtime="20260115 09:17:27.443"/>
+  </test>
+  <test id="s7-p2" name="Firmware Signature Validation U-Boot Signature">
+    <kw name="Execute Verification" library="FirmwareLib">
+      <msg timestamp="20260115 09:17:28.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:28.440" endtime="20260115 09:17:28.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:28.440" endtime="20260115 09:17:28.443"/>
+  </test>
+  <test id="s7-p3" name="Firmware Signature Validation Kernel Initrd Hash">
+    <kw name="Execute Verification" library="FirmwareLib">
+      <msg timestamp="20260115 09:17:29.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:29.440" endtime="20260115 09:17:29.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:29.440" endtime="20260115 09:17:29.443"/>
+  </test>
+  <test id="s7-p4" name="Firmware Signature Validation Secure Boot Chain">
+    <kw name="Execute Verification" library="FirmwareLib">
+      <msg timestamp="20260115 09:17:30.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:30.440" endtime="20260115 09:17:30.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:30.440" endtime="20260115 09:17:30.443"/>
+  </test>
+  <test id="s7-p5" name="Firmware Signature Validation TPM Quote Validation">
+    <kw name="Execute Verification" library="FirmwareLib">
+      <msg timestamp="20260115 09:17:31.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:31.440" endtime="20260115 09:17:31.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:31.440" endtime="20260115 09:17:31.443"/>
+  </test>
+  <test id="s7-p6" name="Firmware Signature Validation BMC Firmware Hash">
+    <kw name="Execute Verification" library="FirmwareLib">
+      <msg timestamp="20260115 09:17:32.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:32.440" endtime="20260115 09:17:32.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:32.440" endtime="20260115 09:17:32.443"/>
+  </test>
+  <test id="s7-p7" name="Firmware Signature Validation Signature Validation Boot Chain">
+    <kw name="Execute Verification" library="FirmwareLib">
+      <msg timestamp="20260115 09:17:33.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:33.440" endtime="20260115 09:17:33.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:33.440" endtime="20260115 09:17:33.443"/>
+  </test>
+  <test id="s7-p8" name="Firmware Signature Validation U-Boot Signature">
+    <kw name="Execute Verification" library="FirmwareLib">
+      <msg timestamp="20260115 09:17:34.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:34.440" endtime="20260115 09:17:34.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:34.440" endtime="20260115 09:17:34.443"/>
+  </test>
+  <test id="s7-p9" name="Firmware Signature Validation Kernel Initrd Hash">
+    <kw name="Execute Verification" library="FirmwareLib">
+      <msg timestamp="20260115 09:17:35.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:35.440" endtime="20260115 09:17:35.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:35.440" endtime="20260115 09:17:35.443"/>
+  </test>
+  <test id="s7-p10" name="Firmware Signature Validation Secure Boot Chain">
+    <kw name="Execute Verification" library="FirmwareLib">
+      <msg timestamp="20260115 09:17:36.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:36.440" endtime="20260115 09:17:36.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:36.440" endtime="20260115 09:17:36.443"/>
+  </test>
+  <test id="s7-p11" name="Firmware Signature Validation TPM Quote Validation">
+    <kw name="Execute Verification" library="FirmwareLib">
+      <msg timestamp="20260115 09:17:37.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:37.440" endtime="20260115 09:17:37.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:37.440" endtime="20260115 09:17:37.443"/>
+  </test>
+  <test id="s7-p12" name="Firmware Signature Validation BMC Firmware Hash">
+    <kw name="Execute Verification" library="FirmwareLib">
+      <msg timestamp="20260115 09:17:38.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:38.440" endtime="20260115 09:17:38.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:38.440" endtime="20260115 09:17:38.443"/>
+  </test>
+  <test id="s7-p13" name="Firmware Signature Validation Signature Validation Boot Chain">
+    <kw name="Execute Verification" library="FirmwareLib">
+      <msg timestamp="20260115 09:17:39.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:39.440" endtime="20260115 09:17:39.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:39.440" endtime="20260115 09:17:39.443"/>
+  </test>
+  <test id="s7-p14" name="Firmware Signature Validation U-Boot Signature">
+    <kw name="Execute Verification" library="FirmwareLib">
+      <msg timestamp="20260115 09:17:40.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:40.440" endtime="20260115 09:17:40.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:40.440" endtime="20260115 09:17:40.443"/>
+  </test>
+  <test id="s8-t1" name="OAM Interface Interface Packet Loss">
+    <kw name="Execute Verification" library="OAMLib">
+      <arg>oam_eth0</arg>
+      <arg>threshold_pct=0.1</arg>
+      <msg timestamp="20260115 09:17:41.440" level="INFO">Executing verification oam_eth0</msg>
+      <msg timestamp="20260115 09:17:41.443" level="FAIL">Packet loss 0.6% exceeds threshold 0.1% on oam_eth0</msg>
+      <status status="FAIL" starttime="20260115 09:17:41.440" endtime="20260115 09:17:41.443"/>
+    </kw>
+    <status status="FAIL" starttime="20260115 09:17:41.440" endtime="20260115 09:17:41.443"/>
+  </test>
+  <test id="s8-p1" name="OAM Interface Interface MTU">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:42.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:42.440" endtime="20260115 09:17:42.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:42.440" endtime="20260115 09:17:42.443"/>
+  </test>
+  <test id="s8-p2" name="OAM Interface Interface Speed Negotiation">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:43.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:43.440" endtime="20260115 09:17:43.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:43.440" endtime="20260115 09:17:43.443"/>
+  </test>
+  <test id="s8-p3" name="OAM Interface Telnet Disabled">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:44.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:44.440" endtime="20260115 09:17:44.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:44.440" endtime="20260115 09:17:44.443"/>
+  </test>
+  <test id="s8-p4" name="OAM Interface SSH Banner Validation">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:45.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:45.440" endtime="20260115 09:17:45.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:45.440" endtime="20260115 09:17:45.443"/>
+  </test>
+  <test id="s8-p5" name="OAM Interface NTP Sync Stratum">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:46.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:46.440" endtime="20260115 09:17:46.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:46.440" endtime="20260115 09:17:46.443"/>
+  </test>
+  <test id="s8-p6" name="OAM Interface SNMP Walk Response">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:47.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:47.440" endtime="20260115 09:17:47.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:47.440" endtime="20260115 09:17:47.443"/>
+  </test>
+  <test id="s8-p7" name="OAM Interface Interface Packet Loss">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:48.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:48.440" endtime="20260115 09:17:48.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:48.440" endtime="20260115 09:17:48.443"/>
+  </test>
+  <test id="s8-p8" name="OAM Interface Interface MTU">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:49.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:49.440" endtime="20260115 09:17:49.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:49.440" endtime="20260115 09:17:49.443"/>
+  </test>
+  <test id="s8-p9" name="OAM Interface Interface Speed Negotiation">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:50.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:50.440" endtime="20260115 09:17:50.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:50.440" endtime="20260115 09:17:50.443"/>
+  </test>
+  <test id="s8-p10" name="OAM Interface Telnet Disabled">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:51.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:51.440" endtime="20260115 09:17:51.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:51.440" endtime="20260115 09:17:51.443"/>
+  </test>
+  <test id="s8-p11" name="OAM Interface SSH Banner Validation">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:52.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:52.440" endtime="20260115 09:17:52.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:52.440" endtime="20260115 09:17:52.443"/>
+  </test>
+  <test id="s8-p12" name="OAM Interface NTP Sync Stratum">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:53.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:53.440" endtime="20260115 09:17:53.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:53.440" endtime="20260115 09:17:53.443"/>
+  </test>
+  <test id="s8-p13" name="OAM Interface SNMP Walk Response">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:54.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:54.440" endtime="20260115 09:17:54.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:54.440" endtime="20260115 09:17:54.443"/>
+  </test>
+  <test id="s8-p14" name="OAM Interface Interface Packet Loss">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:55.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:55.440" endtime="20260115 09:17:55.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:55.440" endtime="20260115 09:17:55.443"/>
+  </test>
+  <test id="s8-p15" name="OAM Interface Interface MTU">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:56.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:56.440" endtime="20260115 09:17:56.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:56.440" endtime="20260115 09:17:56.443"/>
+  </test>
+  <test id="s8-p16" name="OAM Interface Interface Speed Negotiation">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:57.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:57.440" endtime="20260115 09:17:57.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:57.440" endtime="20260115 09:17:57.443"/>
+  </test>
+  <test id="s8-p17" name="OAM Interface Telnet Disabled">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:58.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:58.440" endtime="20260115 09:17:58.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:58.440" endtime="20260115 09:17:58.443"/>
+  </test>
+  <test id="s8-p18" name="OAM Interface SSH Banner Validation">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:17:59.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:17:59.440" endtime="20260115 09:17:59.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:17:59.440" endtime="20260115 09:17:59.443"/>
+  </test>
+  <test id="s8-p19" name="OAM Interface NTP Sync Stratum">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:18:00.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:00.440" endtime="20260115 09:18:00.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:00.440" endtime="20260115 09:18:00.443"/>
+  </test>
+  <test id="s8-p20" name="OAM Interface SNMP Walk Response">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:18:01.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:01.440" endtime="20260115 09:18:01.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:01.440" endtime="20260115 09:18:01.443"/>
+  </test>
+  <test id="s8-p21" name="OAM Interface Interface Packet Loss">
+    <kw name="Execute Verification" library="OAMLib">
+      <msg timestamp="20260115 09:18:02.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:02.440" endtime="20260115 09:18:02.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:02.440" endtime="20260115 09:18:02.443"/>
+  </test>
+  <test id="s9-p1" name="gNB-DU Configuration Configuration Push">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:03.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:03.440" endtime="20260115 09:18:03.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:03.440" endtime="20260115 09:18:03.443"/>
+  </test>
+  <test id="s9-p2" name="gNB-DU Configuration Cell Activation">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:04.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:04.440" endtime="20260115 09:18:04.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:04.440" endtime="20260115 09:18:04.443"/>
+  </test>
+  <test id="s9-p3" name="gNB-DU Configuration PRACH Configuration">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:05.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:05.440" endtime="20260115 09:18:05.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:05.440" endtime="20260115 09:18:05.443"/>
+  </test>
+  <test id="s9-p4" name="gNB-DU Configuration PUCCH Resource Mapping">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:06.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:06.440" endtime="20260115 09:18:06.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:06.440" endtime="20260115 09:18:06.443"/>
+  </test>
+  <test id="s9-p5" name="gNB-DU Configuration RACH-ConfigCommon">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:07.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:07.440" endtime="20260115 09:18:07.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:07.440" endtime="20260115 09:18:07.443"/>
+  </test>
+  <test id="s9-p6" name="gNB-DU Configuration F1 Setup Response">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:08.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:08.440" endtime="20260115 09:18:08.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:08.440" endtime="20260115 09:18:08.443"/>
+  </test>
+  <test id="s9-p7" name="gNB-DU Configuration Configuration Push">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:09.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:09.440" endtime="20260115 09:18:09.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:09.440" endtime="20260115 09:18:09.443"/>
+  </test>
+  <test id="s9-p8" name="gNB-DU Configuration Cell Activation">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:10.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:10.440" endtime="20260115 09:18:10.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:10.440" endtime="20260115 09:18:10.443"/>
+  </test>
+  <test id="s9-p9" name="gNB-DU Configuration PRACH Configuration">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:11.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:11.440" endtime="20260115 09:18:11.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:11.440" endtime="20260115 09:18:11.443"/>
+  </test>
+  <test id="s9-p10" name="gNB-DU Configuration PUCCH Resource Mapping">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:12.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:12.440" endtime="20260115 09:18:12.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:12.440" endtime="20260115 09:18:12.443"/>
+  </test>
+  <test id="s9-p11" name="gNB-DU Configuration RACH-ConfigCommon">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:13.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:13.440" endtime="20260115 09:18:13.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:13.440" endtime="20260115 09:18:13.443"/>
+  </test>
+  <test id="s9-p12" name="gNB-DU Configuration F1 Setup Response">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:14.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:14.440" endtime="20260115 09:18:14.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:14.440" endtime="20260115 09:18:14.443"/>
+  </test>
+  <test id="s9-p13" name="gNB-DU Configuration Configuration Push">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:15.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:15.440" endtime="20260115 09:18:15.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:15.440" endtime="20260115 09:18:15.443"/>
+  </test>
+  <test id="s9-p14" name="gNB-DU Configuration Cell Activation">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:16.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:16.440" endtime="20260115 09:18:16.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:16.440" endtime="20260115 09:18:16.443"/>
+  </test>
+  <test id="s9-p15" name="gNB-DU Configuration PRACH Configuration">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:17.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:17.440" endtime="20260115 09:18:17.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:17.440" endtime="20260115 09:18:17.443"/>
+  </test>
+  <test id="s9-p16" name="gNB-DU Configuration PUCCH Resource Mapping">
+    <kw name="Execute Verification" library="gNBLib">
+      <msg timestamp="20260115 09:18:18.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:18.440" endtime="20260115 09:18:18.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:18.440" endtime="20260115 09:18:18.443"/>
+  </test>
+  <test id="s10-t1" name="IPv6 Interface Enumeration Enumeration eth0">
+    <kw name="Execute Verification" library="NetworkLib">
+      <arg>eth0</arg>
+      <arg>IPv6Addresses</arg>
+      <msg timestamp="20260115 09:18:19.440" level="INFO">Executing verification eth0</msg>
+      <msg timestamp="20260115 09:18:19.443" level="FAIL">IPv6Addresses field missing — schema change in Redfish v1.16.0 introduced new required field</msg>
+      <status status="FAIL" starttime="20260115 09:18:19.440" endtime="20260115 09:18:19.443"/>
+    </kw>
+    <status status="FAIL" starttime="20260115 09:18:19.440" endtime="20260115 09:18:19.443"/>
+  </test>
+  <test id="s10-t2" name="IPv6 Interface Enumeration Enumeration eth1">
+    <kw name="Execute Verification" library="NetworkLib">
+      <arg>eth1</arg>
+      <arg>IPv6Addresses</arg>
+      <msg timestamp="20260115 09:18:20.440" level="INFO">Executing verification eth1</msg>
+      <msg timestamp="20260115 09:18:20.443" level="FAIL">IPv6Addresses field missing — schema change in Redfish v1.16.0 introduced new required field</msg>
+      <status status="FAIL" starttime="20260115 09:18:20.440" endtime="20260115 09:18:20.443"/>
+    </kw>
+    <status status="FAIL" starttime="20260115 09:18:20.440" endtime="20260115 09:18:20.443"/>
+  </test>
+  <test id="s10-t3" name="IPv6 Interface Enumeration Enumeration mgmt0">
+    <kw name="Execute Verification" library="NetworkLib">
+      <arg>mgmt0</arg>
+      <arg>IPv6Addresses</arg>
+      <msg timestamp="20260115 09:18:21.440" level="INFO">Executing verification mgmt0</msg>
+      <msg timestamp="20260115 09:18:21.443" level="FAIL">IPv6Addresses field missing — schema change in Redfish v1.16.0 introduced new required field</msg>
+      <status status="FAIL" starttime="20260115 09:18:21.440" endtime="20260115 09:18:21.443"/>
+    </kw>
+    <status status="FAIL" starttime="20260115 09:18:21.440" endtime="20260115 09:18:21.443"/>
+  </test>
+  <test id="s10-p1" name="IPv6 Interface Enumeration Router Advertisement Accept">
+    <kw name="Execute Verification" library="NetworkLib">
+      <msg timestamp="20260115 09:18:22.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:22.440" endtime="20260115 09:18:22.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:22.440" endtime="20260115 09:18:22.443"/>
+  </test>
+  <test id="s10-p2" name="IPv6 Interface Enumeration Neighbor Discovery">
+    <kw name="Execute Verification" library="NetworkLib">
+      <msg timestamp="20260115 09:18:23.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:23.440" endtime="20260115 09:18:23.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:23.440" endtime="20260115 09:18:23.443"/>
+  </test>
+  <test id="s10-p3" name="IPv6 Interface Enumeration Enumeration eth0">
+    <kw name="Execute Verification" library="NetworkLib">
+      <msg timestamp="20260115 09:18:24.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:24.440" endtime="20260115 09:18:24.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:24.440" endtime="20260115 09:18:24.443"/>
+  </test>
+  <test id="s10-p4" name="IPv6 Interface Enumeration Enumeration eth1">
+    <kw name="Execute Verification" library="NetworkLib">
+      <msg timestamp="20260115 09:18:25.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:25.440" endtime="20260115 09:18:25.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:25.440" endtime="20260115 09:18:25.443"/>
+  </test>
+  <test id="s10-p5" name="IPv6 Interface Enumeration Enumeration mgmt0">
+    <kw name="Execute Verification" library="NetworkLib">
+      <msg timestamp="20260115 09:18:26.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:26.440" endtime="20260115 09:18:26.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:26.440" endtime="20260115 09:18:26.443"/>
+  </test>
+  <test id="s10-p6" name="IPv6 Interface Enumeration Router Advertisement Accept">
+    <kw name="Execute Verification" library="NetworkLib">
+      <msg timestamp="20260115 09:18:27.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:27.440" endtime="20260115 09:18:27.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:27.440" endtime="20260115 09:18:27.443"/>
+  </test>
+  <test id="s10-p7" name="IPv6 Interface Enumeration Neighbor Discovery">
+    <kw name="Execute Verification" library="NetworkLib">
+      <msg timestamp="20260115 09:18:28.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:28.440" endtime="20260115 09:18:28.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:28.440" endtime="20260115 09:18:28.443"/>
+  </test>
+  <test id="s10-p8" name="IPv6 Interface Enumeration Enumeration eth0">
+    <kw name="Execute Verification" library="NetworkLib">
+      <msg timestamp="20260115 09:18:29.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:29.440" endtime="20260115 09:18:29.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:29.440" endtime="20260115 09:18:29.443"/>
+  </test>
+  <test id="s10-p9" name="IPv6 Interface Enumeration Enumeration eth1">
+    <kw name="Execute Verification" library="NetworkLib">
+      <msg timestamp="20260115 09:18:30.440" level="INFO">Pass</msg>
+      <status status="PASS" starttime="20260115 09:18:30.440" endtime="20260115 09:18:30.443"/>
+    </kw>
+    <status status="PASS" starttime="20260115 09:18:30.440" endtime="20260115 09:18:30.443"/>
+  </test>
+    <status status="FAIL" starttime="20260115 09:14:22.440" endtime="20260115 09:48:14.778">
+      Summary: 248 tests · 231 PASS · 12 FAIL · 5 WARN
+    </status>
+  </suite>
+  <statistics>
+    <total>
+      <stat pass="231" fail="12" skip="0">All Tests</stat>
+    </total>
+    <tag>
+      <stat pass="35" fail="2" skip="0">cu-up</stat>
+      <stat pass="34" fail="6" skip="0">redfish</stat>
+      <stat pass="35" fail="0" skip="0">openshift</stat>
+      <stat pass="27" fail="0" skip="0">windriver-caas</stat>
+      <stat pass="23" fail="0" skip="0">ansible</stat>
+      <stat pass="17" fail="0" skip="0">rt-kernel</stat>
+      <stat pass="14" fail="0" skip="0">firmware</stat>
+      <stat pass="21" fail="1" skip="0">oam</stat>
+      <stat pass="16" fail="0" skip="0">gnb-du</stat>
+      <stat pass="9" fail="3" skip="0">ipv6</stat>
+    </tag>
+  </statistics>
+</robot>

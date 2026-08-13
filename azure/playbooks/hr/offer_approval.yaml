@@ -1,0 +1,271 @@
+# CBTS Apex AI Platform - Offer Approval Runbook
+# Natural Language Runbook for Compensation Management
+# Intent -> Output -> Context -> Recipe
+
+name: offer_approval
+version: "1.0.0"
+description: "Automated offer letter processing with compensation validation and approval routing"
+industry: hr
+category: compensation
+
+# =============================================================================
+# INTENT - What the agent should accomplish
+# =============================================================================
+intent: |
+  Process employment offer letters by extracting compensation details,
+  validating against salary bands and equity guidelines, routing for
+  appropriate approvals, and preparing final offer packages.
+
+# =============================================================================
+# OUTPUT - Expected deliverables from the runbook
+# =============================================================================
+output:
+  - name: offer_details
+    type: structured_data
+    description: "Extracted offer details"
+    schema:
+      candidate: object
+      position: object
+      compensation: object
+      benefits: object
+      terms: object
+
+  - name: compensation_validation
+    type: validation_report
+    description: "Compensation band validation results"
+    schema:
+      within_band: boolean
+      band_position: string
+      exceptions: array
+      comparisons: object
+
+  - name: approval_chain
+    type: routing_decision
+    description: "Required approval chain"
+    schema:
+      approvers: array
+      current_stage: string
+      escalations: array
+      estimated_completion: string
+
+# =============================================================================
+# CONTEXT - Business rules and domain knowledge
+# =============================================================================
+context:
+  business_rules:
+    - "All offers must be within approved salary band unless exception approved"
+    - "Equity grants must follow company equity guidelines"
+    - "Signing bonuses over $25,000 require VP approval"
+    - "Offers above band midpoint require HR approval"
+    - "Total compensation must not exceed budget allocation"
+
+  approval_thresholds:
+    above_band: "require_vp_exception"
+    above_midpoint: "require_hr_review"
+    signing_bonus_25k: "require_vp_approval"
+    relocation_50k: "require_cfo_approval"
+
+  compensation_rules:
+    band_flexibility_percent: 10
+    equity_cliff_months: 12
+    standard_vesting_years: 4
+    signing_bonus_clawback: true
+
+  offer_timing:
+    standard_expiration_days: 7
+    executive_expiration_days: 14
+    extension_max_days: 7
+
+# =============================================================================
+# DATA SOURCES - Where to retrieve information
+# =============================================================================
+data_sources:
+  - name: offer_document
+    type: s3_document
+    description: "Offer letter document"
+    input_parameter: document_s3_uri
+
+  - name: salary_bands
+    type: cosmos_db
+    table: apex-salary-bands
+    description: "Salary band data by level and location"
+
+  - name: job_requisitions
+    type: cosmos_db
+    table: apex-job-requisitions
+    description: "Job requisition with budget"
+
+  - name: candidates
+    type: cosmos_db
+    table: apex-candidates
+    description: "Candidate records"
+
+# =============================================================================
+# ACTIONS - Available tools for the agent
+# =============================================================================
+actions:
+  - name: offer_extract
+    action_id: hr.offer_extract
+    description: "Extract data from offer letter"
+    required: true
+
+  - name: compensation_validate
+    action_id: hr.compensation_validation
+    description: "Validate against salary bands"
+    required: true
+
+  - name: budget_check
+    action_id: financial_services.budget_check
+    description: "Check requisition budget"
+    required: true
+
+  - name: equity_validate
+    action_id: hr.equity_validate
+    description: "Validate equity grant guidelines"
+    required: false
+
+  - name: approval_route
+    action_id: financial_services.approval_route
+    description: "Determine approval routing"
+    required: true
+
+  - name: send_notification
+    action_id: core.send_notification
+    description: "Send notifications to approvers"
+    required: false
+
+  - name: create_work_item
+    action_id: core.create_work_item
+    description: "Create approval work item"
+    required: false
+
+# =============================================================================
+# RECIPE - Natural language instructions for the agent
+# =============================================================================
+recipe: |
+  ## Offer Approval Workflow
+
+  ### Step 1: Offer Extraction
+  When an offer letter is submitted for approval:
+  1. Use `offer_extract` to extract all offer details
+  2. Validate extraction of: candidate, position, compensation, start date
+  3. Link to job requisition and candidate record
+  4. Check for existing pending offers for same candidate
+  5. Validate offer expiration date
+
+  ### Step 2: Compensation Validation
+  Validate against salary bands:
+  1. Use `compensation_validate` with position and location
+  2. Compare base salary to band minimum, midpoint, maximum
+  3. Calculate band position percentile
+  4. Check if within standard range (band +/- 10%)
+  5. Flag if above midpoint or out of band
+
+  ### Step 3: Total Compensation Analysis
+  Analyze complete package:
+  1. Calculate total first-year compensation
+  2. Include base, bonus target, signing bonus
+  3. Add estimated equity value if applicable
+  4. Compare to internal equity (similar roles)
+  5. Benchmark against market data if available
+
+  ### Step 4: Equity Validation (if applicable)
+  Validate equity grants:
+  1. Use `equity_validate` with grant details
+  2. Check against level guidelines
+  3. Verify vesting schedule is standard
+  4. Validate cliff period
+  5. Calculate dilution impact for large grants
+
+  ### Step 5: Budget Verification
+  Check requisition budget:
+  1. Use `budget_check` with requisition ID
+  2. Verify total compensation within budget
+  3. Check if signing bonus was budgeted
+  4. Verify relocation within allocation
+  5. Flag if budget exceeded
+
+  ### Step 6: Approval Routing
+  Determine approval chain:
+  1. Use `approval_route` with offer details
+  2. Standard offers (within band): Hiring manager only
+  3. Above midpoint: Add HR approval
+  4. Above band: Add VP exception approval
+  5. Large signing bonus: Add additional approval
+  6. Above budget: Add finance approval
+
+  ### Step 7: Create Approval Workflow
+  Initiate approval process:
+  1. Create work item for each approver in sequence
+  2. Set SLA based on offer expiration
+  3. Send notification to first approver
+  4. Track approval progress
+  5. Handle delegation if approver unavailable
+
+  ### Step 8: Approval Processing
+  Process each approval:
+  1. Present offer summary to approver
+  2. Show compensation analysis
+  3. Highlight any exceptions or concerns
+  4. Capture approval or rejection
+  5. Move to next approver if approved
+  6. Handle rejection with feedback capture
+
+  ### Step 9: Completion
+  Finalize offer:
+  1. All approvals received: Mark offer approved
+  2. Update candidate status
+  3. Notify recruiting team
+  4. Queue for offer delivery
+  5. Log all approvals for audit
+
+  ### Exception Handling
+  - Rejected: Capture reason, notify recruiter for revision
+  - Expired during approval: Notify all, request extension
+  - Approver unavailable: Escalate or route to delegate
+  - Budget concerns: Route to finance for exception
+
+# =============================================================================
+# TRIGGERS - How this runbook is activated
+# =============================================================================
+triggers:
+  - type: blob_event
+    bucket: apex-documents-incoming
+    prefix: offers/
+    events: ["s3:ObjectCreated:*"]
+    description: "Triggered when offer uploaded for approval"
+
+  - type: api
+    endpoint: /api/v1/approve-offer
+    method: POST
+    description: "Manual offer submission"
+
+  - type: event
+    source: ats_integration
+    event_type: offer_created
+    description: "Triggered when offer created in ATS"
+
+# =============================================================================
+# WORKER CONFIGURATION
+# =============================================================================
+worker:
+  queue: apex-offer-approval-queue
+  concurrency: 10
+  timeout_seconds: 180
+  retry_policy:
+    max_attempts: 3
+    backoff_multiplier: 2
+
+# =============================================================================
+# METADATA
+# =============================================================================
+metadata:
+  created_by: apex-platform
+  created_at: "2024-01-15"
+  last_updated: "2024-01-15"
+  tags:
+    - compensation
+    - offer
+    - approval
+    - hr
+    - recruiting

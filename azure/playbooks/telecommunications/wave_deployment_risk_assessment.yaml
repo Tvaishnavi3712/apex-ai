@@ -1,0 +1,95 @@
+name: wave_deployment_risk_assessment
+version: "1.0.0"
+description: "ApexSignal + UpgradeAdvisorAgent — score every site in an upcoming wave, identify the January-2026-outage pattern, and produce a wave-sequence plan with HITL approval gate."
+industry: telecommunications
+category: predictive_intelligence
+
+intent: |
+  When a wave-planning session is initiated, score all 16,247 sites for
+  post-deployment incident risk, cluster high-risk sites by region,
+  produce a wave sequence (wave_1 / wave_2 / wave_3) where the highest-
+  risk sites are deferred to wave_3 with explicit human approval.
+
+  Example prompts:
+    "Score Wave 1 sites for deployment risk"
+    "Show me sites matching the high-risk Type-B Northeast pattern"
+    "Generate the wave sequence for the next deployment window"
+
+output:
+  - name: scored_sites
+    type: structured_data
+    description: "Site list enriched with risk_score, risk_tier, top_risk_factors, wave_assignment"
+  - name: wave_plan
+    type: structured_data
+    description: "wave_1_count, wave_2_count, wave_3_count, critical_clusters, high_risk_pattern_matches, top_10_highest_risk"
+  - name: audit_log_id
+    type: identifier
+
+context:
+  business_rules:
+    - "Lead with the count of critical-tier sites — this is what HQ Planning reads first."
+    - "Always surface high-risk Type-B Northeast pattern matches (Type-B + 23.06 + Northeast) as a red banner."
+    - "Sites with risk_tier=critical MUST be assigned to wave_3 and require HITL approval before deployment."
+    - "Cite historical_failure_rate from the patterns CSV — never invent numbers."
+    - "When a site's path matches a documented high-risk path, attach the KB article reference."
+
+actions:
+  - name: load_site_inventory
+    action_id: verizon_far_edge.load_site_inventory
+    description: "Load the site inventory CSV"
+    required: true
+  - name: compute_risk_scores
+    action_id: verizon_far_edge.compute_risk_scores
+    description: "ApexSignal — score every site"
+    required: true
+  - name: identify_critical_clusters
+    action_id: verizon_far_edge.identify_critical_clusters
+    description: "Group critical-tier sites by region and pattern"
+    required: true
+  - name: validate_upgrade_paths
+    action_id: verizon_far_edge.validate_upgrade_paths
+    description: "UpgradeAdvisorAgent — validate every path in the wave against the compatibility matrix"
+    required: true
+  - name: generate_wave_sequence
+    action_id: verizon_far_edge.generate_wave_sequence
+    description: "Produce wave_1 / wave_2 / wave_3 assignment with HITL gate"
+    required: true
+
+recipe: |
+  1. Call `load_site_inventory(inventory_csv_path)`.
+  2. Call `compute_risk_scores(sites, historical_patterns_csv_path)`.
+  3. Call `identify_critical_clusters(scored_sites)` — group critical sites by region.
+  4. Call `validate_upgrade_paths(scored_sites, compatibility_matrix_path)`.
+  5. Call `generate_wave_sequence(scored_sites, clusters, validated_paths)`.
+  6. HITL gate — REQUIRED if any site has risk_tier=critical:
+       pause and notify james.patchett@verizon.com;
+       display the wave_plan + critical clusters;
+       require approval before publishing.
+  7. Format the response (4-line structure):
+       Wave Plan: <wave_1>/<wave_2>/<wave_3> sites
+       Critical-tier: <critical_count> sites (<jan_2026_matches> matching Jan-2026 pattern)
+       Top risk factor: <top_factor>
+       Recommended action: <hold_or_proceed_summary>
+       [Audit Lens event: <audit_log_id>]
+
+triggers:
+  - type: chat_message
+    routed_by: verizon_router
+  - type: scheduled
+    schedule: "0 6 * * 1"  # Every Monday 06:00
+  - type: api_invoke
+    endpoint: /api/v1/playbooks/wave_deployment_risk_assessment/invoke
+
+hitl:
+  - condition: "any(site.risk_tier == 'critical')"
+    approvers: ["james.patchett@verizon.com"]
+    sla_hours: 48
+    requires_comment: true
+  - condition: "january_2026_pattern_matches > 0"
+    approvers: ["james.patchett@verizon.com", "cert-team-lead@verizon.com"]
+    sla_hours: 24
+    blocking: true
+
+governance:
+  audit_lens: required
+  immutable_log: true

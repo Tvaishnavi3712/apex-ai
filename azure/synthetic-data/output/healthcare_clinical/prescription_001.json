@@ -1,0 +1,66 @@
+{
+  "_metadata": {
+    "blueprint": "apex-prescription-v1",
+    "document_type": "prescription",
+    "extraction_date": "2024-01-17T10:45:00Z",
+    "confidence_score": 0.96,
+    "source_file": "prescription.pdf"
+  },
+  "prescription_number": "RX-2024-789012",
+  "written_date": "2024-01-17",
+  "patient": {
+    "name": "Emily Chen",
+    "dob": "1985-06-30",
+    "address": "456 Pine Street, Chicago, IL 60610",
+    "phone": "312-555-4567"
+  },
+  "prescriber": {
+    "name": "Dr. Michael Brown",
+    "npi": "1357924680",
+    "dea_number": "AB1234567",
+    "specialty": "Internal Medicine",
+    "practice_name": "Chicago Medical Group",
+    "address": "100 Medical Center Drive, Chicago, IL 60601",
+    "phone": "312-555-9000"
+  },
+  "medication": {
+    "drug_name": "Metformin HCl",
+    "strength": "500mg",
+    "form": "Tablet",
+    "ndc": "00093-7212-01",
+    "brand_or_generic": "Generic",
+    "quantity": 60,
+    "days_supply": 30
+  },
+  "directions": {
+    "sig": "Take one tablet by mouth twice daily with meals",
+    "route": "Oral",
+    "frequency": "BID",
+    "duration": null,
+    "prn": false
+  },
+  "refills": {
+    "number": 5,
+    "refills_remaining": 5,
+    "last_fill_date": null
+  },
+  "diagnosis": {
+    "icd_code": "E11.9",
+    "description": "Type 2 diabetes mellitus"
+  },
+  "substitution": {
+    "daw_code": 0,
+    "substitution_permitted": true
+  },
+  "prior_authorization": {
+    "required": false,
+    "number": null
+  },
+  "special_instructions": "Monitor blood glucose regularly. Take with food to minimize GI side effects.",
+  "pharmacy": {
+    "name": "CVS Pharmacy",
+    "ncpdp": "1234567",
+    "address": "200 State Street, Chicago, IL 60601",
+    "phone": "312-555-7890"
+  }
+}

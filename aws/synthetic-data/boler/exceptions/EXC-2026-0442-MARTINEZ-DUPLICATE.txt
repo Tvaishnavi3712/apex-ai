@@ -1,0 +1,75 @@
+APEX EXCEPTION RECORD · HIGH PRIORITY
+═══════════════════════════════════════════════════════════════
+The Boler Company · June 2026 Benefits Cycle
+═══════════════════════════════════════════════════════════════
+
+EXCEPTION ID:     EXC-2026-0442
+Type:             Duplicate Enrollment
+Severity:         HIGH
+Detection Time:   June 6, 2026 · 09:38:14 ET
+Detection Agent:  Benefits Allocation Agent (BEN)
+Status:           AWAITING CFO SIGN-OFF
+
+─────────────── SUBJECT ───────────────
+Employee Name:     Martinez, Laura
+Employee ID:       EMP-3312
+Hire Date:         2019-09-08
+Termination Date:  2026-04-30
+Last Division:     Boler Holdings (CC 6200-004)
+
+─────────────── DETECTION DETAIL ───────────────
+Cross-Reference:   Cigna Medical file + Cigna COBRA file
+
+Source A: Cigna_Medical_Jun2026.csv
+  Status:         ACTIVE
+  Plan:            EE+Spouse PPO
+  Premium:         $1,195/mo
+  Cost Center:     6200-004 (Boler Holdings) — INVALID per HRIS
+
+Source B: Cigna_COBRA_Jun2026.csv
+  Status:         COBRA continuation
+  Plan:            EE+Spouse PPO
+  Premium:         $1,195/mo (self-pay)
+  Coverage:        Through 2026-10-31 (6mo elected)
+
+HRIS (Workday):    TERMINATED 2026-04-30 · severance package paid
+
+─────────────── ANALYSIS ───────────────
+Active medical billing of $1,240/mo (avg after Boler holdings allocation share)
+is INVALID — terminated employees should not have employer-paid medical
+allocated to corporate cost centers. COBRA continuation is self-pay only.
+
+Likely root cause: Cigna's termination feed to APEX failed (last Tuesday's
+batch) and the May 30 carrier file still includes Martinez. APEX detected
+via Cigna COBRA cross-reference at intake on Jun 3.
+
+─────────────── FINANCIAL IMPACT ───────────────
+Per-month overcharge:          $1,240.00
+Cycle-cumulative (Apr 30 → Jun 5):  $5,580.00 (5 weeks)
+Annualized if not corrected:    $14,880.00
+
+─────────────── RECOMMENDED ACTION ───────────────
+  - REMOVE: Active Medical · $1,240/mo · Boler Holdings (INVALID)
+  + COBRA is self-pay — remove from corporate allocation entirely
+
+Effective date: 2026-05-01 (next billing cycle after termination)
+Catch-up adjustment: $5,580 credit posted to Boler Holdings June JE
+Cigna notification: Carrier termination feed re-confirmed
+
+─────────────── ROUTING ───────────────
+  • Detected by:      Benefits Allocation Agent (98.4% confidence)
+  • Routed to:        Exception Resolution Agent for HITL queue
+  • Step Functions:   approval-workflow-v2.boler.us-east-1
+  • Stage 1:          Sarah Mitchell — APPROVED 2026-06-05 09:22
+  • Stage 2:          Ziggy Kravitz (CFO) — PENDING
+  • Notification:     SES email + SNS push sent 2026-06-06 09:38
+  • SLA:               24 hours (current age: 18 hrs · 6 hrs remaining)
+
+─────────────── HAND-OFF ───────────────
+→ Once CFO approves, JE Agent regenerates Boler Holdings JE
+  (subtracts $1,240 from June + $5,580 prior-period adjustment)
+→ HR notified via Teams to follow up with Cigna on termination feed
+→ Power BI dashboard auto-refreshes for division CFO reporting
+
+Storage: DynamoDB · partition=2026-06 · sort=EXC-0442
+Audit ID: AUDIT-2026-06-06-09:38:14-EXC-0442

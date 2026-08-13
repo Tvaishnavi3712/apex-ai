@@ -1,0 +1,51 @@
+================================================================================
+                          ENTERPRISE PRODUCTS OPERATING LLC
+                              1100 Louisiana Street
+                                Houston, TX 77002
+================================================================================
+
+                              PURCHASE ORDER
+
+PO Number:         PO-2026-OPS-2189
+PO Date:           05/04/2026
+Requisitioned By:  T. Aguilar, Operations Manager - South Texas District
+Buyer:             K. Whitfield, Procurement Specialist - O&M
+Cost Center:       CS-SEALY-OPS
+AFE Number:        AFE-CS-SEALY-OH-2026
+Total NTE:         USD 487,000.00
+Payment Terms:     Net 30
+Required-By Date:  06/30/2026
+
+Vendor:                                    Ship-To:
+    Baker Hughes Oilfield Operations LLC       Sealy Compressor Station
+    17021 Aldine Westfield Rd                  4488 FM 1458
+    Houston, TX 77073                          Sealy, TX 77474
+    Vendor ID: V-000914                        Site Contact: R. Ortiz (979) 555-0118
+
+--------------------------------------------------------------------------------
+LN  DESCRIPTION                                    QTY    UNIT $    AMOUNT
+--------------------------------------------------------------------------------
+ 1  Centrifugal Compressor Overhaul - Unit C-2,     1      275,000   275,000.00
+    PCL-803 train, full mechanical scope per
+    Statement of Work SOW-OPS-2189
+ 2  Spare parts kit per BOM (impellers, seals,      1       86,500    86,500.00
+    bearings, gaskets, fasteners)
+ 3  Field service - mechanical engineers (2),     480          175    84,000.00
+    onsite during 21-day outage window, hours
+ 4  Rotor balance & metallurgical inspection        1       41,500    41,500.00
+    (offsite, Houston Service Center)
+--------------------------------------------------------------------------------
+                                              TOTAL PO:       487,000.00
+================================================================================
+
+Special Conditions:
+1. Outage window confirmed: 06/08/2026 - 06/28/2026. No deviation w/o owner
+   written approval.
+2. Vendor responsible for lockout/tagout compliance per EPROD HSE Standard 14.
+3. Daily progress reports via email by 0700 to operations.sealy@eprod.com.
+4. Spare parts to remain EPROD property; un-used returned for credit.
+5. Warranty: 12 months from start-up on labor and OEM-rebuilt parts.
+
+Approved:  T. Aguilar  ___________________   Date: ________
+           K. Whitfield ___________________   Date: ________
+================================================================================

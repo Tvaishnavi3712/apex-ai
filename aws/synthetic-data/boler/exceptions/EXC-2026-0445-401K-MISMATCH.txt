@@ -1,0 +1,54 @@
+APEX EXCEPTION RECORD · MEDIUM PRIORITY
+═══════════════════════════════════════════════════════════════
+EXCEPTION ID:     EXC-2026-0445
+Type:             Rate Card / Policy Mismatch
+Severity:         MEDIUM
+Detection Time:   June 6, 2026 · 09:31:08 ET
+Detection Agent:  Benefits Allocation Agent (BEN)
+Status:           AWAITING BENEFITS DIRECTOR REVIEW
+
+─────────────── DETECTION ───────────────
+Fidelity 401k carrier file applies employer match rate of 4.5%.
+Boler HR policy document P-COMP-401K-2024 specifies match rate of 4.0%.
+
+The 0.5% delta produces:
+  - Monthly delta: $8,240
+  - YTD impact (Jan-Jun): $49,440
+  - Full-year if unresolved: $98,880
+  - 3-yr cumulative: $296,640
+
+─────────────── EVIDENCE ───────────────
+Source A (Fidelity_401k_Jun2026.csv · line 1):
+  "Employer Match Rate Applied: 4.5%"
+
+Source B (HR policy P-COMP-401K-2024.pdf · §3.2):
+  "The Boler Company will match 100% of employee contributions up to 4.0% of
+   eligible compensation."
+
+Source C (Plan Document for 88-441208 · Schedule B):
+  Last amendment date: 2024-04-01
+  Match formula: 100% × first 4.0% of compensation
+  Note: No amendment on file for 4.5% increase.
+
+─────────────── ROOT CAUSE OPTIONS ───────────────
+1. Fidelity rate card was auto-incremented (typical 4.0% → 4.5% bump from prior plan)
+2. HR policy was updated to 4.5% but the policy document + allocation system not synced
+3. Plan administrator error — 4.5% applied without plan amendment
+
+─────────────── RECOMMENDED ACTION ───────────────
+Sarah Mitchell (Benefits Director) follow-up within 7 days:
+  1. Contact Fidelity Relationship Manager (Reggie Park) to confirm match rate authority
+  2. Review HR/Benefits Committee minutes for any approved 4.5% amendment
+  3. Reconcile prior periods + adjust if applicable
+  4. Update P-COMP-401K-2024 OR roll back Fidelity rate
+
+If 4.5% is intentional: amend plan document + restate YTD.
+If 4.0% is correct: file correction with Fidelity + claw back overpayment.
+
+─────────────── ROUTING ───────────────
+  • Detected by:      Benefits Allocation Agent (cross-reference engine)
+  • Routed to:        Sarah Mitchell (Benefits Director) — Stage 1
+  • Confidence:       96.1%
+
+Storage: DynamoDB · partition=2026-06 · sort=EXC-0445
+Audit ID: AUDIT-2026-06-06-09:31:08-EXC-0445

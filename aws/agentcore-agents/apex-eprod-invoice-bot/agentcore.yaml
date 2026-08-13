@@ -1,0 +1,27 @@
+name: apex-eprod-invoice-bot
+description: EPROD vendor invoice extraction and MSA validation agent for midstream operations
+version: 1.0.0
+
+runtime:
+  entrypoint: agent.py
+  handler: handler
+  python_version: "3.12"
+
+model:
+  provider: bedrock
+  model_id: us.amazon.nova-pro-v1:0
+  region: us-east-1
+
+memory:
+  short_term: true
+  long_term: false
+
+observability:
+  enabled: true
+  log_level: INFO
+
+tags:
+  industry: oil_gas_midstream
+  customer: eprod
+  category: accounts_payable
+  environment: production

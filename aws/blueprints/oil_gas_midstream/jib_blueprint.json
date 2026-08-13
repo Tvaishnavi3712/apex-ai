@@ -1,0 +1,29 @@
+{
+  "blueprint_id": "bp-eprod-jib",
+  "name": "EPROD JIB Statement",
+  "description": "Extract Joint Interest Billing (JIB) statements from JV operators with AFE references, working-interest split, capital + operating charges, and prior-period adjustments.",
+  "industry": "oil_gas_midstream",
+  "document_type": "jib_statement",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "EPROD JIB Statement",
+    "description": "JIB schema covering statement identity, JV name, operator, AFE reference, billing period, working-interest math, capital + operating charges, partner share, prior-period adjustments, cumulative position, supporting invoices, and dispute window.",
+    "extractionInstructions": "Capital and operating charges must be extracted separately. Every charge line must reference its AFE. Cumulative-to-date is required for AFE bounds checking.",
+    "fields": {
+      "statement_id":               { "type": "string", "description": "JIB statement identifier", "required": true },
+      "jv_name":                    { "type": "string", "description": "Joint venture name (e.g. Sweeny Frac, Mont Belvieu)", "required": true },
+      "operator":                   { "type": "string", "description": "Operating partner (e.g. Phillips 66, Targa)", "required": true },
+      "afe_reference":              { "type": "string", "description": "AFE / project reference id", "required": true },
+      "billing_period":             { "type": "string", "description": "Statement billing period (YYYY-MM)", "required": true },
+      "working_interest_pct":       { "type": "number", "description": "EPROD working interest percentage per JOA", "required": true },
+      "capital_charges":            { "type": "array",  "description": "Capital charge line items (description, gross_usd, afe_ref)", "required": true },
+      "operating_charges":          { "type": "array",  "description": "Operating charge line items (description, gross_usd, afe_ref)", "required": true },
+      "gross_total":                { "type": "number", "description": "Total gross charges for the period", "required": true },
+      "partner_share":              { "type": "number", "description": "EPROD partner share = gross * wi_pct", "required": true },
+      "prior_period_adjustments":   { "type": "array",  "description": "Prior-period adjustments with original billing cycle ref", "required": false },
+      "cumulative_to_date":         { "type": "number", "description": "Cumulative AFE charges through this statement", "required": true },
+      "supporting_invoices":        { "type": "array",  "description": "Supporting vendor invoice references", "required": false },
+      "dispute_period_deadline":    { "type": "date",   "description": "Last date to file dispute (typically statement_date + 24 months)", "required": true }
+    }
+  }
+}

@@ -1,0 +1,204 @@
+# CBTS Apex AI Platform - Call Quality Analysis Runbook
+name: call_quality_analysis
+version: "1.0.0"
+description: "Automated call quality analysis with sentiment detection and compliance checking"
+industry: contact_center
+category: quality_assurance
+
+intent: |
+  Analyze contact center calls by extracting transcript data, detecting
+  customer sentiment, identifying compliance issues, scoring agent performance,
+  and generating quality insights.
+
+output:
+  - name: quality_score
+    type: assessment
+    schema:
+      call_id: string
+      overall_score: number
+      categories: object
+  - name: coaching_opportunity
+    type: work_item
+    schema:
+      agent_id: string
+      area: string
+      recommendation: string
+
+context:
+  business_rules:
+    - "100% compliance check on all calls"
+    - "Negative sentiment triggers supervisor review"
+    - "Required disclosures must be verified"
+    - "Hold times over 2 minutes flagged"
+
+  quality_criteria:
+    greeting: {weight: 0.10, required: true}
+    verification: {weight: 0.10, required: true}
+    active_listening: {weight: 0.15}
+    resolution: {weight: 0.20}
+    professionalism: {weight: 0.15}
+    compliance: {weight: 0.20, required: true}
+    closing: {weight: 0.10}
+
+  compliance_phrases:
+    required: ["this call may be recorded", "is there anything else"]
+    prohibited: ["guarantee", "promise you"]
+
+actions:
+  - name: transcript_analyze
+    action_id: contact_center.transcript_analyze
+    required: true
+  - name: sentiment_detect
+    action_id: contact_center.sentiment_detect
+    required: true
+  - name: compliance_check
+    action_id: contact_center.compliance_check
+    required: true
+  - name: quality_score
+    action_id: contact_center.quality_score
+    required: true
+  - name: coaching_recommend
+    action_id: contact_center.coaching_recommend
+    required: false
+
+recipe: |
+  ## Call Quality Analysis Workflow
+
+  ### Step 1: Transcript Processing
+  1. Use `transcript_analyze` to parse call content
+  2. Identify agent and customer segments
+  3. Calculate talk ratios and hold times
+  4. Extract key topics discussed
+
+  ### Step 2: Sentiment Analysis
+  1. Use `sentiment_detect` on customer utterances
+  2. Track sentiment changes through call
+  3. Identify frustration indicators
+  4. Flag escalation triggers
+
+  ### Step 3: Compliance Verification
+  1. Use `compliance_check` for required phrases
+  2. Verify proper greeting
+  3. Check identity verification completed
+  4. Validate disclosures given
+  5. Check for prohibited statements
+
+  ### Step 4: Quality Scoring
+  1. Use `quality_score` across all criteria
+  2. Calculate weighted overall score
+  3. Identify strengths and gaps
+  4. Compare to team benchmarks
+
+  ### Step 5: Coaching Recommendations
+  1. If score below threshold, use `coaching_recommend`
+  2. Identify specific improvement areas
+  3. Suggest training resources
+  4. Create coaching work item
+
+triggers:
+  - type: s3_event
+    bucket: apex-call-recordings
+    prefix: transcripts/
+  - type: api
+    endpoint: /api/v1/quality-analysis
+
+# Small Factory Chain Definition
+factory_chain:
+  chain_id: call_analytics_chain
+  description: "End-to-end call analysis with AI-enhanced insights"
+  factories:
+    - id: transcribe_audio
+      action: transcribe_audio
+      ai_enhanced: false
+      description: "Convert audio to text transcript"
+      timeout_seconds: 120
+
+    - id: diarize_speakers
+      action: diarize_speakers
+      ai_enhanced: false
+      depends_on:
+        - transcribe_audio
+      description: "Identify and label speakers"
+      timeout_seconds: 30
+
+    - id: intent_classify
+      action: intent_classify
+      ai_enhanced: true
+      depends_on:
+        - diarize_speakers
+      description: "AI-powered intent classification"
+      timeout_seconds: 30
+
+    - id: sentiment_timeline
+      action: sentiment_timeline
+      ai_enhanced: true
+      depends_on:
+        - diarize_speakers
+      description: "Track sentiment changes over call duration"
+      timeout_seconds: 30
+
+    - id: entity_extract
+      action: entity_extract
+      ai_enhanced: true
+      depends_on:
+        - diarize_speakers
+      description: "Extract named entities from transcript"
+      timeout_seconds: 30
+
+    - id: compliance_audit
+      action: compliance_audit
+      ai_enhanced: false
+      depends_on:
+        - diarize_speakers
+      description: "Check required disclosures and compliance"
+      timeout_seconds: 20
+
+    - id: summary_generate
+      action: summary_generate
+      ai_enhanced: true
+      depends_on:
+        - intent_classify
+        - sentiment_timeline
+        - entity_extract
+      description: "AI-generated call summary"
+      timeout_seconds: 45
+
+    - id: quality_score
+      action: quality_score
+      ai_enhanced: true
+      depends_on:
+        - compliance_audit
+        - summary_generate
+      description: "Calculate quality score across criteria"
+      timeout_seconds: 30
+
+    - id: coaching_recommend
+      action: coaching_recommend
+      ai_enhanced: true
+      depends_on:
+        - quality_score
+      description: "AI-powered coaching recommendations"
+      timeout_seconds: 30
+      optional: true
+
+  output_schema:
+    aggregated: true
+    properties:
+      call_id: string
+      transcript: object
+      speakers: array
+      intent: object
+      sentiment: object
+      entities: array
+      compliance: object
+      summary: object
+      quality: object
+      coaching: object
+
+worker:
+  queue: apex-quality-analysis-queue
+  concurrency: 50
+  timeout_seconds: 180
+
+metadata:
+  tags: [quality, contact-center, sentiment, compliance, coaching, small-factory]

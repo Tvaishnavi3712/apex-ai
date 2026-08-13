@@ -1,0 +1,102 @@
+name: schema_drift_response
+version: "1.0.0"
+description: "SchemaWatchAgent end-to-end — when Redfish breaking changes are detected, map every impacted Ansible/ROBOT script, generate a structured remediation map, and open a JIRA epic with one sub-task per script."
+industry: telecommunications
+category: automation_resilience
+
+intent: |
+  When SchemaWatchAgent reports one or more breaking changes between the
+  baseline and current Redfish schema, immediately:
+    (a) identify EVERY script that references the affected fields,
+    (b) emit a find/replace remediation map per script,
+    (c) open a JIRA epic + per-script sub-tasks,
+    (d) notify automation-team and HQ Planning,
+    (e) recommend hold-or-proceed for any in-flight deployment wave.
+
+  Example prompts:
+    "Run schema drift detection now"
+    "Show me which scripts break with Redfish v1.16.0"
+    "Generate the remediation map for the latest schema drift"
+
+output:
+  - name: drift_report
+    type: structured_data
+    description: "Confirmed breaking changes with confidence, severity, vendor release-note refs"
+  - name: remediation_map
+    type: structured_data
+    description: "Per-script find/replace operations with effort estimate"
+  - name: jira_epic_id
+    type: identifier
+  - name: audit_log_id
+    type: identifier
+
+context:
+  business_rules:
+    - "Surface breaking changes ONLY — additive / cosmetic changes are not actionable for the demo."
+    - "Every script reference MUST cite the exact file path and the changed field name."
+    - "Estimate remediation effort as low/medium/high per script — not in days."
+    - "When the breaking change is documented in vendor release notes, attach the section reference."
+    - "If any in-flight deployment wave references an impacted script, recommend HOLD with explicit reason."
+
+actions:
+  - name: detect_schema_drift
+    action_id: verizon_far_edge.detect_schema_drift
+    description: "Compare baseline + current Redfish schemas"
+    required: true
+  - name: load_script_catalog
+    action_id: verizon_far_edge.load_script_catalog
+    description: "Load the Ansible/ROBOT script catalog"
+    required: true
+  - name: map_impacted_scripts
+    action_id: verizon_far_edge.map_impacted_scripts
+    description: "For each breaking change, find every script that references the changed field"
+    required: true
+  - name: generate_remediation_map
+    action_id: verizon_far_edge.generate_remediation_map
+    description: "Emit find/replace operations per script"
+    required: true
+  - name: open_jira_epic
+    action_id: verizon_far_edge.open_jira_epic
+    description: "Create JIRA epic + sub-tasks (one per impacted script)"
+    required: true
+
+recipe: |
+  1. Call `detect_schema_drift(baseline_path, current_path)` and collect all
+     breaking changes (path_migration / field_rename / new_required / deprecated).
+  2. If breaking_changes_count == 0 → respond "No breaking changes detected" and exit.
+  3. Call `load_script_catalog(catalog_path)`.
+  4. Call `map_impacted_scripts(breaking_changes, script_catalog)` — match by
+     endpoint AND field name. Return per-change script lists.
+  5. Call `generate_remediation_map(breaking_changes, impacted_scripts)` — emit
+     {script: {find, replace, effort}} for every impacted script.
+  6. Call `open_jira_epic(breaking_changes, remediation_map)` — create epic
+     and one Bug sub-task per impacted script.
+  7. HITL gate — if breaking_changes_count > 5: require automation-team-lead
+     approval before publishing the remediation plan.
+  8. Format the response:
+       Schema drift: <baseline_version> → <current_version> · <count> breaking changes
+       Scripts impacted: <total_scripts> (<low_effort> low · <med_effort> medium · <high_effort> high)
+       JIRA epic: <epic_id> opened with <subtask_count> sub-tasks
+       Wave recommendation: <HOLD_PENDING_REMEDIATION | PROCEED_WITH_PATCHES | PROCEED>
+       [Audit Lens event: <audit_log_id>]
+
+triggers:
+  - type: scheduled
+    schedule: "0 */6 * * *"  # Every 6 hours
+  - type: pre_certification_run
+  - type: firmware_update_detected
+  - type: chat_message
+    routed_by: verizon_router
+
+hitl:
+  - condition: "breaking_changes_count > 5"
+    approvers: ["automation-team-lead@verizon.com", "james.patchett@verizon.com"]
+    sla_hours: 2
+  - condition: "in_flight_wave_impacted == true"
+    approvers: ["james.patchett@verizon.com"]
+    sla_hours: 1
+    blocking: true
+
+governance:
+  audit_lens: required
+  immutable_log: true

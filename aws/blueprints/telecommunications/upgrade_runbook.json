@@ -1,0 +1,104 @@
+{
+  "blueprintName": "upgrade-runbook-extractor",
+  "blueprintVersion": "1.0.0",
+  "description": "Extracts step-by-step firmware upgrade procedures from Verizon runbook PDFs \u2014 pre-checks, ordered steps with commands, rollback checkpoints, known issues, and duration estimates.",
+  "industry": "telecommunications",
+  "documentType": "upgrade_runbook_pdf",
+  "bdaSchema": {
+    "class": "ApexUpgradeRunbook",
+    "description": "Step-by-step firmware upgrade procedure (CaaS node)",
+    "definitions": {
+      "UPGRADE_STEP": {
+        "properties": {
+          "step_number": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "command": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Exact CLI command(s) to execute"
+          },
+          "expected_duration_min": {
+            "type": "number"
+          },
+          "rollback_checkpoint": {
+            "type": "string",
+            "inferenceType": "inferred",
+            "instruction": "Label of snapshot taken after this step"
+          },
+          "verification": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "firmware_from": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "firmware_to": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "device_types": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "estimated_total_duration_min": {
+        "type": "number"
+      },
+      "pre_checks": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "instruction": "Required pre-flight checklist items"
+      },
+      "upgrade_steps": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/UPGRADE_STEP"
+        }
+      },
+      "rollback_steps": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "known_issues": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "instruction": "KB IDs relevant to this upgrade"
+      },
+      "required_ansible_version": {
+        "type": "string"
+      },
+      "required_openshift_version": {
+        "type": "string"
+      },
+      "historical_failure_rate": {
+        "type": "number",
+        "inferenceType": "inferred",
+        "instruction": "Failure rate from historical data, 0.0-1.0"
+      }
+    }
+  },
+  "extractionRules": {
+    "confidenceThreshold": 0.88
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeRawText": false
+  }
+}

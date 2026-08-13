@@ -1,0 +1,87 @@
+name: new_platform_onboarding
+version: "1.0.0"
+description: "Autonomous onboarding of a brand-new server type (HPE EL140 Gen12 / iLO7, Dell XR8720t / iDRAC10) — the OrchestratorAgent designs test coverage, runs it through multiple iterations on live lab hardware, generates the BMC playbook change-spec, and gates every direct lab action behind human approval."
+industry: telecommunications
+category: certification_orchestration
+
+intent: |
+  When a new server type arrives whose existing MEAKV tests + BMC playbook
+  are BLOCKED (e.g. EL140 Gen12 / iLO7 — MEAKV-1750/1793 unsupported), drive
+  the full onboarding end-to-end and CLEANLY separate two tiers:
+    • Reporting & Correlation (read-only, auto, mutates nothing)
+    • Direct Lab Action (executes on live hardware — every action HITL-gated)
+  Run each test through 5 iterations for statistical confidence. Finish with a
+  certified platform + a playbook PR + a full audit trail.
+
+  Example prompts that resolve to this playbook:
+    "Onboard the HPE EL140 Gen12 (iLO7)"
+    "Run the full cert campaign through 5 iterations"
+    "Certify the Dell XR8720t (iDRAC 10)"
+
+output:
+  - name: onboarding_report
+    type: structured_data
+    description: "End-to-end run — steps by tier, iterations, HITL decisions, certified status"
+  - name: playbook_pr
+    type: identifier
+    description: "Branch/PR opened with the approved Ansible changes"
+  - name: audit_log_id
+    type: identifier
+    description: "Audit Lens trace id (hash-chained decisions + lab actions)"
+
+context:
+  business_rules:
+    - "Every DIRECT LAB ACTION requires a human approval (HITL gate) before it runs"
+    - "Reporting & correlation steps run automatically and mutate nothing in the lab"
+    - "Each test executes through 5 iterations (run1..run5) for statistical confidence"
+    - "Pull real reference values from a live e930t (iLO6) — never placeholders"
+  tiers:
+    correlate: "Read-only intelligence — analyze, classify, correlate, draft change-specs"
+    action: "Executes on live hardware via SSH proxy + Redfish PATCH / BIOS / power-cycle"
+
+actions:
+  - name: design_test_coverage
+    action_id: telecommunications.design_test_coverage
+    description: "Propose PROPOSED-* test cases for the unsupported platform"
+    required: true
+  - name: run_test_iterations
+    action_id: telecommunications.run_test_iterations
+    description: "Execute the suite on live hardware through N iterations"
+    required: true
+  - name: analyze_playbook_gaps
+    action_id: telecommunications.analyze_playbook_gaps
+    description: "Cross-reference results vs the live BMC playbook → change-spec"
+    required: true
+  - name: apply_playbook_change
+    action_id: telecommunications.apply_playbook_change
+    description: "Commit approved changes + open PR (direct action, HITL-gated)"
+    required: false
+
+recipe: |
+  1. Detect blocked coverage — read the intake, find BLOCKED MEAKV tickets
+     (iLO7 unsupported). [correlate]
+  2. Design test coverage — propose PROPOSED-20→32. [correlate]
+  3. HITL GATE — authorize live-lab execution.
+  4. Connect + capture baseline via SSH proxy + Redfish GET. [action]
+  5. Execute PROPOSED-20→28 × 5 iterations on the live unit. [action]
+  6. Pull real reference values from a live e930t (iLO6). [correlate]
+  7. Cross-platform correlation — find iLO7 deviations also on iLO6. [correlate]
+  8. Gap analysis → draft the BMC playbook change-spec. [correlate]
+  9. Compliance + drift scan (NEBS 62°C, security-hardening gap). [correlate]
+  10. HITL GATE — approve the playbook changes.
+  11. Apply playbook changes + open PR. [action]
+  12. HITL GATE — approve BIOS WorkloadProfile=vRAN + Secure Boot.
+  13. Configure BIOS + Secure Boot (PATCH + cold boot). [action]
+  14. Re-certify × 5 iterations. [action]
+  15. Certification report + audit trail. [correlate]
+
+triggers:
+  - type: gcs_event
+    label: GCP Cloud Storage
+    bucket: apex-prod-intake
+    pattern: "gs://apex-prod-intake/new-platform-intake/**"
+    detail: "gs://apex-prod-intake/new-platform-intake/** · new server type drop"
+  - type: chat_message
+    routed_by: verizon_router
+  - type: api_invoke
+    endpoint: /api/v1/agents/OrchestratorAgent/invoke

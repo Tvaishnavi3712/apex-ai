@@ -1,0 +1,43 @@
+═══════════════════════════════════════════════════════════════════════════════
+                            INVOICE
+═══════════════════════════════════════════════════════════════════════════════
+
+VENDOR:                                      BILL TO:
+---------------------------------           ---------------------------------
+DataPro Analytics Inc.                      Apex Financial Corp
+1500 Data Center Drive                      500 Enterprise Way
+Denver, CO 80202                            San Francisco, CA 94105
+Tax ID: 84-3334567
+Phone: (303) 555-0222
+Email: ar@datapro.com
+
+═══════════════════════════════════════════════════════════════════════════════
+Invoice Number:    DPA-2024-0234
+Invoice Date:      March 10, 2024
+Due Date:          April 9, 2024
+PO Number:         PO-2024-5500
+Payment Terms:     Net 30
+═══════════════════════════════════════════════════════════════════════════════
+
+                    *** ORIGINAL PO AMOUNT: $12,000.00 ***
+
+DESCRIPTION                          QTY      UNIT PRICE      AMOUNT
+-------------------------------------------------------------------------------
+Data Analytics Platform License       1      $9,500.00      $9,500.00
+Additional User Seats (25)           25        $120.00      $3,000.00
+API Integration Package               1      $2,500.00      $2,500.00
+Rush Implementation Fee               1      $1,500.00      $1,500.00  << ADDED
+-------------------------------------------------------------------------------
+
+                                              Subtotal:    $16,500.00
+                                              Tax (7.65%):  $1,262.25
+                                              ─────────────────────────
+                                              TOTAL DUE:   $17,762.25
+
+═══════════════════════════════════════════════════════════════════════════════
+     Note: Rush fee added per verbal approval from project manager
+═══════════════════════════════════════════════════════════════════════════════
+
+TEST SCENARIO: PO Amount Mismatch (Invoice 48% over PO)
+Expected Result: FLAGGED - Invoice exceeds PO tolerance (5%)
+                 Route to Purchasing Manager for PO amendment

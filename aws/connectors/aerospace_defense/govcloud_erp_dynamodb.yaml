@@ -1,0 +1,131 @@
+# GovCloud ERP Replacement - DynamoDB
+# Simulates Essex's work order and inventory system
+# Mode: READ/WRITE
+
+connector:
+  id: govcloud_erp
+  name: "GovCloud ERP System"
+  description: "Work orders and inventory management (Demo: DynamoDB)"
+  type: dynamodb
+  mode: read_write
+  industry: aerospace_defense
+  compliance:
+    - ITAR
+    - NIST-800-171
+    - AS9100D
+
+  # AWS Configuration
+  aws:
+    region: us-east-1
+    tables:
+      work_orders:
+        table_name: apex-demo-work-orders
+        partition_key: work_order_id
+        sort_key: null
+        gsi:
+          - name: program-status-index
+            partition_key: program
+            sort_key: status
+          - name: priority-index
+            partition_key: priority
+            sort_key: required_date
+
+      work_order_operations:
+        table_name: apex-demo-wo-operations
+        partition_key: work_order_id
+        sort_key: operation_number
+
+      inventory:
+        table_name: apex-demo-inventory
+        partition_key: part_number
+        sort_key: location
+
+      ncr_records:
+        table_name: apex-demo-ncr
+        partition_key: ncr_number
+        sort_key: null
+
+      audit_log:
+        table_name: apex-demo-audit-log
+        partition_key: audit_id
+        sort_key: timestamp
+
+  # Operations (READ)
+  read_operations:
+    query_work_order:
+      table: work_orders
+      operation: get_item
+      key: work_order_id
+
+    list_work_orders:
+      table: work_orders
+      operation: query
+      index: program-status-index
+      filters:
+        - program
+        - status
+        - priority
+
+    get_operations:
+      table: work_order_operations
+      operation: query
+      key: work_order_id
+
+    get_inventory:
+      table: inventory
+      operation: get_item
+      key: part_number
+
+  # Operations (WRITE)
+  write_operations:
+    create_work_order:
+      table: work_orders
+      operation: put_item
+      audit: true
+      required_fields:
+        - part_number
+        - quantity
+        - required_date
+        - program
+        - customer_po
+
+    update_work_order:
+      table: work_orders
+      operation: update_item
+      audit: true
+      allowed_fields:
+        - status
+        - quantity_complete
+        - quantity_scrapped
+        - notes
+
+    create_ncr:
+      table: ncr_records
+      operation: put_item
+      audit: true
+      triggers:
+        - update_work_order_hold
+        - send_notification
+      required_fields:
+        - work_order_id
+        - defect_type
+        - defect_description
+        - quantity_affected
+
+  # Audit Configuration
+  audit:
+    enabled: true
+    table: audit_log
+    retention_days: 1095
+    fields:
+      - timestamp
+      - operation
+      - user_id
+      - record_id
+      - changes
+      - ip_address
+
+  # Authentication
+  authentication:
+    type: iam_role
+    role_arn: arn:aws:iam::457795063704:role/apex-dynamodb-rw-role

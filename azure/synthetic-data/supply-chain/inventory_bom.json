@@ -1,0 +1,278 @@
+{
+  "materials": [
+    {
+      "material_id": "VR-4400",
+      "name": "Vinyl Resin (PVC Grade A)",
+      "uom": "kg"
+    },
+    {
+      "material_id": "AL-2024",
+      "name": "Aluminum Coil (6063-T5)",
+      "uom": "kg"
+    },
+    {
+      "material_id": "ST-1008",
+      "name": "Steel Coil (1008)",
+      "uom": "kg"
+    },
+    {
+      "material_id": "PVC-7700",
+      "name": "PVC Compound",
+      "uom": "kg"
+    },
+    {
+      "material_id": "GL-4401",
+      "name": "Low-E Glass Panel",
+      "uom": "panel"
+    },
+    {
+      "material_id": "SL-9902",
+      "name": "Silicone Sealant",
+      "uom": "tube"
+    },
+    {
+      "material_id": "FR-8801",
+      "name": "Foam Insulation Core",
+      "uom": "m\u00b2"
+    },
+    {
+      "material_id": "TR-5520",
+      "name": "Titanium Dioxide (pigment)",
+      "uom": "kg"
+    },
+    {
+      "material_id": "PL-3310",
+      "name": "Polyester Mesh",
+      "uom": "m"
+    }
+  ],
+  "plants": [
+    {
+      "plant_id": "PLT-OH-07",
+      "name": "Ohio Plant 7",
+      "region": "Midwest"
+    },
+    {
+      "plant_id": "PLT-TX-14",
+      "name": "Texas Plant 14",
+      "region": "South"
+    },
+    {
+      "plant_id": "PLT-GA-31",
+      "name": "Georgia Plant 31",
+      "region": "Southeast"
+    },
+    {
+      "plant_id": "PLT-PA-09",
+      "name": "Pennsylvania 9",
+      "region": "Northeast"
+    }
+  ],
+  "products": [
+    {
+      "product_id": "PRD-CSW-4860",
+      "name": "Commercial Casement Window",
+      "plants": [
+        "PLT-OH-07",
+        "PLT-TX-14"
+      ]
+    },
+    {
+      "product_id": "PRD-VSD-2201",
+      "name": "Vinyl Siding (wood-grain)",
+      "plants": [
+        "PLT-OH-07",
+        "PLT-GA-31"
+      ]
+    },
+    {
+      "product_id": "PRD-RFP-1102",
+      "name": "Roofing Panel (SE region)",
+      "plants": [
+        "PLT-GA-31"
+      ]
+    },
+    {
+      "product_id": "PRD-DRL-3304",
+      "name": "Door Light Insert (insulated)",
+      "plants": [
+        "PLT-TX-14",
+        "PLT-PA-09"
+      ]
+    },
+    {
+      "product_id": "PRD-TRM-9910",
+      "name": "Exterior Trim (Midwest)",
+      "plants": [
+        "PLT-OH-07"
+      ]
+    },
+    {
+      "product_id": "PRD-SSH-5402",
+      "name": "Storm Shield (hurricane)",
+      "plants": [
+        "PLT-GA-31",
+        "PLT-TX-14"
+      ]
+    }
+  ],
+  "bom": [
+    {
+      "product_id": "PRD-CSW-4860",
+      "material_id": "VR-4400",
+      "qty_per_unit": 8.0
+    },
+    {
+      "product_id": "PRD-CSW-4860",
+      "material_id": "GL-4401",
+      "qty_per_unit": 2.0
+    },
+    {
+      "product_id": "PRD-CSW-4860",
+      "material_id": "AL-2024",
+      "qty_per_unit": 4.5
+    },
+    {
+      "product_id": "PRD-CSW-4860",
+      "material_id": "SL-9902",
+      "qty_per_unit": 3.0
+    },
+    {
+      "product_id": "PRD-VSD-2201",
+      "material_id": "VR-4400",
+      "qty_per_unit": 1.2
+    },
+    {
+      "product_id": "PRD-VSD-2201",
+      "material_id": "TR-5520",
+      "qty_per_unit": 0.05
+    },
+    {
+      "product_id": "PRD-RFP-1102",
+      "material_id": "AL-2024",
+      "qty_per_unit": 6.8
+    },
+    {
+      "product_id": "PRD-RFP-1102",
+      "material_id": "FR-8801",
+      "qty_per_unit": 1.0
+    },
+    {
+      "product_id": "PRD-DRL-3304",
+      "material_id": "GL-4401",
+      "qty_per_unit": 1.0
+    },
+    {
+      "product_id": "PRD-DRL-3304",
+      "material_id": "AL-2024",
+      "qty_per_unit": 2.2
+    },
+    {
+      "product_id": "PRD-TRM-9910",
+      "material_id": "PVC-7700",
+      "qty_per_unit": 4.0
+    },
+    {
+      "product_id": "PRD-TRM-9910",
+      "material_id": "VR-4400",
+      "qty_per_unit": 2.6
+    },
+    {
+      "product_id": "PRD-SSH-5402",
+      "material_id": "ST-1008",
+      "qty_per_unit": 12.0
+    },
+    {
+      "product_id": "PRD-SSH-5402",
+      "material_id": "AL-2024",
+      "qty_per_unit": 3.1
+    },
+    {
+      "product_id": "PRD-SSH-5402",
+      "material_id": "PL-3310",
+      "qty_per_unit": 8.0
+    }
+  ],
+  "inventory": [
+    {
+      "material_id": "VR-4400",
+      "plant_id": "PLT-OH-07",
+      "stock_level_kg": 14200,
+      "burn_rate_per_day": 1015,
+      "safety_stock_pct": 18,
+      "days_remaining": 14
+    },
+    {
+      "material_id": "VR-4400",
+      "plant_id": "PLT-TX-14",
+      "stock_level_kg": 8900,
+      "burn_rate_per_day": 640,
+      "safety_stock_pct": 21,
+      "days_remaining": 14
+    },
+    {
+      "material_id": "VR-4400",
+      "plant_id": "PLT-GA-31",
+      "stock_level_kg": 7100,
+      "burn_rate_per_day": 505,
+      "safety_stock_pct": 19,
+      "days_remaining": 14
+    },
+    {
+      "material_id": "AL-2024",
+      "plant_id": "PLT-TX-14",
+      "stock_level_kg": 21400,
+      "burn_rate_per_day": 764,
+      "safety_stock_pct": 35,
+      "days_remaining": 28
+    },
+    {
+      "material_id": "AL-2024",
+      "plant_id": "PLT-GA-31",
+      "stock_level_kg": 17500,
+      "burn_rate_per_day": 625,
+      "safety_stock_pct": 33,
+      "days_remaining": 28
+    },
+    {
+      "material_id": "ST-1008",
+      "plant_id": "PLT-GA-31",
+      "stock_level_kg": 44800,
+      "burn_rate_per_day": 722,
+      "safety_stock_pct": 72,
+      "days_remaining": 62
+    },
+    {
+      "material_id": "PVC-7700",
+      "plant_id": "PLT-OH-07",
+      "stock_level_kg": 26100,
+      "burn_rate_per_day": 580,
+      "safety_stock_pct": 58,
+      "days_remaining": 45
+    },
+    {
+      "material_id": "GL-4401",
+      "plant_id": "PLT-OH-07",
+      "stock_level_kg": 2800,
+      "burn_rate_per_day": 120,
+      "safety_stock_pct": 24,
+      "days_remaining": 23
+    },
+    {
+      "material_id": "SL-9902",
+      "plant_id": "PLT-OH-07",
+      "stock_level_kg": 1100,
+      "burn_rate_per_day": 42,
+      "safety_stock_pct": 82,
+      "days_remaining": 26
+    },
+    {
+      "material_id": "FR-8801",
+      "plant_id": "PLT-GA-31",
+      "stock_level_kg": 9200,
+      "burn_rate_per_day": 412,
+      "safety_stock_pct": 60,
+      "days_remaining": 22
+    }
+  ]
+}

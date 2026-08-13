@@ -1,0 +1,28 @@
+{
+  "blueprint_id": "bp-boler-carrier-invoice",
+  "name": "Boler Carrier Invoice",
+  "description": "Monthly carrier invoice (Cigna · Delta · VSP · Fidelity · Hartford) — lives, premium, plan tier, employee/employer split.",
+  "industry": "manufacturing_multi_division",
+  "document_type": "carrier_invoice",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "Boler Carrier Invoice",
+    "description": "Monthly carrier statement covering medical, dental, vision, 401k, life, or disability premium for The Boler Company.",
+    "extractionInstructions": "Extract carrier identity, period covered, every covered life with plan tier + premium, and the totals. Reconcile against the HRIS roster downstream. Distinguish employer-portion vs employee-portion when the statement separates them.",
+    "fields": {
+      "carrier_name":        { "type": "string", "description": "Cigna / Delta Dental / VSP / Fidelity / Hartford / Cigna STD-LTD", "required": true },
+      "benefit_type":        { "type": "string", "description": "medical / dental / vision / 401k / life / disability", "required": true },
+      "invoice_number":      { "type": "string", "description": "Carrier invoice number", "required": true },
+      "period_start":        { "type": "date",   "description": "Coverage period start", "required": true },
+      "period_end":          { "type": "date",   "description": "Coverage period end", "required": true },
+      "total_lives":         { "type": "number", "description": "Total covered lives on invoice", "required": true },
+      "total_premium":       { "type": "number", "description": "Total premium $ on invoice", "required": true },
+      "employer_portion":    { "type": "number", "description": "Employer-paid portion", "required": false },
+      "employee_portion":    { "type": "number", "description": "Employee-paid (payroll-deduct) portion", "required": false },
+      "plan_tiers":          { "type": "array",  "description": "List of plan tiers + per-tier counts (Premium, Standard, HDHP, Basic)", "required": true },
+      "covered_lives":       { "type": "array",  "description": "Roster — { employee_id, legal_name, plan_tier, monthly_premium, division_hint }", "required": true },
+      "tax_id_payer":        { "type": "string", "description": "Tax ID of the payer (legal entity issuing the check)", "required": false },
+      "drift_vs_plan_doc":   { "type": "number", "description": "Variance between billed rate and plan-doc rate (basis points). Filled by reconciliation, not extraction.", "required": false }
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "blueprintName": "firmware-test-campaign-report",
+  "blueprintVersion": "1.0.0",
+  "description": "Input blueprint \u2014 a CAS far-edge firmware test campaign summary (HPE EL140 Gen12, Dell XR8720t, ZT). Frontmatter + per-category MEAKV/PROPOSED results + deviations. Parsed by CertificationAgent + OrchestratorAgent.",
+  "industry": "telecommunications",
+  "documentType": "firmware_test_report",
+  "bdaSchema": {
+    "class": "ApexFirmwareTestReport",
+    "description": "Per-platform firmware certification campaign summary",
+    "fields": {
+      "platform": {
+        "type": "string",
+        "instruction": "e.g. HPE EL140 Gen12 / Dell XR8720t / ZT Proteus",
+        "required": true
+      },
+      "bmc_firmware": {
+        "type": "string",
+        "instruction": "iLO7 1.20.00 / iDRAC 1.30.10.51 / BMC 0.46",
+        "required": true
+      },
+      "bios_version": {
+        "type": "string",
+        "instruction": "BIOS version string",
+        "required": true
+      },
+      "bmc_ip": {
+        "type": "string",
+        "instruction": "BMC IPv6 (lab)",
+        "required": false
+      },
+      "date_start": {
+        "type": "date",
+        "instruction": "campaign start",
+        "required": false
+      },
+      "total_tests": {
+        "type": "number",
+        "instruction": "test count",
+        "required": true
+      },
+      "pass": {
+        "type": "number",
+        "instruction": "PASS count",
+        "required": true
+      },
+      "pass_with_deviation": {
+        "type": "number",
+        "instruction": "PASS-WITH-DEVIATION count",
+        "required": false
+      },
+      "fail": {
+        "type": "number",
+        "instruction": "FAIL count",
+        "required": true
+      },
+      "meakv_results": {
+        "type": "array",
+        "instruction": "per-MEAKV results {id, desc, result}",
+        "required": true
+      },
+      "proposed_results": {
+        "type": "array",
+        "instruction": "per-PROPOSED results {id, title, result}",
+        "required": false
+      },
+      "deviations": {
+        "type": "array",
+        "instruction": "accepted deviations with rationale",
+        "required": false
+      },
+      "overall_result": {
+        "type": "string",
+        "instruction": "PASS / PASS WITH DEVIATIONS / FAIL",
+        "required": true
+      }
+    }
+  }
+}

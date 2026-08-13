@@ -1,0 +1,212 @@
+<!-- Modern Invoice Template -->
+<!-- Variables: {{vendor_name}}, {{vendor_address}}, {{invoice_number}}, etc. -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice {{invoice_number}}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px;
+        }
+        .invoice-container {
+            background: white;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .logo-section h1 { font-size: 28px; font-weight: 300; }
+        .logo-section p { opacity: 0.8; margin-top: 5px; }
+        .invoice-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-align: right;
+        }
+        .invoice-badge h2 { font-size: 24px; font-weight: 300; }
+        .invoice-badge .number { font-size: 14px; opacity: 0.8; }
+        .content { padding: 40px; }
+        .addresses {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .address-block h3 {
+            color: #667eea;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .address-block p { color: #333; line-height: 1.6; }
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 40px;
+        }
+        .detail-item label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #666;
+            letter-spacing: 1px;
+        }
+        .detail-item span {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-top: 5px;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        thead th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        tbody td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        tbody tr:hover { background: #f8f9fa; }
+        .totals-section {
+            margin-top: 30px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .totals-table { width: 300px; }
+        .totals-table tr td {
+            padding: 10px 0;
+            border: none;
+        }
+        .totals-table .label { color: #666; }
+        .totals-table .value { text-align: right; font-weight: 500; }
+        .totals-table .total-row td {
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+            border-top: 2px solid #667eea;
+            padding-top: 15px;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="header">
+            <div class="logo-section">
+                <h1>{{vendor_name}}</h1>
+                <p>{{vendor_tagline}}</p>
+            </div>
+            <div class="invoice-badge">
+                <h2>INVOICE</h2>
+                <div class="number">#{{invoice_number}}</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="addresses">
+                <div class="address-block">
+                    <h3>From</h3>
+                    <p>
+                        <strong>{{vendor_name}}</strong><br>
+                        {{vendor_street}}<br>
+                        {{vendor_city}}, {{vendor_state}} {{vendor_zip}}<br>
+                        {{vendor_phone}}<br>
+                        {{vendor_email}}
+                    </p>
+                </div>
+                <div class="address-block">
+                    <h3>Bill To</h3>
+                    <p>
+                        <strong>{{customer_name}}</strong><br>
+                        {{customer_street}}<br>
+                        {{customer_city}}, {{customer_state}} {{customer_zip}}
+                    </p>
+                </div>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-item">
+                    <label>Invoice Date</label>
+                    <span>{{invoice_date}}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Due Date</label>
+                    <span>{{due_date}}</span>
+                </div>
+                <div class="detail-item">
+                    <label>PO Number</label>
+                    <span>{{po_number}}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Terms</label>
+                    <span>{{terms}}</span>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Qty</th>
+                        <th>Rate</th>
+                        <th style="text-align: right;">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{line_items}}
+                </tbody>
+            </table>
+
+            <div class="totals-section">
+                <table class="totals-table">
+                    <tr>
+                        <td class="label">Subtotal</td>
+                        <td class="value">{{subtotal}}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Tax ({{tax_rate}})</td>
+                        <td class="value">{{tax_amount}}</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td class="label">Total</td>
+                        <td class="value">{{total}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="footer">
+            Thank you for your business! | Payment due within {{terms}}
+        </div>
+    </div>
+</body>
+</html>

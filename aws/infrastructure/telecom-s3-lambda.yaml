@@ -1,0 +1,136 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Verizon Far Edge — Path B (real cloud trigger).
+  S3 bucket where ROBOT XML cycles land + a Lambda that fires on every
+  PutObject and POSTs the object key to the APEX backend, which then
+  runs the same Full Certification Cycle pipeline as the UI upload path.
+
+  Deploy:
+    sam deploy --template-file telecom-s3-lambda.yaml \
+               --stack-name apex-vz-telecom-cycle \
+               --capabilities CAPABILITY_IAM \
+               --parameter-overrides \
+                   ApexBackendUrl=https://your-apex-backend/api/v1 \
+                   IngestBucketName=apex-vz-cycles-457795063704
+
+  Trigger:
+    aws s3 cp robot_output_caas_node_v2412_full.xml \
+              s3://apex-vz-cycles-457795063704/cycles/
+
+  Watch:
+    aws logs tail /aws/lambda/apex-vz-cycle-trigger --follow
+
+Parameters:
+  ApexBackendUrl:
+    Type: String
+    Description: >
+      Public HTTPS URL of the APEX backend, including the /api/v1 prefix.
+      For a local-only demo, expose your laptop via `ngrok http 8000` and
+      paste the ngrok URL here (then redeploy).
+    Default: https://example.invalid/api/v1
+
+  IngestBucketName:
+    Type: String
+    Description: S3 bucket that receives cycle XML drops.
+    Default: apex-vz-cycles-457795063704
+
+  S3KeyPrefix:
+    Type: String
+    Description: >
+      Object key prefix the Lambda watches. Drops to other prefixes in the
+      same bucket are ignored (useful if the bucket is shared).
+    Default: cycles/
+
+Resources:
+
+  # ─────────────────────────── S3 bucket ───────────────────────────
+
+  IngestBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref IngestBucketName
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls:        true
+        BlockPublicPolicy:      true
+        IgnorePublicAcls:       true
+        RestrictPublicBuckets:  true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: expire-cycles-after-30-days
+            Status: Enabled
+            ExpirationInDays: 30
+            NoncurrentVersionExpirationInDays: 7
+      Tags:
+        - Key: Project
+          Value: APEX
+        - Key: Customer
+          Value: Verizon
+        - Key: Pillar
+          Value: Telecommunications
+
+  # ─────────────────────────── Lambda function ───────────────────────────
+
+  CycleTriggerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: apex-vz-cycle-trigger
+      Runtime: python3.12
+      MemorySize: 256
+      Timeout: 30
+      Handler: cycle_trigger.handler
+      CodeUri: ./telecom_cycle_lambda
+      Environment:
+        Variables:
+          APEX_BACKEND_URL: !Ref ApexBackendUrl
+          KEY_PREFIX_FILTER: !Ref S3KeyPrefix
+      Events:
+        ObjectCreated:
+          Type: S3
+          Properties:
+            Bucket: !Ref IngestBucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: prefix
+                    Value: !Ref S3KeyPrefix
+                  - Name: suffix
+                    Value: .xml
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Ref IngestBucketName
+
+  # ─────────────────────────── Logs ───────────────────────────
+
+  LambdaLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${CycleTriggerFunction}
+      RetentionInDays: 14
+
+Outputs:
+  IngestBucketName:
+    Value: !Ref IngestBucket
+    Description: Drop ROBOT XML cycles here
+
+  IngestBucketArn:
+    Value: !GetAtt IngestBucket.Arn
+
+  LambdaFunctionArn:
+    Value: !GetAtt CycleTriggerFunction.Arn
+
+  TestCommand:
+    Value: !Sub |
+      aws s3 cp <robot-output>.xml s3://${IngestBucket}/${S3KeyPrefix}
+    Description: >
+      One-liner to trigger a cycle from the CLI. After running, watch the
+      APEX UI's /canvas/playbook/pb-tel-1/run page to see the pipeline tick
+      live (the SSE stream is shared between Path A and Path B since both
+      hit the same /cycle-start endpoint).

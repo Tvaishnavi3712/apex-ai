@@ -1,0 +1,29 @@
+{
+  "blueprint_id": "bp-cwfcu-ofac",
+  "name": "CWFCU OFAC Screening Result",
+  "description": "OFAC SDN + Consolidated screening result for member and entity onboarding.",
+  "industry": "credit_union",
+  "document_type": "ofac_screening",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "CWFCU OFAC Screening",
+    "description": "Per-screen result with source list, match score, and reviewer disposition.",
+    "extractionInstructions": "Capture every screen run (OFAC SDN, OFAC Consolidated, FinCEN 314(a), 594(a) secondary watchlists). Near-matches require reviewer documentation.",
+    "fields": {
+      "screening_id":         { "type": "string", "description": "Internal screening ID (OFAC-YYYY-NNNNN)", "required": true },
+      "subject_type":         { "type": "string", "description": "individual / entity / signer", "required": true },
+      "subject_name":         { "type": "string", "description": "Screened name", "required": true },
+      "subject_dob":          { "type": "date",   "description": "Subject DOB (if individual)", "required": false },
+      "list_screened":        { "type": "string", "description": "OFAC_SDN / OFAC_CONSOLIDATED / FINCEN_314A / SECONDARY_594A", "required": true },
+      "screen_engine":        { "type": "string", "description": "Vendor (WorldCheck One / Dow Jones RiskCenter / etc.)", "required": true },
+      "screen_timestamp":     { "type": "string", "description": "Screen timestamp (ISO8601)", "required": true },
+      "result":               { "type": "string", "description": "CLEAR / NEAR_MATCH / TRUE_MATCH", "required": true },
+      "match_score_pct":      { "type": "number", "description": "Best-match similarity score (0-100)", "required": false },
+      "near_match_details":   { "type": "string", "description": "Near-match summary (if any)", "required": false },
+      "reviewer_id":          { "type": "string", "description": "Reviewer who dispositioned the near-match (if any)", "required": false },
+      "disposition":          { "type": "string", "description": "ACCEPTED / DISMISSED / ESCALATED", "required": true },
+      "disposition_rationale": { "type": "string","description": "Documented rationale", "required": false },
+      "linked_member_id":     { "type": "string", "description": "Linked CWFCU member number (post-approval)", "required": false }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "blueprint_id": "bp-boler-employee-roster",
+  "name": "Boler HRIS Employee Roster",
+  "description": "Workday/UKG roster export — employee → division mapping, plan elections, hire/term dates.",
+  "industry": "manufacturing_multi_division",
+  "document_type": "employee_roster",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "Boler HRIS Employee Roster",
+    "description": "Authoritative employee → division mapping used to allocate carrier premium to the correct legal entity.",
+    "extractionInstructions": "Treat this as the system of record for which division an employee belongs to during a given pay period. An employee can change divisions via an internal transfer — record both effective_from and effective_to.",
+    "fields": {
+      "employee_id":          { "type": "string", "description": "HRIS employee ID (e.g., EE-104782)", "required": true },
+      "legal_name":           { "type": "string", "description": "Employee legal name", "required": true },
+      "division":             { "type": "string", "description": "Hendrickson Truck Suspension / Boler Hitch / Cequent / ROHO / Henderson", "required": true },
+      "division_code":        { "type": "string", "description": "HTS / BLH / CEQ / RHO / HEN", "required": true },
+      "cost_center":          { "type": "string", "description": "GL cost-center code for the employee", "required": true },
+      "hire_date":            { "type": "date",   "description": "Original hire date", "required": true },
+      "term_date":            { "type": "date",   "description": "Termination date (null if active)", "required": false },
+      "effective_from":       { "type": "date",   "description": "When the division assignment took effect", "required": true },
+      "effective_to":         { "type": "date",   "description": "When the division assignment ends (null = current)", "required": false },
+      "medical_plan":         { "type": "string", "description": "Cigna plan tier (Premium / Standard / HDHP / None)", "required": false },
+      "dental_plan":          { "type": "string", "description": "Delta Dental tier", "required": false },
+      "vision_plan":          { "type": "string", "description": "VSP tier", "required": false },
+      "k401_election_pct":    { "type": "number", "description": "Employee 401k contribution %", "required": false },
+      "dependents":           { "type": "array",  "description": "Covered dependents", "required": false }
+    }
+  }
+}

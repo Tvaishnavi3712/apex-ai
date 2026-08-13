@@ -1,0 +1,28 @@
+{
+  "blueprint_id": "bp-boler-exception-packet",
+  "name": "Boler Exception Packet",
+  "description": "Reconciliation exception — wrong division, duplicate COBRA, terminated-on-roster, carrier rate drift, 401k rate mismatch.",
+  "industry": "manufacturing_multi_division",
+  "document_type": "exception_packet",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "Boler Exception Packet",
+    "description": "Self-contained packet describing one reconciliation exception — what was expected, what was billed, the proposed fix, the $ impact, and the HITL routing decision.",
+    "extractionInstructions": "Every exception MUST include a proposed_resolution, a confidence score, and a dollar variance. The packet is the evidence Sarah Mitchell or Ziggy Kravitz reviews when they Apply / Override / Remove.",
+    "fields": {
+      "exception_id":         { "type": "string", "description": "EXC-YYYY-NNNN", "required": true },
+      "exception_type":       { "type": "string", "description": "wrong_division / duplicate_cobra / carrier_drift / terminated_on_roster / k401_rate_mismatch / new_hire_no_cc / auto_fixed_transfer", "required": true },
+      "severity":             { "type": "string", "description": "LOW / MEDIUM / HIGH / CRITICAL", "required": true },
+      "carrier_invoice_id":   { "type": "string", "description": "Source carrier invoice", "required": true },
+      "employee_id":          { "type": "string", "description": "Affected employee (null for portfolio-wide drift)", "required": false },
+      "expected_value":       { "type": "string", "description": "What the plan doc / HRIS says", "required": true },
+      "observed_value":       { "type": "string", "description": "What the carrier billed", "required": true },
+      "variance_amount":      { "type": "number", "description": "$ variance (signed)", "required": true },
+      "proposed_resolution":  { "type": "string", "description": "Plain-English fix the agent recommends", "required": true },
+      "confidence":           { "type": "number", "description": "Agent confidence 0.0–1.0", "required": true },
+      "auto_fixable":         { "type": "boolean","description": "Whether the agent has authority to auto-fix without HITL", "required": true },
+      "routing_decision":     { "type": "string", "description": "auto_fix / route_benefits_mgr / route_cfo", "required": true },
+      "supporting_evidence":  { "type": "array",  "description": "Pointers to source documents", "required": true }
+    }
+  }
+}

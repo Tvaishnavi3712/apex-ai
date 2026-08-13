@@ -1,0 +1,322 @@
+{
+  "_note": "20 immutable Audit Lens (Governance) events spanning the SchemaWatchAgent detection, the wave-hold authorization, the CertificationAgent run, the HITL approval flow, and the historical gate-change event. Every record is content-addressed via sha256 of the canonical JSON.",
+  "_schema_version": "audit_lens_event_v1",
+  "events": [
+    {
+      "event_id":          "DVR-20260112-031844-001",
+      "timestamp":         "2026-01-12T03:18:44Z",
+      "agent":             "SchemaWatchAgent",
+      "action_type":       "schema_drift_detection",
+      "trigger_condition": "scheduled_6h_cadence",
+      "trigger_value":     "next_scheduled_run",
+      "data_snapshot": {
+        "baseline_version":         "v1.14.0",
+        "current_version":          "v1.16.0",
+        "breaking_changes_count":   3,
+        "scripts_impacted_count":   14,
+        "vendor_release_note_anchor": "Wind River 24.12 §3.2"
+      },
+      "playbook_id":       "playbook-schema-drift-response-vz",
+      "immutable_hash":    "sha256:a3f4b2c1e7d8923ab8742f4e85221a82f4218fb1c8a7df2cb4189127ef0f8d22"
+    },
+    {
+      "event_id":          "DVR-20260112-031844-002",
+      "timestamp":         "2026-01-12T03:18:44Z",
+      "agent":             "SchemaWatchAgent",
+      "action_type":       "remediation_map_generated",
+      "data_snapshot": {
+        "remediation_map_id": "REM-MAP-20260112-031844",
+        "total_find_replace_operations": 14,
+        "estimated_effort_hours": 2.0
+      },
+      "immutable_hash":    "sha256:d2c1e7f4b88a9742f4e85221a82f4218fb1c8a7df2cb4189127ef0f8d22a3f4b"
+    },
+    {
+      "event_id":          "DVR-20260112-031846-003",
+      "timestamp":         "2026-01-12T03:18:46Z",
+      "agent":             "SchemaWatchAgent",
+      "action_type":       "jira_epic_created",
+      "data_snapshot": {
+        "epic_key":          "APEXVZ-SCHEMA-EPIC-2026-01",
+        "subtasks_created":  5
+      },
+      "immutable_hash":    "sha256:fb1c8a7df2cb4189127ef0f8d22a3f4ba3f4b2c1e7d8923ab8742f4e85221a82"
+    },
+    {
+      "event_id":          "DVR-20260112-031912-004",
+      "timestamp":         "2026-01-12T03:19:12Z",
+      "agent":             "SchemaWatchAgent",
+      "action_type":       "notification_sent",
+      "data_snapshot": {
+        "channels":            ["slack", "email"],
+        "recipients":          ["automation-team@verizon.com", "james.patchett@verizon.com"],
+        "slack_channel":       "#apex-vz-schema-watch",
+        "message_template":    "schema_drift_alert"
+      },
+      "immutable_hash":    "sha256:e85221a82f4218fb1c8a7df2cb4189127ef0f8d22a3f4ba3f4b2c1e7d8923ab8"
+    },
+    {
+      "event_id":          "DVR-20260112-103114-005",
+      "timestamp":         "2026-01-12T10:31:14Z",
+      "agent":             "UpgradeAdvisorAgent",
+      "action_type":       "hitl_required",
+      "trigger_condition": "wave_deployment_referenced_impacted_scripts",
+      "data_snapshot": {
+        "wave_id":           "WAVE-2026-Q1-PLANNED",
+        "blocking_reason":   "14 impacted scripts overlap with wave preflight catalog",
+        "approver_required": "james.patchett@verizon.com",
+        "sla_hours":         1
+      },
+      "immutable_hash":    "sha256:8742f4e85221a82f4218fb1c8a7df2cb4189127ef0f8d22a3f4ba3f4b2c1e7d8"
+    },
+    {
+      "event_id":          "DVR-20260112-114108-006",
+      "timestamp":         "2026-01-12T11:41:08Z",
+      "agent":             "UpgradeAdvisorAgent",
+      "action_type":       "hitl_received",
+      "data_snapshot": {
+        "wave_id":           "WAVE-2026-Q1-PLANNED",
+        "decision":          "hold_until_remediation",
+        "human_reviewer":    "james.patchett@verizon.com",
+        "reviewer_role":     "Distinguished Engineer, HQ Planning",
+        "reviewer_note":     "Hold wave authorization pending epic APEXVZ-SCHEMA-EPIC-2026-01 completion. Confirmed historical pattern match — same high-risk Type-B Northeast deployment path.",
+        "review_duration_minutes": 70
+      },
+      "immutable_hash":    "sha256:a82f4218fb1c8a7df2cb4189127ef0f8d22a3f4ba3f4b2c1e7d8923ab8742f4e"
+    },
+    {
+      "event_id":          "DVR-20260115-091422-007",
+      "timestamp":         "2026-01-15T09:14:22Z",
+      "agent":             "CertificationAgent",
+      "action_type":       "robot_xml_ingested",
+      "data_snapshot": {
+        "source_file": "/data/robot-outputs/robot_output_caas_node_v2412_full.xml",
+        "test_count":  247,
+        "file_size_bytes": 104448,
+        "file_hash":   "sha256:9c12bf4b89742f4e85221a82f4218fb1c8a7df2cb4189127ef0f8d22a3f4ba"
+      },
+      "immutable_hash":    "sha256:f4218fb1c8a7df2cb4189127ef0f8d22a3f4ba3f4b2c1e7d8923ab8742f4e852"
+    },
+    {
+      "event_id":          "DVR-20260115-091435-008",
+      "timestamp":         "2026-01-15T09:14:35Z",
+      "agent":             "CertificationAgent",
+      "action_type":       "classification_complete",
+      "data_snapshot": {
+        "p1_count": 14, "p2_count": 1, "p3_count": 2,
+        "overall_status": "FAIL", "deployment_recommendation": "HOLD"
+      },
+      "immutable_hash":    "sha256:c8a7df2cb4189127ef0f8d22a3f4ba3f4b2c1e7d8923ab8742f4e85221a82f42"
+    },
+    {
+      "event_id":          "DVR-20260115-091452-009",
+      "timestamp":         "2026-01-15T09:14:52Z",
+      "agent":             "CertificationAgent",
+      "action_type":       "jira_tickets_opened",
+      "data_snapshot": {
+        "tickets":      ["APEXVZ-2418","APEXVZ-2419","APEXVZ-2420","APEXVZ-2421","APEXVZ-2422","APEXVZ-2423","APEXVZ-2424","APEXVZ-2425","APEXVZ-2426","APEXVZ-2427","APEXVZ-2428","APEXVZ-2429"],
+        "ticket_count": 12,
+        "parent_epic":  "APEXVZ-SCHEMA-EPIC-2026-01"
+      },
+      "immutable_hash":    "sha256:18fb1c8a7df2cb4189127ef0f8d22a3f4ba3f4b2c1e7d8923ab8742f4e85221a"
+    },
+    {
+      "event_id":          "DVR-20260115-091514-010",
+      "timestamp":         "2026-01-15T09:15:14Z",
+      "agent":             "CertificationAgent",
+      "action_type":       "report_generated",
+      "data_snapshot": {
+        "report_id":     "CERT-CYCLE-20260115-CAAS-B-2412",
+        "report_format": ["json", "pdf"],
+        "report_size_kb":47
+      },
+      "immutable_hash":    "sha256:127ef0f8d22a3f4ba3f4b2c1e7d8923ab8742f4e85221a82f4218fb1c8a7df2c"
+    },
+    {
+      "event_id":          "DVR-20260115-091518-011",
+      "timestamp":         "2026-01-15T09:15:18Z",
+      "agent":             "system",
+      "action_type":       "notification_complete",
+      "data_snapshot": {
+        "channels": ["slack", "email", "apex_dashboard"],
+        "slack_channel": "#apex-vz-certification",
+        "message": "✅ Certification complete: CaaS-Node-Type-B 24.12 · 231/247 passed · 12 tickets opened · 38.2h saved"
+      },
+      "immutable_hash":    "sha256:b4189127ef0f8d22a3f4ba3f4b2c1e7d8923ab8742f4e85221a82f4218fb1c8a"
+    },
+    {
+      "event_id":          "DVR-20260116-090814-012",
+      "timestamp":         "2026-01-16T09:08:14Z",
+      "agent":             "ApexSignal",
+      "action_type":       "wave_risk_scoring_complete",
+      "data_snapshot": {
+        "wave_id":                       "WAVE-2026-Q1-PLANNED",
+        "sites_scored":                  16247,
+        "critical_tier_count":           414,
+        "high_tier_count":               1240,
+        "january_2026_pattern_matches":  252,
+        "model_version":                 "apex-signal-verizon-wave-risk-v1"
+      },
+      "immutable_hash":    "sha256:7df2cb4189127ef0f8d22a3f4ba3f4b2c1e7d8923ab8742f4e85221a82f4218f"
+    },
+    {
+      "event_id":          "DVR-20260116-091422-013",
+      "timestamp":         "2026-01-16T09:14:22Z",
+      "agent":             "ApexSignal",
+      "action_type":       "hitl_required",
+      "trigger_condition": "any(site.risk_tier == 'critical')",
+      "data_snapshot": {
+        "critical_count": 414,
+        "approver_required": "james.patchett@verizon.com"
+      },
+      "immutable_hash":    "sha256:f8d22a3f4ba3f4b2c1e7d8923ab8742f4e85221a82f4218fb1c8a7df2cb41891"
+    },
+    {
+      "event_id":          "DVR-20260116-114408-014",
+      "timestamp":         "2026-01-16T11:44:08Z",
+      "agent":             "system",
+      "action_type":       "hitl_received",
+      "data_snapshot": {
+        "decision":       "approve_with_conditions",
+        "human_reviewer": "james.patchett@verizon.com",
+        "conditions": [
+          "All 414 critical-tier sites assigned to wave_3",
+          "252 high-risk Type-B Northeast pattern-match sites require additional vendor pre-engagement",
+          "Re-score every 24 hours until wave_3 authorization"
+        ]
+      },
+      "immutable_hash":    "sha256:e7d8923ab8742f4e85221a82f4218fb1c8a7df2cb4189127ef0f8d22a3f4ba3f"
+    },
+    {
+      "event_id":          "DVR-20260117-061102-015",
+      "timestamp":         "2026-01-17T06:11:02Z",
+      "agent":             "MentorAgent",
+      "action_type":       "knowledge_query",
+      "data_snapshot": {
+        "question":         "What is the upgrade path from 22.12 to 24.12 on CaaS-Node-Type-B?",
+        "questioner":       "automation-team-engineer-44",
+        "answer_passages":  3,
+        "top_citation":     "VZ-Upgrade-Procedures-2026 §2",
+        "confidence":       0.92,
+        "production_change_flag": true,
+        "review_recommended": "Senior engineer review before executing the 22.12→24.12 path"
+      },
+      "immutable_hash":    "sha256:42f4e85221a82f4218fb1c8a7df2cb4189127ef0f8d22a3f4ba3f4b2c1e7d892"
+    },
+    {
+      "event_id":          "DVR-20260117-081844-016",
+      "timestamp":         "2026-01-17T08:18:44Z",
+      "agent":             "SchemaWatchAgent",
+      "action_type":       "schema_drift_detection",
+      "trigger_condition": "scheduled_6h_cadence",
+      "data_snapshot": {
+        "baseline_version":       "v1.14.0",
+        "current_version":        "v1.16.0",
+        "breaking_changes_count": 3,
+        "status":                 "remediation_in_progress",
+        "epic_progress":          "3 of 14 scripts remediated"
+      },
+      "immutable_hash":    "sha256:521a82f4218fb1c8a7df2cb4189127ef0f8d22a3f4ba3f4b2c1e7d8923ab874"
+    },
+    {
+      "event_id":          "DVR-20250924-141822-GATE-CHG-001",
+      "timestamp":         "2025-09-24T14:18:22Z",
+      "agent":             "system",
+      "action_type":       "certification_gate_change",
+      "_historical": true,
+      "data_snapshot": {
+        "change_id":         "GATE-CHG-20250924-001",
+        "gate_from_percent": 95,
+        "gate_to_percent":   60,
+        "rationale":         "Temporary reduction to clear backlog from 24.06 wide refresh wave",
+        "intended_duration_days": 30,
+        "approver_at_time":  "cert-team-lead@verizon.com (no second signature)",
+        "actual_reverted_date": null,
+        "actually_active_days":  113,
+        "linked_incident":   "IR-2026-0114-NE"
+      },
+      "_apex_observation": "APEX requires SRO + HQ Planning co-signature per the high-risk-pattern policy. Missing co-signature is the single most direct organizational risk factor.",
+      "immutable_hash":    "sha256:18fb1c8a7df2cb4189127ef0f8d22a3f4ba3f4b2c1e7d8923ab8742f4e85221a"
+    },
+    {
+      "event_id":          "DVR-20260114-142208-INCIDENT",
+      "timestamp":         "2026-01-15T14:22:08Z",
+      "agent":             "system",
+      "action_type":       "production_incident",
+      "_historical": true,
+      "data_snapshot": {
+        "incident_id":            "IR-2026-0114-NE",
+        "severity":               "geographic",
+        "region":                 "Northeast",
+        "affected_sites":         247,
+        "duration_hours":         12.4,
+        "regulatory_disclosure":  true,
+        "estimated_subscribers_impacted": 1850000
+      },
+      "immutable_hash":    "sha256:34fe85221a82f4218fb1c8a7df2cb4189127ef0f8d22a3f4ba3f4b2c1e7d8923"
+    },
+    {
+      "event_id":          "DVR-20260201-100844-018",
+      "timestamp":         "2026-02-01T10:08:44Z",
+      "agent":             "system",
+      "action_type":       "policy_amendment",
+      "data_snapshot": {
+        "policy_name":  "Certification Gate Threshold Change",
+        "amendment":    "Reductions of the certification gate below 90% now require SRO + HQ Planning co-signature recorded in the Apex Audit Lens. Single-team-lead approval is insufficient.",
+        "approved_by":  ["james.patchett@verizon.com", "sro-lead@verizon.com"],
+        "effective":    "2026-02-01"
+      },
+      "immutable_hash":    "sha256:a3f4ba3f4b2c1e7d8923ab8742f4e85221a82f4218fb1c8a7df2cb4189127ef0"
+    },
+    {
+      "event_id":          "DVR-20260201-101422-019",
+      "timestamp":         "2026-02-01T10:14:22Z",
+      "agent":             "system",
+      "action_type":       "policy_amendment",
+      "data_snapshot": {
+        "policy_name":  "Mandatory Pre-Cycle Schema Drift Check",
+        "amendment":    "SchemaWatchAgent MUST complete a schema drift comparison before every certification cycle. The cycle does not start until the drift report is reviewed. Any breaking changes require remediation epic completion before cycle authorization.",
+        "approved_by":  ["james.patchett@verizon.com"],
+        "effective":    "2026-02-01"
+      },
+      "immutable_hash":    "sha256:09127ef0f8d22a3f4ba3f4b2c1e7d8923ab8742f4e85221a82f4218fb1c8a7df"
+    },
+    {
+      "event_id":          "DVR-20260201-101908-020",
+      "timestamp":         "2026-02-01T10:19:08Z",
+      "agent":             "system",
+      "action_type":       "policy_amendment",
+      "data_snapshot": {
+        "policy_name":  "Wave Risk Scoring Gate",
+        "amendment":    "ApexSignal wave risk scoring is the single source of truth for wave authorization. Sites scoring as risk_tier=critical require Distinguished Engineer (HQ Planning) approval before deployment. Sites matching documented high-risk patterns (e.g. Type-B Northeast skip-level) require vendor pre-engagement in addition to the HQ Planning signature.",
+        "approved_by":  ["james.patchett@verizon.com", "sro-lead@verizon.com", "vp-network-engineering@verizon.com"],
+        "effective":    "2026-02-01"
+      },
+      "immutable_hash":    "sha256:923ab8742f4e85221a82f4218fb1c8a7df2cb4189127ef0f8d22a3f4ba3f4b2c"
+    }
+  ],
+  "_summary": {
+    "total_events":             20,
+    "event_types": {
+      "schema_drift_detection":      2,
+      "hitl_required":               2,
+      "hitl_received":               2,
+      "robot_xml_ingested":          1,
+      "classification_complete":     1,
+      "jira_tickets_opened":         1,
+      "report_generated":            1,
+      "remediation_map_generated":   1,
+      "wave_risk_scoring_complete":  1,
+      "notification_sent":           2,
+      "knowledge_query":             1,
+      "jira_epic_created":           1,
+      "certification_gate_change":   1,
+      "production_incident":         1,
+      "policy_amendment":            3
+    },
+    "agents_involved": ["SchemaWatchAgent", "UpgradeAdvisorAgent", "CertificationAgent", "ApexSignal", "MentorAgent", "system"],
+    "earliest_event":           "2025-09-24T14:18:22Z (historical gate change)",
+    "latest_event":             "2026-02-01T10:19:08Z (post-incident policy amendment)",
+    "human_approvers_involved": ["james.patchett@verizon.com", "sro-lead@verizon.com", "vp-network-engineering@verizon.com", "automation-team-engineer-44"]
+  }
+}

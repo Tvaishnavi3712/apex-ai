@@ -1,0 +1,86 @@
+{
+  "vendor": {
+    "name": "Premier Services Inc.",
+    "address": {
+      "street": "321 Tech Center Ln",
+      "city": "San Jose",
+      "state": "CA",
+      "zip": "95110"
+    },
+    "tax_id": "31-5576039",
+    "phone": "(662) 827-7002",
+    "email": "billing@premierser.com"
+  },
+  "invoice": {
+    "number": "IV2026-18430",
+    "date": "2026-02-17",
+    "due_date": "2026-04-03",
+    "po_number": "PO-384008",
+    "terms": "NET45"
+  },
+  "bill_to": {
+    "company_name": "Contoso Industries",
+    "address": {
+      "street": "999 Corporate Plaza",
+      "city": "Atlanta",
+      "state": "GA",
+      "zip": "30301"
+    }
+  },
+  "line_items": [
+    {
+      "description": "Professional Software License - Annual",
+      "quantity": 20,
+      "unit_price": 3555.83,
+      "amount": 71116.6,
+      "item_code": "HDR-8859"
+    },
+    {
+      "description": "Training Services - Per Person",
+      "quantity": 20,
+      "unit_price": 294.43,
+      "amount": 5888.6,
+      "item_code": "WOY-7587"
+    },
+    {
+      "description": "Technical Consulting - Hourly",
+      "quantity": 10,
+      "unit_price": 259.01,
+      "amount": 2590.1,
+      "item_code": "GVZ-8788"
+    },
+    {
+      "description": "Cloud Hosting Services - Monthly",
+      "quantity": 19,
+      "unit_price": 233.99,
+      "amount": 4445.81,
+      "item_code": "KVU-1206"
+    },
+    {
+      "description": "Hardware Components - Server Grade",
+      "quantity": 9,
+      "unit_price": 1688.65,
+      "amount": 15197.85,
+      "item_code": "XUF-4154"
+    },
+    {
+      "description": "Cloud Hosting Services - Monthly",
+      "quantity": 7,
+      "unit_price": 890.1,
+      "amount": 6230.7,
+      "item_code": "ZCI-2865"
+    }
+  ],
+  "totals": {
+    "subtotal": 105469.66,
+    "tax_rate": 0.0625,
+    "tax_amount": 6591.85,
+    "shipping": 0,
+    "total": 112061.51
+  },
+  "payment": {
+    "bank_name": "First National Bank",
+    "account_number": "****1234",
+    "routing_number": "021000089"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "blueprint_id": "bp-boler-division-allocation",
+  "name": "Boler Division Allocation",
+  "description": "Per-division allocation of monthly benefits spend across all 6 carriers and 5 legal-entity divisions.",
+  "industry": "manufacturing_multi_division",
+  "document_type": "division_allocation",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "Boler Division Allocation",
+    "description": "Output of the carrier-to-division reconciliation — total $ split across HTS / BLH / CEQ / RHO / HEN with full traceability back to each carrier invoice.",
+    "extractionInstructions": "Each allocation row must trace to a carrier_invoice_id and an employee_id. Sum across rows must reconcile to the carrier invoice total to the penny.",
+    "fields": {
+      "allocation_id":      { "type": "string", "description": "Internal allocation ID (ALLOC-YYYY-MM-DIV)", "required": true },
+      "period":             { "type": "string", "description": "Allocation period (YYYY-MM)", "required": true },
+      "division":           { "type": "string", "description": "Division name", "required": true },
+      "division_code":      { "type": "string", "description": "HTS / BLH / CEQ / RHO / HEN", "required": true },
+      "total_amount":       { "type": "number", "description": "Total allocated $ for the division this period", "required": true },
+      "pct_of_total":       { "type": "number", "description": "% of company-wide benefits spend", "required": true },
+      "by_benefit_type":    { "type": "array",  "description": "Breakdown — { benefit_type, amount, lives }", "required": true },
+      "by_carrier":         { "type": "array",  "description": "Breakdown — { carrier_name, amount }", "required": true },
+      "line_items":         { "type": "array",  "description": "Per-employee allocation rows", "required": true },
+      "variance_vs_prior":  { "type": "number", "description": "$ change vs prior period", "required": false },
+      "variance_vs_budget": { "type": "number", "description": "$ change vs FY budget run-rate", "required": false },
+      "reconciliation_status": { "type": "string", "description": "BALANCED / VARIANCE_DETECTED / EXCEPTIONS_PENDING", "required": true }
+    }
+  }
+}

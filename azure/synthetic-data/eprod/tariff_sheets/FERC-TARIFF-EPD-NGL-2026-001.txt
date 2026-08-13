@@ -1,0 +1,131 @@
+================================================================================
+                    FEDERAL ENERGY REGULATORY COMMISSION
+                          F.E.R.C. NO. 47.12.0
+                  Cancels F.E.R.C. NO. 47.11.0 (Original Sheet)
+
+                       ENTERPRISE NGL PIPELINE LP
+                  LOCAL AND JOINT PIPELINE TARIFF
+                  APPLYING TO THE TRANSPORTATION OF
+            NATURAL GAS LIQUIDS (Y-GRADE, PURITY PRODUCTS)
+================================================================================
+
+Issued by:            J.A. Teague
+                      Senior Vice President, Commercial - NGL Pipelines
+                      Enterprise Products Operating LLC, General Partner
+                      1100 Louisiana Street, Houston, Texas 77002
+
+Issued:               April 1, 2026
+Effective Date:       May 1, 2026
+Cancels:              Original Sheet No. 47.11.0 issued February 12, 2026
+
+                              SUMMARY OF CHANGES
+
+This filing implements:
+    (i)   Revised distance-based rates per the 2026 FERC Oil Pipeline Index
+          (PPI-FG + 0.78%), effective May 1, 2026.
+    (ii)  Establishment of a new Term-Shipper category T-1B for 7-year
+          commitments at or above 25,000 BPD.
+    (iii) Increase in the Fuel & Loss Adjustment Rider (Item 90) from 0.45% to
+          0.52% reflecting prior-period reconciliation per Section 9.
+    (iv)  Addition of two new receipt points (Loving County RP-148, Reeves
+          County RP-149) on Permian gathering interconnect.
+
+================================================================================
+ITEM 10 - APPLICATION OF TARIFF
+================================================================================
+
+This tariff applies to the transportation of any liquid hydrocarbon mixture
+meeting Item 25 Quality Specifications, accepted at any Receipt Point listed
+in Item 30 of this tariff and delivered at any Delivery Point listed in
+Item 40, subject to the General Rules and Regulations of this Tariff and
+49 CFR 195 as applicable.
+
+================================================================================
+ITEM 25 - QUALITY SPECIFICATIONS (Y-GRADE)
+================================================================================
+
+Methane (C1):                       0.5% mol max
+Carbon Dioxide:                     200 ppm max
+Hydrogen Sulfide:                   1.0 ppmw max
+Total Sulfur:                       30 ppmw max
+Water:                              1.0 ppmw max (free water none)
+RVP (composite):                    400 psig max
+Olefins:                            1.0% mol max
+Color (Saybolt):                    +25 minimum
+
+================================================================================
+ITEM 50 - TRANSPORTATION RATES (DISTANCE-BASED)
+================================================================================
+
+Rates expressed in U.S. Dollars per Barrel per 100 Miles of pipeline
+transportation, computed on the shortest practical pipeline route between
+Receipt Point and Delivery Point.
+
+Shipper-Category Rate Schedule:
+
+    Category    Description                              Rate ($/bbl/100mi)
+    --------    ---------------------------------------  ------------------
+    T-1A        7-year Term-Shipper, MVC >= 50,000 BPD   $ 0.4280
+    T-1B        7-year Term-Shipper, MVC >= 25,000 BPD   $ 0.4720  *NEW*
+    T-2         5-year Term-Shipper, MVC >= 15,000 BPD   $ 0.5180
+    T-3         3-year Term-Shipper, MVC >=  7,500 BPD   $ 0.5640
+    W-1         Walk-Up Shipper (no MVC)                 $ 0.6920
+    P-1         Priority Walk-Up (peak-demand premium)   $ 0.7950
+    IA-1        Inter-Affiliate Service                  $ 0.4280
+    EX-1        Existing-Contract Grandfather            $ 0.4040
+
+Minimum Volume Commitments (MVC):
+   T-1A: 50,000 BPD nominated monthly; deficiency payment 100% of rate
+         applied to under-shipped volumes (make-up rights 12 months).
+   T-1B: 25,000 BPD; deficiency 100% of rate; make-up rights 9 months.
+   T-2:  15,000 BPD; deficiency 100% of rate; make-up rights 6 months.
+   T-3:   7,500 BPD; deficiency 100% of rate; make-up rights 3 months.
+
+Minimum Tender:                     1,000 bbl per nomination cycle
+Maximum Tender:                     No limit, subject to capacity allocation
+Nomination Window:                  25th of month preceding flow month
+Pro-rationing:                      Per Item 80 General Rules
+
+================================================================================
+ITEM 90 - FUEL & LOSS ADJUSTMENT RIDER
+================================================================================
+
+Pipeline retains in-kind, as a fuel and losses allowance, the following
+percentage of all volumes received:
+
+    Effective May 1, 2026:          0.52% (zero point five two percent)
+    Prior rate (cancelled):         0.45%
+
+The Adjustment Rider is reconciled annually no later than April 30 of the
+following year against actual line-fill, fuel consumption, vapor losses, and
+LACT-measurement variance. Over- or under-collections roll into the
+subsequent year's Rider per the methodology in Appendix C.
+
+================================================================================
+ITEM 95 - QUALITY BANK / VARIANCE ADJUSTMENTS
+================================================================================
+
+Per Appendix B, a quality bank operates on a monthly basis adjusting each
+shipper for composition variance from the common-stream specification.
+Component-level pricing references prior-month Mont Belvieu OPIS postings.
+
+================================================================================
+ITEM 100 - INCIDENTAL CHARGES
+================================================================================
+
+Loading / unloading at Originating Truck Stations    $  0.085 / bbl
+Storage in tankage, days 1-5 (per shipment)          waived
+Storage in tankage, days 6+ (per shipment)           $  0.020 / bbl-day
+Special meter proving (per event)                    $  4,500 / event
+
+================================================================================
+ITEM 200 - SAFETY, COMPLIANCE, AND CHANGE OF SERVICE
+================================================================================
+
+Carrier reserves the right to refuse transportation of any product not
+conforming to specifications. All transportation is subject to the General
+Rules and Regulations of this Tariff, 49 CFR Part 195, and applicable
+Commission regulations.
+
+                                  -- END OF TARIFF F.E.R.C. NO. 47.12.0 --
+================================================================================

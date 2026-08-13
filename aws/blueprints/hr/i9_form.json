@@ -1,0 +1,233 @@
+{
+  "blueprintName": "apex-i9-form-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from I-9 Employment Eligibility Verification forms",
+  "industry": "hr",
+  "documentType": "i9_form",
+  "bdaSchema": {
+    "class": "ApexI9Form",
+    "description": "Apex AI Platform I-9 form extraction blueprint for employment verification",
+    "definitions": {
+      "IDENTITY_DOCUMENT": {
+        "properties": {
+          "document_title": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Title of the identity document"
+          },
+          "issuing_authority": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Authority that issued the document"
+          },
+          "document_number": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Document number or ID"
+          },
+          "expiration_date": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Document expiration date"
+          },
+          "list_category": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "List category (A, B, or C)"
+          }
+        }
+      }
+    },
+    "properties": {
+      "employee_last_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Employee's last name (family name)"
+      },
+      "employee_first_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Employee's first name (given name)"
+      },
+      "employee_middle_initial": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Employee's middle initial"
+      },
+      "other_last_names": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Other last names used (maiden name, etc.)"
+      },
+      "address_street": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Street address"
+      },
+      "address_apt_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Apartment number"
+      },
+      "address_city": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "City"
+      },
+      "address_state": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "State"
+      },
+      "address_zip": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "ZIP code"
+      },
+      "date_of_birth": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date of birth (MM/DD/YYYY)"
+      },
+      "ssn": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Social Security Number (last 4 digits only for security)"
+      },
+      "email": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Employee email address"
+      },
+      "phone": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Employee phone number"
+      },
+      "citizenship_status": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Citizenship status (citizen, noncitizen national, permanent resident, alien authorized to work)"
+      },
+      "alien_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Alien Registration Number/USCIS Number (if applicable)"
+      },
+      "i94_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "I-94 Admission Number (if applicable)"
+      },
+      "foreign_passport_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Foreign passport number (if applicable)"
+      },
+      "passport_country": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Country of issuance for foreign passport"
+      },
+      "work_authorization_expiry": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Work authorization expiration date (if not citizen)"
+      },
+      "employee_signature_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date employee signed Section 1"
+      },
+      "preparer_used": {
+        "type": "boolean",
+        "inferenceType": "inferred",
+        "instruction": "Was a preparer/translator used for Section 1?"
+      },
+      "preparer_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Preparer/translator name (if used)"
+      },
+      "list_a_documents": {
+        "type": "array",
+        "instruction": "List A documents (establishing identity AND employment authorization)",
+        "items": {
+          "$ref": "#/definitions/IDENTITY_DOCUMENT"
+        }
+      },
+      "list_b_documents": {
+        "type": "array",
+        "instruction": "List B documents (establishing identity only)",
+        "items": {
+          "$ref": "#/definitions/IDENTITY_DOCUMENT"
+        }
+      },
+      "list_c_documents": {
+        "type": "array",
+        "instruction": "List C documents (establishing employment authorization only)",
+        "items": {
+          "$ref": "#/definitions/IDENTITY_DOCUMENT"
+        }
+      },
+      "employer_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Employer organization name"
+      },
+      "employer_address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Employer address"
+      },
+      "first_day_of_employment": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Employee's first day of employment"
+      },
+      "employer_signature_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date employer representative signed Section 2"
+      },
+      "employer_representative_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Name of employer representative who completed Section 2"
+      },
+      "employer_representative_title": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Title of employer representative"
+      },
+      "form_version": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "I-9 form version date"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.9
+  },
+  "validationRules": [
+    {
+      "name": "document_lists_valid",
+      "description": "Either List A OR (List B AND List C) documents required",
+      "expression": "list_a_documents.length > 0 || (list_b_documents.length > 0 && list_c_documents.length > 0)"
+    },
+    {
+      "name": "dates_logical",
+      "description": "Signature dates should be near employment date",
+      "expression": "true"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  },
+  "securityNotes": "This blueprint handles PII data. SSN should only extract last 4 digits. Full data redaction policies apply.",
+  "blueprintArn": "arn:aws:bedrock:us-east-1:457795063704:blueprint/07c86499ed6f"
+}

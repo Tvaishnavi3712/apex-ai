@@ -1,0 +1,105 @@
+playbook_id: pb-eprod-4
+name: engineering_quote_processing
+version: "1.0.0"
+description: "Heterogeneous engineering quote intake (Fluor, Bechtel, Emerson) → reconciled with historical pricing + linked to PO/invoice chain."
+industry: oil_gas_midstream
+category: procurement
+
+intent: |
+  Process engineering quotes from Fluor, Bechtel, Emerson, and other EPC
+  vendors. Extract scope description, milestones, unit pricing, validity
+  window, and exclusions. Compare against the trailing 12-month
+  historical pricing for similar scope (same asset_code + scope_category).
+  Flag quotes priced >10% above the historical average. Link the quote
+  to the downstream PO + invoice chain so the full quote-to-pay history
+  is audit-traceable. Surface a procurement recommendation with the
+  variance rationale.
+
+output:
+  - name: quote_extract
+    type: structured_data
+    description: "Full quote with scope, milestones, unit pricing, terms"
+  - name: historical_variance
+    type: structured_data
+    description: "Comparison vs 12-month historical pricing for similar scope"
+  - name: quote_chain_link
+    type: relationship
+    description: "Linkage to downstream PO + invoices for traceability"
+  - name: procurement_recommendation
+    type: routing_decision
+    description: "approve | negotiate | reject with rationale"
+
+context:
+  business_rules:
+    - "Quote validity must be > 14 days for procurement review"
+    - "Pricing > 10% above 12-month historical → negotiate"
+    - "Pricing > 25% above historical → reject and re-RFQ"
+    - "Quote must reference RFP / RFQ if one exists"
+    - "Optional services priced separately must be flagged"
+
+actions:
+  - name: extract_quote_scope
+    action_id: oil_gas_midstream.extract_quote_scope
+    description: "BDA extraction of quote — scope, milestones, prices, validity"
+    required: true
+  - name: lookup_historical_pricing
+    action_id: oil_gas_midstream.lookup_historical_pricing
+    description: "Pull last 12 months of POs/invoices for same scope_category"
+    required: true
+  - name: compute_variance_vs_historical
+    action_id: oil_gas_midstream.compute_variance_vs_historical
+    description: "Per-milestone variance % vs historical median"
+    required: true
+  - name: link_to_po_chain
+    action_id: oil_gas_midstream.link_to_po_chain
+    description: "Persist quote_id → eventual PO/invoice relationship"
+    required: true
+  - name: route_procurement_decision
+    action_id: oil_gas_midstream.route_procurement_decision
+    description: "approve / negotiate / reject with variance rationale"
+    required: true
+  - name: audit_lens_log
+    action_id: oil_gas_midstream.audit_lens_log
+    description: "Quote-to-pay audit trail event"
+    required: true
+
+recipe: |
+  ## EPROD Engineering Quote Processing Recipe
+
+  ### Step 1 · EXTRACT — extract_quote_scope
+  - Source: vendor email PDF or portal upload
+  - BDA blueprint: bp-eprod-quote (13 fields)
+
+  ### Step 2 · LOOKUP — lookup_historical_pricing
+  - Window: trailing 12 months
+  - Filter: same vendor + scope_category + asset_code
+  - Aggregate: median, P25, P75 of unit prices
+
+  ### Step 3 · COMPUTE — compute_variance_vs_historical
+  - Per milestone: variance_pct = (quote_price - historical_median) / median
+  - Overall verdict: max line variance
+
+  ### Step 4 · LINK — link_to_po_chain
+  - Store quote_id in quote_to_pay_chain index
+  - Will be matched when the corresponding PO is issued
+
+  ### Step 5 · DECIDE — route_procurement_decision
+  - variance <= 10% → approve_for_negotiation
+  - 10% < variance <= 25% → negotiate (auto-draft counter)
+  - variance > 25% → reject + re-RFQ
+
+  ### Step 6 · AUDIT — audit_lens_log
+  - Persist variance + decision + downstream chain link
+
+triggers:
+  - type: s3_event
+    bucket: apex-eprod-quotes-incoming
+    prefix: quotes/
+    events: ["s3:ObjectCreated:*"]
+  - type: api
+    endpoint: /api/v1/eprod/quotes
+    method: POST
+
+metadata:
+  created_by: apex-platform
+  tags: [eprod, oil_gas_midstream, quote_processing, procurement]

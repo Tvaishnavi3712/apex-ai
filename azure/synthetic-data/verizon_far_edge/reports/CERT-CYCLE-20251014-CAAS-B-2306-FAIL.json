@@ -1,0 +1,65 @@
+{
+  "report_id": "CERT-CYCLE-20251014-CAAS-B-2306",
+  "generated_by": "APEX CertificationAgent v1.0 (retro-generated 2026-02-01)",
+  "generation_time_seconds": 11.9,
+  "_note": "Retro-generated report for the historical 23.06 cycle that preceded the January 14, 2026 outage. Demonstrates what APEX would have surfaced if it had been running. Not used at the time; reference only.",
+  "header": {
+    "device_name": "CaaS-Edge-Node-Type-B",
+    "firmware_version": "Wind River 23.06",
+    "certification_date": "2025-10-14T11:42:33Z",
+    "cycle_id": "CYCLE-20251014-CAAS-B-2306",
+    "region": "Northeast",
+    "site_id": "VZ-NE-NYC-00042",
+    "operator": "cert-eng-shift-day",
+    "overall_status": "CONDITIONAL_PASS",
+    "deployment_recommendation": "CONDITIONAL — manual review",
+    "_historical_context": "This is the cycle whose Conditional Pass classification was waved through under the temporarily-reduced 60% gate. Three months later, January 14, 2026 outage hit."
+  },
+  "executive_summary": {
+    "total_tests": 247,
+    "pass_count": 233,
+    "fail_count": 14,
+    "warn_count": 0,
+    "schema_drift_events": 0,
+    "scripts_impacted_by_drift": 0,
+    "jira_tickets_opened": 14,
+    "p1_count": 9, "p2_count": 4, "p3_count": 1,
+    "hours_saved_vs_manual": 36.4
+  },
+  "failure_analysis": [
+    { "test_id": "s3-fail-1", "category": "investigate", "severity": "P2",
+      "summary": "OpenShift operator subscription InstallPlanFailed for caas-orchestrator-operator.v2.0.4" },
+    { "test_id": "s5-fail-1", "category": "investigate", "severity": "P2",
+      "summary": "Ansible playbook power_check.yml — idempotency violation on second run" },
+    { "test_id": "s1-fail-1", "category": "latency_threshold_breach", "severity": "P1",
+      "summary": "CU-UP latency 6.1ms vs 5ms threshold (10/14 cores affected)" },
+    { "test_id": "s1-fail-2", "category": "latency_threshold_breach", "severity": "P1",
+      "summary": "CU-UP throughput 1.7Gbps vs 2Gbps threshold" },
+    { "test_id": "s8-fail-1", "category": "latency_threshold_breach", "severity": "P1",
+      "summary": "OAM packet loss 0.4% vs 0.1% threshold" },
+    { "test_id": "s6-fail-1", "category": "investigate", "severity": "P2",
+      "summary": "RT kernel cyclictest P99 32us vs 30us threshold (borderline)" }
+  ],
+  "deployment_recommendation": {
+    "overall": "CONDITIONAL — manual review",
+    "rationale": "Pass rate 94.3% (below 95% target gate, above the temporarily-reduced 60% gate). Multiple P1 failures across CU-UP, OAM, and RT kernel suggest systemic load-handling pressure on Type-B nodes that should be investigated before wave deployment.",
+    "conditions_to_proceed": [
+      "Investigate CU-UP latency root cause",
+      "Vendor support engagement for RT kernel borderline",
+      "Manual SRO sign-off if proceeding"
+    ],
+    "estimated_remediation_days": 14,
+    "hitl_approval_required": true,
+    "hitl_approver": "cert-team-lead@verizon.com",
+    "_retro_observation": "If this cycle had run against a 95% gate (instead of the temporary 60%), the wave deployment would have been held. The temporarily-reduced gate is the most direct organizational cause of the January 14, 2026 outage. APEX surfaces gate-threshold changes in the Audit Lens — any future reduction now requires SRO + HQ Planning co-signature."
+  },
+  "governance_trail": {
+    "audit_lens_event_ids": ["DVR-20251014-114233-001"],
+    "agent_actions_log": [
+      "parse_robot_output(file=robot_output_caas_node_v2312_historical.xml)  →  247 tests, 14 fail",
+      "classify_failures()  →  9 P1, 4 P2, 1 P3",
+      "generate_certification_report()  →  this report",
+      "deployment_gate_compare()  →  pass_rate=94.3%, current_gate=60%, baseline_gate=95%, gate_change_event=GATE-CHG-20250924-001"
+    ]
+  }
+}

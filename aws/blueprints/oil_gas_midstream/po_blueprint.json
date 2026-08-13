@@ -1,0 +1,31 @@
+{
+  "blueprint_id": "bp-eprod-po",
+  "name": "EPROD Purchase Order",
+  "description": "Extract EPROD purchase order header, line items, MSA reference, approval chain, and tax code.",
+  "industry": "oil_gas_midstream",
+  "document_type": "purchase_order",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "EPROD Purchase Order",
+    "description": "Purchase order schema covering header, line items, MSA reference, asset code, tax code, and approval chain.",
+    "extractionInstructions": "Capture every line with its MSA scope linkage. Approval chain must include name, role, and date.",
+    "fields": {
+      "po_number":         { "type": "string", "description": "EPROD PO number", "required": true },
+      "vendor_name":       { "type": "string", "description": "Vendor name", "required": true },
+      "msa_reference":     { "type": "string", "description": "Referenced MSA id", "required": true },
+      "asset_code":        { "type": "string", "description": "EPROD asset / cost center code", "required": true },
+      "po_date":           { "type": "date",   "description": "PO issue date", "required": true },
+      "requested_by":      { "type": "string", "description": "Requestor name", "required": true },
+      "requested_for":     { "type": "string", "description": "End-user / department", "required": true },
+      "ship_to":           { "type": "string", "description": "Ship-to address or facility code", "required": true },
+      "line_items":        { "type": "array",  "description": "Line items with description, quantity, unit_price, asset_code, msa_scope", "required": true },
+      "subtotal":          { "type": "number", "description": "Pre-tax subtotal", "required": true },
+      "sales_tax":         { "type": "number", "description": "Tax amount", "required": true },
+      "tax_code":          { "type": "string", "description": "TX-E / TX-I / TX-S", "required": true },
+      "total":             { "type": "number", "description": "PO total", "required": true },
+      "billing_terms":     { "type": "string", "description": "Billing instructions", "required": true },
+      "expected_delivery": { "type": "date",   "description": "Expected delivery / completion date", "required": true },
+      "approval_chain":    { "type": "array",  "description": "Approval chain entries (approver, role, date)", "required": true }
+    }
+  }
+}

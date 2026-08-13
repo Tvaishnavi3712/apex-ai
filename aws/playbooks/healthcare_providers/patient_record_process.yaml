@@ -1,0 +1,166 @@
+# CBTS Apex AI Platform - Patient Record Processing Playbook
+# Small Factory chain for clinical documentation processing
+name: patient_record_process
+version: "1.0.0"
+description: "Process patient medical records using Small Factory pattern with AI-enhanced extraction"
+industry: healthcare_providers
+category: clinical_documentation
+
+intent: |
+  Process clinical documentation by extracting patient information,
+  clinical data, suggesting appropriate codes, auditing quality,
+  and formatting for EHR integration.
+
+output:
+  - name: patient_record
+    type: clinical
+    schema:
+      patient_mrn: string
+      diagnoses: array
+      icd_codes: array
+      cpt_codes: array
+  - name: quality_result
+    type: audit
+    schema:
+      overall_score: number
+      passed: boolean
+      ready_for_billing: boolean
+
+context:
+  business_rules:
+    - "All documentation must include patient identification"
+    - "Assessment section required for billing"
+    - "ICD-10 codes must match documented diagnoses"
+    - "Quality score must be 70+ for standard processing"
+
+  documentation_requirements:
+    - chief_complaint
+    - history_present_illness
+    - assessment
+    - plan
+
+  coding_rules:
+    - "Code to highest specificity"
+    - "Document medical necessity"
+    - "Query for unclear diagnoses"
+
+factory_chain: patient_record_process
+
+actions:
+  - name: document_classify
+    factory_id: document_classify
+    required: true
+    config:
+      expected_types: [clinical_note, progress_note, h_and_p, discharge_summary]
+
+  - name: patient_identify
+    factory_id: patient_identify
+    required: true
+    depends_on: [document_classify]
+    config:
+      require_mrn: true
+      verify_against_ehr: true
+
+  - name: clinical_extract
+    factory_id: clinical_extract
+    required: true
+    depends_on: [document_classify, patient_identify]
+    config:
+      sections: [chief_complaint, history_present_illness, assessment, plan, vitals, medications]
+      use_ai: true
+
+  - name: code_suggest
+    factory_id: code_suggest
+    required: true
+    depends_on: [clinical_extract]
+    config:
+      use_ai: true
+      require_review: true
+
+  - name: quality_audit
+    factory_id: quality_audit
+    required: true
+    depends_on: [clinical_extract, code_suggest, patient_identify]
+    config:
+      strict_mode: false
+
+  - name: ehr_format
+    factory_id: ehr_format
+    required: true
+    depends_on: [quality_audit]
+    config:
+      ehr_system: epic
+      output_format: fhir
+
+recipe: |
+  ## Patient Record Processing
+
+  This playbook processes clinical documentation through a
+  6-factory chain with AI-enhanced extraction and coding.
+
+  ### Factory Chain Flow
+
+  ```
+  [Document Upload]
+       │
+       ▼
+  ┌──────────────────┐
+  │ Document Classify│
+  └──────────────────┘
+       │
+       ▼
+  ┌──────────────────┐
+  │ Patient Identify │
+  └──────────────────┘
+       │
+       ▼
+  ┌──────────────────┐
+  │ Clinical Extract │ ← AI Enhanced
+  └──────────────────┘
+       │
+       ▼
+  ┌──────────────────┐
+  │  Code Suggest    │ ← AI Enhanced
+  └──────────────────┘
+       │
+       ▼
+  ┌──────────────────┐
+  │  Quality Audit   │
+  └──────────────────┘
+       │
+       ▼
+  ┌──────────────────┐
+  │   EHR Format     │
+  └──────────────────┘
+  ```
+
+  ### AI Enhancement
+
+  - **Clinical Extract**: Uses Claude to understand clinical context
+  - **Code Suggest**: AI-powered ICD-10 and CPT code recommendation
+
+triggers:
+  - type: api
+    endpoint: /api/v1/clinical/upload
+  - type: s3_event
+    bucket: apex-clinical-docs
+    prefix: incoming/
+  - type: hl7
+    endpoint: /api/v1/hl7/adt
+
+worker:
+  queue: apex-clinical-processing-queue
+  concurrency: 15
+  timeout_seconds: 180
+
+integrations:
+  - name: epic_ehr
+    type: ehr
+    config:
+      format: fhir_r4
+      endpoint: epic.healthsystem.org
+
+metadata:
+  tags: [clinical, ehr, coding, ai, fhir]
+  owner: clinical_informatics
+  created_at: "2026-03-16"

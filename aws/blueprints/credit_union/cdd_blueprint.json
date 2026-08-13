@@ -1,0 +1,34 @@
+{
+  "blueprint_id": "bp-cwfcu-cdd",
+  "name": "CWFCU CDD / EDD Review",
+  "description": "Customer Due Diligence / Enhanced Due Diligence review packet for ongoing member monitoring.",
+  "industry": "credit_union",
+  "document_type": "cdd_review",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "CWFCU CDD Review",
+    "description": "CDD/EDD review covering member profile, activity period, anomalies, risk-tier updates, and monitoring schedule changes.",
+    "extractionInstructions": "Captures the periodic CDD touch for an existing member. EDD triggers include high-risk occupation, cross-border activity, PEP status, prior SAR subject, NRA status.",
+    "fields": {
+      "cdd_review_id":        { "type": "string", "description": "Internal CDD review reference (CDD-YYYY-QN-MEM-NNNNN)", "required": true },
+      "review_type":          { "type": "string", "description": "Standard CDD / Enhanced Due Diligence", "required": true },
+      "trigger":              { "type": "string", "description": "Trigger that initiated review (annual / quarterly / event-driven)", "required": true },
+      "review_period_start":  { "type": "date",   "description": "First day of review period", "required": true },
+      "review_period_end":    { "type": "date",   "description": "Last day of review period", "required": true },
+      "member_id":            { "type": "string", "description": "CWFCU member number", "required": true },
+      "member_legal_name":    { "type": "string", "description": "Member legal name", "required": true },
+      "member_dob":           { "type": "date",   "description": "Member DOB", "required": true },
+      "member_address":       { "type": "string", "description": "Current address", "required": true },
+      "stated_occupation":    { "type": "string", "description": "Stated occupation", "required": true },
+      "stated_income":        { "type": "number", "description": "Stated annual income", "required": true },
+      "original_risk_tier":   { "type": "string", "description": "Risk tier at last review", "required": true },
+      "updated_risk_tier":    { "type": "string", "description": "Risk tier after this review (may equal original)", "required": true },
+      "activity_summary":     { "type": "object", "description": "Wire counts, cash deposits, card spend, etc.", "required": true },
+      "anomalies":            { "type": "array",  "description": "Detected anomalies during review period", "required": false },
+      "updated_thresholds":   { "type": "object", "description": "New monitoring thresholds (cash, wire, velocity)", "required": false },
+      "next_review_date":     { "type": "date",   "description": "Next scheduled CDD review", "required": true },
+      "conducted_by":         { "type": "string", "description": "Compliance Agent vN.N.N or person", "required": true },
+      "ncua_exam_folder_path": { "type": "string","description": "NCUA exam folder index path", "required": true }
+    }
+  }
+}

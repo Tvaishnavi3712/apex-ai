@@ -1,0 +1,147 @@
+{
+  "blueprintName": "apex-replenishment-order-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from replenishment/reorder requests",
+  "industry": "supply_chain",
+  "documentType": "replenishment_order",
+  "bdaSchema": {
+    "class": "ApexReplenishmentOrder",
+    "description": "Replenishment order extraction for inventory management",
+    "definitions": {
+      "REPLEN_ITEM": {
+        "properties": {
+          "sku": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "product_name": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "uom": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "current_stock": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "reorder_point": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "order_qty": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "economic_order_qty": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "lead_time_days": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "unit_cost": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "extended_cost": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "preferred_vendor": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "order_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "request_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "order_type": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Standard, Emergency, Seasonal"
+      },
+      "priority": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "requested_by": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "location": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "warehouse": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "items": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/REPLEN_ITEM"
+        }
+      },
+      "total_items": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "total_units": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "total_cost": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "budget_code": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "required_by_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "shipping_method": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "justification": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "approval_status": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "approved_by": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "approval_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "currencyFormat": "decimal",
+    "confidenceThreshold": 0.85
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  },
+  "blueprintArn": "arn:aws:bedrock:us-east-1:457795063704:blueprint/278d2a2ea843"
+}

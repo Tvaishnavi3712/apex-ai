@@ -1,0 +1,226 @@
+{
+  "blueprintName": "apex-defense-contract-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from defense contracts for analysis and RFP support",
+  "industry": "aerospace_defense",
+  "documentType": "defense_contract",
+  "compliance": ["ITAR", "DFARS", "FAR"],
+  "bdaSchema": {
+    "class": "ApexDefenseContract",
+    "description": "Defense contract extraction blueprint for aerospace manufacturing",
+    "definitions": {
+      "CLIN": {
+        "properties": {
+          "clin_number": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Contract Line Item Number (e.g., 0001, 0002)"
+          },
+          "part_number": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Part number or NSN (National Stock Number)"
+          },
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Item description"
+          },
+          "quantity": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Quantity ordered"
+          },
+          "unit_price": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Unit price in USD"
+          },
+          "extended_price": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Extended price (quantity * unit price)"
+          },
+          "delivery_date": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Required delivery date"
+          }
+        }
+      },
+      "DFARS_CLAUSE": {
+        "properties": {
+          "clause_number": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "DFARS clause number (e.g., 252.204-7012)"
+          },
+          "clause_title": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Clause title or description"
+          },
+          "deviation": {
+            "type": "boolean",
+            "inferenceType": "explicit",
+            "instruction": "Is there a deviation from standard clause?"
+          }
+        }
+      }
+    },
+    "properties": {
+      "contract_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The contract number or award number"
+      },
+      "modification_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Contract modification number if applicable (e.g., P00001)"
+      },
+      "contract_type": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Contract type: FFP (Firm Fixed Price), CPFF (Cost Plus Fixed Fee), T&M (Time and Materials), IDIQ"
+      },
+      "prime_contractor": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Prime contractor name (e.g., Lockheed Martin, Boeing)"
+      },
+      "program_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Program name or designation (e.g., F-35, F-22, C-17)"
+      },
+      "award_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Contract award date"
+      },
+      "period_of_performance_start": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Period of performance start date"
+      },
+      "period_of_performance_end": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Period of performance end date"
+      },
+      "total_contract_value": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Total contract value in USD"
+      },
+      "funded_amount": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Currently funded amount in USD"
+      },
+      "clins": {
+        "type": "array",
+        "instruction": "All Contract Line Items (CLINs) with pricing and quantities",
+        "items": {
+          "$ref": "#/definitions/CLIN"
+        }
+      },
+      "quality_requirements": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Quality system requirements (e.g., AS9100D, NADCAP)"
+      },
+      "inspection_point": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Inspection and acceptance point (Source, Destination)"
+      },
+      "fob_point": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "FOB point (Origin, Destination)"
+      },
+      "payment_terms": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Payment terms (e.g., Net 30, Progress Payments)"
+      },
+      "dfars_clauses": {
+        "type": "array",
+        "instruction": "DFARS clauses incorporated by reference",
+        "items": {
+          "$ref": "#/definitions/DFARS_CLAUSE"
+        }
+      },
+      "itar_controlled": {
+        "type": "boolean",
+        "inferenceType": "explicit",
+        "instruction": "Is this contract ITAR controlled?"
+      },
+      "security_classification": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Security classification (Unclassified, CUI, Confidential, Secret)"
+      },
+      "first_article_required": {
+        "type": "boolean",
+        "inferenceType": "explicit",
+        "instruction": "Is First Article Test/Inspection required?"
+      },
+      "subcontracting_plan_required": {
+        "type": "boolean",
+        "inferenceType": "explicit",
+        "instruction": "Is a Small Business Subcontracting Plan required?"
+      },
+      "warranty_terms": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Warranty requirements and duration"
+      },
+      "technical_data_rights": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Technical data rights (Unlimited, Limited, Government Purpose)"
+      },
+      "contracting_officer": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Name of the Contracting Officer"
+      },
+      "contract_administrator": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Name of the Contract Administrator"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "currencyFormat": "decimal",
+    "decimalPrecision": 2,
+    "confidenceThreshold": 0.85
+  },
+  "validationRules": [
+    {
+      "name": "clin_total_validation",
+      "description": "Validate that CLIN extended prices equal qty * unit price",
+      "expression": "clins.each { |clin| (clin.quantity * clin.unit_price - clin.extended_price).abs < 0.01 }"
+    },
+    {
+      "name": "contract_value_validation",
+      "description": "Validate total contract value equals sum of CLINs",
+      "expression": "(total_contract_value - clins.sum { |clin| clin.extended_price }).abs < 1.00"
+    },
+    {
+      "name": "funded_amount_validation",
+      "description": "Funded amount should not exceed total contract value",
+      "expression": "funded_amount <= total_contract_value"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  }
+}

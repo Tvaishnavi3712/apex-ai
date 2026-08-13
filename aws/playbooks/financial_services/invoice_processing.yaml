@@ -1,0 +1,240 @@
+# CBTS Apex AI Platform - Invoice Processing Runbook
+# Natural Language Runbook following Sema4.ai pattern
+# Intent → Output → Context → Recipe
+
+name: invoice_processing
+version: "1.0.0"
+description: "Automated invoice processing from receipt to payment approval"
+industry: financial_services
+category: accounts_payable
+
+# =============================================================================
+# INTENT - What the agent should accomplish
+# =============================================================================
+intent: |
+  Process incoming vendor invoices by extracting data, validating against
+  purchase orders, checking compliance rules, and routing for appropriate
+  approval based on amount thresholds and business policies.
+
+# =============================================================================
+# OUTPUT - Expected deliverables from the runbook
+# =============================================================================
+output:
+  - name: processed_invoice
+    type: structured_data
+    description: "Fully extracted and validated invoice data"
+    schema:
+      vendor: object
+      invoice_details: object
+      line_items: array
+      totals: object
+      validation_status: string
+
+  - name: approval_decision
+    type: routing_decision
+    description: "Approval routing with assigned approver"
+    schema:
+      routing: string
+      approver_email: string
+      priority: integer
+
+  - name: compliance_report
+    type: validation_report
+    description: "Compliance check results with any violations"
+    schema:
+      compliant: boolean
+      violations: array
+      warnings: array
+
+# =============================================================================
+# CONTEXT - Business rules and domain knowledge
+# =============================================================================
+context:
+  business_rules:
+    - "All invoices must have a matching PO for amounts over $1,000"
+    - "Vendors must have W9 on file before payment"
+    - "Invoices older than 90 days require director approval"
+    - "Maximum single transaction is $1,000,000"
+    - "Dual approval required for amounts over $100,000"
+
+  approval_thresholds:
+    auto_approve: 10000
+    manager: 50000
+    director: 100000
+    vp: 500000
+    cfo: 1000000
+
+  compliance_requirements:
+    - require_tax_id: true
+    - require_w9: true
+    - blocked_countries: ["NK", "IR", "SY", "CU"]
+    - max_invoice_age_days: 90
+
+  sla_requirements:
+    extraction_time: "30 seconds"
+    total_processing_time: "5 minutes"
+    approval_routing_time: "1 minute"
+
+# =============================================================================
+# DATA SOURCES - Where to retrieve information
+# =============================================================================
+data_sources:
+  - name: invoice_document
+    type: s3_document
+    description: "Source invoice document (PDF, image, or scanned document)"
+    input_parameter: document_s3_uri
+
+  - name: vendor_database
+    type: dynamodb
+    table: apex-vendors
+    description: "Approved vendor master data"
+
+  - name: purchase_orders
+    type: dynamodb
+    table: apex-purchase-orders
+    description: "Purchase order records for matching"
+
+  - name: compliance_rules
+    type: config
+    source: context.compliance_requirements
+    description: "Compliance rules from runbook context"
+
+# =============================================================================
+# ACTIONS - Available tools for the agent
+# =============================================================================
+actions:
+  - name: invoice_extract
+    action_id: financial_services.invoice_extract
+    description: "Extract structured data from invoice using BDA"
+    required: true
+
+  - name: vendor_lookup
+    action_id: financial_services.vendor_lookup
+    description: "Lookup vendor in approved vendor database"
+    required: true
+
+  - name: po_match
+    action_id: financial_services.po_match
+    description: "Match invoice to purchase order"
+    required: false
+    condition: "invoice.total > 1000"
+
+  - name: compliance_check
+    action_id: financial_services.compliance_check
+    description: "Verify transaction against compliance rules"
+    required: true
+
+  - name: approval_route
+    action_id: financial_services.approval_route
+    description: "Determine approval routing"
+    required: true
+
+  - name: send_notification
+    action_id: core.send_notification
+    description: "Send notification to approver"
+    required: false
+
+  - name: human_review
+    action_id: core.human_review
+    description: "Request human review for exceptions"
+    required: false
+
+# =============================================================================
+# RECIPE - Natural language instructions for the agent
+# =============================================================================
+recipe: |
+  ## Invoice Processing Workflow
+
+  ### Step 1: Document Extraction
+  When a new invoice document arrives in S3:
+  1. Use the `invoice_extract` action to extract structured data from the document
+  2. Wait for extraction to complete (up to 60 seconds)
+  3. Validate that key fields were extracted: vendor name, invoice number, total amount
+  4. If extraction confidence is below 85%, flag for human review
+
+  ### Step 2: Vendor Validation
+  With the extracted vendor information:
+  1. Use `vendor_lookup` to find the vendor in our approved vendor database
+  2. If vendor is not found, check if this is a new vendor submission
+  3. For new vendors, route to vendor onboarding workflow
+  4. Verify vendor has required documentation (Tax ID, W9) on file
+
+  ### Step 3: PO Matching (if applicable)
+  For invoices over $1,000:
+  1. Extract the PO number from the invoice
+  2. Use `po_match` to find the matching purchase order
+  3. Validate that invoice amount is within PO tolerance (±5%)
+  4. Check that PO has remaining budget for this invoice
+  5. If no PO match found, flag for manager review
+
+  ### Step 4: Compliance Verification
+  Run comprehensive compliance checks:
+  1. Use `compliance_check` with all transaction details
+  2. Check vendor country against blocked countries list
+  3. Verify invoice age is within 90-day limit
+  4. Check daily vendor payment totals against limits
+  5. If any critical violations, halt processing and escalate
+
+  ### Step 5: Approval Routing
+  Determine the appropriate approval path:
+  1. Use `approval_route` with the invoice amount
+  2. Factor in any compliance warnings or exceptions
+  3. For amounts under $10,000 with no issues, auto-approve
+  4. For larger amounts, route to appropriate approver level
+  5. Set priority based on due date and amount
+
+  ### Step 6: Notification & Tracking
+  Complete the processing:
+  1. Send notification to assigned approver (if not auto-approved)
+  2. Update work item status in the queue
+  3. Log all decisions and actions for audit trail
+  4. Return processing results to the calling system
+
+  ### Exception Handling
+  - If extraction fails: Request human review with original document
+  - If vendor not approved: Route to vendor onboarding or reject
+  - If compliance fails: Escalate to compliance officer
+  - If PO mismatch > 10%: Route to purchasing manager
+
+# =============================================================================
+# TRIGGERS - How this runbook is activated
+# =============================================================================
+triggers:
+  - type: s3_event
+    bucket: apex-documents-incoming
+    prefix: invoices/
+    events: ["s3:ObjectCreated:*"]
+    description: "Triggered when invoice uploaded to S3"
+
+  - type: api
+    endpoint: /api/v1/process-invoice
+    method: POST
+    description: "Manual trigger via API"
+
+  - type: schedule
+    cron: "0 */6 * * *"
+    description: "Process any pending invoices every 6 hours"
+
+# =============================================================================
+# WORKER CONFIGURATION - For Work Room integration
+# =============================================================================
+worker:
+  queue: apex-invoice-processing-queue
+  concurrency: 10
+  timeout_seconds: 300
+  retry_policy:
+    max_attempts: 3
+    backoff_multiplier: 2
+
+# =============================================================================
+# METADATA
+# =============================================================================
+metadata:
+  created_by: apex-platform
+  created_at: "2024-01-15"
+  last_updated: "2024-01-15"
+  tags:
+    - accounts-payable
+    - invoice
+    - automation
+    - financial-services

@@ -1,0 +1,156 @@
+═══════════════════════════════════════════════════════════════════════════════
+VERIZON FAR EDGE · KNOWN ISSUES KNOWLEDGE BASE — EXCERPT
+Document ID:    VZ-KB-2026-Q1
+Last Updated:   January 12, 2026
+Total Entries:  217 active · 84 archived
+═══════════════════════════════════════════════════════════════════════════════
+
+This is the canonical knowledge base for the Far Edge Operations team. Every
+entry is reviewed quarterly. Workarounds are temporary; permanent fixes are
+tracked back to a specific firmware version.
+
+───────────────────────────────────────────────────────────────────────────────
+KB-2026-0118 · CU-UP Latency Degradation Under Default RT Tuning
+───────────────────────────────────────────────────────────────────────────────
+Severity:         high
+Affected:         CaaS-Node-Type-B running Wind River 24.06 and 24.12
+First Reported:   2025-10-04 (site VZ-NE-NYC-0042)
+Confirmed By:     vendor-engineering · ticket VEN-2025-3318
+
+Symptoms
+  Sustained CU-UP P99 interface latency drifts from baseline 3.2 ms toward
+  6–8 ms over the first 30 minutes after boot. Eventually self-corrects
+  but breaches the 5 ms certification threshold during the warm-up window.
+
+Root Cause
+  kernel.sched_rt_runtime_us default of 950000 (95% of period) leaves
+  insufficient headroom for the CaaS-orchestrator pod scheduler under
+  cold-cache conditions on Type-B SKUs.
+
+Workaround (apply at boot)
+  Set kernel.sched_rt_runtime_us = 980000 in /etc/sysctl.d/99-rt-tune.conf
+  and apply with `sysctl -p`. Effective on next boot.
+
+Permanent Fix
+  Wind River 25.01 changes the default to 980000.
+
+Cross-References
+  • Wind River 24.12 Release Notes §3 (KB-2026-0118)
+  • VZ-RT-KERNEL-ERRATA §4.2
+
+───────────────────────────────────────────────────────────────────────────────
+KB-2026-0091 · Redfish Thermal Endpoint Returns 503 During Boot Window
+───────────────────────────────────────────────────────────────────────────────
+Severity:         medium
+Affected:         All CaaS node types with fan controller firmware < 3.1.4
+
+Symptoms
+  GET /redfish/v1/Chassis/1/Thermal returns 503 Service Unavailable for
+  ~20 seconds after boot completion. ROBOT tests that query this endpoint
+  during the post-boot validation window fail intermittently.
+
+Root Cause
+  Fan controller (BMC daughtercard) firmware versions below 3.1.4 do not
+  expose the Thermal subsystem to the BMC's Redfish front-end until the
+  fan tachometer subsystem completes its initial calibration.
+
+Workaround
+  ROBOT test should retry the GET with exponential backoff (1s, 2s, 4s,
+  8s, 16s) before failing. Maximum total wait: 31 seconds.
+
+Permanent Fix
+  Upgrade fan controller firmware to ≥ 3.1.4 via BMC out-of-band update.
+
+───────────────────────────────────────────────────────────────────────────────
+KB-2026-0073 · IPv6 Management Interface Enumeration Failure
+───────────────────────────────────────────────────────────────────────────────
+Severity:         medium
+Affected:         All node types where IPv6 Router Advertisement is disabled
+
+Symptoms
+  Post-boot ROBOT test ipv6_enumeration_check.robot fails with
+  "IPv6Addresses field missing or empty" on the management interface.
+  Functional impact: IPv6 routing to the site is broken.
+
+Root Cause
+  /etc/sysctl.d/40-ipv6.conf in the v24.12 base image sets
+  net.ipv6.conf.eth_mgmt0.accept_ra=0, which prevents stateless
+  autoconfiguration. The schema change in Redfish v1.16.0 now requires
+  the IPv6Addresses array to be populated, so a missing IPv6 stack
+  produces a schema validation failure in addition to the routing failure.
+
+Workaround
+  Set net.ipv6.conf.eth_mgmt0.accept_ra=2 and reload sysctl. Verify with
+  `ip -6 addr show eth_mgmt0` showing a global-scope address.
+
+Permanent Fix
+  Wind River 25.06 base image enables accept_ra by default.
+
+───────────────────────────────────────────────────────────────────────────────
+KB-2026-0044 · CaaS Orchestrator Pod Stall After Non-Graceful Shutdown
+───────────────────────────────────────────────────────────────────────────────
+Severity:         high
+Affected:         All node types after a hard power loss or kernel panic
+
+Symptoms
+  Boot sequence stalls at step 4.6 (CaaS-orchestrator pod scheduling) for
+  ≥ 5 minutes. `oc get pods -n caas-system` shows the orchestrator stuck
+  in ContainerCreating.
+
+Root Cause
+  When the previous shutdown was non-graceful, /var/lib/caas/lock is not
+  cleaned up. The pod's init container will not proceed until the lock
+  is released or its parent process is reaped — but the parent process
+  no longer exists.
+
+Workaround
+  Before boot: rm -f /var/lib/caas/lock
+  After boot:  verify pods reach Running with `oc get pods -n caas-system`
+
+Permanent Fix
+  Wind River 25.01 changes the lock file to a flock-based lease that
+  expires after 30 seconds of orphan parent.
+
+───────────────────────────────────────────────────────────────────────────────
+KB-2025-0288 · January 14, 2026 Northeast Outage — Root Cause Summary
+───────────────────────────────────────────────────────────────────────────────
+Severity:         critical · LESSONS LEARNED
+Affected:         CaaS-Node-Type-B · firmware 23.06 → 24.01 path · Northeast
+Outage Window:    2026-01-14 14:22 EST — 2026-01-15 02:48 EST
+Incident Report:  IR-2026-0114-NE
+
+Summary
+  A wave-3 deployment promoted 247 Type-B nodes in the Northeast region
+  from firmware 23.06 directly to 24.01. The transition crossed a Redfish
+  schema boundary (v1.13 → v1.14) and 14 automation scripts referenced
+  fields that had been silently relocated.
+
+  Failed scripts returned non-zero exit codes that were classified as
+  "transient" by the deployment orchestrator and not surfaced. The
+  certification cycle passed at 61% (below the 95% gate) but the gate
+  threshold had been reduced to 60% three weeks earlier as a temporary
+  measure for an unrelated issue.
+
+  Production traffic was steered to the upgraded sites before the
+  failures were detected. Twelve incidents within the first 30 days,
+  including a 12-hour geographic-scale outage on January 14.
+
+Root Causes (in order of contribution)
+  1. Reactive schema drift detection — the schema delta was present in
+     the Wind River 24.12 release notes but no script scanned the
+     automation catalog for impacted files BEFORE the cycle.
+  2. Temporarily reduced certification gate not reverted on schedule.
+  3. Historical 78% failure rate for this path/region was in the data
+     but not surfaced to the wave-deployment approver.
+
+Corrective Actions (post-incident)
+  • Deploy SchemaWatchAgent to run every 6 hours and pre-cycle.
+  • Deploy UpgradeAdvisorAgent to surface historical failure rates at
+    wave-planning time with mandatory HITL approval if rate > 15%.
+  • Audit Lens to capture every gate threshold change with reviewer.
+  • Reinstate 95% gate; any future reduction requires SRO + HQ Planning
+    co-signature.
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF EXCERPT — full KB is 94 pages.
+═══════════════════════════════════════════════════════════════════════════════

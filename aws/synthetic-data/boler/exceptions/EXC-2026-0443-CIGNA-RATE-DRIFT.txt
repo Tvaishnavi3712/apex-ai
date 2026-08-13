@@ -1,0 +1,44 @@
+APEX EXCEPTION RECORD · MEDIUM PRIORITY
+═══════════════════════════════════════════════════════════════
+EXCEPTION ID:     EXC-2026-0443
+Type:             Carrier Rate Drift
+Severity:         MEDIUM
+Detection Time:   June 6, 2026 · 09:35:14 ET
+Detection Agent:  Signal Agent (SIG)
+Status:           AWAITING BENEFITS DIRECTOR REVIEW
+
+─────────────── DETECTION ───────────────
+Cigna medical premium drift: +4.1% above contracted rate card
+Trailing 90-day pattern: +0.5% → +1.2% → +1.8% → +2.6% → +3.4% → +4.1%
+Affected division (highest exposure): Boler Holdings
+Cycle variance: $2,180
+
+─────────────── FINANCIAL IMPACT ───────────────
+This cycle (June 2026):       $50,557 over contracted rate
+Year-to-date (Jan-Jun):       $182,400 cumulative drift
+Full-year if unresolved:      $606,684 exposure
+3-yr exposure (if pattern continues): $1.82M
+
+─────────────── CONTRACT CONTEXT ───────────────
+Contract:       Cigna Healthcare PPO + HDHP (Apr 2024 - Jul 2026)
+Annual cap:     +2.5% escalator
+Current drift:   +4.1% (+1.6 points over cap)
+Renewal window:  May 1 - Jul 1, 2026 (41 days remaining)
+Auto-renewal:   Triggers if no 30-day notice
+
+─────────────── RECOMMENDED ACTION ───────────────
+1. Initiate Cigna renegotiation BEFORE Jul 1 auto-renewal
+2. Target: cap at +2.5% (the contracted escalator) or lower
+3. Alternative: BCBS Illinois quote in hand at +2.4% → est $230K/yr saving
+4. Backup: 30-day non-renewal notice if Cigna won't move
+
+─────────────── ROUTING ───────────────
+  • Detected by:      Signal Agent (rate-drift watcher)
+  • Routed to:        Benefits Director (Sarah Mitchell) — Stage 1
+  • Step Functions:   approval-workflow-v2.boler.us-east-1
+  • Stage 1:          Sarah Mitchell — PENDING
+  • Stage 2:          Ziggy Kravitz (CFO) — if escalated
+  • Notification:     SES email + SNS push sent 2026-06-06 09:35
+
+Storage: DynamoDB · partition=2026-06 · sort=EXC-0443
+Audit ID: AUDIT-2026-06-06-09:35:14-EXC-0443

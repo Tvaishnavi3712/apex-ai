@@ -1,0 +1,399 @@
+================================================================================
+                    STP NUCLEAR OPERATING COMPANY
+                  REACTOR COOLANT SYSTEM — VIBRATION
+                 SURVEILLANCE & PUMP MAINTENANCE STANDARD
+================================================================================
+
+  Document Number:    STP-OP-2204
+  Title:              RCS Vibration Surveillance & Pump Maintenance
+  Revision:           6
+  Effective Date:     2024-09-15
+  Next Review:        2027-09-15
+  Owner:              Operations · Reactor Coolant Systems Group
+  Approver:           D. Hawkins, Manager — Reactor Operations
+  Approval Date:      2024-09-12
+  NRC Classification: SAFETY-RELATED · QA Class A
+  Tech Spec Refs:     LCO 3.4.6, SR 3.4.6.1, SR 3.4.6.2
+
+  Distribution:       All RCS-qualified operators, mechanical maintenance
+                      engineers, predictive-maintenance analysts, training
+                      department, plant procedure index.
+
+
+--------------------------------------------------------------------------------
+                              TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+
+  Section 1.  Purpose & Scope
+  Section 2.  Definitions
+  Section 3.  Roles, Responsibilities, and Qualifications
+  Section 4.  Surveillance Frequencies & Acceptance Criteria
+  Section 5.  Vibration Monitoring — Continuous
+  Section 6.  Vibration Surveillance — Quarterly
+  Section 7.  Lockout / Tagout (LOTO) — Pump Maintenance
+  Section 8.  Bearing Condition Monitoring
+  Section 9.  Lubricating Oil Sampling and Analysis
+  Section 10. Tech Spec Action Statements
+  Section 11. Records & Reporting
+  Section 12. Cross References
+
+
+================================================================================
+SECTION 1.  PURPOSE & SCOPE
+================================================================================
+
+1.1  PURPOSE.  This standard establishes the surveillance frequency, acceptance
+     criteria, and corrective actions for vibration monitoring of the four (4)
+     Reactor Coolant Pumps (RCPs) at South Texas Project Units 1 and 2,
+     consistent with Technical Specification Limiting Condition for Operation
+     (LCO) 3.4.6 and Surveillance Requirement (SR) 3.4.6.1.
+
+1.2  SCOPE.  This procedure applies to:
+
+     (a) Continuous vibration monitoring per RCP via the Bently Nevada
+         3500 Series machinery monitoring system;
+     (b) Quarterly walk-down vibration surveillance using the Emerson
+         CSI 2140 portable analyzer;
+     (c) Lockout/tagout (LOTO) provisions when an RCP is removed from
+         service for maintenance;
+     (d) Mechanical seal leakoff measurement; and
+     (e) Reactor coolant pump motor lubricating-oil sampling.
+
+1.3  EXCLUSIONS.  This standard does NOT cover:
+
+     (a) Component cooling water (CCW) pump surveillance — see STP-OP-2306;
+     (b) Auxiliary feedwater pump surveillance — see STP-OP-2412;
+     (c) Charging pump surveillance — see STP-OP-2118.
+
+
+================================================================================
+SECTION 2.  DEFINITIONS
+================================================================================
+
+  ACTION STATEMENT — A specific Tech Spec requirement triggered when an
+  LCO becomes inoperable. Action statements impose a completion time
+  during which the plant must be returned to compliance or shut down.
+
+  CRITICAL VIBRATION LIMIT — A peak velocity reading at which an RCP
+  trip is automatically initiated to protect the pump and the RCS
+  pressure boundary. Set at 0.50 in/s per ANSI 12.10 Class IIA pumps.
+
+  ALERT VIBRATION LIMIT — A peak velocity reading at which Tech Spec
+  entry is required within 4 hours and operations must enter ACTION
+  Statement A of LCO 3.4.6. Set at 0.30 in/s per axis.
+
+  DEGRADED OPERATION — RCP operation between the alert limit and the
+  critical limit. Continued operation requires Engineering evaluation
+  per ED-FORM-014 and ODMP entry per STP-415-A.
+
+  BENTLY NEVADA 3500 — The plant's permanently-installed continuous
+  vibration monitoring system. Provides 1× and 2× spectra, overall
+  velocity, axial position, and bearing temperature.
+
+  EMERSON CSI 2140 — The portable vibration analyzer used for
+  quarterly walk-down surveillance, route data trending, and root-cause
+  spectral analysis when a continuous-system alarm is received.
+
+
+================================================================================
+SECTION 3.  ROLES, RESPONSIBILITIES, AND QUALIFICATIONS
+================================================================================
+
+3.1  SHIFT SUPERVISOR.  Authorizes RCP downpower per Section 10 when an
+     LCO action statement is entered.
+
+3.2  REACTOR OPERATOR (RO).  Monitors continuous vibration trends on
+     panel CRT-RCS-04. Notifies the Shift Supervisor upon receipt of
+     an alert alarm.
+
+3.3  PREDICTIVE MAINTENANCE ANALYST.  Performs quarterly route data
+     collection, performs FFT spectrum analysis, generates trend
+     reports per PMA-REC-002.
+
+3.4  MECHANICAL ENGINEER.  Reviews continuous-monitor alarms and
+     quarterly trend reports. Recommends corrective maintenance.
+
+3.5  QUALIFICATIONS.  Personnel performing surveillance under this
+     procedure shall hold:
+
+     - SRO/RO license for monitoring activities (Section 5)
+     - Predictive Maintenance Analyst Certification per PMP-CERT-001
+       for spectral analysis (Section 6, 8, 9)
+     - LOTO Authorized Worker per SAFE-PROC-301 for lockout (Section 7)
+
+
+================================================================================
+SECTION 4.  SURVEILLANCE FREQUENCIES & ACCEPTANCE CRITERIA
+================================================================================
+
+4.1  CONTINUOUS MONITORING.  All four (4) RCPs shall have continuous
+     vibration monitoring active whenever the RCS is at operating
+     pressure (≥ 2,235 psia) and the pump is operating.
+
+4.2  QUARTERLY WALK-DOWN.  A complete vibration surveillance route
+     shall be performed every 92 days, ± 25%, per SR 3.4.6.1.
+
+4.3  ACCEPTANCE CRITERIA — VIBRATION VELOCITY (PEAK).
+
+     Per axis (X, Y, Z), measured at the upper bearing housing:
+
+       NORMAL OPERATION  : ≤ 0.20 in/s
+       WATCH BAND        : 0.21 – 0.29 in/s
+       ALERT LIMIT       : 0.30 – 0.49 in/s     (LCO entry within 4 hr)
+       CRITICAL LIMIT    : ≥ 0.50 in/s          (Auto-trip)
+
+4.4  ACCEPTANCE CRITERIA — BEARING TEMPERATURE.
+
+       NORMAL            : ≤ 175 °F
+       WATCH             : 176 – 195 °F
+       ALERT             : 196 – 219 °F          (LCO entry within 4 hr)
+       CRITICAL          : ≥ 220 °F               (Auto-trip)
+
+4.5  ACCEPTANCE CRITERIA — MECHANICAL SEAL LEAKOFF.
+
+       NORMAL            : ≤ 1.5 gpm
+       WATCH             : 1.6 – 2.4 gpm
+       ALERT             : 2.5 – 4.0 gpm          (LCO entry within 4 hr)
+       CRITICAL          : ≥ 4.1 gpm              (Pump trip required)
+
+
+================================================================================
+SECTION 5.  VIBRATION MONITORING — CONTINUOUS
+================================================================================
+
+5.1  Reactor coolant pump vibration shall be monitored continuously by the
+     Bently Nevada 3500 Series machinery monitoring system. Single-axis
+     velocity readings exceeding 0.30 in/s peak shall trigger a Tech-Spec
+     entry within 4 hours.
+
+5.2  ALARM RESPONSE FLOW.
+
+     Upon receipt of a "VIB-HI" alarm at the main control board:
+
+     (a) The Reactor Operator shall:
+         (i)   Verify the alarm is not spurious by cross-checking
+               the redundant accelerometer (channel B);
+         (ii)  Record the time, pump id, axis, and reading on
+               Operational Log STP-LOG-OPS-DAILY;
+         (iii) Notify the Shift Supervisor within 5 minutes.
+
+     (b) The Shift Supervisor shall:
+         (i)   Verify the alarm via independent observation of the
+               Bently Nevada workstation in the control room;
+         (ii)  If verified, enter LCO 3.4.6 ACTION A and initiate
+               Operational Decision-Making Process (ODMP) per STP-415-A;
+         (iii) Initiate work order request for vibration analysis
+               using the Emerson CSI 2140 portable analyzer.
+
+5.3  AUTOMATIC PROTECTIVE ACTIONS.  At ≥ 0.50 in/s, the pump trip relay
+     activates automatically. No operator action shall override this
+     protective signal except by the Shift Supervisor with concurrence
+     of the Plant Manager.
+
+
+================================================================================
+SECTION 6.  VIBRATION SURVEILLANCE — QUARTERLY (SR 3.4.6.1)
+================================================================================
+
+6.1  FREQUENCY.  Every 92 days, ± 25%, per Tech Spec SR 3.4.6.1.
+
+6.2  EQUIPMENT REQUIRED.
+
+     - Emerson CSI 2140 portable vibration analyzer (calibration
+       current within ± 30 days)
+     - 622B01 ICP accelerometer (sensitivity 100 mV/g)
+     - Magnetic mounting base, model 080A106
+     - RCP route file (STP-RCP-ROUTE-2024)
+
+6.3  PROCEDURE.
+
+     (a) Pre-job briefing per OSHA 1910.147 and SAFE-PROC-301.
+     (b) Verify pump operating at full design flow (≥ 88,500 gpm)
+         and pressure (2,235 psia).
+     (c) Collect data at the four (4) measurement points per pump:
+         POINT-01  : Motor outboard bearing (vertical axis)
+         POINT-02  : Motor outboard bearing (horizontal axis)
+         POINT-03  : Pump-end bearing (vertical axis)
+         POINT-04  : Pump-end bearing (horizontal axis)
+     (d) Record overall velocity (in/s peak) and 1× spectral peak.
+     (e) Trend against the most-recent 4 quarters of data.
+     (f) Sign off the route in the eAM system by 17:00 on the day
+         of collection.
+
+6.4  ACCEPTANCE.  All four points must read within the WATCH BAND
+     (≤ 0.29 in/s) for the surveillance to be marked SAT.
+
+
+================================================================================
+SECTION 7.  LOCKOUT / TAGOUT (LOTO) — PUMP MAINTENANCE
+================================================================================
+
+7.1  Prior to maintenance on any RCP, two-person verification of breaker
+     open and tag-applied shall be documented in the work package per
+     OSHA 1910.147 and SAFE-PROC-301.
+
+7.2  LOCKOUT VERIFICATION CHECKLIST (signed by both Authorized Worker
+     and an independent Verifier):
+
+     [ ]  Breaker BKR-RCP-1A (or applicable) racked OUT
+     [ ]  Personal lock applied — serial number recorded
+     [ ]  Personal danger tag applied — serial number recorded
+     [ ]  Try-test verification of zero energy state
+     [ ]  Independent verification by Verifier (printed name, signature)
+
+7.3  RE-ENERGIZATION.  Upon completion of work, locks/tags shall be
+     removed only by the personnel who applied them. The Authorized
+     Worker shall:
+
+     (a) Walk down the work area and confirm no personnel remain in
+         the LOTO boundary;
+     (b) Remove personal lock and tag;
+     (c) Notify the Shift Supervisor of LOTO release;
+     (d) Document the release in the eAM work order with a timestamp.
+
+7.4  PROCEDURE VIOLATIONS.  Any deviation from this section shall be
+     reported to the Shift Supervisor and Industrial Safety per
+     SAFE-REC-005 within 1 hour. Failure to perform two-person
+     verification is a NRC-reportable event.
+
+
+================================================================================
+SECTION 8.  BEARING CONDITION MONITORING
+================================================================================
+
+8.1  Bearing condition shall be assessed using:
+
+     (a) Bently Nevada 3500/72 (continuous) — monitors thrust position,
+         radial vibration, bearing temperature.
+     (b) Acoustic emission probes (continuous) — monitors high-frequency
+         spike energy indicative of incipient bearing damage.
+     (c) Quarterly route data per Section 6 — bearing-pass-frequency
+         analysis.
+
+8.2  TREND CRITERIA.  A 30% rise in spike energy across 3 consecutive
+     quarterly walk-downs shall trigger:
+
+     (a) Engineering evaluation per ED-FORM-022;
+     (b) Submission of a Predictive Maintenance Action Recommendation
+         (PMAR) form;
+     (c) Consideration of advancing the next preventive maintenance
+         cycle (PM-7B) per STP-MNT-1102.
+
+
+================================================================================
+SECTION 9.  LUBRICATING OIL SAMPLING AND ANALYSIS
+================================================================================
+
+9.1  FREQUENCY.  RCP motor lubricating oil samples shall be collected
+     monthly during normal operation, and within 24 hours of any
+     vibration or bearing-temperature alert.
+
+9.2  SAMPLE VOLUME.  150 mL per sample, collected from the bottom
+     drain after the motor has been at operating temperature for
+     ≥ 4 hours.
+
+9.3  LAB ANALYSIS — STP CHEMISTRY LABORATORY.
+
+     The following parameters shall be reported within 72 hours:
+
+     - Iron (Fe)         : ≤ 50  ppm (ALERT > 50)
+     - Copper (Cu)       : ≤ 25  ppm (ALERT > 25)
+     - Lead (Pb)         : ≤ 30  ppm (ALERT > 30)
+     - Tin (Sn)          : ≤ 20  ppm (ALERT > 20)
+     - Water content     : ≤ 100 ppm (ALERT > 100)
+     - Total acid number : ≤ 1.5 mg KOH/g (ALERT > 1.5)
+
+9.4  ALERT TREND.  Two (2) consecutive monthly samples showing wear
+     metals above the alert limit shall trigger PMAR submission and
+     consideration of advancing the bearing inspection PM.
+
+
+================================================================================
+SECTION 10. TECH SPEC ACTION STATEMENTS
+================================================================================
+
+10.1 LCO 3.4.6 — REACTOR COOLANT PUMP OPERABILITY.
+
+     APPLICABILITY: MODES 1, 2, 3.
+
+     ACTION A — One RCP inoperable:
+       A.1  Restore the inoperable RCP to OPERABLE within 7 days, or
+       A.2  Be in MODE 4 within the following 12 hours.
+
+     ACTION B — Two or more RCPs inoperable:
+       B.1  Be in MODE 3 within 6 hours, AND
+       B.2  Be in MODE 4 within the following 12 hours.
+
+10.2 ENTRY CRITERIA.  An RCP shall be declared inoperable upon:
+
+     (a) Vibration in any single axis ≥ 0.30 in/s sustained for > 4 hr
+     (b) Bearing temperature ≥ 196 °F sustained for > 4 hr
+     (c) Mechanical seal leakoff ≥ 2.5 gpm sustained for > 4 hr
+     (d) Two consecutive monthly oil samples with wear metals above
+         alert limits (Section 9.4)
+
+10.3 ODMP REQUIREMENT.  ANY entry into LCO 3.4.6 ACTION A shall
+     additionally trigger an Operational Decision-Making Process
+     review per STP-415-A (Operational Decision-Making Process)
+     within 24 hours of LCO entry.
+
+
+================================================================================
+SECTION 11. RECORDS & REPORTING
+================================================================================
+
+11.1 RETENTION.  All records generated under this procedure shall be
+     retained for the life of the plant per 10 CFR 50.71.
+
+11.2 RECORDS INDEX.
+
+     - Daily continuous vibration log:    STP-LOG-OPS-DAILY
+     - Quarterly route data file:         STP-RCP-ROUTE-2024
+     - Tech Spec entry log:               STP-LOG-TS-2024
+     - LOTO records:                      SAFE-REC-005
+     - Oil sample chemistry results:      CHEM-LAB-2024
+     - PMAR records:                      PMP-REC-014
+
+11.3 NRC REPORTING.  An RCP TRIP from any cause is REPORTABLE to the
+     Nuclear Regulatory Commission per 10 CFR 50.72(b)(2)(iv) within
+     8 hours of occurrence.
+
+
+================================================================================
+SECTION 12. CROSS REFERENCES
+================================================================================
+
+  STP-415-A    Operational Decision-Making Process
+  STP-415      Business Travel & Per-Diem Allowances
+  STP-OP-2306  Component Cooling Water — Surveillance
+  STP-MNT-1102 Preventive Maintenance Scheduling
+  STP-RAD-901  Radiation Work Permit Issuance
+  SAFE-PROC-301 Lockout/Tagout — Authorized Worker Standard
+  ED-FORM-022   Engineering Evaluation — Vibration Trend
+  10 CFR 50.65  Maintenance Rule (Federal Regulation)
+  10 CFR 50.72  Notification of Significant Events
+  10 CFR 50.73  Licensee Event Report Submittal
+  10 CFR 50.71  Maintenance and Retention of Records
+
+
+================================================================================
+                        END OF PROCEDURE — STP-OP-2204 — REV 6
+================================================================================
+
+Approved by:
+
+   _______________________________________   _____________
+   D. Hawkins                                 2024-09-12
+   Manager, Reactor Operations
+
+   _______________________________________   _____________
+   M. Ramirez                                 2024-09-13
+   Manager, Mechanical Engineering
+
+   _______________________________________   _____________
+   B. Trotter                                 2024-09-14
+   Plant Manager
+
+   _______________________________________   _____________
+   D. Wilson                                  2024-09-15
+   Site Vice President

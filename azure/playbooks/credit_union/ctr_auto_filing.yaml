@@ -1,0 +1,73 @@
+playbook_id: pb-cwfcu-3
+name: ctr_auto_filing
+version: "1.0.0"
+description: "Auto-draft and file Currency Transaction Reports (FinCEN Form 112) for cash transactions ≥ $10,000."
+industry: credit_union
+category: compliance
+
+intent: |
+  Catch every single cash transaction ≥ $10,000 at any CWFCU branch
+  within the same business day. Auto-draft the FinCEN Form 112 (CTR)
+  with full subject, transaction, and source-of-funds context. Route to
+  BSA Officer for review then file to FinCEN — well within the 15-day
+  statutory window. Aggregate multi-transaction filings when the same
+  member conducts ≥ $10K in cash across same business day.
+
+output:
+  - name: ctr_filing
+    type: structured_data
+    description: "FinCEN Form 112 ready for submission"
+  - name: filing_decision
+    type: routing_decision
+    description: "auto_draft → bsa_review → fincen_submit"
+
+context:
+  business_rules:
+    - "Cash transactions ≥ $10,000 require CTR (31 U.S.C. § 5313)"
+    - "Aggregate multi-transaction when same member ≥ $10K same business day"
+    - "Filing deadline: transaction date + 15 days"
+    - "Currency exchange + armored car + ATM flags surface where applicable"
+
+actions:
+  - name: detect_threshold_breach
+    action_id: credit_union.detect_ctr_threshold
+    description: "Stream-process cash events for ≥ $10K threshold"
+    required: true
+  - name: draft_ctr
+    action_id: credit_union.draft_ctr
+    description: "Auto-draft FinCEN Form 112"
+    required: true
+  - name: review_ctr
+    action_id: credit_union.bsa_officer_review
+    description: "BSA Officer review queue"
+    required: true
+  - name: submit_to_fincen
+    action_id: credit_union.fincen_submit
+    description: "Submit to FinCEN BSA E-Filing"
+    required: true
+  - name: index_to_ncua_folder
+    action_id: credit_union.ncua_folder_index
+    description: "Index CTR to NCUA exam BSA/AML folder"
+    required: true
+
+recipe: |
+  1. Stream cash events from the core. Catch any single transaction
+     ≥ $10,000 OR aggregated multi-transaction ≥ $10,000 same business day.
+  2. Auto-draft the CTR using bp-cwfcu-ctr blueprint. Pull subject
+     identity (name, DOB, address, SSN-last-4, occupation), transaction
+     detail (date, branch, teller, amount, currency, type), and source-
+     of-funds context from the member's profile.
+  3. Set ancillary flags: multiple-transaction, currency-exchange,
+     armored-car, ATM as applicable.
+  4. Set filing deadline: transaction date + 15 days.
+  5. Route to BSA Officer review queue with priority MEDIUM (or HIGH
+     if subject has EDD or prior SAR).
+  6. On approve: submit to FinCEN via BSA E-Filing. Capture
+     acknowledgment ID. Update folder index.
+  7. Track filing latency (transaction → submit timestamp). Alert if
+     any filing approaches 12-day age.
+
+triggers:
+  - type: stream
+    source: core_banking_events
+    pattern: cash_deposit_ge_10000 | cash_withdrawal_ge_10000 | wire_in_ge_10000 | aggregate_cash_day_ge_10000

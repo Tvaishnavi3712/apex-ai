@@ -1,0 +1,168 @@
+{
+  "blueprintName": "apex-insurance-app-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from insurance applications for underwriting",
+  "industry": "insurance_underwriting",
+  "documentType": "insurance_application",
+  "bdaSchema": {
+    "class": "ApexInsuranceApplication",
+    "description": "Insurance application extraction for underwriting",
+    "definitions": {
+      "COVERAGE_REQUEST": {
+        "properties": {
+          "coverage_type": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "limit": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "deductible": {
+            "type": "number",
+            "inferenceType": "explicit"
+          }
+        }
+      },
+      "LOSS_HISTORY": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "type": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "amount": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "status": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "application_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "application_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "policy_type": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Auto, Home, Life, Commercial"
+      },
+      "applicant_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "applicant_dob": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "applicant_ssn_last_four": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "applicant_address": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "applicant_phone": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "applicant_email": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "occupation": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "employer": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "annual_income": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "effective_date_requested": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "coverages_requested": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/COVERAGE_REQUEST"
+        }
+      },
+      "prior_carrier": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "prior_policy_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "prior_expiration_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "loss_history": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/LOSS_HISTORY"
+        }
+      },
+      "years_with_prior_carrier": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "has_prior_cancellation": {
+        "type": "boolean",
+        "inferenceType": "explicit"
+      },
+      "cancellation_reason": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "agent_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "agent_code": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "applicant_signature": {
+        "type": "boolean",
+        "inferenceType": "explicit"
+      },
+      "signature_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.85
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  },
+  "blueprintArn": "arn:aws:bedrock:us-east-1:457795063704:blueprint/a2a8059a184d"
+}

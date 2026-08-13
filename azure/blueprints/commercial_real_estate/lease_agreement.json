@@ -1,0 +1,114 @@
+{
+  "blueprintName": "apex-ae-lease-agreement-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Agentic Enterprise UC-3 — extract tenant, expiration, and liability terms from commercial real estate lease agreements. Output is shaped for direct ingestion into the DuckDB leases table.",
+  "industry": "commercial_real_estate",
+  "documentType": "commercial_lease",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "tenant_name": {
+        "type": "string",
+        "description": "Legal name of the tenant entity (e.g., 'Aurora Biotech Solutions, Inc.'). Look for the 'TENANT:' header followed by a corporate name and entity suffix (Inc., LLC, LP, Corp., Ltd.)."
+      },
+      "tenant_type": {
+        "type": "string",
+        "enum": ["Inc.", "LLC", "LP", "Corp.", "Ltd.", "Other"],
+        "description": "Entity type derived from the tenant_name suffix."
+      },
+      "landlord_name": {
+        "type": "string",
+        "description": "Legal name of the landlord/lessor entity."
+      },
+      "premises_address": {
+        "type": "string",
+        "description": "Street address + suite/floor of the leased premises."
+      },
+      "rentable_square_feet": {
+        "type": "number",
+        "description": "Approximate rentable square footage as stated in Article 1 (Premises)."
+      },
+      "commencement_date": {
+        "type": "string",
+        "format": "date",
+        "description": "Lease commencement date in ISO 8601 (YYYY-MM-DD)."
+      },
+      "expiration_date": {
+        "type": "string",
+        "format": "date",
+        "description": "Lease expiration date in ISO 8601. Look for the 'Expiration Date' definition in Article 2 (Term)."
+      },
+      "base_rent_psf_per_year": {
+        "type": "number",
+        "description": "Base rent per rentable square foot per annum (USD)."
+      },
+      "monthly_rent_usd": {
+        "type": "number",
+        "description": "Monthly base rent installment (USD)."
+      },
+      "annual_escalation_pct": {
+        "type": "number",
+        "description": "Annual rent escalation percentage."
+      },
+      "renewal_option": {
+        "type": "object",
+        "description": "If a renewal option exists, capture term length and notice window.",
+        "properties": {
+          "term_years": {"type": "number"},
+          "notice_days": {"type": "number"}
+        }
+      },
+      "permitted_use": {
+        "type": "string",
+        "description": "Verbatim use clause (Article 4)."
+      },
+      "liability_clause_text": {
+        "type": "string",
+        "description": "Full verbatim text of the indemnification / liability clause (typically Article 7). Required for downstream search by 'indemnify' keyword."
+      },
+      "indemnification_present": {
+        "type": "boolean",
+        "description": "True when the liability_clause_text contains the word 'indemnify' (case-insensitive)."
+      },
+      "indemnification_survival_years": {
+        "type": "number",
+        "description": "Number of years the indemnification obligation survives lease termination."
+      },
+      "insurance_required_per_occurrence_usd": {
+        "type": "number",
+        "description": "Minimum per-occurrence general liability insurance required (USD)."
+      },
+      "insurance_required_aggregate_usd": {
+        "type": "number",
+        "description": "Minimum aggregate general liability insurance required (USD)."
+      },
+      "default_cure_days": {
+        "type": "number",
+        "description": "Number of days after rent due date before non-payment becomes an Event of Default."
+      },
+      "governing_law_state": {
+        "type": "string",
+        "description": "State whose law governs the lease (e.g., 'Texas')."
+      },
+      "signed_at": {
+        "type": "string",
+        "format": "date",
+        "description": "Most recent signature date on the lease."
+      }
+    },
+    "required": [
+      "tenant_name",
+      "expiration_date",
+      "liability_clause_text"
+    ]
+  },
+  "extractionRules": {
+    "preserveVerbatimText": true,
+    "verbatimFields": ["liability_clause_text", "permitted_use"],
+    "dateFormat": "ISO8601",
+    "confidenceThreshold": 0.7,
+    "lowConfidenceAction": "flag_for_human_review",
+    "downstreamTable": "leases"
+  },
+  "extractionInstructions": "This is a commercial real estate lease agreement. Extract the legal entity names, lease term dates, rent terms, and the verbatim indemnification clause. The liability_clause_text is critical for downstream search — preserve it verbatim including the survival provision. Set indemnification_present=true if the liability clause contains the word 'indemnify' (case-insensitive)."
+}

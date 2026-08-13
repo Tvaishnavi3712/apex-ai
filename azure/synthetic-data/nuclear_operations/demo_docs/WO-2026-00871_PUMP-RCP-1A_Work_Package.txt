@@ -1,0 +1,266 @@
+================================================================================
+                  STP NUCLEAR OPERATING COMPANY
+            PREVENTIVE MAINTENANCE WORK PACKAGE
+================================================================================
+
+  Work Order:               WO-2026-00871
+  Equipment Tag:            PUMP-RCP-1A
+  Equipment Description:    Reactor Coolant Pump 1A · Westinghouse Model 93A
+  System:                   Reactor Coolant System (RCS) · Loop A
+  Unit:                     Unit 1
+  PM Type:                  PM-7B · 18-month Major Preventive Maintenance
+                             — Bearing Inspection & Mechanical Seal Replacement
+  Procedure Reference:      0PMP-RCS-7B Rev 4
+  Tech Spec:                LCO 3.4.6 · ACTION A entered (Refueling Outage RFO-26)
+  Outage Window:            2026-03-12 (00:00) → 2026-03-19 (23:59)
+  Planner:                  T. Whitfield (EMP-1042)
+  Lead Engineer:            J. Whitfield (EMP-2117) · Mech Eng II
+  Authorized Workers:       M. Holloway (EMP-2243), J. Greene (EMP-2289),
+                             P. Liu (EMP-2310)
+  QC Inspector:             R. Marquez (EMP-3018)
+  Total Hours Charged:      52.5 hr
+  Status at Issuance:       OPEN — NOT STARTED
+  Status at Completion:     CLOSED · ACCEPTANCE: PASSED
+  Material RFP Pull:        2026-03-09 18:42 CST
+  Closure Timestamp:        2026-03-18 14:30 CST
+
+
+--------------------------------------------------------------------------------
+                       1. SCOPE OF WORK
+--------------------------------------------------------------------------------
+
+This work package covers the 18-month major preventive maintenance on
+Reactor Coolant Pump 1A (PUMP-RCP-1A), specifically:
+
+  (a) Lockout / tagout (LOTO) per OSHA 1910.147
+  (b) Removal and inspection of upper and lower bearings
+  (c) Mechanical seal replacement (Flowserve P/N 4421-A)
+  (d) Coupling alignment to within 0.005 in
+  (e) Lube oil replacement (240 gal Mobil DTE-32)
+  (f) Vibration baseline collection per STP-OP-2204
+  (g) Independent QC verification of all sign-off points
+  (h) Restoration to OPERABLE status per LCO 3.4.6
+
+
+--------------------------------------------------------------------------------
+                       2. PRE-JOB BRIEFING (RECORD)
+--------------------------------------------------------------------------------
+
+  Briefing Date:        2026-03-12  06:30 CST
+  Briefing Location:    RCS Maintenance Trailer 04
+  Lead Briefer:         J. Whitfield (Mech Eng II)
+  Attendees (signed):
+                        M. Holloway     EMP-2243   _____ (initials)
+                        J. Greene       EMP-2289   _____
+                        P. Liu          EMP-2310   _____
+                        R. Marquez      EMP-3018   _____ (QC)
+                        D. Sokolova     EMP-1115   _____ (Rad Pro)
+
+  Topics covered (per SAFE-PROC-301):
+    [x] Job scope & sequence
+    [x] LOTO boundaries · breaker BKR-RCP-1A
+    [x] Radiation Work Permit RWP-RCS-2026-0042 · 4 mR/hr at work face
+    [x] Foreign Material Exclusion (FME) zone — yellow tape boundary
+    [x] Mechanical hazards — pinch points, sharp edges, lifting >50 lb
+    [x] Confined space requirements
+    [x] Emergency egress route — south stairwell, RCS Bldg
+    [x] Stop-work authority — every individual present
+
+
+--------------------------------------------------------------------------------
+                       3. LOCKOUT / TAGOUT (LOTO)
+--------------------------------------------------------------------------------
+
+  Per SAFE-PROC-301 and OSHA 1910.147 (two-person verification required):
+
+  Date/Time Applied:    2026-03-12  07:14 CST
+  Authorized Worker:    M. Holloway · personal lock #L-2243-014
+  Verifier:             P. Liu · personal lock #L-2310-007
+
+  Energy Sources Isolated:
+
+    [ x ]  ELECTRICAL
+           Breaker:           BKR-RCP-1A · Switchgear SG-RCS-1A
+           Position:          RACKED OUT · INDICATOR RED
+           Try-test:          MOTOR DID NOT START · 07:18
+           Locks Applied:     L-2243-014 (Worker) · L-2310-007 (Verifier)
+
+    [ x ]  MECHANICAL (RCS Loop A flow path)
+           Valve:             8702A · 14" Suction Isolation
+           Position:          CLOSED & TAGGED · Tag T-2024-09-1142
+           Backup:            Bypass valve 8702A-BP closed & blanked
+
+    [ x ]  HYDRAULIC (Mechanical seal stage 1 leakoff)
+           Valve:             SEAL-LEAKOFF-A1 · ¾" globe
+           Position:          CLOSED & TAGGED · Tag T-2024-09-1144
+
+  Date/Time Released:    2026-03-18 14:25 CST
+
+
+--------------------------------------------------------------------------------
+                       4. STEP-BY-STEP WORK INSTRUCTIONS
+--------------------------------------------------------------------------------
+
+STEP 1 — DISASSEMBLY (Day 1, 0900-1700)
+   Performed by: M. Holloway, J. Greene
+   Witness:      R. Marquez (QC)
+   Result:       PASS
+
+   1.1  Drain motor lubricating oil into approved container · 240 gal
+        captured · sample retained for chemistry lab (sample #C-2026-0312-A)
+   1.2  Remove motor coupling guard · 12 fasteners · M16 × 50 mm
+   1.3  Disconnect motor coupling · backup pin removed · stored in
+        FME-controlled tote
+   1.4  Remove upper-end coupling spacer · 23.4 lb
+   1.5  Disconnect mechanical seal cooling water lines (3 lines)
+   1.6  Remove upper bearing housing cover · 8 fasteners · M20 × 65 mm
+
+   Notes: All fasteners retained in step-specific FME baggies, labeled.
+
+STEP 2 — UPPER BEARING INSPECTION
+   Performed by: J. Greene
+   Witness:      J. Whitfield (Engineer)
+   Result:       PASS
+
+   2.1  Bearing condition visual: surface scoring within tolerance
+   2.2  Roller wear measured at 0.0008 in (limit 0.0015 in) — PASS
+   2.3  Cage wear measured at 0.0011 in (limit 0.0020 in) — PASS
+   2.4  Photo documentation: 18 images, attached as Appendix A
+   2.5  Decision: REINSTALL existing bearing (within service life)
+
+STEP 3 — MECHANICAL SEAL REPLACEMENT
+   Performed by: M. Holloway, P. Liu
+   Witness:      R. Marquez (QC)
+   Result:       PASS
+
+   3.1  Remove old mechanical seal cartridge · Flowserve 4421-A · S/N
+        4421A-2018-1247 (8 years in service)
+   3.2  Inspect seal faces · 65% wear pattern at primary seal face
+        → REPLACEMENT JUSTIFIED (acceptance ≤ 30% wear at this PM)
+   3.3  Install new mechanical seal cartridge · Flowserve 4421-A
+        S/N 4421A-2026-0042 · MFG date 2025-11-18
+   3.4  Verify face flatness with optical flat · 2 light bands ≤ helium
+        (acceptance ≤ 3 bands) — PASS
+   3.5  Verify seal carbon ring concentricity · 0.0006 in TIR
+        (acceptance ≤ 0.0010 in) — PASS
+
+STEP 4 — LOWER BEARING INSPECTION
+   Performed by: J. Greene, P. Liu
+   Witness:      J. Whitfield (Engineer)
+   Result:       PASS
+
+   4.1  Bearing condition visual: light surface frosting, no spalling
+   4.2  Roller wear: 0.0006 in (limit 0.0015 in) — PASS
+   4.3  Decision: REINSTALL existing lower bearing
+   4.4  Photo documentation: 12 images, Appendix B
+
+STEP 5 — REASSEMBLY
+   Performed by: M. Holloway, J. Greene, P. Liu
+   Witness:      R. Marquez (QC) · J. Whitfield (Engineer)
+   Result:       PASS
+
+   5.1  Install upper bearing assembly · torque to 850 ± 25 ft-lb
+   5.2  Install mechanical seal cartridge · torque to 1,200 ± 50 ft-lb
+   5.3  Install upper bearing housing cover · torque to 600 ± 20 ft-lb
+   5.4  Reinstall coupling spacer · alignment dial-indicator reading
+        0.003 in TIR (axial)  · 0.002 in TIR (radial) — PASS
+   5.5  Reinstall coupling guard
+
+STEP 6 — LUBE OIL FILL
+   Performed by: P. Liu
+   Witness:      R. Marquez (QC)
+   Result:       PASS
+
+   6.1  Fill motor sump with new Mobil DTE-32 · 240 gal · Lot 2025-Q4-1188
+   6.2  Verify sight-glass level at center mark
+   6.3  Sample drawn 1 hour after fill · sample #C-2026-0316-B for
+        baseline (no wear metals expected at this point)
+
+
+--------------------------------------------------------------------------------
+                       5. ACCEPTANCE TESTING
+--------------------------------------------------------------------------------
+
+5.1  POST-MAINTENANCE VIBRATION SURVEY (per STP-OP-2204 §6)
+     Date Performed:  2026-03-18  10:00–11:30 CST
+     Analyst:         T. Davies, Predictive Maintenance Cert. #PMA-014
+     Equipment:       Emerson CSI 2140 portable analyzer · cal current
+
+  +-----------------------+-------------+-------------+--------------+
+  | Measurement Point     | Velocity    | 1× Spectral | Acceptance   |
+  |                       | (in/s peak) | Peak (Hz)   |              |
+  +-----------------------+-------------+-------------+--------------+
+  | Motor outboard V      | 0.18        | 25.0        | PASS         |
+  | Motor outboard H      | 0.21        | 25.0        | PASS         |
+  | Pump-end V            | 0.19        | 25.0        | PASS         |
+  | Pump-end H            | 0.20        | 25.0        | PASS         |
+  +-----------------------+-------------+-------------+--------------+
+
+  All four points within WATCH BAND (≤ 0.29 in/s) — SURVEILLANCE SAT
+  per STP-OP-2204 §6.4. ED-2026-014 issued (post-maintenance 0.21 in/s
+  at one point — within tolerance per ED §3, no further action).
+
+5.2  BEARING TEMPERATURE
+     Upper bearing:    142 °F (Normal · ≤ 175 °F)
+     Lower bearing:    137 °F (Normal · ≤ 175 °F)
+
+5.3  MECHANICAL SEAL LEAKOFF
+     Reading:          0.4 gpm (Normal · ≤ 1.5 gpm)
+     New seal break-in trend: monitor weekly for 4 weeks.
+
+5.4  RUN TEST (4 hours at full operating pressure)
+     Start:            2026-03-18 12:30 CST
+     End:              2026-03-18 16:30 CST
+     Vibration drift:  +0.01 in/s on motor outboard horizontal —
+                       within typical break-in band, acceptable.
+     Bearing temp:     stabilized at 144 °F upper, 138 °F lower.
+
+
+--------------------------------------------------------------------------------
+                       6. SIGN-OFFS
+--------------------------------------------------------------------------------
+
+   ROLE                NAME              EMP-ID     DATE         INITIALS
+   ──────────────────  ────────────────  ─────────  ──────────   ────────
+   Authorized Worker   M. Holloway       EMP-2243   2026-03-18   _____
+   Authorized Worker   J. Greene         EMP-2289   2026-03-18   _____
+   Authorized Worker   P. Liu            EMP-2310   2026-03-18   _____
+   QC Inspector        R. Marquez        EMP-3018   2026-03-18   _____
+   Lead Engineer       J. Whitfield      EMP-2117   2026-03-18   _____
+   Operations Reviewer K. Anderson       EMP-1078   2026-03-18   _____
+   Maintenance Manager B. Tan            EMP-1009   2026-03-18   _____
+
+
+--------------------------------------------------------------------------------
+                       7. APPENDICES
+--------------------------------------------------------------------------------
+
+  Appendix A:   Upper bearing inspection photos (18 images, JPEG)
+  Appendix B:   Lower bearing inspection photos (12 images, JPEG)
+  Appendix C:   Vibration spectrum FFT plots, baseline + post-PM
+  Appendix D:   Coupling alignment laser readings (Pruftechnik OPTALIGN)
+  Appendix E:   Mechanical seal old-component photo log (8 images)
+  Appendix F:   Lube oil chemistry — pre-PM (sample C-2026-0312-A)
+  Appendix G:   Lube oil chemistry — baseline post-fill (sample C-2026-0316-B)
+
+
+--------------------------------------------------------------------------------
+                       8. POST-WORK CONDITION REPORT
+--------------------------------------------------------------------------------
+
+  CR Number:       (none generated)
+  Findings:
+    - All acceptance criteria met
+    - One field-engineering disposition (ED-2026-014) issued for
+      post-maintenance vibration 0.21 in/s — within band per ED §3
+    - Old mechanical seal sent to vendor (Flowserve) for failure
+      analysis · expected report 2026-04-30
+    - Next PM-7B scheduled for 2027-09 (18 months from completion)
+
+  Operational Status After Completion:
+    PUMP-RCP-1A — DECLARED OPERABLE per LCO 3.4.6 at 2026-03-18 17:45 CST
+    Tech Spec exit confirmed in shift turnover STP-LOG-OPS-2026-03-18.
+
+================================================================================
+                      END OF WORK PACKAGE — WO-2026-00871
+================================================================================

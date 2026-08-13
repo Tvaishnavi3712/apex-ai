@@ -1,0 +1,3379 @@
+{
+  "generated_at": "2026-08-12T10:59:47+00:00",
+  "generator": "scripts/extract_hw_inventory.py",
+  "provenance": "Verizon Far Edge lab certification campaigns, June 2026",
+  "sources": [
+    "HPE-EL140-ilo_1.20.00-BIOS_v1.30 copy",
+    "Dell-XR8720-1.1.3_BIOS-1.30.10.51_iDRAC copy"
+  ],
+  "servers": [
+    {
+      "id": "dell-823a-e001",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "hostname": "welktxwr-HDM35J4-dl-720x-001",
+      "vendor": "Dell",
+      "platform": "Dell XR8720t",
+      "bmc_type": "iDRAC 10",
+      "bmc_firmware": "iDRAC 1.30.10.51",
+      "bios_version": "1.1.3",
+      "chassis_model": "17G DCS",
+      "processor": "Intel Xeon 6776P-B (GNR-D), 72 cores / 144 threads",
+      "memory": "256 GB DDR5 ECC, 6400 MT/s, MaxPerf mode",
+      "nics": [],
+      "last_seen": "2026-06-16",
+      "evidence_files": [
+        "MEAKV-1789-result.md",
+        "MEAKV-1808-result.md",
+        "MEAKV-507-result.md",
+        "MEAKV-508-result.md",
+        "MEAKV-509-result.md",
+        "MEAKV-510-result.md",
+        "MEAKV-511-result.md",
+        "MEAKV-512-result.md",
+        "MEAKV-513-result.md",
+        "MEAKV-514-result.md",
+        "MEAKV-515-result.md",
+        "MEAKV-516-result.md",
+        "MEAKV-517-result.md",
+        "MEAKV-518-result.md",
+        "MEAKV-519-result.md",
+        "MEAKV-520-result.md",
+        "MEAKV-521-result.md",
+        "MEAKV-522-result.md",
+        "MEAKV-523-result.md",
+        "MEAKV-648-result.md",
+        "MEAKV-649-result.md",
+        "MEAKV-650-result.md",
+        "MEAKV-651-result.md",
+        "MEAKV-652-result.md",
+        "MEAKV-653-result.md",
+        "MEAKV-654-result.md",
+        "MEAKV-655-result.md",
+        "PROPOSED-10-result.md",
+        "PROPOSED-13-result.md",
+        "PROPOSED-14-result.md",
+        "PROPOSED-18-result.md",
+        "PROPOSED-20-result.md",
+        "PROPOSED-21-result.md",
+        "PROPOSED-22-result.md",
+        "PROPOSED-23-result.md",
+        "PROPOSED-24-result.md",
+        "PROPOSED-25-result.md",
+        "PROPOSED-26-result.md",
+        "PROPOSED-27-result.md",
+        "PROPOSED-28-result.md",
+        "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md",
+        "configure-run-2607-f160-10-823a-ce-40a-0-e001.md",
+        "test-campaign-summary-Dell-XR8720t-iDRAC-1.30.10.51.md"
+      ],
+      "checks": [
+        {
+          "category": "Checks",
+          "step": "iDRAC Firmware",
+          "result": "PASS",
+          "detail": "iDRAC FW 1.30.33.10 → 1.30.10.51 (downgrade complete)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "iDRAC Identity",
+          "result": "PASS",
+          "detail": "iDRAC FW 1.30.10.51, Model: 17G DCS, Health: OK",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Firmware Inventory",
+          "result": "WARN",
+          "detail": "9 PASS, 1 WARN — iDRAC/BMC entry \"(not found)\" immediately post-flash; all other 9 components at/above recipe",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "NIC Inventory",
+          "result": "PASS",
+          "detail": "1x Connersville E825-C (NIC#3), 2x CarterFlat E830-XXV-8 (slots 1+2)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Memory Capacity",
+          "result": "WARN",
+          "detail": "TotalSystemMemoryGiB not reported by iDRAC (transient post-reset)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Thermal / Fan Baseline",
+          "result": "PASS",
+          "detail": "16/16 fans OK, Inlet 26°C",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "DHCP Disable",
+          "result": "PASS",
+          "detail": "Already disabled",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "NTP",
+          "result": "PASS",
+          "detail": "Already set (2607:f160:10:9200::a/b)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "DNS",
+          "result": "PASS",
+          "detail": "Already set",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "iDRAC Hostname",
+          "result": "PASS",
+          "detail": "Already set — welktxwr-HDM35J4-dl-720x-001",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "iDRAC Domain (FQDN)",
+          "result": "PASS",
+          "detail": "Already set",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Remote Syslog",
+          "result": "PASS",
+          "detail": "Already configured",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Event Subscription",
+          "result": "PASS",
+          "detail": "Subscription exists (ID 15)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Alert Category Filters",
+          "result": "PASS",
+          "detail": "All 5 categories set (SystemHealth, Storage, Configuration, Audit, Updates) — 4 SCP export 409s resolved via retry",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "BIOS WorkloadProfile",
+          "result": "PASS",
+          "detail": "WorkloadProfile=TelcoOptimizedProfile (active)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Secure Boot",
+          "result": "PASS",
+          "detail": "Policy=Custom, KEK=3 (VZ), DB=8 (WR), SecureBootEnable=True (CurrentBoot=Enabled)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Administrator User",
+          "result": "PASS",
+          "detail": "ID=3, RoleId=Administrator, Enabled=True",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "HTTP Disable",
+          "result": "PASS",
+          "detail": "Already disabled",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "SNMP Disable",
+          "result": "PASS",
+          "detail": "Already disabled",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "IPMI LAN Alerts",
+          "result": "PASS",
+          "detail": "Already enabled",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Login Security Banner",
+          "result": "PASS",
+          "detail": "Already configured",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "iDRAC Reset",
+          "result": "PASS",
+          "detail": "iDRAC reachable after reset (1 retry needed — iDRAC needed extra ~30s beyond 4 min window)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "System Power-On / Reset",
+          "result": "PASS",
+          "detail": "Force Restart initiated",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001-r2.md"
+        },
+        {
+          "category": "Checks",
+          "step": "iDRAC Identity",
+          "result": "PASS",
+          "detail": "iDRAC FW 1.30.10.51, Model: 17G DCS, Health: OK",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Firmware Inventory",
+          "result": "PASS",
+          "detail": "10/10 components at or above recipe minimum",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "NIC Inventory",
+          "result": "PASS",
+          "detail": "1x Connersville E825, 2x CarterFlat E830",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Memory Capacity",
+          "result": "PASS",
+          "detail": "256 GiB, Health: OK",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Thermal / Fan Baseline",
+          "result": "PASS",
+          "detail": "16/16 fans OK, Inlet 24°C",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "DHCP Disable",
+          "result": "PASS",
+          "detail": "Already disabled",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "NTP",
+          "result": "PASS",
+          "detail": "Already set (2607:f160:10:9200::a/b)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "DNS",
+          "result": "PASS",
+          "detail": "Already set",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "iDRAC Hostname",
+          "result": "PASS",
+          "detail": "Already set — welktxwr-HDM35J4-dl-720x-001",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "iDRAC Domain (FQDN)",
+          "result": "PASS",
+          "detail": "Already set",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Remote Syslog",
+          "result": "PASS",
+          "detail": "Already configured",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Event Subscription",
+          "result": "PASS",
+          "detail": "Subscription exists (ID 15)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Alert Category Filters",
+          "result": "PASS",
+          "detail": "All 5 categories set (SystemHealth, Storage, Configuration, Audit, Updates)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "BIOS WorkloadProfile",
+          "result": "WARN",
+          "detail": "TelcoOptimizedProfile job queued (OnReset) — activates on next reboot",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Administrator User",
+          "result": "PASS",
+          "detail": "ID=3, RoleId=Administrator, Enabled=True",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "HTTP Disable",
+          "result": "PASS",
+          "detail": "Already disabled",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "SNMP Disable",
+          "result": "PASS",
+          "detail": "Already disabled",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "IPMI LAN Alerts",
+          "result": "PASS",
+          "detail": "Already enabled",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Login Security Banner",
+          "result": "PASS",
+          "detail": "Already configured",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "iDRAC Reset",
+          "result": "PASS",
+          "detail": "iDRAC reachable after reset",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "System Power-On / Reset",
+          "result": "PASS",
+          "detail": "Force Restart initiated — BIOS settings will activate on boot",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-823a-ce-40a-0-e001.md"
+        }
+      ],
+      "tests": [
+        {
+          "test_id": "MEAKV-1789",
+          "title": "BMC Sensor List / Sensor Validation",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-1808",
+          "title": "Redfish BIOS Configuration Retrieval (Dell iDRAC)",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-507",
+          "title": "DMTF Redfish Protocol Conformance",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-17"
+        },
+        {
+          "test_id": "MEAKV-508",
+          "title": "Functional BIOS Testing: Boot Configuration Attributes",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-509",
+          "title": "Functional BIOS Testing: CPU / Processor Attributes",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-510",
+          "title": "Functional BIOS Testing: VT-d / IOMMU Attributes",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-511",
+          "title": "Functional BIOS Testing: SR-IOV / PCIe Attributes",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-512",
+          "title": "Functional BIOS Testing: Power Management Attributes",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-513",
+          "title": "Functional BIOS Testing: Memory Configuration Attributes",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-514",
+          "title": "Functional BIOS Testing: NUMA / Topology Attributes",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-515",
+          "title": "Functional BIOS Testing: Platform Security Attributes",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-516",
+          "title": "Functional BIOS Testing: Network Boot Attributes",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-517",
+          "title": "Functional BIOS Testing: Overall BIOS Compliance",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-518",
+          "title": "Redfish Functional Monitoring: Thermal Sensors",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-519",
+          "title": "Redfish Functional Monitoring: Fan Sensors",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-520",
+          "title": "Redfish Functional Monitoring: Power Supply Sensors",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-521",
+          "title": "Redfish Functional Monitoring: Voltage Sensors",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-522",
+          "title": "Redfish Functional Monitoring: API Response Time",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-523",
+          "title": "Redfish Functional Monitoring: Chassis Health Rollup",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-648",
+          "title": "Redfish Functional: Firmware Inventory",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-649",
+          "title": "Redfish Functional: System Overview",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-650",
+          "title": "Redfish Functional: Chassis Overview",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-651",
+          "title": "Redfish Functional: Processor Inventory",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-652",
+          "title": "Redfish Functional: Memory Inventory",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-653",
+          "title": "Redfish Functional: Storage Inventory",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-654",
+          "title": "Redfish Functional: Network Interface Inventory",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "MEAKV-655",
+          "title": "Redfish Functional: UpdateService Endpoint",
+          "result": "PARTIAL-PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "PROPOSED-10",
+          "title": "BMC HTTPS / TLS Security Validation",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "PROPOSED-13",
+          "title": "Chassis Indicator LED / UID Light Control",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "PROPOSED-14",
+          "title": "Concurrent Redfish API Stability",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "PROPOSED-18",
+          "title": "Redfish Log Service Validation (Dell iDRAC Adaptation)",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "PROPOSED-20",
+          "title": "BMC User Account Create",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "PROPOSED-21",
+          "title": "BMC User Account Modify (Password and Role Change)",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "PROPOSED-22",
+          "title": "BMC User Account Delete",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "PROPOSED-23",
+          "title": "BMC NTP/SNTP Server Configuration",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "PROPOSED-24",
+          "title": "BMC DNS Server Configuration",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "PROPOSED-25",
+          "title": "BMC General Configuration (Hostname and FQDN)",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "PROPOSED-26",
+          "title": "BMC Syslog / Remote Logging Configuration",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "PROPOSED-27",
+          "title": "Redfish Event Subscription Management",
+          "result": "PASS",
+          "date": "2026-06-16"
+        },
+        {
+          "test_id": "PROPOSED-28",
+          "title": "BMC/BIOS General Configuration and MAC Discovery",
+          "result": "PASS",
+          "date": "2026-06-16"
+        }
+      ],
+      "check_summary": {
+        "total": 44,
+        "pass": 41,
+        "warn": 3,
+        "drift": 0,
+        "fail": 0
+      },
+      "test_summary": {
+        "total": 40,
+        "pass": 29,
+        "deviation": 10,
+        "partial": 1,
+        "fail": 0,
+        "other": 0
+      },
+      "status": "PASS WITH DEVIATION",
+      "firmware": [
+        {
+          "component": "BIOS",
+          "version": "1.1.3",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "iDRAC (BMC)",
+          "version": "1.30.10.51",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "Lifecycle Controller",
+          "version": "1.30.10.51",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "PSU",
+          "version": "00.03.B1",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "TPM",
+          "version": "7.2.3.1",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "Chassis Manager (MC)",
+          "version": "2.15",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "CPLD IOBay",
+          "version": "1.0.4",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "FPGA Embedded",
+          "version": "123.000.000",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "Heater Manager",
+          "version": "1.0.2.0",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "NIC Embedded (Connersville)",
+          "version": "4.10",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "NIC Slot (Carter Flat)",
+          "version": "1.22",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "Driver Pack",
+          "version": "0",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "Bootstrap OS",
+          "version": "0",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "Diagnostics",
+          "version": "0",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "Service Module",
+          "version": "0",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "Previous iDRAC",
+          "version": "1.30.13.10",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "Previous MC.Chassis",
+          "version": "2.0",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "Previous NIC Embedded",
+          "version": "30.5.0.54",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "Previous NIC Slot",
+          "version": "30.5.0.54",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "Previous PSU",
+          "version": "00.03.B1",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "Previous HeaterManager",
+          "version": "0.9.0.0",
+          "minimum": "",
+          "result": ""
+        }
+      ],
+      "artifacts": []
+    },
+    {
+      "id": "dell-9254-e001",
+      "bmc_ip": "2607:f160:10:9254:ce:40a:0:e001",
+      "hostname": "welktxwr-FBM35J4-dl-720x-001",
+      "vendor": "Dell",
+      "platform": "Dell XR8720t",
+      "bmc_type": "iDRAC 10",
+      "bmc_firmware": null,
+      "bios_version": null,
+      "chassis_model": null,
+      "processor": null,
+      "memory": null,
+      "nics": [],
+      "last_seen": null,
+      "evidence_files": [
+        "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+      ],
+      "checks": [
+        {
+          "category": "Checks",
+          "step": "iDRAC Identity",
+          "result": "PASS",
+          "detail": "iDRAC FW 1.30.10.51, Model: 17G DCS, Health: OK",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Firmware Inventory",
+          "result": "PASS",
+          "detail": "10/10 components at or above recipe minimum",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "NIC Inventory",
+          "result": "PASS",
+          "detail": "1x Connersville E825, 2x CarterFlat E830",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Memory Capacity",
+          "result": "PASS",
+          "detail": "256 GiB, Health: OK",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Thermal / Fan Baseline",
+          "result": "PASS",
+          "detail": "16/16 fans OK, Inlet 26°C",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "DHCP Disable",
+          "result": "PASS",
+          "detail": "Already disabled",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "NTP",
+          "result": "PASS",
+          "detail": "Already set (2607:f160:10:9200::a/b)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "DNS",
+          "result": "PASS",
+          "detail": "Already set",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "iDRAC Hostname",
+          "result": "PASS",
+          "detail": "Already set — welktxwr-FBM35J4-dl-720x-001",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "iDRAC Domain (FQDN)",
+          "result": "PASS",
+          "detail": "Already set",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Remote Syslog",
+          "result": "PASS",
+          "detail": "Already configured",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Event Subscription",
+          "result": "PASS",
+          "detail": "Subscription exists (ID 1)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Alert Category Filters",
+          "result": "PASS",
+          "detail": "All 5 categories enabled (1 SCP import 409 retry required)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "BIOS WorkloadProfile",
+          "result": "PASS",
+          "detail": "TelcoOptimizedProfile (active)",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Secure Boot",
+          "result": "WARN",
+          "detail": "Policy=Custom, KEK=3 (VZ), DB=8 (WR), SecureBootEnable=True — activates on next reboot",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Administrator User",
+          "result": "PASS",
+          "detail": "ID=3, RoleId=Administrator, Enabled=True",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "HTTP Disable",
+          "result": "PASS",
+          "detail": "Already disabled",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "SNMP Disable",
+          "result": "PASS",
+          "detail": "Already disabled",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "IPMI LAN Alerts",
+          "result": "PASS",
+          "detail": "Already enabled",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Login Security Banner",
+          "result": "PASS",
+          "detail": "Already configured",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "iDRAC Reset",
+          "result": "PASS",
+          "detail": "iDRAC reachable after reset",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        },
+        {
+          "category": "Checks",
+          "step": "System Power-On / Reset",
+          "result": "PASS",
+          "detail": "Force Restart initiated — Secure Boot activates on boot",
+          "gap": null,
+          "source_file": "configure-run-2607-f160-10-9254-ce-40a-0-e001.md"
+        }
+      ],
+      "tests": [],
+      "check_summary": {
+        "total": 22,
+        "pass": 21,
+        "warn": 1,
+        "drift": 0,
+        "fail": 0
+      },
+      "test_summary": {
+        "total": 0,
+        "pass": 0,
+        "deviation": 0,
+        "partial": 0,
+        "fail": 0,
+        "other": 0
+      },
+      "status": "PASS WITH DEVIATION",
+      "firmware": [],
+      "artifacts": []
+    },
+    {
+      "id": "hpe-90bf-e002",
+      "bmc_ip": "2607:f160:10:90bf:ce:40a:0:e002",
+      "hostname": "ILO7CED3YR2ET",
+      "vendor": "HPE",
+      "platform": "HPE ProLiant Compute EL140 Gen12",
+      "bmc_type": "iLO 7",
+      "bmc_firmware": "1.20.00",
+      "bios_version": "v1.30",
+      "chassis_model": null,
+      "processor": null,
+      "memory": null,
+      "nics": [],
+      "last_seen": "2026-06-10",
+      "evidence_files": [
+        "bmc-playbook-gap-test-results-2607-f160-10-90bf-ce-40a-0-e002.md",
+        "secureboot-cert-install-2607-f160-10-90bf-ce-40a-0-e002.md",
+        "test-campaign-summary-HPE-EL140-Gen12-2026-06-10.md"
+      ],
+      "checks": [],
+      "tests": [],
+      "check_summary": {
+        "total": 0,
+        "pass": 0,
+        "warn": 0,
+        "drift": 0,
+        "fail": 0
+      },
+      "test_summary": {
+        "total": 0,
+        "pass": 0,
+        "deviation": 0,
+        "partial": 0,
+        "fail": 0,
+        "other": 0
+      },
+      "status": "PASS WITH DEVIATION",
+      "firmware": [],
+      "artifacts": [
+        {
+          "id": "bmc-playbook-gap-test-results-2607-f160-10-90bf-ce-40a-0-e002",
+          "title": "BMC Playbook Function Test Results — 2607:f160:10:90bf:ce:40a:0:e002",
+          "objective": "PROPOSED-20 through PROPOSED-28 — BMC Playbook Function Replication for PROPOSED-29 Gap Analysis input",
+          "result": "PASS WITH DEVIATION",
+          "bmc_ip": "2607:f160:10:90bf:ce:40a:0:e002",
+          "date": "2026-06-10",
+          "source_file": "bmc-playbook-gap-test-results-2607-f160-10-90bf-ce-40a-0-e002.md"
+        },
+        {
+          "id": "secureboot-cert-install-2607-f160-10-90bf-ce-40a-0-e002",
+          "title": "Secure Boot Cert Install — 2607:f160:10:90bf:ce:40a:0:e002",
+          "objective": "Test #2 — Install Verizon KEK and Wind River DB certs, set WorkloadProfile to vRAN, enable Secure Boot, verify boot",
+          "result": "PASS",
+          "bmc_ip": "2607:f160:10:90bf:ce:40a:0:e002",
+          "date": "2026-06-10",
+          "source_file": "secureboot-cert-install-2607-f160-10-90bf-ce-40a-0-e002.md"
+        }
+      ]
+    },
+    {
+      "id": "hpe-9249-e033",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "hostname": null,
+      "vendor": "HPE",
+      "platform": "HPE ProLiant Compute EL140 Gen12",
+      "bmc_type": "iLO 7",
+      "bmc_firmware": "iLO 7 1.20.00",
+      "bios_version": "U77 v1.30 (02/06/2026)",
+      "chassis_model": null,
+      "processor": null,
+      "memory": null,
+      "nics": [],
+      "last_seen": "2026-06-02",
+      "evidence_files": [
+        "MEAKV-1789-result.md",
+        "MEAKV-507-result.md",
+        "MEAKV-508-result.md",
+        "MEAKV-509-result.md",
+        "MEAKV-510-result.md",
+        "MEAKV-511-result.md",
+        "MEAKV-512-result.md",
+        "MEAKV-513-result.md",
+        "MEAKV-514-result.md",
+        "MEAKV-515-result.md",
+        "MEAKV-516-result.md",
+        "MEAKV-517-result.md",
+        "MEAKV-648-result.md",
+        "MEAKV-649-result.md",
+        "MEAKV-650-result.md",
+        "MEAKV-651-result.md",
+        "MEAKV-652-result.md",
+        "MEAKV-653-result.md",
+        "MEAKV-654-result.md",
+        "MEAKV-655-result.md",
+        "PROPOSED-01-result.md",
+        "PROPOSED-08-result.md",
+        "PROPOSED-10-result.md",
+        "PROPOSED-13-result.md",
+        "PROPOSED-14-result.md",
+        "PROPOSED-16-result.md",
+        "PROPOSED-17-result.md",
+        "PROPOSED-18-result.md",
+        "PROPOSED-19-result.md",
+        "PROPOSED-20-result.md",
+        "PROPOSED-21-result.md",
+        "PROPOSED-22-result.md",
+        "PROPOSED-23-result.md",
+        "PROPOSED-24-result.md",
+        "PROPOSED-25-result.md",
+        "PROPOSED-26-result.md",
+        "PROPOSED-27-result.md",
+        "PROPOSED-28-result.md",
+        "PROPOSED-29-result.md",
+        "PROPOSED-30-result.md",
+        "PROPOSED-31-result.md",
+        "PROPOSED-32-result.md",
+        "adhoc-bios_vran-compare_with_default.md"
+      ],
+      "checks": [],
+      "tests": [
+        {
+          "test_id": "MEAKV-1789",
+          "title": "BMC Sensor List / Sensor Validation",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-507",
+          "title": "DMTF Redfish Protocol Conformance",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-17"
+        },
+        {
+          "test_id": "MEAKV-508",
+          "title": "BIOS: Boot Configuration Attributes",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-509",
+          "title": "BIOS: CPU / Processor Attributes",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-510",
+          "title": "BIOS: VT-d / IOMMU Attributes",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-511",
+          "title": "BIOS: SR-IOV / PCIe Attributes",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-512",
+          "title": "BIOS: Power Management Attributes",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-513",
+          "title": "BIOS: Memory Configuration Attributes",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-514",
+          "title": "BIOS: NUMA / Topology Attributes",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-515",
+          "title": "BIOS: Platform Security Attributes",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-516",
+          "title": "BIOS: Network Boot Attributes",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-517",
+          "title": "BIOS: Overall BIOS Compliance",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-648",
+          "title": "Redfish Functional: Firmware Inventory",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-649",
+          "title": "Redfish Functional: System Overview",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-650",
+          "title": "Redfish Functional: Chassis Overview",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-651",
+          "title": "Redfish Functional: Processor Inventory",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-652",
+          "title": "Redfish Functional: Memory Inventory",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-653",
+          "title": "Redfish Functional: Storage Inventory",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-654",
+          "title": "Redfish Functional: Network Interface Inventory",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "MEAKV-655",
+          "title": "Redfish Functional: UpdateService Endpoint",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "PROPOSED-01",
+          "title": "Redfish Power Control Actions",
+          "result": "FAIL",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "PROPOSED-08",
+          "title": "BMC Reset and Settings Persistence",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "PROPOSED-10",
+          "title": "BMC HTTPS / TLS Security Validation",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "PROPOSED-13",
+          "title": "Chassis Indicator LED / UID Light Control",
+          "result": "SKIP",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "PROPOSED-14",
+          "title": "Concurrent Redfish API Stability",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "PROPOSED-16",
+          "title": "Redfish Direct Sensor Validation (No vCMP)",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "PROPOSED-17",
+          "title": "Redfish Event Service and Alert Delivery Validation",
+          "result": "PARTIAL-PASS",
+          "date": "2026-06-11"
+        },
+        {
+          "test_id": "PROPOSED-18",
+          "title": "Redfish Log Service Validation",
+          "result": "PASS",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "PROPOSED-19",
+          "title": "iLO7 Metric Naming and Schema Documentation (iLO6 → iLO7 Delta)",
+          "result": "REFERENCE-ARTIFACT",
+          "date": "2026-06-02"
+        },
+        {
+          "test_id": "PROPOSED-20",
+          "title": "BMC User Account Create",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-10"
+        },
+        {
+          "test_id": "PROPOSED-21",
+          "title": "BMC User Account Modify (Password and Role Change)",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-10"
+        },
+        {
+          "test_id": "PROPOSED-22",
+          "title": "BMC User Account Delete",
+          "result": "PASS",
+          "date": "2026-06-10"
+        },
+        {
+          "test_id": "PROPOSED-23",
+          "title": "BMC NTP/SNTP Server Configuration",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-10"
+        },
+        {
+          "test_id": "PROPOSED-24",
+          "title": "BMC DNS Server Configuration",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-10"
+        },
+        {
+          "test_id": "PROPOSED-25",
+          "title": "BMC General Configuration (Hostname and FQDN)",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-10"
+        },
+        {
+          "test_id": "PROPOSED-26",
+          "title": "BMC Syslog / Remote Logging Configuration",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-10"
+        },
+        {
+          "test_id": "PROPOSED-27",
+          "title": "Redfish Event Subscription Management",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-11"
+        },
+        {
+          "test_id": "PROPOSED-28",
+          "title": "BMC/BIOS General Configuration and MAC Discovery",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-10"
+        },
+        {
+          "test_id": "PROPOSED-29",
+          "title": "BMC Playbook Integration Gap Analysis and Change Specification",
+          "result": "COMPLETE",
+          "date": "2026-06-10"
+        },
+        {
+          "test_id": "PROPOSED-30",
+          "title": "HPE Secure Boot Certificate Update (Wind River + Verizon KEK/DB)",
+          "result": "PASS",
+          "date": "2026-06-10"
+        },
+        {
+          "test_id": "PROPOSED-31",
+          "title": "Fan and Thermal Baseline Validation (NEBS)",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-10"
+        },
+        {
+          "test_id": "PROPOSED-32",
+          "title": "iLO Security Configuration Validation",
+          "result": "PASS WITH DEVIATION",
+          "date": "2026-06-10"
+        }
+      ],
+      "check_summary": {
+        "total": 0,
+        "pass": 0,
+        "warn": 0,
+        "drift": 0,
+        "fail": 0
+      },
+      "test_summary": {
+        "total": 42,
+        "pass": 26,
+        "deviation": 11,
+        "partial": 1,
+        "fail": 1,
+        "other": 3
+      },
+      "status": "FAIL",
+      "firmware": [],
+      "artifacts": [
+        {
+          "id": "adhoc-bios_vran-compare_with_default",
+          "title": "Ad-Hoc: BIOS WorkloadProfile vRAN vs. Default Comparison",
+          "objective": null,
+          "result": null,
+          "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+          "date": "2026-06-02",
+          "source_file": "adhoc-bios_vran-compare_with_default.md"
+        }
+      ]
+    },
+    {
+      "id": "hpe-9249-e051",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e051",
+      "hostname": "welktxwr-1372466-rh-le0140x-001",
+      "vendor": "HPE",
+      "platform": "HPE ProLiant Compute EL140 Gen12",
+      "bmc_type": "iLO 7",
+      "bmc_firmware": "iLO 7 1.20.00",
+      "bios_version": "U77 v1.30",
+      "chassis_model": null,
+      "processor": null,
+      "memory": null,
+      "nics": [],
+      "last_seen": "2026-06-17",
+      "evidence_files": [
+        "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+      ],
+      "checks": [
+        {
+          "category": "Checks",
+          "step": "iLO License",
+          "result": "PASS",
+          "detail": "iLO Advanced / Perpetual",
+          "gap": null,
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Firmware Inventory",
+          "result": "PASS",
+          "detail": "12 PASS, 1 INFO — all components at or above recipe minimum",
+          "gap": null,
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "Checks",
+          "step": "NIC Inventory",
+          "result": "PASS",
+          "detail": "2x E830-XXVDA8F (OCP A/B), 2x E825-C (integrated SFP)",
+          "gap": null,
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "Checks",
+          "step": "Thermal / Fan Baseline",
+          "result": "WARN",
+          "detail": "ThermalConfig=OptimalCooling; Fans=8/8 OK; InletAmbient=24°C — CautionThreshold=0 (not 62°C)",
+          "gap": null,
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "Network",
+          "step": "DHCP Disable",
+          "result": "PASS",
+          "detail": "DHCPv4=off, DHCPv6=Disabled",
+          "gap": null,
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "Network",
+          "step": "NTP",
+          "result": "PASS",
+          "detail": "2607:f160:10:9200::a, 2607:f160:10:9200::b",
+          "gap": null,
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "Network",
+          "step": "DNS",
+          "result": "PASS",
+          "detail": "VZ DNS servers present (2607:F160:10:4409:CE:103:0:5 / :6)",
+          "gap": null,
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "Identity",
+          "step": "iLO Hostname",
+          "result": "PASS",
+          "detail": "welktxwr-1372466-rh-le0140x-001",
+          "gap": null,
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "Identity",
+          "step": "Host Identity (Systems/1)",
+          "result": "DRIFT",
+          "detail": "Two sub-issues: **a) HostName truncated** — `Systems/1.HostName` is `welktxwr-1372466-rh-le0140x-` (missing `-001`). The iLO hostname (`welktxwr-1372466-rh-le0140x-001`) is correct; only the host-side `Systems/1` field is truncated. This may indicate a 30-character limit in the Systems/1 HostName fi",
+          "gap": {
+            "ref": "Gap 1",
+            "title": "Host Identity (Systems/1) DRIFT",
+            "summary": "Two sub-issues: **a) HostName truncated** — `Systems/1.HostName` is `welktxwr-1372466-rh-le0140x-` (missing `-001`). The iLO hostname (`welktxwr-1372466-rh-le0140x-001`) is correct; only the host-side `Systems/1` field is truncated. This may indicate a 30-character limit in the Systems/1 HostName field on iLO 7 v1.20.00 (the full name is 32 characters). Investigate whether this is an iLO7 field limit or a prior provisioning error. **b) FQDN domain mismatch** — FQDN is `faredge.vzwops.com` but the provisioning standard uses `vcpfe.vzwops.com`. This server may have been provisioned with a site-specific config or before the DNS domain was standardized. Confirm which domain is correct for this unit before re-running.",
+            "fields": [
+              {
+                "field": "Systems/1.HostName",
+                "current": "welktxwr-1372466-rh-le0140x- (truncated)",
+                "expected": "welktxwr-1372466-rh-le0140x-001"
+              },
+              {
+                "field": "Systems/1.Oem.Hpe.ServerFQDN",
+                "current": "welktxwr-1372466-rh-le0140x-001.faredge.vzwops.com",
+                "expected": "welktxwr-1372466-rh-le0140x-001.vcpfe.vzwops.com"
+              }
+            ],
+            "action": "Re-run `el140_configure.py` (without `--check-only`) after confirming the correct DNS domain. Pass `--dns-domain faredge.vzwops.com` if the faredge domain is correct for this site.",
+            "remediation_command": null
+          },
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "Monitoring",
+          "step": "Remote Syslog",
+          "result": "PASS",
+          "detail": "vcp-faredge-syslog.mon.vzwops.com:5140 enabled",
+          "gap": null,
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "Monitoring",
+          "step": "Event Subscription",
+          "result": "DRIFT",
+          "detail": "No Redfish event subscription exists for `https://vcp-fe-redfishevents.mon.vzwops.com:443/`. This means BMC alert events will not be delivered to the monitoring platform.",
+          "gap": {
+            "ref": "Gap 2",
+            "title": "Event Subscription DRIFT",
+            "summary": "No Redfish event subscription exists for `https://vcp-fe-redfishevents.mon.vzwops.com:443/`. This means BMC alert events will not be delivered to the monitoring platform.",
+            "fields": [],
+            "action": "Re-run `el140_configure.py` to create the subscription, or run the event subscription step individually. The subscription uses `RegistryPrefixes` (iLO7 required mechanism).",
+            "remediation_command": null
+          },
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "BIOS / vRAN",
+          "step": "WorkloadProfile",
+          "result": "PASS",
+          "detail": "vRAN (active)",
+          "gap": null,
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "BIOS / vRAN",
+          "step": "vRAN Attribute Validation",
+          "result": "PASS",
+          "detail": "WorkloadProfile=vRAN active — 11 vRAN BIOS attributes applied",
+          "gap": null,
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "Secure Boot",
+          "step": "Secure Boot",
+          "result": "DRIFT",
+          "detail": "The VZ KEK certificate and Wind River DB certificate have not been installed. SecureBoot cannot be enabled without them. This is the most significant gap — the server is running without Secure Boot protection.",
+          "gap": {
+            "ref": "Gap 3",
+            "title": "Secure Boot Certs Not Installed (DRIFT)",
+            "summary": "The VZ KEK certificate and Wind River DB certificate have not been installed. SecureBoot cannot be enabled without them. This is the most significant gap — the server is running without Secure Boot protection.",
+            "fields": [
+              {
+                "field": "KEK",
+                "current": "3 (factory baseline)",
+                "expected": "> 3 (VZ KEK cert needed)"
+              },
+              {
+                "field": "DB",
+                "current": "8 (factory baseline)",
+                "expected": "> 8 (WR DB cert needed)"
+              }
+            ],
+            "action": "Run with cert files: This will install certs, enable SecureBoot, and trigger a system ForceRestart to commit. Allow 8–12 minutes for the system to POST and verify. See PROPOSED-30 for the full cert install procedure and expected outcome.",
+            "remediation_command": "python3 el140_configure.py \\\n  --bmc-ip 2607:f160:10:9249:ce:40a:0:e051 \\\n  --hostname welktxwr-1372466-rh-le0140x-001 \\\n  --password XXXXXXXXXX \\\n  --kek-cert ~/vz-kek.json \\\n  --db-cert  ~/wr-db.json"
+          },
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "Security Hardening",
+          "step": "SNMP Disable",
+          "result": "PASS",
+          "detail": "SNMP port off",
+          "gap": null,
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "Security Hardening",
+          "step": "HTTP + SSDP Disable",
+          "result": "PASS",
+          "detail": "HTTP off, SSDP off, multicast disabled",
+          "gap": null,
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        },
+        {
+          "category": "Security Hardening",
+          "step": "Login Security Banner",
+          "result": "PASS",
+          "detail": "Banner enabled",
+          "gap": null,
+          "source_file": "ilo-config-check-2607-f160-10-9249-ce-40a-0-e051.md"
+        }
+      ],
+      "tests": [],
+      "check_summary": {
+        "total": 17,
+        "pass": 13,
+        "warn": 1,
+        "drift": 3,
+        "fail": 0
+      },
+      "test_summary": {
+        "total": 0,
+        "pass": 0,
+        "deviation": 0,
+        "partial": 0,
+        "fail": 0,
+        "other": 0
+      },
+      "status": "DRIFT",
+      "firmware": [
+        {
+          "component": "iLO 7",
+          "version": "1.20.00 Feb 12 2026",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "BIOS / System ROM",
+          "version": "U77 v1.30 (02/06/2026)",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "IPAD",
+          "version": "1.46.0 Build 7",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "System CPLD",
+          "version": "0x0D",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "PSU (x2)",
+          "version": "1.04.04",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "PDB PLD",
+          "version": "0x06",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "GNSS M.2",
+          "version": "2.25",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "DPLL M.2",
+          "version": "0x1BC4",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "TPM",
+          "version": "9.256",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "NIC E830-XXVDA8F (x2)",
+          "version": "1.22 (0x800183AB)",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "NIC E825-C (x2)",
+          "version": "4.10 (0x80008428) / 4.10 (0x80008435)",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "Video Controller",
+          "version": "2.7",
+          "minimum": "",
+          "result": ""
+        },
+        {
+          "component": "NVMe SSD (x2)",
+          "version": "GDC7502Q",
+          "minimum": "",
+          "result": ""
+        }
+      ],
+      "artifacts": []
+    }
+  ],
+  "redfish_catalog": [
+    {
+      "seq": 1,
+      "id": "model",
+      "name": "model",
+      "requires_change": true,
+      "changes_required": [
+        {
+          "check": "model",
+          "change": "Add HPE ProLiant Compute EL140 Gen12",
+          "applies": "No — wrong product string"
+        }
+      ],
+      "url": "/redfish/v1/",
+      "urls_referenced": [
+        "/redfish/v1/"
+      ],
+      "commands": [
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/' | \\\n  jq '{Product: .Product}'\""
+      ],
+      "response": {
+        "Product": "HPE ProLiant Compute EL140 Gen12"
+      },
+      "responses": [
+        {
+          "Product": "HPE ProLiant Compute EL140 Gen12"
+        }
+      ],
+      "reason_for_change": "The EL140 Gen12 has a different product name in the Redfish root. `model4` needs to be added to the monitored model list. The exact string was unconfirmed prior to this test.",
+      "required_change": "---",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "bmc_fw": "iLO 7 1.20.00",
+      "source_file": "icinga-el140-redfish-endpoints.md"
+    },
+    {
+      "seq": 2,
+      "id": "aggregate_health_status",
+      "name": "aggregate_health_status",
+      "requires_change": false,
+      "changes_required": [],
+      "url": "/redfish/v1/Systems/1",
+      "urls_referenced": [
+        "/redfish/v1/Systems/1",
+        "/redfish/v1/systems/1/"
+      ],
+      "commands": [
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Systems/1' | \\\n  jq '.Oem.Hpe.AggregateHealthStatus'\""
+      ],
+      "response": {
+        "AgentlessManagementService": "Unavailable",
+        "AggregateServerHealth": "OK",
+        "BiosOrHardwareHealth": {
+          "Status": {
+            "Health": "OK"
+          }
+        },
+        "FanRedundancy": "Redundant",
+        "Fans": {
+          "Status": {
+            "Health": "OK"
+          }
+        },
+        "Memory": {
+          "Status": {
+            "Health": "OK"
+          }
+        },
+        "Network": {
+          "Status": {
+            "Health": "OK"
+          }
+        },
+        "PowerSupplies": {
+          "PowerSuppliesMismatch": false,
+          "Status": {
+            "Health": "OK"
+          }
+        },
+        "PowerSupplyRedundancy": "Redundant",
+        "Processors": {
+          "Status": {
+            "Health": "OK"
+          }
+        },
+        "Storage": {
+          "Status": {
+            "Health": "OK"
+          }
+        },
+        "Temperatures": {
+          "Status": {
+            "Health": "OK"
+          }
+        }
+      },
+      "responses": [
+        {
+          "AgentlessManagementService": "Unavailable",
+          "AggregateServerHealth": "OK",
+          "BiosOrHardwareHealth": {
+            "Status": {
+              "Health": "OK"
+            }
+          },
+          "FanRedundancy": "Redundant",
+          "Fans": {
+            "Status": {
+              "Health": "OK"
+            }
+          },
+          "Memory": {
+            "Status": {
+              "Health": "OK"
+            }
+          },
+          "Network": {
+            "Status": {
+              "Health": "OK"
+            }
+          },
+          "PowerSupplies": {
+            "PowerSuppliesMismatch": false,
+            "Status": {
+              "Health": "OK"
+            }
+          },
+          "PowerSupplyRedundancy": "Redundant",
+          "Processors": {
+            "Status": {
+              "Health": "OK"
+            }
+          },
+          "Storage": {
+            "Status": {
+              "Health": "OK"
+            }
+          },
+          "Temperatures": {
+            "Status": {
+              "Health": "OK"
+            }
+          }
+        }
+      ],
+      "reason_for_change": "iLO7 was suspected to have changed the AggregateHealthStatus structure. Also needed to confirm `FanRedundancy = \"Redundant\"` still applies on the EL140 chassis (8 fans, non-contiguous slots).",
+      "required_change": "**No structural changes required.** Same URL, same OEM path, all expected attributes present and healthy. `FanRedundancy = \"Redundant\"` confirmed on EL140 Gen12. iLO7 adds two new fields not in iLO5/6: `Network.Status.Health` and `PowerSupplies.PowerSuppliesMismatch`. These can optionally be added as additional health checks. ---",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "bmc_fw": "iLO 7 1.20.00",
+      "source_file": "icinga-el140-redfish-endpoints.md"
+    },
+    {
+      "seq": 3,
+      "id": "bios",
+      "name": "bios",
+      "requires_change": false,
+      "changes_required": [],
+      "url": "/redfish/v1/Systems/1/bios/settings",
+      "urls_referenced": [
+        "/redfish/v1/Systems/1/Actions/ComputerSystem.Reset",
+        "/redfish/v1/Systems/1/bios/settings",
+        "/redfish/v1/Systems/1/bios/settings/",
+        "/redfish/v1/systems/1/bios/settings/"
+      ],
+      "commands": [
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X PATCH \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Systems/1/bios/settings' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\\\"Attributes\\\": {\\\"WorkloadProfile\\\": \\\"vRAN\\\"}}' \\\n  -w '\\nHTTP:%{http_code}'\"\n# HTTP:200 — {\"MessageId\":\"iLO.2.39.SystemResetRequired\"}",
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X POST \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Systems/1/Actions/ComputerSystem.Reset' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\\\"ResetType\\\": \\\"ForceRestart\\\"}' \\\n  -w '\\nHTTP:%{http_code}'\"\n# HTTP:200 — {\"MessageId\":\"Base.1.18.Success\"}\n# Reboot issued: 2026-06-04T03:35:53Z\n# FinishedPost:  2026-06-04T03:41:41Z  (~5m48s total boot)",
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Systems/1/bios/settings' | \\\n  jq '.Attributes | {WorkloadProfile: .WorkloadProfile, ProcessorConfigTDPLevel: .ProcessorConfigTDPLevel,\n    LlcPrefetch: .LlcPrefetch, ProcHyperthreading: .ProcHyperthreading,\n    ProcTurbo: .ProcTurbo, ProcVirtualization: .ProcVirtualization,\n    Sriov: .Sriov, SubNumaClustering: .SubNumaClustering}'\""
+      ],
+      "response": {
+        "WorkloadProfile": "vRAN",
+        "ProcessorConfigTDPLevel": "Level2",
+        "LlcPrefetch": "Disabled",
+        "ProcHyperthreading": "Enabled",
+        "ProcTurbo": "Enabled",
+        "ProcVirtualization": "Enabled",
+        "Sriov": "Enabled",
+        "SubNumaClustering": "Disabled"
+      },
+      "responses": [
+        {
+          "WorkloadProfile": "vRAN",
+          "ProcessorConfigTDPLevel": "Level2",
+          "LlcPrefetch": "Disabled",
+          "ProcHyperthreading": "Enabled",
+          "ProcTurbo": "Enabled",
+          "ProcVirtualization": "Enabled",
+          "Sriov": "Enabled",
+          "SubNumaClustering": "Disabled"
+        },
+        {
+          "WorkloadProfile": "vRAN",
+          "PowerRegulator": "OsControl",
+          "EnergyPerfBias": "MaxPerf",
+          "EnergyEfficientTurbo": "Disabled",
+          "MinProcIdlePkgState": "NoState",
+          "UncoreFreqScaling": "Maximum",
+          "ProcessorConfigTDPLevel": "Level2",
+          "AvxLicensePreGrantOverride": "Enabled",
+          "AvxIccpPreGrantLevel": "512Heavy",
+          "PcieGlobalAspm": "Disabled",
+          "MemPatrolScrubbing": "Disabled"
+        }
+      ],
+      "reason_for_change": "Two validations needed: (1) `LlcPrefetch` was unconfirmed in the EL140 Gen12 BIOS registry (U77 v1.30); (2) confirm the expected BIOS state at time of Icinga check. **Factory default on HPE EL140 Gen12 with U77 v1.30 is `WorkloadProfile: vRAN`** — HPE configures this before shipping. A factory-fresh unit will already have `ProcessorConfigTDPLevel: Level2` and all 10 other vRAN tuning attributes applied. The bmc-config Ansible playbook re-confirms these settings but is **not a prerequisite** for the Icinga BIOS check to pass.",
+      "required_change": "`LlcPrefetch` **exists** in the EL140 BIOS registry and returns `Disabled` — no change needed. All Icinga BIOS attributes confirmed correct at `/bios/settings` with `WorkloadProfile: vRAN` applied. `ProcessorConfigTDPLevel: Level2` is the live confirmed value — the Icinga check is correct as-is for EL140 once vRAN profile is active (factory default on U77 v1.30). **Note on `MinProcIdlePower`:** On EL140 Gen12 (iLO7), this attribute is `MinProcIdlePkgState` (renamed in the Gen12 BIOS registry). The vRAN profile sets it to `NoState`. If Icinga adds this check for EL140, use `MinProcIdlePkgState: NoState` not `MinProcIdlePower`. ---",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "bmc_fw": "iLO 7 1.20.00",
+      "source_file": "icinga-el140-redfish-endpoints.md"
+    },
+    {
+      "seq": 4,
+      "id": "secure_boot",
+      "name": "secure_boot",
+      "requires_change": false,
+      "changes_required": [],
+      "url": "/redfish/v1/Systems/1/SecureBoot",
+      "urls_referenced": [
+        "/redfish/v1/Systems/1/SecureBoot",
+        "/redfish/v1/Systems/1/SecureBoot/"
+      ],
+      "commands": [
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Systems/1/SecureBoot' | \\\n  jq '{SecureBootEnable: .SecureBootEnable, SecureBootCurrentBoot: .SecureBootCurrentBoot,\n    SecureBootMode: .SecureBootMode}'\""
+      ],
+      "response": {
+        "SecureBootEnable": false,
+        "SecureBootCurrentBoot": "Disabled",
+        "SecureBootMode": "UserMode"
+      },
+      "responses": [
+        {
+          "SecureBootEnable": false,
+          "SecureBootCurrentBoot": "Disabled",
+          "SecureBootMode": "UserMode"
+        }
+      ],
+      "reason_for_change": "Endpoint path needed validation on iLO7. Field name `SecureBootEnable` vs. `SecureBootCurrentBoot` needed confirmation.",
+      "required_change": "**No change required.** Same URL, same field name `SecureBootEnable`, same value `false`. Endpoint works identically on iLO7. ---",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "bmc_fw": "iLO 7 1.20.00",
+      "source_file": "icinga-el140-redfish-endpoints.md"
+    },
+    {
+      "seq": 5,
+      "id": "cpu",
+      "name": "cpu",
+      "requires_change": true,
+      "changes_required": [
+        {
+          "check": "cpu — Model",
+          "change": "Change to INTEL(R) XEON(R) 6776P-B (all caps on iLO7)",
+          "applies": "No — different processor"
+        }
+      ],
+      "url": "/redfish/v1/Systems/1",
+      "urls_referenced": [
+        "/redfish/v1/Systems/1",
+        "/redfish/v1/Systems/1/",
+        "/redfish/v1/systems/1/"
+      ],
+      "commands": [
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Systems/1' | \\\n  jq '{ProcessorSummary: .ProcessorSummary}'\""
+      ],
+      "response": {
+        "ProcessorSummary": {
+          "Count": 1,
+          "Model": "INTEL(R) XEON(R) 6776P-B",
+          "Status": {
+            "HealthRollup": "OK"
+          }
+        }
+      },
+      "responses": [
+        {
+          "ProcessorSummary": {
+            "Count": 1,
+            "Model": "INTEL(R) XEON(R) 6776P-B",
+            "Status": {
+              "HealthRollup": "OK"
+            }
+          }
+        }
+      ],
+      "reason_for_change": "The EL140 Gen12 uses a different processor (Xeon 6776P-B, Granite Rapids). The model string will not match `Intel(R) Xeon(R) Gold 6443N`. A new platform profile `HPE-GEN12-el140` is required.",
+      "required_change": "**Note on `HealthRollup`:** iLO7 exposes `ProcessorSummary.Status.HealthRollup` (not just `Health`). `HealthRollup = \"OK\"` is the correct field to check for processor aggregate health on EL140. ---",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "bmc_fw": "iLO 7 1.20.00",
+      "source_file": "icinga-el140-redfish-endpoints.md"
+    },
+    {
+      "seq": 6,
+      "id": "memory",
+      "name": "memory",
+      "requires_change": true,
+      "changes_required": [
+        {
+          "check": "memory — TotalSystemMemoryGiB",
+          "change": "Change 256 → 512",
+          "applies": "No — wrong capacity"
+        }
+      ],
+      "url": "/redfish/v1/Systems/1",
+      "urls_referenced": [
+        "/redfish/v1/Systems/1",
+        "/redfish/v1/Systems/1/",
+        "/redfish/v1/systems/1/"
+      ],
+      "commands": [
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Systems/1' | \\\n  jq '{MemorySummary: .MemorySummary}'\""
+      ],
+      "response": {
+        "MemorySummary": {
+          "Status": {
+            "HealthRollup": "OK"
+          },
+          "TotalSystemMemoryGiB": 512,
+          "TotalSystemPersistentMemoryGiB": 0
+        }
+      },
+      "responses": [
+        {
+          "MemorySummary": {
+            "Status": {
+              "HealthRollup": "OK"
+            },
+            "TotalSystemMemoryGiB": 512,
+            "TotalSystemPersistentMemoryGiB": 0
+          }
+        }
+      ],
+      "reason_for_change": "EL140 Gen12 ships with 512 GiB (8 × 64 GiB Samsung DDR5-6400), not 256 GiB. The existing check will alarm on every EL140 deployment.",
+      "required_change": "---",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "bmc_fw": "iLO 7 1.20.00",
+      "source_file": "icinga-el140-redfish-endpoints.md"
+    },
+    {
+      "seq": 7,
+      "id": "fans",
+      "name": "fans",
+      "requires_change": true,
+      "changes_required": [
+        {
+          "check": "fans — count",
+          "change": "Change 6 → 8",
+          "applies": "No — wrong count"
+        },
+        {
+          "check": "fans — ReadingUnits",
+          "change": "Update plugin to accept Percent for iLO7",
+          "applies": "No — Percent not RPM"
+        }
+      ],
+      "url": "/redfish/v1/Chassis/1/Thermal",
+      "urls_referenced": [
+        "/redfish/v1/Chassis/1/Thermal",
+        "/redfish/v1/Chassis/1/Thermal/",
+        "/redfish/v1/chassis/1/Thermal/"
+      ],
+      "commands": [
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Chassis/1/Thermal' | \\\n  jq '{fan_count: (.Fans | length), fans: [.Fans[] | {Name: .Name, Reading: .Reading,\n    ReadingUnits: .ReadingUnits, Health: .Status.Health, State: .Status.State}]}'\""
+      ],
+      "response": {
+        "fan_count": 8,
+        "fans": [
+          {
+            "Name": "Fan 1",
+            "Reading": 8,
+            "ReadingUnits": "Percent",
+            "Health": "OK",
+            "State": "Enabled"
+          },
+          {
+            "Name": "Fan 2",
+            "Reading": 8,
+            "ReadingUnits": "Percent",
+            "Health": "OK",
+            "State": "Enabled"
+          },
+          {
+            "Name": "Fan 9",
+            "Reading": 8,
+            "ReadingUnits": "Percent",
+            "Health": "OK",
+            "State": "Enabled"
+          },
+          {
+            "Name": "Fan 10",
+            "Reading": 8,
+            "ReadingUnits": "Percent",
+            "Health": "OK",
+            "State": "Enabled"
+          },
+          {
+            "Name": "Fan 11",
+            "Reading": 8,
+            "ReadingUnits": "Percent",
+            "Health": "OK",
+            "State": "Enabled"
+          },
+          {
+            "Name": "Fan 12",
+            "Reading": 8,
+            "ReadingUnits": "Percent",
+            "Health": "OK",
+            "State": "Enabled"
+          },
+          {
+            "Name": "Fan 13",
+            "Reading": 8,
+            "ReadingUnits": "Percent",
+            "Health": "OK",
+            "State": "Enabled"
+          },
+          {
+            "Name": "Fan 14",
+            "Reading": 8,
+            "ReadingUnits": "Percent",
+            "Health": "OK",
+            "State": "Enabled"
+          }
+        ]
+      },
+      "responses": [
+        {
+          "fan_count": 8,
+          "fans": [
+            {
+              "Name": "Fan 1",
+              "Reading": 8,
+              "ReadingUnits": "Percent",
+              "Health": "OK",
+              "State": "Enabled"
+            },
+            {
+              "Name": "Fan 2",
+              "Reading": 8,
+              "ReadingUnits": "Percent",
+              "Health": "OK",
+              "State": "Enabled"
+            },
+            {
+              "Name": "Fan 9",
+              "Reading": 8,
+              "ReadingUnits": "Percent",
+              "Health": "OK",
+              "State": "Enabled"
+            },
+            {
+              "Name": "Fan 10",
+              "Reading": 8,
+              "ReadingUnits": "Percent",
+              "Health": "OK",
+              "State": "Enabled"
+            },
+            {
+              "Name": "Fan 11",
+              "Reading": 8,
+              "ReadingUnits": "Percent",
+              "Health": "OK",
+              "State": "Enabled"
+            },
+            {
+              "Name": "Fan 12",
+              "Reading": 8,
+              "ReadingUnits": "Percent",
+              "Health": "OK",
+              "State": "Enabled"
+            },
+            {
+              "Name": "Fan 13",
+              "Reading": 8,
+              "ReadingUnits": "Percent",
+              "Health": "OK",
+              "State": "Enabled"
+            },
+            {
+              "Name": "Fan 14",
+              "Reading": 8,
+              "ReadingUnits": "Percent",
+              "Health": "OK",
+              "State": "Enabled"
+            }
+          ]
+        }
+      ],
+      "reason_for_change": "EL140 Gen12 has 8 fans (not 6), and iLO7 reports fan speed in `ReadingUnits: \"Percent\"` instead of RPM. Fan slot numbering is also non-contiguous (Fan 1, 2, 9–14 — fans 3–8 not present).",
+      "required_change": "**Critical:** If the Icinga plugin validates `Reading > 0` as a fan-spinning check, it should work (8 > 0 is true). If it validates `ReadingUnits == \"RPM\"`, that check will fail — update to accept `\"Percent\"` for iLO7 platforms. ---",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "bmc_fw": "iLO 7 1.20.00",
+      "source_file": "icinga-el140-redfish-endpoints.md"
+    },
+    {
+      "seq": 8,
+      "id": "thermal_sensors",
+      "name": "thermal_sensors",
+      "requires_change": true,
+      "changes_required": [
+        {
+          "check": "thermal_sensors — count",
+          "change": "Change 22 → 18 (enabled) out of 24 total",
+          "applies": "No — wrong count"
+        }
+      ],
+      "url": "/redfish/v1/Chassis/1/Thermal",
+      "urls_referenced": [
+        "/redfish/v1/Chassis/1/Thermal",
+        "/redfish/v1/Chassis/1/Thermal/",
+        "/redfish/v1/chassis/1/Thermal/"
+      ],
+      "commands": [
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Chassis/1/Thermal' | \\\n  jq '{total_sensors: (.Temperatures | length),\n    enabled: ([.Temperatures[] | select(.Status.State == \\\"Enabled\\\")] | length),\n    absent: ([.Temperatures[] | select(.Status.State == \\\"Absent\\\")] | length)}'\""
+      ],
+      "response": {
+        "total_sensors": 24,
+        "enabled": 18,
+        "absent": 6
+      },
+      "responses": [
+        {
+          "total_sensors": 24,
+          "enabled": 18,
+          "absent": 6
+        }
+      ],
+      "reason_for_change": "EL140 Gen12 has a different thermal sensor count. Some sensors are present but in `State: Absent` (for unpopulated hardware like empty PCIe slots) — the count depends on whether Icinga checks total array members or only enabled sensors.",
+      "required_change": "**Note:** The 6 absent sensors correspond to unpopulated PCIe slots, a second embedded NIC that is not installed, and the DPLL M.2 module thermal sensor (module present but sensor not exposed). These are expected hardware absences, not failures. ---",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "bmc_fw": "iLO 7 1.20.00",
+      "source_file": "icinga-el140-redfish-endpoints.md"
+    },
+    {
+      "seq": 9,
+      "id": "base_network_adapters",
+      "name": "base_network_adapters",
+      "requires_change": true,
+      "changes_required": [
+        {
+          "check": "network adapters — count",
+          "change": "Change 3 → 4",
+          "applies": "No — wrong count"
+        },
+        {
+          "check": "network adapters — NIC names",
+          "change": "E810 → E830 / E825",
+          "applies": "No — wrong adapter model"
+        },
+        {
+          "check": "network adapters — Status.Health",
+          "change": "Remove per-NIC health check; use AggregateHealthStatus.Network instead",
+          "applies": "No — null on iLO7"
+        }
+      ],
+      "url": "/redfish/v1/Systems/1/NetworkInterfaces",
+      "urls_referenced": [
+        "/redfish/v1/Systems/1/",
+        "/redfish/v1/Systems/1/NetworkInterfaces",
+        "/redfish/v1/Systems/1/NetworkInterfaces/",
+        "/redfish/v1/Systems/1/NetworkInterfaces/DE008000",
+        "/redfish/v1/Systems/1/NetworkInterfaces/DE009000",
+        "/redfish/v1/Systems/1/NetworkInterfaces/DE07A000",
+        "/redfish/v1/Systems/1/NetworkInterfaces/DE07B000",
+        "/redfish/v1/systems/1/NetworkInterfaces/"
+      ],
+      "commands": [
+        "ssh vcpe-jumpserver 'curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  \"https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Systems/1/NetworkInterfaces\" | \\\n  python3 -c \"import json,sys; d=json.load(sys.stdin);\n  print(json.dumps({\\\"count\\\": len(d[\\\"Members\\\"]),\n    \\\"members\\\": [m[\\\"@odata.id\\\"] for m in d[\\\"Members\\\"]]}, indent=2))\"'",
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Systems/1/NetworkInterfaces/DE07A000' | \\\n  jq '{Id: .Id, Name: .Name, Health: .Status.Health, State: .Status.State}'\"",
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Systems/1/NetworkInterfaces/DE008000' | \\\n  jq '{Id: .Id, Name: .Name, Health: .Status.Health, State: .Status.State}'\""
+      ],
+      "response": {
+        "count": 4,
+        "members": [
+          "/redfish/v1/Systems/1/NetworkInterfaces/DE008000",
+          "/redfish/v1/Systems/1/NetworkInterfaces/DE009000",
+          "/redfish/v1/Systems/1/NetworkInterfaces/DE07A000",
+          "/redfish/v1/Systems/1/NetworkInterfaces/DE07B000"
+        ]
+      },
+      "responses": [
+        {
+          "count": 4,
+          "members": [
+            "/redfish/v1/Systems/1/NetworkInterfaces/DE008000",
+            "/redfish/v1/Systems/1/NetworkInterfaces/DE009000",
+            "/redfish/v1/Systems/1/NetworkInterfaces/DE07A000",
+            "/redfish/v1/Systems/1/NetworkInterfaces/DE07B000"
+          ]
+        },
+        {
+          "Id": "DE07A000",
+          "Name": "E830 Network Interface",
+          "Health": null,
+          "State": "Enabled"
+        },
+        {
+          "Id": "DE008000",
+          "Name": "E825 Network Interface",
+          "Health": null,
+          "State": "Enabled"
+        }
+      ],
+      "reason_for_change": "EL140 Gen12 has 4 network interfaces (not 3), uses E830 and E825 adapters (not E810), and iLO7 returns `Status.Health: null` at the NetworkInterface resource level — a check for `Health: OK` at this level will fail.",
+      "required_change": "**Critical — Health check must change:** `Status.Health` is **null** at the `NetworkInterface` resource level on iLO7. Do **not** check `Health: OK` per NIC at this endpoint — it will alarm on every EL140. Use `AggregateHealthStatus.Network.Status.Health: OK` from `/redfish/v1/Systems/1/` OEM data instead (validated in Section 2 above — returned `\"OK\"`). ---",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "bmc_fw": "iLO 7 1.20.00",
+      "source_file": "icinga-el140-redfish-endpoints.md"
+    },
+    {
+      "seq": 10,
+      "id": "power_supply",
+      "name": "power_supply",
+      "requires_change": false,
+      "changes_required": [],
+      "url": "/redfish/v1/Chassis/1/Power",
+      "urls_referenced": [
+        "/redfish/v1/Chassis/1/Power",
+        "/redfish/v1/Chassis/1/Power/"
+      ],
+      "commands": [
+        "ssh vcpe-jumpserver 'curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  \"https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Chassis/1/Power\" | \\\n  python3 -c \"\nimport json,sys\nd=json.load(sys.stdin)\npsus=[{\\\"Name\\\":p.get(\\\"Name\\\"),\\\"Model\\\":p.get(\\\"Model\\\"),\n  \\\"Health\\\":p.get(\\\"Status\\\",{}).get(\\\"Health\\\"),\n  \\\"State\\\":p.get(\\\"Status\\\",{}).get(\\\"State\\\"),\n  \\\"InputVoltage\\\":p.get(\\\"LineInputVoltage\\\"),\n  \\\"CapacityWatts\\\":p.get(\\\"PowerCapacityWatts\\\")} for p in d.get(\\\"PowerSupplies\\\",[])]\nprint(json.dumps({\\\"psu_count\\\":len(psus),\\\"supplies\\\":psus},indent=2))\"'"
+      ],
+      "response": {
+        "psu_count": 2,
+        "supplies": [
+          {
+            "Name": "HpeServerPowerSupply",
+            "Model": "P82622-B21",
+            "Health": "OK",
+            "State": "Enabled",
+            "InputVoltage": 214,
+            "CapacityWatts": 3000
+          },
+          {
+            "Name": "HpeServerPowerSupply",
+            "Model": "P82622-B21",
+            "Health": "OK",
+            "State": "Enabled",
+            "InputVoltage": 213,
+            "CapacityWatts": 3000
+          }
+        ]
+      },
+      "responses": [
+        {
+          "psu_count": 2,
+          "supplies": [
+            {
+              "Name": "HpeServerPowerSupply",
+              "Model": "P82622-B21",
+              "Health": "OK",
+              "State": "Enabled",
+              "InputVoltage": 214,
+              "CapacityWatts": 3000
+            },
+            {
+              "Name": "HpeServerPowerSupply",
+              "Model": "P82622-B21",
+              "Health": "OK",
+              "State": "Enabled",
+              "InputVoltage": 213,
+              "CapacityWatts": 3000
+            }
+          ]
+        }
+      ],
+      "reason_for_change": "Validation that count and health checks work identically on iLO7.",
+      "required_change": "**No change required.** Same URL, same section, count = 2, both PSUs Health OK / State Enabled. Endpoint and check work identically on iLO7. Note: EL140 uses dual 3000W PSUs (P82622-B21) running at ~213–214V AC. The e930t used smaller PSUs — if Icinga checks `PowerCapacityWatts`, confirm the expected value matches 3000 for EL140. ---",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "bmc_fw": "iLO 7 1.20.00",
+      "source_file": "icinga-el140-redfish-endpoints.md"
+    },
+    {
+      "seq": 11,
+      "id": "storage",
+      "name": "storage",
+      "requires_change": true,
+      "changes_required": [
+        {
+          "check": "storage — endpoint",
+          "change": "Change to /Systems/1/Storage/; update attribute checks",
+          "applies": "No — PCISlots not applicable"
+        }
+      ],
+      "url": "/redfish/v1/Systems/1/Storage",
+      "urls_referenced": [
+        "/redfish/v1/Systems/1/PCISlots/",
+        "/redfish/v1/Systems/1/Storage",
+        "/redfish/v1/Systems/1/Storage/",
+        "/redfish/v1/Systems/1/Storage/DA010D00",
+        "/redfish/v1/Systems/1/Storage/DA010E00",
+        "/redfish/v1/Systems/1/Storage/DA010E00/Drives/DA010E00",
+        "/redfish/v1/Systems/1/Storage/DA010E00/Drives/DA010E00/"
+      ],
+      "commands": [
+        "ssh vcpe-jumpserver 'curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  \"https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Systems/1/Storage\" | \\\n  python3 -c \"import json,sys; d=json.load(sys.stdin);\n  print(json.dumps({\\\"count\\\": len(d[\\\"Members\\\"]),\n    \\\"members\\\": [m[\\\"@odata.id\\\"] for m in d[\\\"Members\\\"]]}, indent=2))\"'",
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Systems/1/Storage/DA010E00' | \\\n  jq '{Id: .Id, Name: .Name, Health: .Status.Health, State: .Status.State,\n    DriveCount: (.Drives | length), Drive0: (.Drives[0].\\\"@odata.id\\\")}'\"",
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Systems/1/Storage/DA010E00/Drives/DA010E00' | \\\n  jq '{Name: .Name, Model: .Model, CapacityBytes: .CapacityBytes, Health: .Status.Health}'\""
+      ],
+      "response": {
+        "count": 2,
+        "members": [
+          "/redfish/v1/Systems/1/Storage/DA010E00",
+          "/redfish/v1/Systems/1/Storage/DA010D00"
+        ]
+      },
+      "responses": [
+        {
+          "count": 2,
+          "members": [
+            "/redfish/v1/Systems/1/Storage/DA010E00",
+            "/redfish/v1/Systems/1/Storage/DA010D00"
+          ]
+        },
+        {
+          "Id": "DA010E00",
+          "Name": "NVMe Storage System",
+          "Health": "OK",
+          "State": "Enabled",
+          "DriveCount": 1,
+          "Drive0": "/redfish/v1/Systems/1/Storage/DA010E00/Drives/DA010E00/"
+        },
+        {
+          "Name": "Samsung 1.92TB 64G NVME SSD",
+          "Model": "SAMSUNG MZ1L21T9HCLS-00A07",
+          "CapacityBytes": 1920383410176,
+          "Health": "OK"
+        }
+      ],
+      "reason_for_change": "The HPE `PCISlots` endpoint and its `OperationalStatus.Status = InUse` structure **does not apply to EL140 Gen12**. EL140 uses direct NVMe controllers exposed via `/redfish/v1/Systems/1/Storage/`. This is a complete endpoint change — using the old endpoint on EL140 will either return 404 or return unrelated data.",
+      "required_change": "---",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "bmc_fw": "iLO 7 1.20.00",
+      "source_file": "icinga-el140-redfish-endpoints.md"
+    },
+    {
+      "seq": 12,
+      "id": "ilo_bmc_version",
+      "name": "ilo (BMC version)",
+      "requires_change": true,
+      "changes_required": [
+        {
+          "check": "ilo — OEM version path",
+          "change": "Update parser to access Manager[0]; update version value",
+          "applies": "Yes — array on iLO7"
+        }
+      ],
+      "url": "/redfish/v1/",
+      "urls_referenced": [
+        "/redfish/v1/",
+        "/redfish/v1/Managers/1"
+      ],
+      "commands": [
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/' | \\\n  jq '.Oem.Hpe.Manager'\"",
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Managers/1' | \\\n  jq '{FirmwareVersion: .FirmwareVersion, ManagerType: .ManagerType, Health: .Status.Health}'\""
+      ],
+      "response": [
+        {
+          "CloudConnectionPreEnabled": false,
+          "ComputeOpsManagementSupport": true,
+          "DefaultLanguage": "en",
+          "ExternalManager": "None",
+          "FQDN": "ILO7CED3YR2F4.laserlab-bench.local",
+          "HostName": "ILO7CED3YR2F4",
+          "ManagerFirmwareVersion": "1.20.00",
+          "ManagerType": "iLO 7",
+          "Status": {
+            "Health": "OK"
+          }
+        }
+      ],
+      "responses": [
+        [
+          {
+            "CloudConnectionPreEnabled": false,
+            "ComputeOpsManagementSupport": true,
+            "DefaultLanguage": "en",
+            "ExternalManager": "None",
+            "FQDN": "ILO7CED3YR2F4.laserlab-bench.local",
+            "HostName": "ILO7CED3YR2F4",
+            "ManagerFirmwareVersion": "1.20.00",
+            "ManagerType": "iLO 7",
+            "Status": {
+              "Health": "OK"
+            }
+          }
+        ],
+        {
+          "FirmwareVersion": "1.20.00 Feb 12 2026",
+          "ManagerType": "BMC",
+          "Health": "OK"
+        }
+      ],
+      "reason_for_change": "The OEM path `Oem.Hpe.Manager[].ManagerFirmwareVersion` at `/redfish/v1/` was valid on iLO5/6 but needed confirmation on iLO7. Also, the version value obviously differs between platforms.",
+      "required_change": "The OEM path `Oem.Hpe.Manager[].ManagerFirmwareVersion` **works on iLO7** — no path change required. Note that on iLO7 `Oem.Hpe.Manager` returns an **array** (`[{...}]`) not an object — if the Icinga script accesses it as a direct object (`Manager.ManagerFirmwareVersion`), it must be updated to access index 0 (`Manager[0].ManagerFirmwareVersion`). Also note: `Managers/1.ManagerType` returns `\"BMC\"` on iLO7, not `\"iLO 7\"` as might be expected. ---",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "bmc_fw": "iLO 7 1.20.00",
+      "source_file": "icinga-el140-redfish-endpoints.md"
+    },
+    {
+      "seq": 13,
+      "id": "bios_version",
+      "name": "bios_version",
+      "requires_change": true,
+      "changes_required": [
+        {
+          "check": "bios_version — OEM path",
+          "change": "Update version string to U77 v1.30 (02/06/2026) format",
+          "applies": "Yes — same path"
+        }
+      ],
+      "url": "/redfish/v1/Systems/1",
+      "urls_referenced": [
+        "/redfish/v1/Systems/1",
+        "/redfish/v1/Systems/1/",
+        "/redfish/v1/systems/1/"
+      ],
+      "commands": [
+        "ssh vcpe-jumpserver \"curl -gsk -u Administrator:XXXXXXXXXX -X GET \\\n  'https://[2607:f160:10:9249:ce:40a:0:e033]/redfish/v1/Systems/1' | \\\n  jq '{BiosVersion: .BiosVersion, OemBiosCurrent: .Oem.Hpe.Bios.Current}'\""
+      ],
+      "response": {
+        "BiosVersion": "U77 v1.30 (02/06/2026)",
+        "OemBiosCurrent": {
+          "Date": "02/06/2026",
+          "Family": "U77",
+          "VersionString": "U77 v1.30 (02/06/2026)"
+        }
+      },
+      "responses": [
+        {
+          "BiosVersion": "U77 v1.30 (02/06/2026)",
+          "OemBiosCurrent": {
+            "Date": "02/06/2026",
+            "Family": "U77",
+            "VersionString": "U77 v1.30 (02/06/2026)"
+          }
+        }
+      ],
+      "reason_for_change": "Needed to confirm `Oem.Hpe.Bios.Current.VersionString` path is present on iLO7 and determine the version string format for the EL140.",
+      "required_change": "The OEM path `Oem.Hpe.Bios.Current.VersionString` **works on iLO7** — no path change required. The version format for EL140 is `\"U77 v1.30 (02/06/2026)\"`, which differs from the `v1.11` style used on e910t/e920t/e930t. --- ## Summary Table | Icinga Check | Current Config Applies to EL140? | Change Required | |---|---|---| | model | No — wrong product string | Add `HPE ProLiant Compute EL140 Gen12` | | aggregate_health_status | Yes — same path, works | None (FanRedundancy=Redundant confirmed) | | bios — LlcPrefetch | Yes — attribute exists | None | | bios — ProcHyperthreading | Yes | None | | bios — ProcTurbo | Yes | None | | bios — ProcVirtualization | Yes | None | | bios — ProcessorConfigTDPLevel | Yes — Level2 confirmed live at /bios/settings | None — confirmed Level2 with vRAN profile; add WorkloadProfile: vRAN as compliance signal | | bios — Sriov | Yes | None | | bios — SubNumaClustering | Yes | None | | secure_boot | Yes — same path and field | None | | cpu — Count | Yes (Count=1) | None | | cpu — Model | No — different processor | Change to `INTEL(R) XEON(R) 6776P-B` (all caps on iLO7) | | memory — TotalSystemMemoryGiB | No — wrong capacity | Change 256 → 512 | | fans — count | No — wrong count | Change 6 → 8 | | fans — ReadingUnits | No — Percent not RPM | Update plugin to accept Percent for iLO7 | | fans — Health/State | Yes | None | | thermal_sensors — count | No — wrong count | Change 22 → 18 (enabled) out of 24 total | | thermal_sensors — Health/State | Yes | None | | network adapters — count | No — wrong count | Change 3 → 4 | | network adapters — NIC names | No — wrong adapter model | E810 → E830 / E825 | | network adapters — Status.Health | **No — null on iLO7** | Remove per-NIC health check; use AggregateHealthStatus.Network instead | | power_supply | Yes — same path, count, health | None | | storage — endpoint | **No — PCISlots not applicable** | Change to `/Systems/1/Storage/`; update attribute checks | | ilo — OEM version path | Yes — array on iLO7 | Update parser to access `Manager[0]`; update version value | | bios_version — OEM path | Yes — same path | Update version string to `U77 v1.30 (02/06/2026)` format |",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "bmc_fw": "iLO 7 1.20.00",
+      "source_file": "icinga-el140-redfish-endpoints.md"
+    }
+  ],
+  "tests": [
+    {
+      "test_id": "MEAKV-1789",
+      "title": "BMC Sensor List / Sensor Validation",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-1789-result.md"
+    },
+    {
+      "test_id": "MEAKV-507",
+      "title": "DMTF Redfish Protocol Conformance",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-17",
+      "source_file": "MEAKV-507-result.md"
+    },
+    {
+      "test_id": "MEAKV-508",
+      "title": "BIOS: Boot Configuration Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-508-result.md"
+    },
+    {
+      "test_id": "MEAKV-509",
+      "title": "BIOS: CPU / Processor Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-509-result.md"
+    },
+    {
+      "test_id": "MEAKV-510",
+      "title": "BIOS: VT-d / IOMMU Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-510-result.md"
+    },
+    {
+      "test_id": "MEAKV-511",
+      "title": "BIOS: SR-IOV / PCIe Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-511-result.md"
+    },
+    {
+      "test_id": "MEAKV-512",
+      "title": "BIOS: Power Management Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-512-result.md"
+    },
+    {
+      "test_id": "MEAKV-513",
+      "title": "BIOS: Memory Configuration Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-513-result.md"
+    },
+    {
+      "test_id": "MEAKV-514",
+      "title": "BIOS: NUMA / Topology Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-514-result.md"
+    },
+    {
+      "test_id": "MEAKV-515",
+      "title": "BIOS: Platform Security Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-515-result.md"
+    },
+    {
+      "test_id": "MEAKV-516",
+      "title": "BIOS: Network Boot Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-516-result.md"
+    },
+    {
+      "test_id": "MEAKV-517",
+      "title": "BIOS: Overall BIOS Compliance",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-517-result.md"
+    },
+    {
+      "test_id": "MEAKV-648",
+      "title": "Redfish Functional: Firmware Inventory",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-648-result.md"
+    },
+    {
+      "test_id": "MEAKV-649",
+      "title": "Redfish Functional: System Overview",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-649-result.md"
+    },
+    {
+      "test_id": "MEAKV-650",
+      "title": "Redfish Functional: Chassis Overview",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-650-result.md"
+    },
+    {
+      "test_id": "MEAKV-651",
+      "title": "Redfish Functional: Processor Inventory",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-651-result.md"
+    },
+    {
+      "test_id": "MEAKV-652",
+      "title": "Redfish Functional: Memory Inventory",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-652-result.md"
+    },
+    {
+      "test_id": "MEAKV-653",
+      "title": "Redfish Functional: Storage Inventory",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-653-result.md"
+    },
+    {
+      "test_id": "MEAKV-654",
+      "title": "Redfish Functional: Network Interface Inventory",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-654-result.md"
+    },
+    {
+      "test_id": "MEAKV-655",
+      "title": "Redfish Functional: UpdateService Endpoint",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "MEAKV-655-result.md"
+    },
+    {
+      "test_id": "PROPOSED-01",
+      "title": "Redfish Power Control Actions",
+      "result": "FAIL",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "PROPOSED-01-result.md"
+    },
+    {
+      "test_id": "PROPOSED-08",
+      "title": "BMC Reset and Settings Persistence",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "PROPOSED-08-result.md"
+    },
+    {
+      "test_id": "PROPOSED-10",
+      "title": "BMC HTTPS / TLS Security Validation",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "PROPOSED-10-result.md"
+    },
+    {
+      "test_id": "PROPOSED-13",
+      "title": "Chassis Indicator LED / UID Light Control",
+      "result": "SKIP",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "PROPOSED-13-result.md"
+    },
+    {
+      "test_id": "PROPOSED-14",
+      "title": "Concurrent Redfish API Stability",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "PROPOSED-14-result.md"
+    },
+    {
+      "test_id": "PROPOSED-16",
+      "title": "Redfish Direct Sensor Validation (No vCMP)",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "PROPOSED-16-result.md"
+    },
+    {
+      "test_id": "PROPOSED-17",
+      "title": "Redfish Event Service and Alert Delivery Validation",
+      "result": "PARTIAL-PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-11",
+      "source_file": "PROPOSED-17-result.md"
+    },
+    {
+      "test_id": "PROPOSED-18",
+      "title": "Redfish Log Service Validation",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "PROPOSED-18-result.md"
+    },
+    {
+      "test_id": "PROPOSED-19",
+      "title": "iLO7 Metric Naming and Schema Documentation (iLO6 → iLO7 Delta)",
+      "result": "REFERENCE-ARTIFACT",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-02",
+      "source_file": "PROPOSED-19-result.md"
+    },
+    {
+      "test_id": "PROPOSED-20",
+      "title": "BMC User Account Create",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-10",
+      "source_file": "PROPOSED-20-result.md"
+    },
+    {
+      "test_id": "PROPOSED-21",
+      "title": "BMC User Account Modify (Password and Role Change)",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-10",
+      "source_file": "PROPOSED-21-result.md"
+    },
+    {
+      "test_id": "PROPOSED-22",
+      "title": "BMC User Account Delete",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-10",
+      "source_file": "PROPOSED-22-result.md"
+    },
+    {
+      "test_id": "PROPOSED-23",
+      "title": "BMC NTP/SNTP Server Configuration",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-10",
+      "source_file": "PROPOSED-23-result.md"
+    },
+    {
+      "test_id": "PROPOSED-24",
+      "title": "BMC DNS Server Configuration",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-10",
+      "source_file": "PROPOSED-24-result.md"
+    },
+    {
+      "test_id": "PROPOSED-25",
+      "title": "BMC General Configuration (Hostname and FQDN)",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-10",
+      "source_file": "PROPOSED-25-result.md"
+    },
+    {
+      "test_id": "PROPOSED-26",
+      "title": "BMC Syslog / Remote Logging Configuration",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-10",
+      "source_file": "PROPOSED-26-result.md"
+    },
+    {
+      "test_id": "PROPOSED-27",
+      "title": "Redfish Event Subscription Management",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-11",
+      "source_file": "PROPOSED-27-result.md"
+    },
+    {
+      "test_id": "PROPOSED-28",
+      "title": "BMC/BIOS General Configuration and MAC Discovery",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-10",
+      "source_file": "PROPOSED-28-result.md"
+    },
+    {
+      "test_id": "PROPOSED-29",
+      "title": "BMC Playbook Integration Gap Analysis and Change Specification",
+      "result": "COMPLETE",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-10",
+      "source_file": "PROPOSED-29-result.md"
+    },
+    {
+      "test_id": "PROPOSED-30",
+      "title": "HPE Secure Boot Certificate Update (Wind River + Verizon KEK/DB)",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-10",
+      "source_file": "PROPOSED-30-result.md"
+    },
+    {
+      "test_id": "PROPOSED-31",
+      "title": "Fan and Thermal Baseline Validation (NEBS)",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-10",
+      "source_file": "PROPOSED-31-result.md"
+    },
+    {
+      "test_id": "PROPOSED-32",
+      "title": "iLO Security Configuration Validation",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "platform": "HPE EL140 Gen12",
+      "date": "2026-06-10",
+      "source_file": "PROPOSED-32-result.md"
+    },
+    {
+      "test_id": "MEAKV-1789",
+      "title": "BMC Sensor List / Sensor Validation",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-1789-result.md"
+    },
+    {
+      "test_id": "MEAKV-1808",
+      "title": "Redfish BIOS Configuration Retrieval (Dell iDRAC)",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-1808-result.md"
+    },
+    {
+      "test_id": "MEAKV-507",
+      "title": "DMTF Redfish Protocol Conformance",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-17",
+      "source_file": "MEAKV-507-result.md"
+    },
+    {
+      "test_id": "MEAKV-508",
+      "title": "Functional BIOS Testing: Boot Configuration Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-508-result.md"
+    },
+    {
+      "test_id": "MEAKV-509",
+      "title": "Functional BIOS Testing: CPU / Processor Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-509-result.md"
+    },
+    {
+      "test_id": "MEAKV-510",
+      "title": "Functional BIOS Testing: VT-d / IOMMU Attributes",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-510-result.md"
+    },
+    {
+      "test_id": "MEAKV-511",
+      "title": "Functional BIOS Testing: SR-IOV / PCIe Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-511-result.md"
+    },
+    {
+      "test_id": "MEAKV-512",
+      "title": "Functional BIOS Testing: Power Management Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-512-result.md"
+    },
+    {
+      "test_id": "MEAKV-513",
+      "title": "Functional BIOS Testing: Memory Configuration Attributes",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-513-result.md"
+    },
+    {
+      "test_id": "MEAKV-514",
+      "title": "Functional BIOS Testing: NUMA / Topology Attributes",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-514-result.md"
+    },
+    {
+      "test_id": "MEAKV-515",
+      "title": "Functional BIOS Testing: Platform Security Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-515-result.md"
+    },
+    {
+      "test_id": "MEAKV-516",
+      "title": "Functional BIOS Testing: Network Boot Attributes",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-516-result.md"
+    },
+    {
+      "test_id": "MEAKV-517",
+      "title": "Functional BIOS Testing: Overall BIOS Compliance",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-517-result.md"
+    },
+    {
+      "test_id": "MEAKV-518",
+      "title": "Redfish Functional Monitoring: Thermal Sensors",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-518-result.md"
+    },
+    {
+      "test_id": "MEAKV-519",
+      "title": "Redfish Functional Monitoring: Fan Sensors",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-519-result.md"
+    },
+    {
+      "test_id": "MEAKV-520",
+      "title": "Redfish Functional Monitoring: Power Supply Sensors",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-520-result.md"
+    },
+    {
+      "test_id": "MEAKV-521",
+      "title": "Redfish Functional Monitoring: Voltage Sensors",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-521-result.md"
+    },
+    {
+      "test_id": "MEAKV-522",
+      "title": "Redfish Functional Monitoring: API Response Time",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-522-result.md"
+    },
+    {
+      "test_id": "MEAKV-523",
+      "title": "Redfish Functional Monitoring: Chassis Health Rollup",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-523-result.md"
+    },
+    {
+      "test_id": "MEAKV-648",
+      "title": "Redfish Functional: Firmware Inventory",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-648-result.md"
+    },
+    {
+      "test_id": "MEAKV-649",
+      "title": "Redfish Functional: System Overview",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-649-result.md"
+    },
+    {
+      "test_id": "MEAKV-650",
+      "title": "Redfish Functional: Chassis Overview",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-650-result.md"
+    },
+    {
+      "test_id": "MEAKV-651",
+      "title": "Redfish Functional: Processor Inventory",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-651-result.md"
+    },
+    {
+      "test_id": "MEAKV-652",
+      "title": "Redfish Functional: Memory Inventory",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-652-result.md"
+    },
+    {
+      "test_id": "MEAKV-653",
+      "title": "Redfish Functional: Storage Inventory",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-653-result.md"
+    },
+    {
+      "test_id": "MEAKV-654",
+      "title": "Redfish Functional: Network Interface Inventory",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-654-result.md"
+    },
+    {
+      "test_id": "MEAKV-655",
+      "title": "Redfish Functional: UpdateService Endpoint",
+      "result": "PARTIAL-PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "MEAKV-655-result.md"
+    },
+    {
+      "test_id": "PROPOSED-10",
+      "title": "BMC HTTPS / TLS Security Validation",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "PROPOSED-10-result.md"
+    },
+    {
+      "test_id": "PROPOSED-13",
+      "title": "Chassis Indicator LED / UID Light Control",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "PROPOSED-13-result.md"
+    },
+    {
+      "test_id": "PROPOSED-14",
+      "title": "Concurrent Redfish API Stability",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "PROPOSED-14-result.md"
+    },
+    {
+      "test_id": "PROPOSED-18",
+      "title": "Redfish Log Service Validation (Dell iDRAC Adaptation)",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "PROPOSED-18-result.md"
+    },
+    {
+      "test_id": "PROPOSED-20",
+      "title": "BMC User Account Create",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "PROPOSED-20-result.md"
+    },
+    {
+      "test_id": "PROPOSED-21",
+      "title": "BMC User Account Modify (Password and Role Change)",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "PROPOSED-21-result.md"
+    },
+    {
+      "test_id": "PROPOSED-22",
+      "title": "BMC User Account Delete",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "PROPOSED-22-result.md"
+    },
+    {
+      "test_id": "PROPOSED-23",
+      "title": "BMC NTP/SNTP Server Configuration",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "PROPOSED-23-result.md"
+    },
+    {
+      "test_id": "PROPOSED-24",
+      "title": "BMC DNS Server Configuration",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "PROPOSED-24-result.md"
+    },
+    {
+      "test_id": "PROPOSED-25",
+      "title": "BMC General Configuration (Hostname and FQDN)",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "PROPOSED-25-result.md"
+    },
+    {
+      "test_id": "PROPOSED-26",
+      "title": "BMC Syslog / Remote Logging Configuration",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "PROPOSED-26-result.md"
+    },
+    {
+      "test_id": "PROPOSED-27",
+      "title": "Redfish Event Subscription Management",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "PROPOSED-27-result.md"
+    },
+    {
+      "test_id": "PROPOSED-28",
+      "title": "BMC/BIOS General Configuration and MAC Discovery",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "platform": "Dell XR8720t",
+      "date": "2026-06-16",
+      "source_file": "PROPOSED-28-result.md"
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "HPE-EL140-Gen12-2026-06-10",
+      "platform": "HPE ProLiant Compute EL140 Gen12",
+      "bmc_ip": "2607:f160:10:90bf:ce:40a:0:e002",
+      "date_start": "2026-06-10",
+      "date_end": "2026-06-10",
+      "totals": {},
+      "source_file": "test-campaign-summary-HPE-EL140-Gen12-2026-06-10.md"
+    },
+    {
+      "id": "Dell-XR8720t-iDRAC-1.30.10.51",
+      "platform": "Dell XR8720t",
+      "bmc_ip": "2607:f160:10:823a:ce:40a:0:e001",
+      "date_start": "2026-06-16",
+      "date_end": "2026-06-17",
+      "totals": {
+        "total_tests": 40,
+        "pass": 29,
+        "pass_with_deviation": 10,
+        "partial_pass": 1,
+        "blocked": 0,
+        "fail": 0
+      },
+      "source_file": "test-campaign-summary-Dell-XR8720t-iDRAC-1.30.10.51.md"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "adhoc-bios_vran-compare_with_default",
+      "title": "Ad-Hoc: BIOS WorkloadProfile vRAN vs. Default Comparison",
+      "objective": null,
+      "result": null,
+      "bmc_ip": "2607:f160:10:9249:ce:40a:0:e033",
+      "date": "2026-06-02",
+      "source_file": "adhoc-bios_vran-compare_with_default.md"
+    },
+    {
+      "id": "bmc-playbook-gap-test-results-2607-f160-10-90bf-ce-40a-0-e002",
+      "title": "BMC Playbook Function Test Results — 2607:f160:10:90bf:ce:40a:0:e002",
+      "objective": "PROPOSED-20 through PROPOSED-28 — BMC Playbook Function Replication for PROPOSED-29 Gap Analysis input",
+      "result": "PASS WITH DEVIATION",
+      "bmc_ip": "2607:f160:10:90bf:ce:40a:0:e002",
+      "date": "2026-06-10",
+      "source_file": "bmc-playbook-gap-test-results-2607-f160-10-90bf-ce-40a-0-e002.md"
+    },
+    {
+      "id": "secureboot-cert-install-2607-f160-10-90bf-ce-40a-0-e002",
+      "title": "Secure Boot Cert Install — 2607:f160:10:90bf:ce:40a:0:e002",
+      "objective": "Test #2 — Install Verizon KEK and Wind River DB certs, set WorkloadProfile to vRAN, enable Secure Boot, verify boot",
+      "result": "PASS",
+      "bmc_ip": "2607:f160:10:90bf:ce:40a:0:e002",
+      "date": "2026-06-10",
+      "source_file": "secureboot-cert-install-2607-f160-10-90bf-ce-40a-0-e002.md"
+    }
+  ],
+  "skipped": []
+}

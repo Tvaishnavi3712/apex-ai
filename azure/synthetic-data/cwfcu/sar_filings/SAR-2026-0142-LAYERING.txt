@@ -1,0 +1,55 @@
+FinCEN SAR (Suspicious Activity Report) — Form 111
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+═══════════════════════════════════════════════════════════════
+
+FILING REFERENCE:      SAR-2026-0141
+Filing Status:         PENDING BSA Officer review
+Detection Mechanism:   ApexAI Compliance Agent — Layering Heuristic v1.4
+Drafted By:            Compliance Agent · v2.6.3 (94.7% confidence)
+Pending BSA Officer:   Adrienne Williams (BSA Officer · NCCO/CAMS)
+
+──────── SUBJECT INFORMATION ────────
+Member Number:         #51887
+Legal Name:            BERG, Adrian Mark
+Date of Birth:         1990-02-19 (36)
+Address:               2208 Sunnyside Ct, Mishawaka, IN 46545
+Occupation:            E-commerce reseller (self-employed)
+Member Since:          2025-11-04
+Risk Tier:             MEDIUM (now elevated)
+
+──────── SUSPICIOUS ACTIVITY ────────
+Activity Type:         Layering (peer-to-peer cycling through 3+ intermediaries)
+Suspected Violation:   31 U.S.C. § 5324
+Activity Date Range:   2026-05-04 through 2026-05-30 (27 days)
+Total Activity:        $31,200.00
+Transaction Count:     22 (Zelle outbound + ACH inbound combined)
+
+──────── PATTERN ANALYSIS ────────
+─ 11 Zelle sends to 7 different unrelated peers (avg $2,200)
+─ 11 ACH credits from 4 prepaid card providers
+─ Peer recipients show no historical relationship (CWFCU + national sample)
+─ All sends/receives below FinCEN reporting thresholds
+─ Mean dwell time of funds in account: 13.4 hours
+─ Pattern consistent with cash-out layering through reload card cycle
+
+──────── NARRATIVE (Part IV) ────────
+On or about May 4 through May 30, 2026, the subject (#51887) conducted
+22 transactions consistent with layering activity. The subject received
+11 ACH credits from four prepaid card / reload card providers totaling
+$31,200 and within 24 hours of receipt initiated 11 corresponding Zelle
+peer-to-peer transfers to 7 different unrelated peer recipients in
+amounts averaging $2,200 each. No corresponding business invoice, payroll
+deposit, or legitimate commercial purpose was identified during agent
+review. The pattern is consistent with layering activity used to obscure
+the original cash source through multiple unrelated intermediaries.
+
+──────── HAND-OFF NOTES ────────
+→ Compliance Agent:    Member added to EDD watch — quarterly review cycle
+→ Loan Document Agent: Enhanced source-of-funds on any future application
+→ Policy & HR Agent:   No employee impact
+
+──────── NCUA EXAM FOLDER INDEX ────────
+Folder Path:           ncua-exam-2026/bsa_aml/sars/2026-Q2/
+Immutable Audit ID:    AUDIT-2026-05-30-21:42:08-SAR-0141
+SAR Deadline:          2026-06-29 (30 days from detection)

@@ -1,0 +1,26 @@
+name: apex-invoice-bot
+description: AI agent for processing vendor invoices and accounts payable automation
+version: 1.0.0
+
+runtime:
+  entrypoint: agent.py
+  handler: handler
+  python_version: "3.12"
+
+model:
+  provider: bedrock
+  model_id: anthropic.claude-3-sonnet-20240229-v1:0
+  region: us-east-1
+
+memory:
+  short_term: true
+  long_term: false
+
+observability:
+  enabled: true
+  log_level: INFO
+
+tags:
+  industry: financial_services
+  category: accounts_payable
+  environment: production

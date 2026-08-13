@@ -1,0 +1,336 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: APEX AI Platform - Integration Webhooks API Gateway
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues: [dev, staging, prod]
+
+  DomainName:
+    Type: String
+    Description: Domain for API
+    Default: api.apex.company.com
+
+  SlackSigningSecret:
+    Type: String
+    Description: Slack signing secret for verification
+    NoEcho: true
+    Default: ""
+
+  MicrosoftAppId:
+    Type: String
+    Description: Microsoft Bot Framework App ID
+    Default: ""
+
+  MicrosoftAppPassword:
+    Type: String
+    Description: Microsoft Bot Framework App Password
+    NoEcho: true
+    Default: ""
+
+  DocumentBucket:
+    Type: String
+    Default: apex-documents
+
+  WorkItemsTable:
+    Type: String
+    Default: apex-work-items
+
+Resources:
+
+  #############################################
+  # Secrets Manager
+  #############################################
+
+  SlackSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: !Sub "apex/slack-${Environment}"
+      Description: Slack integration credentials
+      SecretString: !Sub |
+        {
+          "bot_token": "",
+          "signing_secret": "${SlackSigningSecret}",
+          "app_id": ""
+        }
+      Tags:
+        - Key: Application
+          Value: APEX
+
+  TeamsSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: !Sub "apex/teams-${Environment}"
+      Description: Microsoft Teams integration credentials
+      SecretString: !Sub |
+        {
+          "app_id": "${MicrosoftAppId}",
+          "app_password": "${MicrosoftAppPassword}",
+          "tenant_id": ""
+        }
+      Tags:
+        - Key: Application
+          Value: APEX
+
+  ServiceNowSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: !Sub "apex/servicenow-${Environment}"
+      Description: ServiceNow integration credentials
+      SecretString: |
+        {
+          "instance_url": "",
+          "username": "",
+          "password": ""
+        }
+      Tags:
+        - Key: Application
+          Value: APEX
+
+  #############################################
+  # API Gateway
+  #############################################
+
+  WebhooksApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub "apex-webhooks-${Environment}"
+      StageName: !Ref Environment
+      Description: APEX Integration Webhooks API
+      Cors:
+        AllowMethods: "'POST, OPTIONS'"
+        AllowHeaders: "'Content-Type, Authorization, X-Slack-Signature, X-Slack-Request-Timestamp'"
+        AllowOrigin: "'*'"
+      Auth:
+        DefaultAuthorizer: NONE
+      EndpointConfiguration:
+        Type: REGIONAL
+      Tags:
+        Application: APEX
+        Component: Integrations
+
+  #############################################
+  # Slack Integration Lambda
+  #############################################
+
+  SlackWebhookFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "apex-slack-webhook-${Environment}"
+      Description: Handle Slack webhook events
+      Runtime: python3.12
+      Handler: handler.lambda_handler
+      CodeUri: ../../actions/integrations/slack_notify/
+      Timeout: 30
+      MemorySize: 512
+      Environment:
+        Variables:
+          ENVIRONMENT: !Ref Environment
+          SLACK_SECRET_ARN: !Ref SlackSecret
+          WORK_ITEMS_TABLE: !Ref WorkItemsTable
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref WorkItemsTable
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+              Resource: !Ref SlackSecret
+      Events:
+        SlackEvents:
+          Type: Api
+          Properties:
+            RestApiId: !Ref WebhooksApi
+            Path: /slack/events
+            Method: POST
+        SlackInteractive:
+          Type: Api
+          Properties:
+            RestApiId: !Ref WebhooksApi
+            Path: /slack/interactive
+            Method: POST
+      Tags:
+        Application: APEX
+        Component: SlackIntegration
+
+  #############################################
+  # Teams Integration Lambda
+  #############################################
+
+  TeamsWebhookFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "apex-teams-webhook-${Environment}"
+      Description: Handle Microsoft Teams bot messages
+      Runtime: python3.12
+      Handler: handler.lambda_handler
+      CodeUri: ../../actions/integrations/teams_bot/
+      Timeout: 30
+      MemorySize: 512
+      Environment:
+        Variables:
+          ENVIRONMENT: !Ref Environment
+          TEAMS_SECRET_ARN: !Ref TeamsSecret
+          APEX_API_URL: !Sub "https://${DomainName}"
+          WORK_ITEMS_TABLE: !Ref WorkItemsTable
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref WorkItemsTable
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+              Resource: !Ref TeamsSecret
+      Events:
+        TeamsMessages:
+          Type: Api
+          Properties:
+            RestApiId: !Ref WebhooksApi
+            Path: /teams/messages
+            Method: POST
+      Tags:
+        Application: APEX
+        Component: TeamsIntegration
+
+  #############################################
+  # ServiceNow Integration Lambda
+  #############################################
+
+  ServiceNowWebhookFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "apex-servicenow-webhook-${Environment}"
+      Description: Handle ServiceNow integration requests
+      Runtime: python3.12
+      Handler: handler.lambda_handler
+      CodeUri: ../../actions/integrations/servicenow/
+      Timeout: 60
+      MemorySize: 512
+      Environment:
+        Variables:
+          ENVIRONMENT: !Ref Environment
+          SERVICENOW_SECRET_ARN: !Ref ServiceNowSecret
+          DOCUMENT_BUCKET: !Ref DocumentBucket
+          WORK_ITEMS_TABLE: !Ref WorkItemsTable
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref DocumentBucket
+        - DynamoDBCrudPolicy:
+            TableName: !Ref WorkItemsTable
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+              Resource: !Ref ServiceNowSecret
+      Events:
+        ServiceNowReceive:
+          Type: Api
+          Properties:
+            RestApiId: !Ref WebhooksApi
+            Path: /servicenow/receive
+            Method: POST
+        ServiceNowUpdate:
+          Type: Api
+          Properties:
+            RestApiId: !Ref WebhooksApi
+            Path: /servicenow/update
+            Method: POST
+        ServiceNowCallback:
+          Type: Api
+          Properties:
+            RestApiId: !Ref WebhooksApi
+            Path: /servicenow/callback
+            Method: POST
+      Tags:
+        Application: APEX
+        Component: ServiceNowIntegration
+
+  #############################################
+  # CloudWatch Log Groups
+  #############################################
+
+  SlackLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${SlackWebhookFunction}"
+      RetentionInDays: 30
+
+  TeamsLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${TeamsWebhookFunction}"
+      RetentionInDays: 30
+
+  ServiceNowLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${ServiceNowWebhookFunction}"
+      RetentionInDays: 30
+
+  #############################################
+  # CloudWatch Alarms
+  #############################################
+
+  WebhookErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "apex-webhooks-errors-${Environment}"
+      AlarmDescription: Alert when webhook functions have errors
+      MetricName: 5XXError
+      Namespace: AWS/ApiGateway
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 10
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: ApiName
+          Value: !Sub "apex-webhooks-${Environment}"
+        - Name: Stage
+          Value: !Ref Environment
+
+Outputs:
+  WebhooksApiUrl:
+    Description: Webhooks API Gateway URL
+    Value: !Sub "https://${WebhooksApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}"
+    Export:
+      Name: !Sub "${AWS::StackName}-WebhooksApiUrl"
+
+  SlackWebhookUrl:
+    Description: Slack webhook endpoint
+    Value: !Sub "https://${WebhooksApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/slack/events"
+
+  TeamsWebhookUrl:
+    Description: Teams bot messaging endpoint
+    Value: !Sub "https://${WebhooksApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/teams/messages"
+
+  ServiceNowReceiveUrl:
+    Description: ServiceNow document receive endpoint
+    Value: !Sub "https://${WebhooksApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/servicenow/receive"
+
+  ServiceNowCallbackUrl:
+    Description: ServiceNow callback endpoint
+    Value: !Sub "https://${WebhooksApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/servicenow/callback"
+
+  SlackSecretArn:
+    Description: Slack credentials secret ARN
+    Value: !Ref SlackSecret
+    Export:
+      Name: !Sub "${AWS::StackName}-SlackSecretArn"
+
+  TeamsSecretArn:
+    Description: Teams credentials secret ARN
+    Value: !Ref TeamsSecret
+    Export:
+      Name: !Sub "${AWS::StackName}-TeamsSecretArn"
+
+  ServiceNowSecretArn:
+    Description: ServiceNow credentials secret ARN
+    Value: !Ref ServiceNowSecret
+    Export:
+      Name: !Sub "${AWS::StackName}-ServiceNowSecretArn"

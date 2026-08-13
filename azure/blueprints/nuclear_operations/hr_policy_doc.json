@@ -1,0 +1,117 @@
+{
+  "blueprintName": "apex-stp-hr-policy-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from STP corporate HR & administrative policy documents (STP-4xx series)",
+  "industry": "nuclear_operations",
+  "documentType": "hr_policy",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "header": {
+        "type": "object",
+        "description": "Policy document header block — appears on page 1 above the body text",
+        "properties": {
+          "doc_number": {
+            "type": "string",
+            "description": "STP policy number, e.g. STP-415",
+            "extraction_hints": ["Document Number:", "Policy No:", "STP-"],
+            "pattern": "^STP-[0-9]{3}$"
+          },
+          "title": {
+            "type": "string",
+            "description": "Policy title",
+            "extraction_hints": ["Title:", "Subject:"]
+          },
+          "revision": {
+            "type": "string",
+            "description": "Revision identifier",
+            "extraction_hints": ["Rev:", "Revision:"]
+          },
+          "effective_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date the policy takes effect",
+            "extraction_hints": ["Effective Date:", "Effective:"]
+          },
+          "owner": {
+            "type": "string",
+            "description": "Department or role responsible for the policy",
+            "extraction_hints": ["Owner:", "Responsible Department:"]
+          },
+          "nrc_classification": {
+            "type": "string",
+            "description": "NRC classification (Public, Internal, Safeguards, etc.)",
+            "enum": ["Public", "Internal", "Safeguards", "Security-Related"]
+          }
+        },
+        "required": ["doc_number", "title", "effective_date"]
+      },
+      "sections": {
+        "type": "array",
+        "description": "Numbered policy sections (1, 2, 3.1, 3.2, …)",
+        "items": {
+          "type": "object",
+          "properties": {
+            "section_number": {
+              "type": "string",
+              "description": "Section identifier",
+              "pattern": "^[0-9]+(\\.[0-9]+)*$"
+            },
+            "heading": {"type": "string"},
+            "body_text": {
+              "type": "string",
+              "description": "Verbatim text — required for citation accuracy"
+            },
+            "bullet_points": {
+              "type": "array",
+              "items": {"type": "string"}
+            },
+            "tables": {
+              "type": "array",
+              "description": "Tables extracted from the section (e.g. per-diem schedules)",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "caption": {"type": "string"},
+                  "headers": {"type": "array", "items": {"type": "string"}},
+                  "rows": {"type": "array", "items": {"type": "array"}}
+                }
+              }
+            }
+          },
+          "required": ["section_number", "heading", "body_text"]
+        }
+      },
+      "definitions": {
+        "type": "array",
+        "description": "Glossary block if present",
+        "items": {
+          "type": "object",
+          "properties": {
+            "term": {"type": "string"},
+            "definition": {"type": "string"}
+          }
+        }
+      },
+      "references": {
+        "type": "array",
+        "description": "Cross-references to other STP docs / federal regs",
+        "items": {
+          "type": "object",
+          "properties": {
+            "ref_type": {"type": "string", "enum": ["STP_doc", "10_CFR", "NRC_RG", "ANSI", "IEEE", "Other"]},
+            "ref_number": {"type": "string"},
+            "title": {"type": "string"}
+          }
+        }
+      }
+    },
+    "required": ["header", "sections"]
+  },
+  "extractionRules": {
+    "preserveVerbatimText": true,
+    "dateFormat": "ISO8601",
+    "confidenceThreshold": 0.90,
+    "tableDetection": true
+  }
+}

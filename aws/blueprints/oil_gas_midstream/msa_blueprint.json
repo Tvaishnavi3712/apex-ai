@@ -1,0 +1,27 @@
+{
+  "blueprint_id": "bp-eprod-msa",
+  "name": "EPROD Master Service Agreement",
+  "description": "Extract scope categories, rate card, billing terms, and approval thresholds from EPROD vendor MSAs.",
+  "industry": "oil_gas_midstream",
+  "document_type": "master_service_agreement",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "EPROD Master Service Agreement",
+    "description": "MSA schema covering identity, term, scope, rate card, billing/payment terms, indemnity, and approval thresholds.",
+    "extractionInstructions": "Scope categories must map to Schedule B section ids. Rate card entries must include asset class + unit + rate + currency.",
+    "fields": {
+      "msa_id":              { "type": "string", "description": "MSA identifier (e.g. MSA-HAL-2024)", "required": true },
+      "vendor_name":         { "type": "string", "description": "Vendor legal name", "required": true },
+      "msa_type":            { "type": "string", "description": "MSA classification (services, equipment, EPC, etc.)", "required": true },
+      "effective_date":      { "type": "date",   "description": "MSA effective date", "required": true },
+      "expiration_date":     { "type": "date",   "description": "MSA expiration date", "required": true },
+      "scope_categories":    { "type": "array",  "description": "Schedule B scope categories (section + description)", "required": true },
+      "rate_card":           { "type": "array",  "description": "Rate card entries (asset_class, unit, rate, currency)", "required": true },
+      "billing_terms":       { "type": "string", "description": "Billing cycle and submission requirements", "required": true },
+      "payment_terms":       { "type": "string", "description": "Net payment terms", "required": true },
+      "indemnity_clauses":   { "type": "array",  "description": "Indemnity / liability clauses with section refs", "required": false },
+      "approval_thresholds": { "type": "array",  "description": "Delegation of authority thresholds by role", "required": true },
+      "governing_law":       { "type": "string", "description": "Governing law jurisdiction", "required": true }
+    }
+  }
+}

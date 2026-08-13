@@ -1,0 +1,109 @@
+name: operator_kb_query
+version: "1.0.0"
+description: >
+  Operator-facing knowledge Q&A over the Verizon Far Edge document corpus
+  (runbooks, release notes, known-issues KB, upgrade procedures, integration
+  guides). Answers with verbatim citations only — never paraphrases.
+industry: telecommunications
+category: knowledge_query
+
+intent: |
+  When a Verizon engineer asks a question about a procedure, a known issue,
+  a Wind River release behavior, or an upgrade path, route to MentorAgent.
+  MentorAgent retrieves the top-k most relevant passages from the Apex Lens
+  index (8 indexed documents, 364 pages, 2,418 chunks), extracts verbatim
+  citations with section anchors, and returns the answer with explicit
+  source attribution.
+
+  When the question implies a production change (e.g. "how do I roll back",
+  "what's the upgrade path for", "should I apply this workaround"), set
+  production_change_safety_flag=true so the UI surfaces a senior-engineer
+  review recommendation before the user acts on the answer.
+
+  Confidence floor is 0.50 — below that, MentorAgent says "no high-confidence
+  match" explicitly rather than guess. The recipe never paraphrases — every
+  claim must be backed by a verbatim passage from a cited document.
+
+output:
+  - name: question
+    type: string
+    description: "The verbatim question the engineer asked"
+  - name: answer
+    type: string
+    description: "Composed answer (verbatim passages stitched together)"
+  - name: citations
+    type: array
+    description: "List of {document, section, page, passage} per source"
+  - name: confidence
+    type: number
+    description: "Retrieval confidence 0.0-1.0"
+  - name: production_change_safety_flag
+    type: boolean
+    description: "True when the question implies a production-changing action"
+  - name: review_recommended
+    type: string
+    description: "Senior-engineer review recommendation when flag is set"
+  - name: audit_log_id
+    type: string
+    description: "Audit Lens event id for this query"
+
+context:
+  business_rules:
+    - "Never paraphrase. Every claim must trace to a verbatim passage with section anchor."
+    - "Below confidence 0.50, return 'no high-confidence match' instead of guessing."
+    - "Surface production_change_safety_flag whenever the question implies acting on the answer (rollback, upgrade, workaround, override)."
+    - "Cite multiple sources when they agree; flag disagreement explicitly when they don't."
+    - "Every Q&A round-trip emits an Audit Lens event so questions are auditable."
+
+actions:
+  - name: intent_classify
+    action_id: telecommunications.intent_classify
+    description: "Classify the inbound question (knowledge / action / status)"
+    required: true
+
+  - name: mentor_query
+    action_id: telecommunications.mentor_query
+    description: "Hybrid (keyword + semantic) retrieval over the Apex Lens index"
+    required: true
+
+  - name: production_change_flag
+    action_id: telecommunications.production_change_flag
+    description: "Set safety flag when question implies a production-changing action"
+    required: true
+
+  - name: audit_log_emit
+    action_id: core.audit_log_emit
+    description: "Emit an Audit Lens event for the question + answer round-trip"
+    required: true
+
+recipe: |
+  ## Operator Knowledge Q&A Recipe
+
+  ### Step 1 · EXTRACT — intent_classify
+  - Classifier: regex + keyword match → knowledge / action / status
+  - If intent != knowledge, hand off to the correct telecom agent.
+
+  ### Step 2 · EXECUTE — mentor_query
+  - Index: Apex Lens manifest (8 docs, 2,418 chunks)
+  - Retrieval: hybrid (keyword + semantic) — top_k=5
+  - Confidence floor: 0.50 — below that, return "no high-confidence match"
+  - Output: passages[] with {document, section, page, verbatim_text}
+
+  ### Step 3 · VALIDATE — production_change_flag
+  - Surface flag when question implies acting on the answer:
+    - rollback, downgrade, apply workaround, override gate, force upgrade
+  - When flag is set, append a senior-engineer review recommendation
+  - Specifically for 22.12→24.12 paths, always recommend SE review
+
+  ### Step 4 · NOTIFY — audit_log_emit
+  - Emit immutable DVR-{timestamp}-MENTOR event into the Audit Lens
+  - Capture: question, answer hash, citation list, confidence,
+    production_change_safety_flag, reviewer recommendation
+
+triggers:
+  - type: chat_message
+    routed_by: chatstp_router
+  - type: api_invoke
+    endpoint: /api/v1/agents/MentorAgent/invoke
+  - type: slack_mention
+    channel: "#apex-vz-mentor"

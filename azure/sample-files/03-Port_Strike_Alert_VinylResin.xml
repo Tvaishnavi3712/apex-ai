@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Disruption Alert — emitted by Global Supply Chain Monitor (GSM)
+  When dropped into ApexLens, triggers the Disruption Impact & Reroute pipeline.
+-->
+<DisruptionAlert source="GlobalSupplyChainMonitor" version="1.0">
+  <AlertID>SC-ALERT-2026-0441</AlertID>
+  <EventType>PortStrike</EventType>
+  <Severity>HIGH</Severity>
+  <Timestamp>2026-04-21T09:08:00Z</Timestamp>
+
+  <Port code="KSAV">
+    <Name>Port of Savannah, GA</Name>
+    <Country>US</Country>
+    <Latitude>32.0809</Latitude>
+    <Longitude>-81.0912</Longitude>
+  </Port>
+
+  <AffectedSupplier>
+    <Id>SUP-0044</Id>
+    <Name>Chemours Vinyl Resins</Name>
+    <Tier>1</Tier>
+    <PrimaryContact>
+      <Name>Andrea Patel</Name>
+      <Email>andrea.patel@chemours.com</Email>
+    </PrimaryContact>
+  </AffectedSupplier>
+
+  <Material>
+    <Id>MAT-0021</Id>
+    <Name>Vinyl Resin (PVC Grade A)</Name>
+    <Grade>A</Grade>
+  </Material>
+
+  <ImpactEstimate>
+    <DelayDays>7</DelayDays>
+    <ExpectedRecovery>2026-04-28</ExpectedRecovery>
+    <SourceConfidence>0.99</SourceConfidence>
+    <Region>Southeast US</Region>
+  </ImpactEstimate>
+
+  <RecommendedAction>
+    <Type>RerouteAnalysis</Type>
+    <Priority>IMMEDIATE</Priority>
+    <RoutingTarget>logistics-alerts@cbb.com</RoutingTarget>
+  </RecommendedAction>
+
+  <Notes>
+    Union escalation Day 3. No indication of settlement. Alternate suppliers
+    (Oxy Vinyls LP, Formosa, PolySource) should be considered.
+  </Notes>
+</DisruptionAlert>

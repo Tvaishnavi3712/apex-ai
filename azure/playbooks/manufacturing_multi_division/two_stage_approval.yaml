@@ -1,0 +1,80 @@
+playbook_id: pb-boler-3
+name: two_stage_approval
+version: "1.0.0"
+description: "Two-stage approval (Benefits Manager → CFO) for the monthly consolidated JE before posting and division distribution."
+industry: manufacturing_multi_division
+category: benefits_operations
+
+intent: |
+  Once exceptions are resolved and the consolidated JE is drafted,
+  route it through Benefits Manager Sarah Mitchell (stage 1) and CFO
+  Ziggy Kravitz (stage 2) before it posts to the GL or distributes to
+  the divisions. Flag material variance vs FY budget for the CFO.
+  Capture immutable audit trail at every step.
+
+output:
+  - name: approved_je
+    type: structured_data
+    description: "JE with both stage approvers + timestamps captured"
+  - name: audit_chain
+    type: audit_trail
+    description: "Immutable DDB-backed audit log"
+
+context:
+  business_rules:
+    - "Stage 1 (Benefits Manager) reviews allocation accuracy + exception resolutions"
+    - "Stage 2 (CFO) reviews material variance + total spend trajectory"
+    - "Material variance threshold: > $50K vs FY budget run-rate"
+    - "Stage 1 SLA: 4 business hours. Stage 2 SLA: 24 business hours"
+    - "Skip stage 2 only if total spend variance < 2% AND no exception was overridden"
+  approver_chain:
+    - role: Benefits Manager
+      person: Sarah Mitchell
+      sla_hours: 4
+    - role: CFO
+      person: Ziggy Kravitz
+      sla_hours: 24
+
+actions:
+  - name: assemble_allocation_bundle
+    action_id: manufacturing_multi_division.assemble_allocation_bundle
+    description: "Bundle staged allocations + resolved exceptions into review packet"
+    required: true
+  - name: benefits_manager_review
+    action_id: manufacturing_multi_division.benefits_manager_review
+    description: "Stage-1 HITL review (Sarah Mitchell)"
+    required: true
+  - name: flag_material_variance
+    action_id: manufacturing_multi_division.flag_material_variance
+    description: "Flag spend variance > $50K vs FY budget"
+    required: true
+  - name: cfo_signoff
+    action_id: manufacturing_multi_division.cfo_signoff
+    description: "Stage-2 HITL sign-off (Ziggy Kravitz)"
+    required: true
+  - name: commit_audit_trail
+    action_id: manufacturing_multi_division.commit_audit_trail
+    description: "Commit immutable audit log to DDB"
+    required: true
+
+recipe: |
+  1. After exception detection completes, assemble the consolidated
+     review packet. Include: per-division splits, exception summary
+     (auto-fixed + overridden + dismissed), $ variance vs prior month,
+     $ variance vs FY budget.
+  2. Route to Sarah Mitchell. She sees the dashboard view with diffs
+     highlighted. She can: approve, request revision, or escalate any
+     line to CFO. Capture her decision + timestamp.
+  3. Compute material variance flag. If consolidated spend deviates
+     > $50K from FY budget run-rate, attach a CFO callout block
+     explaining the drivers.
+  4. Route to Ziggy Kravitz. He sees Sarah's review notes plus the
+     variance callout. He can approve or reject. Capture decision +
+     timestamp.
+  5. On both approvals: lock the JE (no further edits possible) and
+     write the full audit chain to DDB (immutable, hash-chained).
+  6. Trigger the downstream JE generation + distribution playbook.
+
+triggers:
+  - type: pipeline_complete
+    upstream: pb-boler-2

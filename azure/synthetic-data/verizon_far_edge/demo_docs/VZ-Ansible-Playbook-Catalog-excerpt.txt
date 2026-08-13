@@ -1,0 +1,127 @@
+═══════════════════════════════════════════════════════════════════════════════
+VERIZON FAR EDGE · ANSIBLE PLAYBOOK CATALOG (NARRATIVE OVERVIEW)
+Document ID:    VZ-ANSIBLE-CATALOG-v6
+Revision:       Rev 6 · January 2026
+Companion to:   /data/scripts/ansible_robot_catalog.json
+═══════════════════════════════════════════════════════════════════════════════
+
+This document is the narrative companion to the structured JSON catalog at
+`ansible_robot_catalog.json`. The JSON is what SchemaWatchAgent reads; this
+prose is what a human reads when they need to understand WHY a playbook
+exists and what assumptions it makes about the Redfish schema.
+
+If you change a playbook's Redfish reference, you MUST update both the
+JSON and the corresponding section here.
+
+───────────────────────────────────────────────────────────────────────────────
+1. HEALTH-CHECK PLAYBOOKS
+───────────────────────────────────────────────────────────────────────────────
+
+  power_check.yml
+    Asserts the node power state via Redfish. Returns OK if PowerState=On
+    and Status.Health=OK. Used by node_health_check.yml, the nightly
+    sweep, and the pre-wave-deployment readiness check.
+
+  node_health_check.yml
+    Composite check rolling power, thermal headroom, storage controller
+    health, and BMC firmware version. Returns a single overall_health
+    score (0-100) used as the primary input to ApexSignal risk scoring.
+
+───────────────────────────────────────────────────────────────────────────────
+2. UPGRADE PLAYBOOKS
+───────────────────────────────────────────────────────────────────────────────
+
+  pre_upgrade_validation.yml
+    Pre-upgrade gate. Asserts power state, IPv6 reachability, disk space,
+    Ansible control-node version, and vendor support ticket presence
+    (for premium/platinum SLA tiers). Returns BLOCK if any assertion
+    fails; refuses to proceed to the upgrade itself.
+
+  post_upgrade_validation.yml
+    Post-upgrade smoke validation. Confirms PowerState, validates BIOS
+    version matches the target image, and re-runs ipv6_enumeration_check.
+
+  firmware_apply_24_12.yml (and 24_06, 24_01 siblings)
+    BMC-driven firmware update. Uploads the firmware bundle to the BMC,
+    triggers update mode, and waits for the device to come back via the
+    Redfish UpdateService.
+
+  rollback_to_checkpoint.yml
+    Rolls back to the last good snapshot taken by `bmc-cli snapshot`.
+
+  caas_drain.yml / caas_uncordon.yml
+    Drain and re-admit CaaS workloads around a maintenance window.
+
+───────────────────────────────────────────────────────────────────────────────
+3. WAVE-PLANNING PLAYBOOKS
+───────────────────────────────────────────────────────────────────────────────
+
+  site_readiness_check.yml
+    Per-site readiness sweep run 48 hours before wave authorization.
+
+  wave_deployment_preflight.yml
+    Wave-wide orchestrator. Loops site_readiness_check across every site
+    in the wave and aggregates the result into a single pass/fail.
+
+───────────────────────────────────────────────────────────────────────────────
+4. REGRESSION PLAYBOOKS (ROBOT)
+───────────────────────────────────────────────────────────────────────────────
+
+  thermal_baseline.robot
+    Captures a thermal sensor baseline at the start of each cycle.
+
+  thermal_regression.robot
+    Cycle-over-cycle thermal drift detection. Compares the current
+    cycle's FanSpeeds against the previous cycle stored in /data/baseline.
+    NOTE: References FanSpeeds.CurrentReading — BREAKING under v1.16.0.
+
+  ansible_idempotency_suite.yml
+    Runs every playbook in the catalog twice and asserts the second run
+    reports zero changed_tasks. Catches accidental imperative-style
+    additions to playbooks.
+
+───────────────────────────────────────────────────────────────────────────────
+5. MONITORING + ALERT PLAYBOOKS
+───────────────────────────────────────────────────────────────────────────────
+
+  fan_speed_monitor.yml / thermal_alert_check.yml
+    Continuous fan speed monitor with alert thresholds. Runs every 5
+    minutes. Both reference FanSpeeds[] — BREAKING under v1.16.0.
+
+  event_service_subscribe.yml
+    Subscribes the central alerting infrastructure to BMC Redfish events.
+
+───────────────────────────────────────────────────────────────────────────────
+6. RAN-LAYER PLAYBOOKS (ROBOT)
+───────────────────────────────────────────────────────────────────────────────
+
+  cu_up_latency_baseline.robot / cu_up_throughput.robot / cu_up_handover.robot
+    Sustained CU-UP interface validation. Owned by the RAN team.
+
+  gnb_du_config_push.robot
+    gNB-DU configuration push + diff. Owned by the RAN team.
+
+───────────────────────────────────────────────────────────────────────────────
+7. SECURITY PLAYBOOKS
+───────────────────────────────────────────────────────────────────────────────
+
+  firmware_signature_chain.robot
+    Validates the signed boot chain end-to-end: U-Boot, kernel, initrd, BMC.
+
+  secure_boot_chain.robot
+    Secure Boot + TPM PCR validation. References SecureBoot field —
+    BREAKING under v1.16.0 (field path changed in the BIOS subresource).
+
+  ldap_auth_check.yml
+    LDAP bind validation via Redfish AccountService.
+
+  session_service_validation.yml
+    Validates the SessionService timeout matches the security baseline.
+
+  oam_ssh_banner.robot
+    SSH banner + cipher policy validation.
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF EXCERPT — full catalog is 28 pages. Sections 8-12 cover BMC, storage,
+memory, network, and RT-kernel playbooks (cross-referenced in the JSON catalog).
+═══════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,251 @@
+# CBTS Apex AI Platform - Shipment Tracking Runbook
+# Natural Language Runbook for Manufacturing Logistics
+# Intent -> Output -> Context -> Recipe
+
+name: shipment_tracking
+version: "1.0.0"
+description: "Automated shipment tracking from BOL processing to delivery confirmation"
+industry: manufacturing
+category: logistics
+
+# =============================================================================
+# INTENT - What the agent should accomplish
+# =============================================================================
+intent: |
+  Process bills of lading and shipping documents to track inbound and outbound
+  shipments, update inventory systems, notify stakeholders of shipment status,
+  and manage delivery exceptions.
+
+# =============================================================================
+# OUTPUT - Expected deliverables from the runbook
+# =============================================================================
+output:
+  - name: shipment_record
+    type: structured_data
+    description: "Complete shipment record with tracking details"
+    schema:
+      bol_number: string
+      carrier: object
+      origin: object
+      destination: object
+      cargo: array
+      status: string
+
+  - name: tracking_update
+    type: status_update
+    description: "Shipment tracking status update"
+    schema:
+      tracking_number: string
+      current_status: string
+      location: string
+      eta: string
+      exceptions: array
+
+  - name: receiving_preparation
+    type: notification
+    description: "Notification to receiving dock for inbound shipments"
+    schema:
+      expected_date: string
+      dock_assignment: string
+      special_handling: array
+
+# =============================================================================
+# CONTEXT - Business rules and domain knowledge
+# =============================================================================
+context:
+  business_rules:
+    - "All inbound shipments must have valid BOL documentation"
+    - "Hazmat shipments require special handling notification"
+    - "Receiving dock must be notified 24 hours before arrival"
+    - "Late shipments (> 2 days) require automatic escalation"
+    - "High-value shipments (> $100k) require tracking verification"
+
+  carrier_requirements:
+    approved_carriers:
+      - FedEx
+      - UPS
+      - DHL
+      - "XPO Logistics"
+      - "Old Dominion"
+      - "Estes Express"
+    tracking_frequency_hours: 4
+    late_threshold_days: 2
+
+  receiving_rules:
+    advance_notice_hours: 24
+    dock_scheduling_required: true
+    weight_limit_lbs: 45000
+    operating_hours: "06:00-22:00"
+
+# =============================================================================
+# DATA SOURCES - Where to retrieve information
+# =============================================================================
+data_sources:
+  - name: bol_document
+    type: s3_document
+    description: "Bill of lading document"
+    input_parameter: document_s3_uri
+
+  - name: shipment_database
+    type: dynamodb
+    table: apex-shipments
+    description: "Shipment tracking records"
+
+  - name: carrier_apis
+    type: external_api
+    description: "Carrier tracking API integrations"
+
+  - name: purchase_orders
+    type: dynamodb
+    table: apex-purchase-orders
+    description: "Related purchase orders"
+
+# =============================================================================
+# ACTIONS - Available tools for the agent
+# =============================================================================
+actions:
+  - name: bol_extract
+    action_id: manufacturing.bol_extract
+    description: "Extract structured data from bill of lading"
+    required: true
+
+  - name: carrier_validate
+    action_id: manufacturing.carrier_validation
+    description: "Validate carrier and get tracking information"
+    required: true
+
+  - name: po_lookup
+    action_id: manufacturing.po_lookup
+    description: "Look up related purchase order"
+    required: false
+
+  - name: dock_schedule
+    action_id: manufacturing.dock_schedule
+    description: "Schedule receiving dock assignment"
+    required: false
+
+  - name: inventory_update
+    action_id: manufacturing.inventory_update
+    description: "Update expected inventory receipt"
+    required: false
+
+  - name: send_notification
+    action_id: core.send_notification
+    description: "Send status notifications"
+    required: false
+
+  - name: create_exception
+    action_id: core.create_exception
+    description: "Create exception record for issues"
+    required: false
+
+# =============================================================================
+# RECIPE - Natural language instructions for the agent
+# =============================================================================
+recipe: |
+  ## Shipment Tracking Workflow
+
+  ### Step 1: Document Processing
+  When a BOL document is received:
+  1. Use `bol_extract` to extract shipment details
+  2. Validate extraction of: BOL number, carrier, origin, destination, cargo
+  3. Check for hazmat indicators and flag if present
+  4. Link to existing PO using `po_lookup` if PO reference exists
+  5. Create shipment record in tracking system
+
+  ### Step 2: Carrier Validation
+  Verify carrier and obtain tracking:
+  1. Use `carrier_validate` with carrier name and SCAC code
+  2. Verify carrier is on approved carrier list
+  3. Obtain tracking number and current status
+  4. Set up tracking webhook if available
+  5. Calculate estimated arrival based on origin/destination
+
+  ### Step 3: Receiving Preparation (Inbound Only)
+  For inbound shipments:
+  1. Calculate expected arrival date
+  2. Check for special handling requirements (hazmat, oversized, fragile)
+  3. If arrival within 24 hours, use `dock_schedule` for dock assignment
+  4. Send advance shipping notice to receiving team
+  5. Update expected inventory in system using `inventory_update`
+
+  ### Step 4: Active Tracking
+  Monitor shipment progress:
+  1. Query carrier API for status updates every 4 hours
+  2. Update shipment record with location and ETA
+  3. Check for delivery exceptions or delays
+  4. If delay exceeds 2 days, create exception and escalate
+  5. For high-value shipments, verify each status change
+
+  ### Step 5: Exception Handling
+  When issues detected:
+  1. Use `create_exception` to log the issue
+  2. Notify relevant stakeholders (buyer, receiver, supplier)
+  3. For damaged shipments, initiate claims process
+  4. For lost shipments, escalate to carrier management
+  5. Update related PO status
+
+  ### Step 6: Delivery Confirmation
+  Upon delivery:
+  1. Update shipment status to delivered
+  2. Capture proof of delivery information
+  3. Notify receiving for inspection queue
+  4. Trigger receiving workflow for inbound
+  5. Close shipment record
+  6. Update PO received quantity
+
+  ### Step 7: Reporting & Analytics
+  Generate tracking metrics:
+  1. Calculate carrier on-time performance
+  2. Track average transit times by lane
+  3. Report exceptions by type and carrier
+  4. Flag carriers with poor performance
+  5. Update carrier scorecard
+
+# =============================================================================
+# TRIGGERS - How this runbook is activated
+# =============================================================================
+triggers:
+  - type: s3_event
+    bucket: apex-documents-incoming
+    prefix: shipping/
+    events: ["s3:ObjectCreated:*"]
+    description: "Triggered when BOL uploaded to S3"
+
+  - type: api
+    endpoint: /api/v1/track-shipment
+    method: POST
+    description: "Manual tracking request"
+
+  - type: webhook
+    source: carrier_api
+    description: "Carrier tracking webhook updates"
+
+  - type: schedule
+    cron: "0 */4 * * *"
+    description: "Poll active shipments every 4 hours"
+
+# =============================================================================
+# WORKER CONFIGURATION
+# =============================================================================
+worker:
+  queue: apex-shipment-tracking-queue
+  concurrency: 20
+  timeout_seconds: 180
+  retry_policy:
+    max_attempts: 5
+    backoff_multiplier: 2
+
+# =============================================================================
+# METADATA
+# =============================================================================
+metadata:
+  created_by: apex-platform
+  created_at: "2024-01-15"
+  last_updated: "2024-01-15"
+  tags:
+    - logistics
+    - shipping
+    - tracking
+    - manufacturing
+    - receiving

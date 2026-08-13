@@ -1,0 +1,73 @@
+playbook_id: pb-boler-1
+name: carrier_file_ingest
+version: "1.0.0"
+description: "Monthly carrier file ingest — extract, roster-match, division-lookup, stage for allocation."
+industry: manufacturing_multi_division
+category: benefits_operations
+
+intent: |
+  Catch every monthly carrier file (Cigna medical, Delta dental, VSP vision,
+  Fidelity 401k, Hartford life, Cigna STD-LTD) the moment it lands in S3.
+  Extract the full roster with BDA, match every life to an HRIS employee
+  record, look up that employee's current division assignment, and stage
+  the data for downstream allocation. Surface mismatches as exceptions
+  before they reach the JE.
+
+output:
+  - name: staged_allocation
+    type: structured_data
+    description: "Roster-matched, division-tagged premium data ready for allocation"
+  - name: ingest_summary
+    type: report
+    description: "Per-carrier totals, match rate, exception count"
+
+context:
+  business_rules:
+    - "All 6 carriers drop files on different days of month — process each on arrival"
+    - "Employee-to-division match must use the effective-dated HRIS roster (transfers matter)"
+    - "Match rate < 99.5% triggers HITL review before allocation"
+    - "Per-life premium variance > 3% vs prior month flags carrier drift exception"
+
+actions:
+  - name: detect_carrier_file
+    action_id: manufacturing_multi_division.carrier_file_detect
+    description: "S3 event listener for new carrier file drops"
+    required: true
+  - name: extract_carrier_file
+    action_id: manufacturing_multi_division.carrier_file_extract
+    description: "BDA extraction of carrier invoice + roster"
+    required: true
+  - name: match_employee_roster
+    action_id: manufacturing_multi_division.match_employee_roster
+    description: "Match covered lives to HRIS employee records"
+    required: true
+  - name: lookup_division
+    action_id: manufacturing_multi_division.lookup_division
+    description: "Resolve employee → division using effective-dated assignment"
+    required: true
+  - name: stage_for_allocation
+    action_id: manufacturing_multi_division.stage_for_allocation
+    description: "Write to allocation staging table for downstream pipeline"
+    required: true
+
+recipe: |
+  1. Wait for S3 PutObject event in apex-boler-carrier-files/{carrier}/.
+     Trigger only when file matches naming convention (Carrier_Type_YYYYMM.*).
+  2. Run BDA against the file using bp-boler-carrier-invoice. Extract
+     carrier_name, period, total_lives, total_premium, plan_tiers, and
+     the per-life covered_lives array.
+  3. For each covered life, match by SSN-last-4 + name + DOB against
+     the Workday HRIS roster. Record match confidence per row.
+  4. Use the employee's effective-dated division assignment (effective_from
+     ≤ period_end ≤ effective_to). If an employee transferred mid-month,
+     pro-rate across both divisions.
+  5. Stage the matched + division-tagged rows in the allocation staging
+     table. Surface any unmatched life or low-confidence match as an
+     exception packet (EXC-YYYY-NNNN).
+  6. Emit ingest_summary covering per-carrier match rate, total lives,
+     total premium, and exception count.
+
+triggers:
+  - type: s3_event
+    bucket: apex-boler-carrier-files
+    pattern: "*/Carrier_*_2026*.txt"

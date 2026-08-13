@@ -1,0 +1,121 @@
+playbook_id: pb-eprod-1
+name: invoice_intelligence
+version: "1.0.0"
+description: "Vendor invoice extraction + MSA rate validation for EPROD AP. Halliburton, Schlumberger, Baker Hughes, Kiewit — 75% review-time reduction."
+industry: oil_gas_midstream
+category: accounts_payable
+
+intent: |
+  Process every vendor invoice landing in the EPROD AP intake bucket. Extract
+  vendor, invoice number, line items, asset codes, MSA references, amounts,
+  and tax codes via BDA. Validate billed unit rates against the vendor's
+  active MSA rate card and flag any line item whose rate variance exceeds
+  2%. Route every invoice over $50K with no PO reference to a human
+  reviewer. Never write to the ERP without explicit human approval — the
+  agent only stages an ERP write-back in the queue. Every decision is
+  logged to Audit Lens with the source MSA, line-item delta, and the
+  reviewer identity (if HITL fired).
+
+output:
+  - name: processed_invoice
+    type: structured_data
+    description: "Fully extracted invoice with vendor, line items, totals, asset codes, MSA refs"
+  - name: rate_variance_report
+    type: structured_data
+    description: "Per-line rate comparison vs MSA card with variance percentages"
+  - name: routing_decision
+    type: routing_decision
+    description: "auto_approve | hitl_review | reject with reason"
+  - name: audit_lens_event
+    type: audit_event
+    description: "Immutable audit trail entry written before any ERP staging"
+
+context:
+  business_rules:
+    - "Every invoice must reference an active MSA"
+    - "Rate variance vs MSA card > 2% requires human review"
+    - "Invoices > $50K with no PO require HITL approval"
+    - "Duplicate invoice number (same vendor, same period) blocks processing"
+    - "ERP write-back is staged only — never auto-committed"
+  approval_thresholds:
+    auto_approve: 10000
+    manager: 50000
+    director: 250000
+
+actions:
+  - name: extract_invoice
+    action_id: oil_gas_midstream.extract_invoice
+    description: "BDA extraction of vendor, invoice fields, line items, asset codes"
+    required: true
+  - name: lookup_msa_rate_card
+    action_id: oil_gas_midstream.lookup_msa_rate_card
+    description: "Resolve the active MSA + rate card for the invoicing vendor"
+    required: true
+  - name: validate_rate_variance
+    action_id: oil_gas_midstream.validate_rate_variance
+    description: "Compute per-line variance vs MSA card; flag any > 2%"
+    required: true
+  - name: check_duplicate_invoice
+    action_id: oil_gas_midstream.check_duplicate_invoice
+    description: "Search for same vendor + invoice_number in last 18 months"
+    required: true
+  - name: route_hitl_or_approve
+    action_id: oil_gas_midstream.route_hitl_or_approve
+    description: "Auto-approve if all gates pass; otherwise route to AP reviewer queue"
+    required: true
+  - name: erp_writeback_queue
+    action_id: oil_gas_midstream.erp_writeback_queue
+    description: "Stage the invoice in the ERP write-back queue (human approves the commit)"
+    required: true
+  - name: audit_lens_log
+    action_id: oil_gas_midstream.audit_lens_log
+    description: "Immutable audit-trail log entry with all decisions + sources"
+    required: true
+
+recipe: |
+  ## EPROD Invoice Intelligence Recipe
+
+  ### Step 1 · EXTRACT — extract_invoice
+  - Source: S3 drop in apex-eprod-invoices-incoming
+  - BDA blueprint: bp-eprod-invoice (14 fields)
+  - Validate confidence >= 90% on vendor + invoice_number + total
+
+  ### Step 2 · LOOKUP — lookup_msa_rate_card
+  - Resolve vendor → active MSA via vendor_id
+  - Pull the MSA rate card (unit rates per service/asset code)
+  - If no active MSA → halt and route to AP Lead
+
+  ### Step 3 · VALIDATE — validate_rate_variance
+  - For each line item: compare billed_rate vs msa_rate_for_asset_code
+  - Compute variance_pct = (billed - msa) / msa
+  - Flag if any line variance > 2%
+
+  ### Step 4 · VALIDATE — check_duplicate_invoice
+  - Query AP history for same vendor + invoice_number in 18-month window
+  - If duplicate → halt and route to AP Lead
+
+  ### Step 5 · DECIDE — route_hitl_or_approve
+  - If total > $50K AND no PO → HITL
+  - If any variance > 2% → HITL
+  - Otherwise auto-approve
+
+  ### Step 6 · EXECUTE — erp_writeback_queue
+  - Stage in write-back queue (NEVER commit without human)
+  - Attach extracted JSON + MSA evidence
+
+  ### Step 7 · AUDIT — audit_lens_log
+  - Emit immutable record: invoice id, decisions, variance, reviewer, sources
+  - Audit Lens trace id surfaced to AP team
+
+triggers:
+  - type: s3_event
+    bucket: apex-eprod-invoices-incoming
+    prefix: invoices/
+    events: ["s3:ObjectCreated:*"]
+  - type: api
+    endpoint: /api/v1/eprod/invoices
+    method: POST
+
+metadata:
+  created_by: apex-platform
+  tags: [eprod, oil_gas_midstream, accounts_payable, msa_validation]

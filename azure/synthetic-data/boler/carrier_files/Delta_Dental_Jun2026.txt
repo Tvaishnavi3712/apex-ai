@@ -1,0 +1,39 @@
+DELTA DENTAL — GROUP PREMIUM INVOICE
+═══════════════════════════════════════════════════════════════
+Group:           The Boler Company (Group #DD-9928-412)
+Period:          June 1-30, 2026
+Statement Date:  May 28, 2026
+Carrier Contact: Marcus Liu · groups@deltadental.com
+
+─────────────── SUMMARY ───────────────
+Total Premium:     $187,450.00
+Total Lives:       831 employees (16 employees waived dental)
+Average per EE:    $225.57
+
+─────────────── DIVISION BREAKDOWN ───────────────
+Hendrickson Intl       406 EE  $126,800.00
+Boler Mfg Services     154 EE  $49,800.00
+Boler Holdings         121 EE  $39,600.00
+Boler Real Estate       87 EE  $28,400.00
+Corporate/Shared        63 EE  $21,080.00
+Adjustments              -     -$78,230.00 (16 waivers prorated)
+
+─────────────── COVERAGE TIER ───────────────
+EE-only PPO         598 employees × $208/mo  = $124,384
+EE+Family PPO       233 employees × $271/mo  = $63,143
+                                              ────────
+                                              $187,527
+Less wave-off credit: $77 → $187,450 net
+
+─────────────── DRIFT NOTICE ───────────────
+Rate drift this cycle: +1.8% above contract.
+Contract rate (Apr 2024 - Jul 2026): $204/$266
+Billed rate (Jun 2026):              $208/$271
+
+Within tolerance band (+3% contracted cap). No Signal alert generated.
+Trending: +1.8% over 6 months — monitor at next renewal.
+
+─────────────── REMITTANCE ───────────────
+Payable to:   Delta Dental of Illinois
+Reference:    BOLER-JUN26-DENTAL
+Method:        ACH (auto-debit on file)

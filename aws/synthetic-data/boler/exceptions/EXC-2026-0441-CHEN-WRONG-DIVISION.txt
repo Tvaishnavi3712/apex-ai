@@ -1,0 +1,73 @@
+APEX EXCEPTION RECORD · HIGH PRIORITY
+═══════════════════════════════════════════════════════════════
+The Boler Company · June 2026 Benefits Cycle
+═══════════════════════════════════════════════════════════════
+
+EXCEPTION ID:     EXC-2026-0441
+Type:             Reclassification Error
+Severity:         HIGH
+Detection Time:   June 6, 2026 · 09:41:03 ET
+Detection Agent:  Benefits Allocation Agent (BEN)
+Status:           AWAITING CFO SIGN-OFF
+
+─────────────── SUBJECT ───────────────
+Employee Name:     Chen, Robert
+Employee ID:       EMP-4821
+Hire Date:         2018-03-14
+Current Division:  Boler Holdings (effective 2026-05-15)
+Carrier File Coding: Hendrickson Intl (INCORRECT)
+Cost Center:       6200-001 → should be 6200-004
+Job Title:         Senior Engineering Manager
+Manager:           Patel, Anita (EMP-2104)
+
+─────────────── DETECTION DETAIL ───────────────
+Source Cross-References:
+  • HRIS (Workday)     :  Boler Holdings (CC 6200-004) effective 2026-05-15
+  • Cigna Medical      :  Hendrickson Intl (CC 6200-001) — MISMATCH
+  • Delta Dental       :  Hendrickson Intl (CC 6200-001) — MISMATCH
+  • Fidelity 401k       :  Hendrickson Intl (CC 6200-001) — MISMATCH
+  • VSP Vision         :  Hendrickson Intl (CC 6200-001) — MISMATCH
+  • Hartford Life      :  Hendrickson Intl (CC 6200-001) — MISMATCH
+  • Cigna STD/LTD      :  Hendrickson Intl (CC 6200-001) — MISMATCH
+
+All 6 benefit lines incorrectly allocated to Hendrickson Intl.
+
+─────────────── FINANCIAL IMPACT ───────────────
+Per-month misallocation:       $3,840.00
+  • Cigna Medical (Family PPO):  $1,753.00
+  • Delta Dental (Family):       $271.00
+  • Fidelity 401k (match):        $1,420.00 (4.5% × $31,560 monthly comp)
+  • VSP Vision (Family):          $134.00
+  • Hartford Basic Life:           $4.65
+  • Cigna STD/LTD:                $257.35
+
+Catch-up (May 15-31 prorate):  $1,920.00 (16 days)
+Annualized if not corrected:   $46,080.00
+
+─────────────── RECOMMENDED ACTION ───────────────
+  - REMOVE: Hendrickson Intl · Cost Center 6200-001 · $3,840/mo
+  + ADD:    Boler Holdings · Cost Center 6200-004 · $3,840/mo
+
+Effective date: 2026-05-15 (backdated to actual transfer date)
+Catch-up adjustment: $1,920 prorate posted to June JE
+
+─────────────── ROUTING ───────────────
+  • Detected by:      Benefits Allocation Agent (96.1% confidence)
+  • Routed to:        Exception Resolution Agent for HITL queue
+  • Step Functions:   approval-workflow-v2.boler.us-east-1
+  • Stage 1:          Sarah Mitchell (Benefits Director) — APPROVED 2026-06-05 09:22
+  • Stage 2:          Ziggy Kravitz (CFO) — PENDING
+  • Notification:     SES email + SNS push sent 2026-06-06 09:41
+  • SLA:               24 hours (current age: 18 hrs · 6 hrs remaining)
+
+─────────────── AUDIT TRAIL ───────────────
+  2026-06-03 09:14:22 · Carrier file ingested
+  2026-06-03 11:32:07 · HRIS cross-reference completed
+  2026-06-03 11:32:14 · Mismatch detected (BEN)
+  2026-06-05 09:22:14 · Stage 1 approved (Sarah Mitchell)
+  2026-06-06 09:38:22 · Stage 2 notification sent (SES + SNS)
+  2026-06-06 09:41:03 · Routed to CFO HITL queue
+
+Storage: DynamoDB · partition=2026-06 · sort=EXC-0441
+Encryption: KMS · CMK rotated quarterly
+Retention: 7 years per Boler SOC 2 policy

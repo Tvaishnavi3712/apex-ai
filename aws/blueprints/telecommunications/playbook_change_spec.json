@@ -1,0 +1,58 @@
+{
+  "blueprintName": "bmc-playbook-change-spec",
+  "blueprintVersion": "1.0.0",
+  "description": "Output blueprint \u2014 the BMC Ansible playbook change-spec produced by PlaybookAgent for a new platform. Per-role assessment with diff, reason, risk. The PROPOSAL artifact a human approves before any commit.",
+  "industry": "telecommunications",
+  "documentType": "playbook_change_spec_output",
+  "bdaSchema": {
+    "class": "ApexPlaybookChangeSpec",
+    "description": "Per-role change assessment for new-platform playbook support",
+    "fields": {
+      "new_server_type": {
+        "type": "string",
+        "instruction": "e.g. HPE EL140 Gen12 (iLO7)",
+        "required": true
+      },
+      "playbook_commit": {
+        "type": "string",
+        "instruction": "playbook git commit/tag",
+        "required": true
+      },
+      "change_required": {
+        "type": "number",
+        "instruction": "count of CHANGE REQUIRED roles",
+        "required": true
+      },
+      "no_change": {
+        "type": "number",
+        "instruction": "count of NO-CHANGE roles",
+        "required": true
+      },
+      "verify_required": {
+        "type": "number",
+        "instruction": "count of VERIFY roles",
+        "required": true
+      },
+      "role_assessments": {
+        "type": "array",
+        "instruction": "{role, assessment, proposed_ref, current_code, required_change, reason, risk}",
+        "required": true
+      },
+      "new_roles": {
+        "type": "array",
+        "instruction": "net-new roles required (e.g. security-hardening)",
+        "required": false
+      },
+      "compliance_notes": {
+        "type": "array",
+        "instruction": "NEBS / operational notes",
+        "required": false
+      },
+      "status": {
+        "type": "string",
+        "instruction": "DRAFT \u2014 pending automation-team review",
+        "required": true
+      }
+    }
+  }
+}

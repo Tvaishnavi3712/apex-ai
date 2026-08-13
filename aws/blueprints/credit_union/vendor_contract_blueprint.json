@@ -1,0 +1,36 @@
+{
+  "blueprint_id": "bp-cwfcu-vendor-contract",
+  "name": "CWFCU Vendor Contract / MSA",
+  "description": "Third-party vendor contract (Fiserv, Eltropy, CO-OP, Diebold, Jack Henry, Heartland, etc.) with SLA, rate escalation, and policy obligation extraction.",
+  "industry": "credit_union",
+  "document_type": "vendor_contract",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "CWFCU Vendor Contract",
+    "description": "Vendor contract schema covering terms, SLA, rate escalation, policy obligations triggered, and renewal cycle.",
+    "extractionInstructions": "Surface auto-renewal clauses + renewal-window dates explicitly. Extract every policy-obligation clause that requires CWFCU employee ack (security training, PCI, data residency, etc.).",
+    "fields": {
+      "contract_id":          { "type": "string", "description": "Internal contract ID (VND-VENDOR-YYYY)", "required": true },
+      "vendor_name":          { "type": "string", "description": "Vendor legal name", "required": true },
+      "vendor_tier":          { "type": "string", "description": "CRITICAL (Tier 1) / HIGH (Tier 2) / MEDIUM / LOW", "required": true },
+      "service_category":     { "type": "string", "description": "Core banking / ATM / Member experience / Compliance / etc.", "required": true },
+      "vendor_risk_score":    { "type": "number", "description": "0-100 (lower is better)", "required": true },
+      "effective_date":       { "type": "date",   "description": "Contract effective date", "required": true },
+      "initial_term_end":     { "type": "date",   "description": "Initial term end", "required": true },
+      "renewal_window_start": { "type": "date",   "description": "Renewal window opens", "required": true },
+      "renewal_window_end":   { "type": "date",   "description": "Renewal window closes (notice deadline)", "required": true },
+      "auto_renewal":         { "type": "boolean","description": "Auto-renews unless notice", "required": true },
+      "notice_required_days": { "type": "number", "description": "Notice days required to non-renew", "required": false },
+      "annual_value_usd":     { "type": "number", "description": "Annual contract value", "required": true },
+      "rate_escalator_cap_pct": { "type": "number", "description": "Annual rate escalation cap (%)", "required": false },
+      "current_drift_pct":    { "type": "number", "description": "Actual rate drift vs baseline (%)", "required": false },
+      "sla_uptime_pct":       { "type": "number", "description": "Guaranteed uptime (%)", "required": true },
+      "sla_p1_response_hours": { "type": "number", "description": "P1 response SLA (hrs)", "required": true },
+      "sla_breaches_ytd":     { "type": "number", "description": "Breach count YTD", "required": true },
+      "performance_credits_owed_usd": { "type": "number", "description": "Credits owed by vendor", "required": false },
+      "policy_obligations":   { "type": "array",  "description": "Triggered CWFCU policy obligations (training, attestations, etc.)", "required": false },
+      "renewal_status":       { "type": "string", "description": "OPEN / IN_NEGOTIATION / RENEWED / EXPIRED / TERMINATED", "required": true },
+      "ncua_exam_folder_path": { "type": "string","description": "NCUA exam folder index path", "required": true }
+    }
+  }
+}

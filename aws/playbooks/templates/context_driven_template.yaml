@@ -1,0 +1,373 @@
+# =============================================================================
+# APEX AI Platform - Context-Driven Playbook Template
+# =============================================================================
+# This template demonstrates the production-ready context-driven architecture.
+# All business rules live in the context section; actions read from context.
+# =============================================================================
+
+playbook:
+  name: "${industry}_${workflow}_playbook"
+  version: "2.0.0"
+  industry: "${industry}"
+  description: "Context-driven playbook template"
+
+  # ---------------------------------------------------------------------------
+  # CONFIGURATION INHERITANCE
+  # ---------------------------------------------------------------------------
+  # Reference base configuration for environment-specific values
+  # ---------------------------------------------------------------------------
+  inherits:
+    - config/base_configuration.yaml
+
+  # ---------------------------------------------------------------------------
+  # INTENT
+  # ---------------------------------------------------------------------------
+  # What this playbook accomplishes (natural language)
+  # ---------------------------------------------------------------------------
+  intent: |
+    Process ${document_type} documents by:
+    1. Extracting structured data using AI
+    2. Validating against business rules defined in context
+    3. Routing for approval based on context thresholds
+    4. Recording audit trail and notifications
+
+  # ---------------------------------------------------------------------------
+  # OUTPUT
+  # ---------------------------------------------------------------------------
+  # Expected outputs from this playbook
+  # ---------------------------------------------------------------------------
+  output:
+    schema:
+      type: object
+      properties:
+        document_id:
+          type: string
+        extraction_results:
+          type: object
+        validation_status:
+          type: string
+          enum: [passed, failed, review_required]
+        approval_status:
+          type: string
+          enum: [auto_approved, pending, approved, rejected]
+        processing_metadata:
+          type: object
+
+  # ===========================================================================
+  # CONTEXT SECTION - ALL BUSINESS RULES LIVE HERE
+  # ===========================================================================
+  # Actions read from this context instead of using hardcoded values.
+  # This enables configuration-driven behavior without code changes.
+  # ===========================================================================
+  context:
+    # -------------------------------------------------------------------------
+    # AWS Resources (environment-substituted)
+    # -------------------------------------------------------------------------
+    aws_resources:
+      s3_bucket: "${aws_resources.s3_buckets.documents_incoming}"
+      dynamodb_table: "apex-${APEX_ENVIRONMENT}-${entity_name}"
+      sqs_queue: "apex-${APEX_ENVIRONMENT}-${workflow}-queue"
+
+    # -------------------------------------------------------------------------
+    # Document Type Configuration
+    # -------------------------------------------------------------------------
+    document_config:
+      document_type: "${document_type}"
+      blueprint_id: "${blueprint_id}"
+      supported_formats: ["pdf", "png", "jpg", "tiff"]
+      max_file_size_mb: 25
+      retention_days: 2555
+
+    # -------------------------------------------------------------------------
+    # Extraction Rules
+    # -------------------------------------------------------------------------
+    # Define field-level extraction rules and validation
+    # -------------------------------------------------------------------------
+    extraction_rules:
+      confidence_threshold: 85
+      required_fields:
+        # Example: Define required fields for your document type
+        - field_name: "document_date"
+          type: "date"
+          format: "YYYY-MM-DD"
+          validation: "must be within 90 days"
+        - field_name: "total_amount"
+          type: "currency"
+          min: 0
+          max: 10000000
+        - field_name: "entity_name"
+          type: "string"
+          min_length: 2
+          max_length: 200
+
+      optional_fields:
+        - field_name: "reference_number"
+          type: "string"
+
+    # -------------------------------------------------------------------------
+    # Validation Rules
+    # -------------------------------------------------------------------------
+    # Business validation rules applied after extraction
+    # -------------------------------------------------------------------------
+    validation_rules:
+      # Date validations
+      date_rules:
+        max_age_days: 90
+        allow_future_dates: false
+
+      # Amount validations
+      amount_rules:
+        require_positive: true
+        max_variance_percent: 10
+        currency_codes: ["USD", "EUR", "GBP", "CAD"]
+
+      # Entity validations
+      entity_rules:
+        require_active_status: true
+        blocked_entities: []  # Add blocked entity IDs
+
+      # Cross-field validations
+      cross_field_rules:
+        - rule: "line_items_sum_equals_total"
+          tolerance_percent: 0.01
+        - rule: "dates_are_chronological"
+          fields: ["order_date", "ship_date", "delivery_date"]
+
+    # -------------------------------------------------------------------------
+    # Approval Workflow Configuration
+    # -------------------------------------------------------------------------
+    # Define approval thresholds and routing rules
+    # -------------------------------------------------------------------------
+    approval_config:
+      # Amount-based approval tiers
+      thresholds:
+        auto_approve:
+          max_amount: 5000
+          conditions:
+            - confidence_above: 95
+            - no_validation_errors: true
+            - entity_verified: true
+
+        supervisor_approval:
+          max_amount: 25000
+          approvers: ["supervisor", "team_lead"]
+          sla_hours: 24
+
+        manager_approval:
+          max_amount: 50000
+          approvers: ["manager", "dept_head"]
+          sla_hours: 48
+
+        director_approval:
+          max_amount: 100000
+          approvers: ["director"]
+          sla_hours: 72
+
+        vp_approval:
+          max_amount: 500000
+          approvers: ["vp", "svp"]
+          sla_hours: 96
+
+        executive_approval:
+          max_amount: null  # No limit
+          approvers: ["cfo", "ceo"]
+          sla_hours: 120
+
+      # Escalation rules
+      escalation:
+        sla_breach_action: "escalate_to_next_level"
+        max_escalations: 3
+        notification_channels: ["email", "slack"]
+
+    # -------------------------------------------------------------------------
+    # Notification Configuration
+    # -------------------------------------------------------------------------
+    notifications:
+      on_extraction_complete:
+        enabled: true
+        channels: ["email"]
+        template: "extraction_complete"
+
+      on_validation_failed:
+        enabled: true
+        channels: ["email", "slack"]
+        template: "validation_failed"
+        include_details: true
+
+      on_approval_required:
+        enabled: true
+        channels: ["email"]
+        template: "approval_required"
+
+      on_approved:
+        enabled: true
+        channels: ["email"]
+        template: "document_approved"
+
+      on_rejected:
+        enabled: true
+        channels: ["email", "slack"]
+        template: "document_rejected"
+        include_reason: true
+
+    # -------------------------------------------------------------------------
+    # Compliance Configuration
+    # -------------------------------------------------------------------------
+    compliance:
+      audit_all_actions: true
+      pii_masking_enabled: true
+      retention_policy: "standard_7_year"
+      regulatory_frameworks: []  # e.g., ["SOX", "HIPAA", "GDPR"]
+
+    # -------------------------------------------------------------------------
+    # Integration Configuration
+    # -------------------------------------------------------------------------
+    integrations:
+      # ERP Integration
+      erp:
+        enabled: false
+        system: "SAP"  # or "Oracle", "NetSuite", etc.
+        endpoint: "${ERP_ENDPOINT}"
+        sync_on_approval: true
+
+      # Accounting Integration
+      accounting:
+        enabled: false
+        system: "QuickBooks"
+        auto_post: false
+
+  # ===========================================================================
+  # RECIPE - PROCESSING STEPS
+  # ===========================================================================
+  # Recipe references context values instead of hardcoding
+  # ===========================================================================
+  recipe: |
+    1. RECEIVE DOCUMENT
+       - Accept document from context.aws_resources.s3_bucket
+       - Validate format against context.document_config.supported_formats
+       - Check file size against context.document_config.max_file_size_mb
+
+    2. EXTRACT DATA
+       - Use blueprint context.document_config.blueprint_id
+       - Apply confidence threshold from context.extraction_rules.confidence_threshold
+       - Extract all fields defined in context.extraction_rules.required_fields
+       - Flag fields below threshold for human review
+
+    3. VALIDATE EXTRACTION
+       - Apply context.validation_rules.date_rules
+       - Apply context.validation_rules.amount_rules
+       - Apply context.validation_rules.entity_rules
+       - Run context.validation_rules.cross_field_rules
+
+    4. DETERMINE APPROVAL ROUTE
+       - Look up amount in context.approval_config.thresholds
+       - If meets auto_approve conditions, auto-approve
+       - Otherwise route to appropriate approver level
+       - Apply SLA from context.approval_config.thresholds.{level}.sla_hours
+
+    5. PROCESS APPROVAL
+       - Track approval status
+       - Handle escalations per context.approval_config.escalation
+       - Send notifications per context.notifications configuration
+
+    6. COMPLETE PROCESSING
+       - Update status in context.aws_resources.dynamodb_table
+       - Trigger integrations if context.integrations.{system}.enabled
+       - Archive document per context.compliance.retention_policy
+
+  # ===========================================================================
+  # FACTORY CHAIN - SMALL FACTORY EXECUTION
+  # ===========================================================================
+  # Each factory specifies which context sections it needs
+  # ===========================================================================
+  factory_chain:
+    chainId: "${workflow}_chain"
+    description: "Context-driven ${workflow} processing chain"
+    factories:
+      - id: document_intake
+        action: document_intake
+        context_keys: [aws_resources, document_config]
+        timeout_seconds: 60
+
+      - id: data_extraction
+        action: data_extraction
+        depends_on: [document_intake]
+        context_keys: [extraction_rules, document_config]
+        ai_enhanced: true
+        timeout_seconds: 120
+
+      - id: validation
+        action: validation
+        depends_on: [data_extraction]
+        context_keys: [validation_rules, extraction_rules]
+        timeout_seconds: 60
+
+      - id: approval_routing
+        action: approval_routing
+        depends_on: [validation]
+        context_keys: [approval_config]
+        timeout_seconds: 30
+
+      - id: notification
+        action: notification
+        depends_on: [approval_routing]
+        context_keys: [notifications]
+        timeout_seconds: 30
+
+      - id: completion
+        action: completion
+        depends_on: [notification]
+        context_keys: [aws_resources, compliance, integrations]
+        timeout_seconds: 60
+
+  # ===========================================================================
+  # ACTIONS MAPPING
+  # ===========================================================================
+  actions:
+    - id: document_intake
+      handler: "core.document_intake"
+      description: "Receive and validate incoming document"
+
+    - id: data_extraction
+      handler: "${industry}.data_extraction"
+      description: "Extract structured data using AI"
+
+    - id: validation
+      handler: "${industry}.validation"
+      description: "Validate extracted data against business rules"
+
+    - id: approval_routing
+      handler: "core.approval_routing"
+      description: "Route for appropriate approval level"
+
+    - id: notification
+      handler: "core.notification"
+      description: "Send notifications based on status"
+
+    - id: completion
+      handler: "core.completion"
+      description: "Complete processing and archive"
+
+  # ===========================================================================
+  # TRIGGERS
+  # ===========================================================================
+  triggers:
+    - type: s3
+      bucket: "${aws_resources.s3_buckets.documents_incoming}"
+      prefix: "${industry}/${workflow}/"
+      events: ["s3:ObjectCreated:*"]
+
+    - type: api
+      path: "/api/v2/${industry}/${workflow}"
+      methods: ["POST"]
+
+  # ===========================================================================
+  # WORKER CONFIGURATION
+  # ===========================================================================
+  worker:
+    queue: "apex-${APEX_ENVIRONMENT}-${workflow}-queue"
+    concurrency: 5
+    timeout_seconds: 300
+    visibility_timeout: 60
+    max_retries: 3
+    dead_letter_queue: "apex-${APEX_ENVIRONMENT}-${workflow}-dlq"

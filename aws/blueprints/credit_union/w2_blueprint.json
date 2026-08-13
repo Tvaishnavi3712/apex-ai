@@ -1,0 +1,29 @@
+{
+  "blueprint_id": "bp-cwfcu-w2",
+  "name": "CWFCU W-2",
+  "description": "IRS Form W-2 — wages and tax statement — for loan income verification.",
+  "industry": "credit_union",
+  "document_type": "w2",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "CWFCU W-2",
+    "description": "W-2 schema (boxes 1-20).",
+    "extractionInstructions": "Cross-reference EIN with employer name. Validate wages box 1 against most recent paystub YTD.",
+    "fields": {
+      "tax_year":             { "type": "number", "description": "Tax year", "required": true },
+      "employer_ein":         { "type": "string", "description": "Employer EIN (box b)", "required": true },
+      "employer_name":        { "type": "string", "description": "Employer name + address (box c)", "required": true },
+      "employee_ssn_last4":   { "type": "string", "description": "Employee SSN last 4 (box a)", "required": true },
+      "employee_name":        { "type": "string", "description": "Employee name + address (box e/f)", "required": true },
+      "wages_box1":           { "type": "number", "description": "Wages, tips, other comp (box 1)", "required": true },
+      "federal_wh_box2":      { "type": "number", "description": "Federal income tax withheld (box 2)", "required": true },
+      "social_security_wages_box3": { "type": "number", "description": "SS wages (box 3)", "required": true },
+      "social_security_tax_box4":   { "type": "number", "description": "SS tax withheld (box 4)", "required": true },
+      "medicare_wages_box5":  { "type": "number", "description": "Medicare wages (box 5)", "required": true },
+      "medicare_tax_box6":    { "type": "number", "description": "Medicare tax (box 6)", "required": true },
+      "state_wages_box16":    { "type": "number", "description": "State wages (box 16)", "required": false },
+      "state_wh_box17":       { "type": "number", "description": "State tax withheld (box 17)", "required": false },
+      "state_code":           { "type": "string", "description": "State 2-letter code (box 15)", "required": false }
+    }
+  }
+}

@@ -1,0 +1,228 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: APEX AI Platform - Email Intake Infrastructure
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues: [dev, staging, prod]
+
+  DomainName:
+    Type: String
+    Description: Email domain for receiving documents
+    Default: apex.company.com
+
+  NotificationEmail:
+    Type: String
+    Description: Email address for sending notifications
+    Default: noreply@apex.company.com
+
+  SupportEmail:
+    Type: String
+    Description: Support email for replies
+    Default: support@company.com
+
+  DocumentBucket:
+    Type: String
+    Description: S3 bucket for storing documents
+    Default: apex-documents
+
+  WorkItemsTable:
+    Type: String
+    Description: DynamoDB table for work items
+    Default: apex-work-items
+
+Resources:
+
+  #############################################
+  # S3 Bucket for Email Storage
+  #############################################
+
+  EmailInboxBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "apex-email-inbox-${Environment}"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LifecycleConfiguration:
+        Rules:
+          - Id: DeleteOldEmails
+            Status: Enabled
+            ExpirationInDays: 30
+          - Id: DeleteOldRawEmails
+            Status: Enabled
+            Prefix: raw/
+            ExpirationInDays: 7
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: Application
+          Value: APEX
+        - Key: Component
+          Value: EmailIntake
+
+  EmailInboxBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref EmailInboxBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowSESPuts
+            Effect: Allow
+            Principal:
+              Service: ses.amazonaws.com
+            Action: s3:PutObject
+            Resource: !Sub "${EmailInboxBucket.Arn}/*"
+            Condition:
+              StringEquals:
+                aws:Referer: !Ref AWS::AccountId
+
+  #############################################
+  # Lambda Function for Email Processing
+  #############################################
+
+  EmailParserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "apex-email-parser-${Environment}"
+      Description: Parse incoming emails and route documents to APEX
+      Runtime: python3.12
+      Handler: handler.lambda_handler
+      CodeUri: ../../actions/integrations/email_intake/
+      Timeout: 300
+      MemorySize: 1024
+      Environment:
+        Variables:
+          ENVIRONMENT: !Ref Environment
+          EMAIL_BUCKET: !Ref EmailInboxBucket
+          DOCUMENT_BUCKET: !Ref DocumentBucket
+          WORK_ITEMS_TABLE: !Ref WorkItemsTable
+          NOTIFICATION_FROM_EMAIL: !Ref NotificationEmail
+          SUPPORT_EMAIL: !Ref SupportEmail
+          APEX_URL: !Sub "https://apex.${DomainName}"
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Ref EmailInboxBucket
+        - S3CrudPolicy:
+            BucketName: !Ref DocumentBucket
+        - DynamoDBCrudPolicy:
+            TableName: !Ref WorkItemsTable
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - ses:SendEmail
+                - ses:SendRawEmail
+              Resource: "*"
+      Tags:
+        Application: APEX
+        Component: EmailIntake
+
+  EmailParserFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref EmailParserFunction
+      Action: lambda:InvokeFunction
+      Principal: ses.amazonaws.com
+      SourceAccount: !Ref AWS::AccountId
+
+  #############################################
+  # SES Receipt Rule Set
+  #############################################
+
+  EmailReceiptRuleSet:
+    Type: AWS::SES::ReceiptRuleSet
+    Properties:
+      RuleSetName: !Sub "apex-email-intake-${Environment}"
+
+  EmailReceiptRule:
+    Type: AWS::SES::ReceiptRule
+    DependsOn:
+      - EmailInboxBucketPolicy
+      - EmailParserFunctionPermission
+    Properties:
+      RuleSetName: !Ref EmailReceiptRuleSet
+      Rule:
+        Name: apex-document-intake
+        Enabled: true
+        Recipients:
+          - !Sub "invoices@${DomainName}"
+          - !Sub "claims@${DomainName}"
+          - !Sub "po@${DomainName}"
+          - !Sub "hr@${DomainName}"
+          - !Sub "expenses@${DomainName}"
+          - !Sub "docs@${DomainName}"
+        ScanEnabled: true
+        Actions:
+          - S3Action:
+              BucketName: !Ref EmailInboxBucket
+              ObjectKeyPrefix: "raw/"
+          - LambdaAction:
+              FunctionArn: !GetAtt EmailParserFunction.Arn
+              InvocationType: Event
+
+  #############################################
+  # CloudWatch Alarms
+  #############################################
+
+  EmailParserErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub "apex-email-parser-errors-${Environment}"
+      AlarmDescription: Alert when email parser function has errors
+      MetricName: Errors
+      Namespace: AWS/Lambda
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 5
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: FunctionName
+          Value: !Ref EmailParserFunction
+
+  #############################################
+  # Logs
+  #############################################
+
+  EmailParserLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${EmailParserFunction}"
+      RetentionInDays: 30
+
+Outputs:
+  EmailInboxBucket:
+    Description: S3 bucket for email storage
+    Value: !Ref EmailInboxBucket
+    Export:
+      Name: !Sub "${AWS::StackName}-EmailInboxBucket"
+
+  EmailParserFunctionArn:
+    Description: Email parser Lambda ARN
+    Value: !GetAtt EmailParserFunction.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-EmailParserFunctionArn"
+
+  ReceiptRuleSetName:
+    Description: SES Receipt Rule Set name
+    Value: !Ref EmailReceiptRuleSet
+    Export:
+      Name: !Sub "${AWS::StackName}-ReceiptRuleSetName"
+
+  EmailAddresses:
+    Description: Email addresses for document intake
+    Value: !Sub |
+      invoices@${DomainName}
+      claims@${DomainName}
+      po@${DomainName}
+      hr@${DomainName}
+      expenses@${DomainName}
+      docs@${DomainName}

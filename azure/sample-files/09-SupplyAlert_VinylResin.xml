@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SupplyAlert source="CBB-InternalMonitor">
+  <AlertID>SC-ALERT-2026-0442</AlertID>
+  <Severity>MEDIUM</Severity>
+  <Timestamp>2026-04-21T08:55:00Z</Timestamp>
+
+  <Component>
+    <Id>VR-2201</Id>
+    <Name>Vinyl Resin</Name>
+  </Component>
+
+  <Supplier>
+    <Name>ChemCo Industries</Name>
+    <SupplierId>SUP-0092</SupplierId>
+  </Supplier>
+
+  <DelayDays>7</DelayDays>
+
+  <AffectedPlants>
+    <Plant code="HOU">Houston</Plant>
+    <Plant code="DAL">Dallas</Plant>
+    <Plant code="MEM">Memphis</Plant>
+  </AffectedPlants>
+
+  <AffectedSkus count="14"/>
+
+  <RevenueAtRiskUSD>1090000</RevenueAtRiskUSD>
+
+  <AlternateSupplier>
+    <Name>PolySource Inc</Name>
+    <LeadTimeDays>3</LeadTimeDays>
+    <PriceDeltaPct>15</PriceDeltaPct>
+  </AlternateSupplier>
+
+  <RecommendedAction>NotifyOpsAndSwitch</RecommendedAction>
+</SupplyAlert>

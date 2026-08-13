@@ -1,0 +1,656 @@
+# =============================================================================
+# APEX AI Platform - Call Quality Analysis Playbook v2.0
+# =============================================================================
+# Context-Driven Architecture: All QA criteria and scoring rules live in context.
+# Actions read from context instead of using hardcoded values.
+# =============================================================================
+
+playbook:
+  name: call_quality_analysis_v2
+  version: "2.0.0"
+  industry: contact_center
+  category: quality_assurance
+  description: "Production-ready call quality analysis with context-driven scoring"
+
+  # ---------------------------------------------------------------------------
+  # Configuration Inheritance
+  # ---------------------------------------------------------------------------
+  inherits:
+    - config/base_configuration.yaml
+
+  # ---------------------------------------------------------------------------
+  # INTENT
+  # ---------------------------------------------------------------------------
+  intent: |
+    Analyze customer service calls for quality assurance:
+    1. Transcribe and diarize call audio
+    2. Evaluate agent performance against QA criteria from context
+    3. Check compliance with required and prohibited phrases from context
+    4. Calculate quality score using weights from context
+    5. Generate coaching recommendations based on context-driven rules
+    6. Route for supervisor review based on score thresholds
+
+  # ---------------------------------------------------------------------------
+  # OUTPUT
+  # ---------------------------------------------------------------------------
+  output:
+    schema:
+      type: object
+      properties:
+        call_id:
+          type: string
+        transcription:
+          type: object
+        quality_score:
+          type: number
+        compliance_status:
+          type: object
+        sentiment_analysis:
+          type: object
+        coaching_tips:
+          type: array
+        review_required:
+          type: boolean
+
+  # ===========================================================================
+  # CONTEXT SECTION - ALL QA RULES LIVE HERE
+  # ===========================================================================
+  context:
+    # -------------------------------------------------------------------------
+    # AWS Resources
+    # -------------------------------------------------------------------------
+    aws_resources:
+      s3_buckets:
+        recordings: "apex-${APEX_ENVIRONMENT}-call-recordings"
+        transcripts: "apex-${APEX_ENVIRONMENT}-call-transcripts"
+        reports: "apex-${APEX_ENVIRONMENT}-qa-reports"
+      dynamodb_tables:
+        qa_scores: "apex-${APEX_ENVIRONMENT}-qa-scores"
+        agents: "apex-${APEX_ENVIRONMENT}-agents"
+        coaching: "apex-${APEX_ENVIRONMENT}-coaching-records"
+      sqs_queues:
+        processing: "apex-${APEX_ENVIRONMENT}-call-qa-queue"
+
+    # -------------------------------------------------------------------------
+    # Transcription Configuration
+    # -------------------------------------------------------------------------
+    transcription_config:
+      language: "en-US"
+      enable_diarization: true
+      max_speakers: 3
+      profanity_filter: false
+      custom_vocabulary:
+        - "APEX"
+        - "Uniphore"
+        - "IVR"
+      confidence_threshold: 85
+
+    # -------------------------------------------------------------------------
+    # Diarization Configuration
+    # -------------------------------------------------------------------------
+    diarization_config:
+      speaker_labels:
+        spk_0: "Agent"
+        spk_1: "Customer"
+        spk_2: "Supervisor"
+      identify_by:
+        - greeting_patterns
+        - question_asking
+        - hold_announcements
+
+    # -------------------------------------------------------------------------
+    # Quality Criteria - THE CORE QA RULES
+    # -------------------------------------------------------------------------
+    quality_criteria:
+      # Opening criteria
+      greeting:
+        weight: 0.10
+        required: true
+        description: "Proper greeting and introduction"
+        evaluation_points:
+          - "Greeted customer warmly"
+          - "Stated company name"
+          - "Introduced self by name"
+          - "Offered assistance"
+        passing_score: 80
+
+      identity_verification:
+        weight: 0.10
+        required: true
+        description: "Proper customer identity verification"
+        evaluation_points:
+          - "Asked for account number or identifier"
+          - "Verified at least 2 security questions"
+          - "Did not share sensitive info prematurely"
+        passing_score: 100
+
+      # Interaction criteria
+      active_listening:
+        weight: 0.15
+        required: false
+        description: "Demonstrated active listening skills"
+        evaluation_points:
+          - "Acknowledged customer statements"
+          - "Asked clarifying questions"
+          - "Paraphrased to confirm understanding"
+          - "Did not interrupt customer"
+        passing_score: 70
+
+      empathy:
+        weight: 0.10
+        required: false
+        description: "Showed empathy and understanding"
+        evaluation_points:
+          - "Acknowledged customer feelings"
+          - "Used empathetic language"
+          - "Apologized when appropriate"
+        passing_score: 70
+
+      problem_solving:
+        weight: 0.15
+        required: false
+        description: "Effective problem resolution"
+        evaluation_points:
+          - "Understood the issue correctly"
+          - "Provided accurate information"
+          - "Offered appropriate solutions"
+          - "Followed up on action items"
+        passing_score: 75
+
+      # Knowledge criteria
+      product_knowledge:
+        weight: 0.10
+        required: false
+        description: "Demonstrated product/service knowledge"
+        evaluation_points:
+          - "Provided accurate product information"
+          - "Knew policies and procedures"
+          - "Avoided providing incorrect information"
+        passing_score: 80
+
+      # Closing criteria
+      resolution:
+        weight: 0.15
+        required: false
+        description: "Achieved call resolution"
+        evaluation_points:
+          - "Resolved customer issue"
+          - "Confirmed customer satisfaction"
+          - "Set appropriate expectations"
+        passing_score: 80
+
+      closing:
+        weight: 0.10
+        required: false
+        description: "Proper call closing"
+        evaluation_points:
+          - "Summarized actions taken"
+          - "Asked if anything else needed"
+          - "Thanked customer"
+          - "Ended call professionally"
+        passing_score: 80
+
+      # Compliance
+      compliance:
+        weight: 0.05
+        required: true
+        description: "Regulatory compliance"
+        evaluation_points:
+          - "Used required disclosures"
+          - "Avoided prohibited language"
+          - "Followed data protection rules"
+        passing_score: 100
+
+    # -------------------------------------------------------------------------
+    # Required Phrases (MUST say)
+    # -------------------------------------------------------------------------
+    required_phrases:
+      call_recording:
+        phrase: "this call may be recorded"
+        alternatives:
+          - "call is being recorded"
+          - "call may be monitored"
+        timing: "within_first_30_seconds"
+        severity: "critical"
+
+      closing_offer:
+        phrase: "is there anything else I can help you with"
+        alternatives:
+          - "anything else I can assist you with"
+          - "any other questions"
+        timing: "before_call_end"
+        severity: "high"
+
+      identity_confirmation:
+        phrase: "can you verify"
+        alternatives:
+          - "can you confirm"
+          - "for security purposes"
+        timing: "before_account_access"
+        severity: "critical"
+
+    # -------------------------------------------------------------------------
+    # Prohibited Phrases (MUST NOT say)
+    # -------------------------------------------------------------------------
+    prohibited_phrases:
+      guarantee:
+        patterns:
+          - "guarantee"
+          - "guaranteed"
+          - "I guarantee"
+        severity: "high"
+        reason: "Legal liability"
+
+      promise:
+        patterns:
+          - "I promise"
+          - "promise you"
+        severity: "high"
+        reason: "Sets unrealistic expectations"
+
+      profanity:
+        patterns:
+          - "damn"
+          - "hell"
+          # Additional profanity patterns would be added
+        severity: "critical"
+        reason: "Unprofessional conduct"
+
+      competitor_criticism:
+        patterns:
+          - "they are terrible"
+          - "don't use them"
+          - "worst company"
+        severity: "medium"
+        reason: "Unprofessional comparison"
+
+      personal_opinion:
+        patterns:
+          - "I think the policy is stupid"
+          - "I hate this system"
+          - "this company doesn't care"
+        severity: "high"
+        reason: "Unprofessional conduct"
+
+    # -------------------------------------------------------------------------
+    # Sentiment Analysis Configuration
+    # -------------------------------------------------------------------------
+    sentiment_config:
+      granularity: "segment"
+      include_peaks: true
+      escalation_detection: true
+
+      thresholds:
+        positive:
+          min_score: 0.6
+          label: "Positive"
+        neutral:
+          min_score: 0.4
+          label: "Neutral"
+        negative:
+          min_score: 0.0
+          label: "Negative"
+
+      escalation_indicators:
+        - "speak to supervisor"
+        - "speak to manager"
+        - "this is unacceptable"
+        - "going to report"
+        - "file a complaint"
+        - "cancel my account"
+        - "terrible service"
+
+      recovery_indicators:
+        - "thank you for understanding"
+        - "I appreciate your help"
+        - "that makes sense"
+        - "you've been helpful"
+
+    # -------------------------------------------------------------------------
+    # Scoring Configuration
+    # -------------------------------------------------------------------------
+    scoring_config:
+      # Score thresholds
+      thresholds:
+        excellent:
+          min_score: 90
+          label: "Excellent"
+          action: "recognition"
+        good:
+          min_score: 80
+          label: "Good"
+          action: "standard"
+        acceptable:
+          min_score: 70
+          label: "Acceptable"
+          action: "coaching_optional"
+        needs_improvement:
+          min_score: 60
+          label: "Needs Improvement"
+          action: "coaching_required"
+        unacceptable:
+          min_score: 0
+          label: "Unacceptable"
+          action: "supervisor_review"
+
+      # Automatic failures
+      auto_fail_conditions:
+        - compliance_critical_failure
+        - prohibited_phrase_critical
+        - customer_escalation_unresolved
+        - identity_verification_skip
+
+      # Bonus points
+      bonus_criteria:
+        first_call_resolution:
+          bonus: 5
+          max_total: 105
+        customer_compliment:
+          bonus: 3
+          max_total: 105
+        upsell_success:
+          bonus: 2
+          max_total: 105
+
+    # -------------------------------------------------------------------------
+    # Coaching Configuration
+    # -------------------------------------------------------------------------
+    coaching_config:
+      # Coaching areas mapped to quality criteria
+      areas:
+        communication:
+          related_criteria: [greeting, closing, active_listening]
+          training_modules: ["effective_communication", "active_listening_101"]
+
+        empathy:
+          related_criteria: [empathy]
+          training_modules: ["empathy_in_service", "emotional_intelligence"]
+
+        problem_solving:
+          related_criteria: [problem_solving, resolution]
+          training_modules: ["issue_resolution", "critical_thinking"]
+
+        product_knowledge:
+          related_criteria: [product_knowledge]
+          training_modules: ["product_training", "policy_refresher"]
+
+        compliance:
+          related_criteria: [compliance, identity_verification]
+          training_modules: ["compliance_101", "security_awareness"]
+
+      # Coaching triggers
+      triggers:
+        low_criteria_score:
+          threshold: 70
+          action: "add_to_coaching_queue"
+        repeated_issues:
+          count: 3
+          period_days: 30
+          action: "supervisor_meeting"
+        critical_failure:
+          action: "immediate_review"
+
+    # -------------------------------------------------------------------------
+    # Review Routing
+    # -------------------------------------------------------------------------
+    review_routing:
+      # When to flag for supervisor review
+      review_triggers:
+        score_below: 70
+        compliance_failure: true
+        customer_escalation: true
+        agent_request: true
+        random_sample_percent: 5
+
+      # Supervisor assignment
+      assignment:
+        by_team: true
+        round_robin: true
+        max_queue_size: 20
+
+      # SLA
+      sla:
+        review_within_hours: 48
+        feedback_within_hours: 72
+
+    # -------------------------------------------------------------------------
+    # Notification Configuration
+    # -------------------------------------------------------------------------
+    notifications:
+      channels:
+        email:
+          enabled: true
+        slack:
+          enabled: true
+          channel: "#qa-alerts"
+
+      events:
+        qa_complete:
+          channels: []
+          recipients: []
+
+        low_score:
+          channels: ["email", "slack"]
+          recipients: ["supervisor"]
+          threshold: 70
+
+        compliance_failure:
+          channels: ["email", "slack"]
+          recipients: ["supervisor", "compliance_team"]
+          urgent: true
+
+        coaching_recommended:
+          channels: ["email"]
+          recipients: ["supervisor"]
+
+        excellence_recognition:
+          channels: ["slack"]
+          recipients: ["team_channel"]
+          threshold: 95
+
+  # ===========================================================================
+  # RECIPE
+  # ===========================================================================
+  recipe: |
+    ## Call Quality Analysis Workflow (Context-Driven)
+
+    ### Phase 1: Audio Processing
+    1. Receive call recording from context.aws_resources.s3_buckets.recordings
+    2. Transcribe using context.transcription_config settings
+    3. Diarize speakers using context.diarization_config
+    4. Validate transcription confidence against context.transcription_config.confidence_threshold
+
+    ### Phase 2: Compliance Check
+    1. Check for required phrases from context.required_phrases
+    2. Check for prohibited phrases from context.prohibited_phrases
+    3. Flag any critical compliance failures
+    4. Calculate compliance score for context.quality_criteria.compliance
+
+    ### Phase 3: Quality Evaluation
+    For each criterion in context.quality_criteria:
+    1. Evaluate agent performance against criterion.evaluation_points
+    2. Apply criterion.weight to score
+    3. Check if required criteria pass criterion.passing_score
+    4. Calculate weighted quality score
+
+    ### Phase 4: Sentiment Analysis
+    1. Analyze sentiment using context.sentiment_config
+    2. Detect escalation indicators from context.sentiment_config.escalation_indicators
+    3. Identify recovery moments from context.sentiment_config.recovery_indicators
+    4. Calculate sentiment trajectory
+
+    ### Phase 5: Score Calculation
+    1. Sum weighted criteria scores
+    2. Apply bonus points from context.scoring_config.bonus_criteria if earned
+    3. Check for auto-fail conditions from context.scoring_config.auto_fail_conditions
+    4. Determine final score category from context.scoring_config.thresholds
+
+    ### Phase 6: Coaching Generation
+    1. Identify low-scoring criteria (below context.coaching_config.triggers.low_criteria_score.threshold)
+    2. Map to coaching areas from context.coaching_config.areas
+    3. Recommend training modules
+    4. Check for repeated issues pattern
+
+    ### Phase 7: Review Routing
+    1. Check review triggers from context.review_routing.review_triggers
+    2. If review required, assign per context.review_routing.assignment
+    3. Apply SLA from context.review_routing.sla
+
+    ### Phase 8: Completion
+    1. Store results to context.aws_resources.dynamodb_tables.qa_scores
+    2. Send notifications per context.notifications.events
+    3. Update agent coaching record if needed
+
+  # ===========================================================================
+  # FACTORY CHAIN
+  # ===========================================================================
+  factory_chain:
+    chainId: call_quality_chain
+    description: "Context-driven call quality analysis chain"
+    factories:
+      - id: transcribe
+        action: transcribe_audio
+        context_keys: [transcription_config, aws_resources]
+        timeout_seconds: 120
+
+      - id: diarize
+        action: diarize_speakers
+        depends_on: [transcribe]
+        context_keys: [diarization_config]
+        timeout_seconds: 60
+
+      - id: compliance_check
+        action: compliance_audit
+        depends_on: [diarize]
+        context_keys: [required_phrases, prohibited_phrases, quality_criteria]
+        timeout_seconds: 45
+
+      - id: sentiment
+        action: sentiment_timeline
+        depends_on: [diarize]
+        context_keys: [sentiment_config]
+        ai_enhanced: true
+        timeout_seconds: 60
+
+      - id: quality_evaluate
+        action: quality_evaluate
+        depends_on: [diarize, compliance_check]
+        context_keys: [quality_criteria, scoring_config]
+        ai_enhanced: true
+        timeout_seconds: 90
+
+      - id: score_calculate
+        action: score_calculate
+        depends_on: [quality_evaluate, sentiment]
+        context_keys: [scoring_config]
+        timeout_seconds: 30
+
+      - id: coaching_generate
+        action: coaching_tips
+        depends_on: [score_calculate]
+        context_keys: [coaching_config, quality_criteria]
+        ai_enhanced: true
+        timeout_seconds: 45
+
+      - id: review_route
+        action: review_route
+        depends_on: [score_calculate]
+        context_keys: [review_routing]
+        timeout_seconds: 30
+
+      - id: notification
+        action: send_notification
+        depends_on: [review_route]
+        context_keys: [notifications]
+        timeout_seconds: 30
+
+      - id: completion
+        action: completion
+        depends_on: [notification]
+        context_keys: [aws_resources]
+        timeout_seconds: 30
+
+  # ===========================================================================
+  # ACTIONS
+  # ===========================================================================
+  actions:
+    - id: transcribe_audio
+      handler: core.transcribe_audio
+      description: "Transcribe call audio"
+
+    - id: diarize_speakers
+      handler: core.diarize_speakers
+      description: "Identify and label speakers"
+
+    - id: compliance_audit
+      handler: contact_center.compliance_audit
+      description: "Check required and prohibited phrases"
+
+    - id: sentiment_timeline
+      handler: contact_center.sentiment_timeline
+      description: "Analyze sentiment throughout call"
+
+    - id: quality_evaluate
+      handler: contact_center.quality_evaluate
+      description: "Evaluate against QA criteria"
+
+    - id: score_calculate
+      handler: contact_center.score_calculate
+      description: "Calculate final quality score"
+
+    - id: coaching_tips
+      handler: contact_center.coaching_tips
+      description: "Generate coaching recommendations"
+
+    - id: review_route
+      handler: contact_center.review_route
+      description: "Route for supervisor review if needed"
+
+    - id: send_notification
+      handler: core.send_notification
+      description: "Send notifications"
+
+    - id: completion
+      handler: core.completion
+      description: "Store results and complete"
+
+  # ===========================================================================
+  # TRIGGERS
+  # ===========================================================================
+  triggers:
+    - type: s3
+      bucket: "${aws_resources.s3_buckets.recordings}"
+      prefix: "calls/"
+      events: ["s3:ObjectCreated:*"]
+
+    - type: api
+      path: "/api/v2/contact-center/analyze-call"
+      methods: ["POST"]
+
+    - type: schedule
+      cron: "0 * * * *"
+      description: "Process pending calls every hour"
+
+  # ===========================================================================
+  # WORKER
+  # ===========================================================================
+  worker:
+    queue: "${aws_resources.sqs_queues.processing}"
+    concurrency: 10
+    timeout_seconds: 300
+    visibility_timeout: 120
+    max_retries: 3
+
+  # ===========================================================================
+  # METADATA
+  # ===========================================================================
+  metadata:
+    created_by: apex-platform
+    created_at: "2024-01-15"
+    updated_at: "2025-03-19"
+    version_notes: "v2.0.0 - Context-driven architecture"
+    tags:
+      - contact-center
+      - quality-assurance
+      - call-analysis
+      - context-driven

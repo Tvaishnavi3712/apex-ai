@@ -1,0 +1,66 @@
+{
+  "schema_version": "v1.14.0",
+  "captured_at": "2025-08-14T11:22:08Z",
+  "source_device": "CaaS-Edge-Node-Type-B",
+  "endpoints": {
+    "/redfish/v1/Systems/1": {
+      "@odata.type": "#ComputerSystem.v1_14_0.ComputerSystem",
+      "required_fields": ["Id", "Name", "SystemType", "PowerState", "Status"],
+      "fields": {
+        "Id": { "type": "string" },
+        "Name": { "type": "string" },
+        "SystemType": { "type": "string" },
+        "PowerState": { "type": "string", "enum": ["On", "Off", "PoweringOn", "PoweringOff"] },
+        "Status": { "type": "object", "properties": { "Health": { "type": "string" }, "State": { "type": "string" } } },
+        "BiosVersion": { "type": "string" },
+        "MemorySummary": { "type": "object" }
+      },
+      "deprecated_fields": []
+    },
+    "/redfish/v1/Chassis/1/Thermal": {
+      "@odata.type": "#Thermal.v1_14_0.Thermal",
+      "required_fields": ["Id", "Name", "Temperatures", "FanSpeeds"],
+      "fields": {
+        "Id": { "type": "string" },
+        "Name": { "type": "string" },
+        "Temperatures": { "type": "array" },
+        "FanSpeeds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "MemberId":       { "type": "string" },
+              "CurrentReading": { "type": "integer", "units": "RPM" },
+              "Status":         { "type": "object" }
+            }
+          }
+        }
+      },
+      "deprecated_fields": []
+    },
+    "/redfish/v1/Managers/1/EthernetInterfaces/1": {
+      "@odata.type": "#EthernetInterface.v1_14_0.EthernetInterface",
+      "required_fields": ["Id", "Name", "MACAddress", "InterfaceEnabled"],
+      "fields": {
+        "Id":               { "type": "string" },
+        "Name":             { "type": "string" },
+        "MACAddress":       { "type": "string" },
+        "InterfaceEnabled": { "type": "boolean" },
+        "IPv4Addresses":    { "type": "array" },
+        "IPv6Addresses":    { "type": "array", "_note": "present but NOT required in v1.14.0" }
+      },
+      "deprecated_fields": []
+    },
+    "/redfish/v1/Systems/1/Storage/1": {
+      "@odata.type": "#Storage.v1_14_0.Storage",
+      "required_fields": ["Id", "Name", "Drives", "StorageControllers"],
+      "fields": {
+        "Id":                 { "type": "string" },
+        "Name":               { "type": "string" },
+        "Drives":             { "type": "array" },
+        "StorageControllers": { "type": "array", "_note": "embedded array in v1.14.0" }
+      },
+      "deprecated_fields": []
+    }
+  }
+}

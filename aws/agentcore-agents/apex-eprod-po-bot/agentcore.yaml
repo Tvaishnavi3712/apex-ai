@@ -1,0 +1,27 @@
+name: apex-eprod-po-bot
+description: EPROD pre-pay PO-to-Contract validation agent against MSA rate cards and tax codes
+version: 1.0.0
+
+runtime:
+  entrypoint: agent.py
+  handler: handler
+  python_version: "3.12"
+
+model:
+  provider: bedrock
+  model_id: us.amazon.nova-pro-v1:0
+  region: us-east-1
+
+memory:
+  short_term: true
+  long_term: false
+
+observability:
+  enabled: true
+  log_level: INFO
+
+tags:
+  industry: oil_gas_midstream
+  customer: eprod
+  category: procurement
+  environment: production

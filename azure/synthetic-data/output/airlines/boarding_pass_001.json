@@ -1,0 +1,31 @@
+{
+  "_metadata": {
+    "blueprint": "apex-boarding-pass-v1",
+    "document_type": "boarding_pass",
+    "extraction_date": "2024-01-25T06:45:00Z",
+    "confidence_score": 0.97,
+    "source_file": "boarding_pass.pdf"
+  },
+  "passenger_name": "SMITH/JOHNMICHAEL",
+  "booking_reference": "ABC123",
+  "ticket_number": "0012345678901",
+  "frequent_flyer_number": "FF12345678",
+  "frequent_flyer_status": "GOLD",
+  "flight_number": "AA1234",
+  "airline_code": "AA",
+  "departure_city": "Chicago",
+  "departure_airport": "ORD",
+  "arrival_city": "Los Angeles",
+  "arrival_airport": "LAX",
+  "flight_date": "25JAN24",
+  "departure_time": "08:30",
+  "boarding_time": "07:55",
+  "gate": "K15",
+  "seat_number": "12A",
+  "cabin_class": "BUSINESS",
+  "boarding_group": "1",
+  "sequence_number": "0045",
+  "barcode_data": "M1SMITH/JOHNMICHAEL    EABC123 ORDLAXAA 1234 025Y012A0045 100",
+  "tsa_precheck": true,
+  "ssss_selected": false
+}

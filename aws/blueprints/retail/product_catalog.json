@@ -1,0 +1,157 @@
+{
+  "blueprintName": "apex-retail-product-catalog-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured product data for Agent Commerce shopping and comparison",
+  "industry": "retail",
+  "documentType": "product_catalog",
+  "bdaSchema": {
+    "class": "ApexProductCatalog",
+    "description": "Product catalog extraction for AI-powered shopping agents",
+    "definitions": {
+      "PRODUCT_SPEC": {
+        "properties": {
+          "spec_name": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "spec_value": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      },
+      "PRODUCT_VARIANT": {
+        "properties": {
+          "variant_id": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "color": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "size": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "price": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "in_stock": {
+            "type": "boolean",
+            "inferenceType": "explicit"
+          },
+          "quantity_available": {
+            "type": "number",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "product_id": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "description": "Unique product identifier/SKU"
+      },
+      "product_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "description": "Product display name"
+      },
+      "brand": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "category": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "description": "Primary product category"
+      },
+      "subcategory": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "description": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "description": "Full product description"
+      },
+      "base_price": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "sale_price": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "discount_percentage": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "currency": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "rating": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "description": "Average customer rating (1-5)"
+      },
+      "review_count": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "specifications": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/PRODUCT_SPEC"
+        }
+      },
+      "variants": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/PRODUCT_VARIANT"
+        }
+      },
+      "images": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Product image URLs"
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Searchable product tags"
+      },
+      "shipping_weight": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "shipping_dimensions": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "is_prime_eligible": {
+        "type": "boolean",
+        "inferenceType": "explicit"
+      },
+      "estimated_delivery_days": {
+        "type": "number",
+        "inferenceType": "explicit"
+      }
+    }
+  },
+  "extractionRules": {
+    "currencyFormat": "decimal",
+    "confidenceThreshold": 0.85
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  }
+}

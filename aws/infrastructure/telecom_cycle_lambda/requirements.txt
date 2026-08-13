@@ -1,0 +1,2 @@
+# cycle_trigger uses only stdlib (urllib) — no extra deps required.
+# Kept as a file so `sam build` is happy.

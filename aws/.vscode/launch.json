@@ -1,0 +1,35 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // F5 runs the API with the debugger attached. Breakpoints work in any
+      // file under backend/.
+      "name": "Apex API (aws :8001)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["main:app", "--reload", "--port", "8001"],
+      "cwd": "${workspaceFolder}/backend",
+      "envFile": "${workspaceFolder}/backend/.env",
+      "env": { "JIRA_MOCK_MODE": "true" },
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Apex Frontend (aws :3000)",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "console": "integratedTerminal"
+    }
+  ],
+  "compounds": [
+    {
+      // Start both with one keystroke.
+      "name": "Apex — full stack (aws)",
+      "configurations": ["Apex API (aws :8001)", "Apex Frontend (aws :3000)"]
+    }
+  ]
+}

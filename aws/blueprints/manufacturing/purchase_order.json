@@ -1,0 +1,221 @@
+{
+  "blueprintName": "apex-purchase-order-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from purchase order documents for manufacturing operations",
+  "industry": "manufacturing",
+  "documentType": "purchase_order",
+  "bdaSchema": {
+    "class": "ApexPurchaseOrder",
+    "description": "Apex AI Platform purchase order extraction blueprint for manufacturing",
+    "definitions": {
+      "POITEM": {
+        "properties": {
+          "line_number": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "The line item number or sequence"
+          },
+          "part_number": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "The part number, SKU, or material code"
+          },
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Description of the item being ordered"
+          },
+          "quantity": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "The quantity ordered"
+          },
+          "unit_of_measure": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Unit of measure (e.g., EA, PCS, KG, LB)"
+          },
+          "unit_price": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Price per unit"
+          },
+          "line_total": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Total amount for this line item"
+          },
+          "requested_date": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Requested delivery date for this line item"
+          }
+        }
+      },
+      "ADDRESS": {
+        "properties": {
+          "company_name": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "street_address": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "city": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "state": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "postal_code": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "country": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "po_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The unique purchase order number"
+      },
+      "po_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The date the purchase order was created"
+      },
+      "revision_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "PO revision or version number if present"
+      },
+      "buyer_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Name of the buyer or purchasing agent"
+      },
+      "buyer_phone": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Buyer's contact phone number"
+      },
+      "buyer_email": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Buyer's email address"
+      },
+      "vendor_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Name of the vendor or supplier"
+      },
+      "vendor_code": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Internal vendor or supplier code"
+      },
+      "ship_to_address": {
+        "type": "object",
+        "instruction": "Shipping destination address",
+        "items": {
+          "$ref": "#/definitions/ADDRESS"
+        }
+      },
+      "bill_to_address": {
+        "type": "object",
+        "instruction": "Billing address",
+        "items": {
+          "$ref": "#/definitions/ADDRESS"
+        }
+      },
+      "shipping_method": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Shipping method or carrier preference"
+      },
+      "shipping_terms": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Shipping terms (e.g., FOB, CIF, EXW)"
+      },
+      "payment_terms": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Payment terms (e.g., NET30, NET60)"
+      },
+      "currency": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Currency code (e.g., USD, EUR)"
+      },
+      "line_items": {
+        "type": "array",
+        "instruction": "All line items on the purchase order",
+        "items": {
+          "$ref": "#/definitions/POITEM"
+        }
+      },
+      "subtotal": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Subtotal before tax and shipping"
+      },
+      "tax_amount": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Tax amount"
+      },
+      "shipping_cost": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Shipping and handling costs"
+      },
+      "total_amount": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Total purchase order amount"
+      },
+      "special_instructions": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Any special instructions or notes on the PO"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "currencyFormat": "decimal",
+    "decimalPrecision": 2,
+    "confidenceThreshold": 0.85
+  },
+  "validationRules": [
+    {
+      "name": "line_item_total_validation",
+      "description": "Validate line item totals equal qty * unit_price",
+      "expression": "line_items.each { |item| (item.quantity * item.unit_price - item.line_total).abs < 0.01 }"
+    },
+    {
+      "name": "subtotal_validation",
+      "description": "Validate subtotal equals sum of line items",
+      "expression": "(subtotal - line_items.sum { |item| item.line_total }).abs < 0.01"
+    },
+    {
+      "name": "total_validation",
+      "description": "Validate total calculation",
+      "expression": "(total_amount - (subtotal + tax_amount + shipping_cost)).abs < 0.01"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  }
+}

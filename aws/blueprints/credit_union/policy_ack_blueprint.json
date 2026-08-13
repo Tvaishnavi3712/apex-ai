@@ -1,0 +1,31 @@
+{
+  "blueprint_id": "bp-cwfcu-policy-ack",
+  "name": "CWFCU Policy Acknowledgment",
+  "description": "Employee policy acknowledgment record (BSA/AML training, PCI-DSS, InfoSec, code of conduct, etc.).",
+  "industry": "credit_union",
+  "document_type": "policy_acknowledgment",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "CWFCU Policy Acknowledgment",
+    "description": "Acknowledgment schema covering policy id, employee, acknowledgment timestamp, signature hash, and module score (if training-linked).",
+    "extractionInstructions": "Captures individual employee ack of a specific policy. Roster files contain aggregated acks — split per-employee on ingest.",
+    "fields": {
+      "ack_id":               { "type": "string", "description": "Internal ack ID (POL-ACK-YYYY-NNNNN)", "required": true },
+      "policy_id":            { "type": "string", "description": "Internal policy ID (P-COMP-201, P-OPS-114, etc.)", "required": true },
+      "policy_name":          { "type": "string", "description": "Human-readable policy name", "required": true },
+      "policy_version":       { "type": "string", "description": "Policy version", "required": true },
+      "policy_effective_date": { "type": "date", "description": "Policy effective date", "required": true },
+      "employee_id":          { "type": "string", "description": "Employee ID", "required": true },
+      "employee_name":        { "type": "string", "description": "Employee name", "required": true },
+      "employee_department":  { "type": "string", "description": "Department (lending / ops / branch / IT / etc.)", "required": true },
+      "acknowledged_at":      { "type": "string", "description": "Ack timestamp (ISO8601)", "required": true },
+      "signature_method":     { "type": "string", "description": "DocuSign / Adobe Sign / portal / paper", "required": true },
+      "signature_hash":       { "type": "string", "description": "Signature hash (SHA-256) for audit", "required": true },
+      "ip_address":           { "type": "string", "description": "IP at ack time", "required": false },
+      "training_linked":      { "type": "boolean","description": "Whether ack required training module completion", "required": true },
+      "module_score_pct":     { "type": "number", "description": "Training module score (if applicable)", "required": false },
+      "time_to_complete_min": { "type": "number", "description": "Module completion time (min)", "required": false },
+      "ncua_exam_folder_path": { "type": "string","description": "NCUA exam folder index path", "required": true }
+    }
+  }
+}

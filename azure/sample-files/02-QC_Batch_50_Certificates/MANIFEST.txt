@@ -1,0 +1,6 @@
+QC Batch Manifest — 2026-04-21
+Supplier:    Apex Vinyl Solutions (SUP-0081)
+Material:    Vinyl Resin Compound (PVC Grade A)
+Plant:       Ohio Plant 7
+Total certs: 50
+Expected:    48 PASS · 2 FAIL (LOT-A44 tensile, LOT-B12 color)

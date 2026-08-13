@@ -1,0 +1,27 @@
+name: apex-eprod-jib-bot
+description: EPROD JIB statement reconciliation agent against AFEs with working-interest math validation
+version: 1.0.0
+
+runtime:
+  entrypoint: agent.py
+  handler: handler
+  python_version: "3.12"
+
+model:
+  provider: bedrock
+  model_id: us.amazon.nova-pro-v1:0
+  region: us-east-1
+
+memory:
+  short_term: true
+  long_term: false
+
+observability:
+  enabled: true
+  log_level: INFO
+
+tags:
+  industry: oil_gas_midstream
+  customer: eprod
+  category: joint_venture_accounting
+  environment: production

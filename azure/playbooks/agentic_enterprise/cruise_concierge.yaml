@@ -1,0 +1,88 @@
+name: cruise_concierge
+version: "1.0.0"
+description: "Agentic Enterprise UC-2 — stateful cruise/hospitality concierge with RAG over the guest-services FAQ, booking modification, sentiment monitoring, and seamless handoff to a human agent."
+industry: hospitality
+category: customer_engagement
+
+intent: |
+  When a guest opens a chat:
+    1. sentiment_score the incoming message
+    2. classify intent (booking_modify | cancellation | faq | handoff)
+    3. dispatch the right tool:
+        • booking_modify  → apply policy, compute fee, stage the change
+        • faq             → RAG over the cruise FAQ corpus
+        • handoff trigger → switch to Agent Assist Console with summary
+    4. preserve context across topic switches — if the guest pivots from a
+       date change to "what are the pool hours", answer the FAQ then offer
+       to resume the booking change
+
+  Example flows the playbook resolves:
+    "I want to change my sail date to June 28."
+    "What are the pool hours?"          (mid-flow context preservation)
+    "Cancel my booking."                (cancellation policy quote)
+    "I want to speak to a human."       (immediate handoff)
+    "This is ridiculous and useless."   (negative sentiment → auto-handoff)
+
+  Two UI views are wired:
+    Guest Chat              — standard customer-facing widget
+    Agent Assist Console    — live transcript + sentiment gauge + AI-suggested
+                              response, activated by the handoff trigger.
+
+output:
+  - name: assistant_message
+    type: text
+    description: "Guest-facing reply, including any policy quote or modification preview."
+  - name: sentiment
+    type: structured_data
+    description: "{ score: -1..+1, label: positive|neutral|negative }"
+  - name: handoff
+    type: boolean
+    description: "True when the conversation should switch to Agent Assist Console."
+  - name: modification
+    type: structured_data
+    description: "{ booking_id, original_date, new_date, fee_usd, days_to_original_sail } when intent=booking_modify"
+
+context:
+  business_rules:
+    - "Always sentiment-score before classifying intent — sentiment can override intent (frustration ⇒ handoff)."
+    - "Date-change fee policy: $0 if >30 days before sail, $75 if 14–30 days, $75 + availability disclaimer if <14 days."
+    - "Cancellation refund tiers: 100% (>90d) / 75% (60–89d) / 50% (30–59d) / 25% (15–29d) / 0% (<15d). Always quote the matching tier."
+    - "Never auto-confirm a booking modification — always end with 'Would you like me to confirm and apply?'"
+    - "Handoff triggers: explicit 'speak to a human', sentiment ≤ -0.6, or guest mentions 'manager'/'frustrated'/'unacceptable'."
+    - "When handing off, attach the booking summary to the Agent Assist Console so the human starts informed."
+    - "RAG answers must come verbatim from the FAQ corpus — never paraphrase a policy."
+
+actions:
+  - name: sentiment_score
+    action_id: hospitality.sentiment_score
+    description: "Score the incoming message on a -1..+1 scale and return a label."
+    required: true
+  - name: rag_faq_lookup
+    action_id: hospitality.rag_faq_lookup
+    description: "Retrieve the most relevant section from the cruise_faq.md corpus by keyword overlap."
+    required: false
+  - name: booking_modify
+    action_id: hospitality.booking_modify
+    description: "Apply the cruise's date-change policy to the active booking and return the staged change."
+    required: false
+  - name: agent_assist_handoff
+    action_id: hospitality.agent_assist_handoff
+    description: "Mark the conversation as handed-off and prepare a context summary for the Agent Assist Console."
+    required: false
+
+recipe: |
+  1. Run sentiment_score on the user message.
+  2. If handoff triggered → call agent_assist_handoff and return.
+  3. Classify intent (booking_modify / cancellation / faq).
+  4. If booking_modify and a date is present → call booking_modify with the parsed date.
+  5. If booking_modify and no date is present → ask for one and remember the pending intent.
+  6. If faq → call rag_faq_lookup and return the matched section verbatim.
+  7. If a prior booking_modify is pending and an FAQ was answered, end the FAQ
+     answer with: "(By the way — we were in the middle of changing your sail
+     date. Want to come back to that when you're ready?)"
+
+triggers:
+  - type: chat
+    surface: agent_hub
+  - type: voice
+    surface: guest_chat_widget

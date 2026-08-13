@@ -1,0 +1,76 @@
+playbook_id: pb-boler-2
+name: exception_detection_reclassification
+version: "1.0.0"
+description: "Detect reconciliation exceptions, classify by type, auto-fix where confident, route the rest to HITL."
+industry: manufacturing_multi_division
+category: benefits_operations
+
+intent: |
+  Catch the 5–8 monthly exceptions that today cost The Boler Company
+  $182K/year in reclassification rework. Types include: employee on
+  wrong division, duplicate COBRA, terminated employee still on roster,
+  401k employer-match rate mismatch, carrier rate drift, new hires
+  missing cost-center, and auto-routable internal transfers. The agent
+  auto-fixes the high-confidence cases (transfers, new-hire CC pulls)
+  and routes the rest to Benefits Manager Sarah Mitchell with a
+  proposed resolution.
+
+output:
+  - name: exception_packets
+    type: structured_data
+    description: "One packet per detected exception — see bp-boler-exception-packet"
+  - name: routing_decisions
+    type: routing_decision
+    description: "auto_fix vs route_benefits_mgr vs route_cfo"
+
+context:
+  business_rules:
+    - "Auto-fix only when confidence ≥ 0.92 AND variance ≤ $5,000"
+    - "Variance > $10,000 always routes to CFO (Ziggy Kravitz)"
+    - "Carrier rate drift > 250 bps routes to CFO regardless of $"
+    - "Every auto-fix logged with full before/after for audit"
+
+actions:
+  - name: detect_exception
+    action_id: manufacturing_multi_division.detect_exception
+    description: "Variance scan against expected allocation"
+    required: true
+  - name: detect_carrier_drift
+    action_id: manufacturing_multi_division.detect_carrier_drift
+    description: "Per-life premium drift vs plan-doc rate"
+    required: true
+  - name: hris_cross_check
+    action_id: manufacturing_multi_division.hris_cross_check
+    description: "Sanity-check against HRIS for term/transfer events"
+    required: true
+  - name: draft_reclassification
+    action_id: manufacturing_multi_division.draft_reclassification
+    description: "Draft proposed resolution + supporting evidence"
+    required: true
+  - name: route_exception
+    action_id: manufacturing_multi_division.route_exception
+    description: "Auto-fix vs HITL routing decision"
+    required: true
+
+recipe: |
+  1. After ingest staging completes, run variance scan: each per-life
+     premium vs (a) prior month, (b) plan-doc expected rate, (c) HRIS
+     election. Anything > 3% variance becomes a candidate exception.
+  2. Classify the exception type: wrong_division (employee billed under
+     prior division post-transfer), duplicate_cobra (same SSN billed
+     twice), terminated_on_roster (term_date < period_start),
+     k401_rate_mismatch (Fidelity 4.5% vs plan-doc 4.0%),
+     carrier_drift (portfolio-wide bps move), new_hire_no_cc.
+  3. Cross-check HRIS for the supporting evidence (transfer effective
+     date, term date, latest 401k election).
+  4. Draft a proposed_resolution in plain English. Include the
+     before/after numbers and the dollar variance.
+  5. Compute confidence. If confidence ≥ 0.92 AND variance ≤ $5K AND
+     type ∈ {auto_fixable_transfer, new_hire_no_cc} — auto-fix and log.
+  6. Otherwise, route based on $ impact: ≤ $10K → Benefits Manager,
+     > $10K or carrier-drift → CFO. Every routed packet gets a SLA
+     timer (4h Benefits, 24h CFO).
+
+triggers:
+  - type: pipeline_complete
+    upstream: pb-boler-1

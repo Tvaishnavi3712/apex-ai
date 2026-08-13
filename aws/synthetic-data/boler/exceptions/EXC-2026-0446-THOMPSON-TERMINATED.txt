@@ -1,0 +1,37 @@
+APEX EXCEPTION RECORD · LOW PRIORITY · AUTO-FIXED
+═══════════════════════════════════════════════════════════════
+EXCEPTION ID:     EXC-2026-0446
+Type:             Terminated Employee — Benefits Still Active
+Severity:         LOW
+Detection Time:   June 5, 2026 · 09:18:33 ET
+Detection Agent:  Benefits Allocation Agent (BEN)
+Status:           AUTO-FIXED
+
+─────────────── DETECTION ───────────────
+Thompson, D. (EMP-7142)
+Last division:    Boler Mfg Services (CC 6200-004)
+Termination date: 2026-05-28
+
+Carrier files still showing active billing for Thompson:
+  • VSP Vision:     $134/mo (Family tier)
+  • Delta Dental:   $286/mo (Family tier)
+
+Total: $420/mo unauthorized billing.
+
+─────────────── AUTO-FIX APPLIED ───────────────
+Per Boler auto-fix policy: termination + <$500/mo + no prior SAR/EDD → auto-resolve.
+
+  • VSP Vision  · $134/mo REMOVED · backdated to 2026-05-29
+  • Delta Dental · $286/mo REMOVED · backdated to 2026-05-29
+  • Catch-up credit: $420 to Boler Mfg Services June JE
+
+Termination cascade triggered for remaining carriers (Cigna, Hartford, Fidelity)
+— all already correctly showing TERMINATED status. Only VSP + Delta were lagging.
+
+─────────────── ROUTING ───────────────
+  • Detected by:      Benefits Allocation Agent
+  • Auto-fix policy:   Below threshold + clear HRIS source-of-truth
+  • Notification:     Confirmation email to Sarah Mitchell
+
+Storage: DynamoDB · partition=2026-06 · sort=EXC-0446
+Audit ID: AUDIT-2026-06-05-09:18:33-EXC-0446-AUTOFIX

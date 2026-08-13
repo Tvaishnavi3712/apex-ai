@@ -1,0 +1,433 @@
+# =============================================================================
+# APEX AI Platform - Work Order Management Playbook
+# =============================================================================
+# Aerospace & Defense: Manage work orders with READ from ERP/PowerFlow
+# and WRITE capabilities for status updates and creation.
+# =============================================================================
+
+playbook:
+  name: work_order_management
+  version: "1.0.0"
+  industry: aerospace_defense
+  category: operations
+  description: "Work order query, status update, and creation with full READ/WRITE"
+  compliance: ["ITAR", "AS9100", "NIST-800-171"]
+
+  # ---------------------------------------------------------------------------
+  # LLM Configuration
+  # ---------------------------------------------------------------------------
+  llm_config:
+    primary_model:
+      provider: bedrock
+      model_id: anthropic.claude-opus-4-6
+      region: us-gov-west-1
+      parameters:
+        temperature: 0.1
+        max_tokens: 4000
+
+  # ---------------------------------------------------------------------------
+  # INTENT
+  # ---------------------------------------------------------------------------
+  intent: |
+    Manage manufacturing work orders with full READ and WRITE capabilities:
+    1. Query work order status from ERP and PowerFlow (READ)
+    2. Retrieve associated documents, BOMs, and specifications (READ)
+    3. Update work order status and completion data (WRITE)
+    4. Create new work orders based on requirements (WRITE)
+    5. Generate program status reports
+    6. Track quality holds and NCRs
+
+  # ---------------------------------------------------------------------------
+  # OUTPUT
+  # ---------------------------------------------------------------------------
+  output:
+    schema:
+      type: object
+      properties:
+        work_orders:
+          type: array
+        status_updates:
+          type: array
+        created_orders:
+          type: array
+        documents:
+          type: array
+        quality_holds:
+          type: array
+
+  # ===========================================================================
+  # CONTEXT SECTION
+  # ===========================================================================
+  context:
+    # -------------------------------------------------------------------------
+    # Data Sources (READ)
+    # -------------------------------------------------------------------------
+    data_sources:
+      govcloud_erp:
+        type: erp
+        api_endpoint: "${ERP_API_ENDPOINT}"
+        mode: read_write
+        description: "GovCloud ERP - Work orders, inventory, BOM"
+        entities:
+          work_orders: "/api/work-orders"
+          inventory: "/api/inventory"
+          bom: "/api/bill-of-materials"
+          routing: "/api/routings"
+
+      power_flow:
+        type: sql_database
+        connection: "${POWER_FLOW_CONNECTION_STRING}"
+        mode: read_only
+        tables:
+          documents: "dbo.Documents"
+          work_packages: "dbo.WorkPackages"
+          travelers: "dbo.Travelers"
+
+      quality_system:
+        type: api
+        base_url: "${QUALITY_SYSTEM_URL}"
+        mode: read_write
+        endpoints:
+          ncrs: "/api/ncrs"
+          holds: "/api/quality-holds"
+          inspections: "/api/inspections"
+
+    # -------------------------------------------------------------------------
+    # Output Destinations (WRITE)
+    # -------------------------------------------------------------------------
+    output_destinations:
+      erp_updates:
+        type: erp
+        api_endpoint: "${ERP_API_ENDPOINT}"
+        mode: write
+        description: "Post updates to ERP"
+
+      work_order_creation:
+        type: erp
+        api_endpoint: "${ERP_API_ENDPOINT}/work-orders"
+        mode: write
+        description: "Create new work orders"
+
+      status_notifications:
+        type: notification
+        channels: ["email", "teams"]
+        mode: write
+
+      audit_log:
+        type: dynamodb
+        table: "apex-${APEX_ENVIRONMENT}-audit-log"
+        mode: write
+
+    # -------------------------------------------------------------------------
+    # Work Order Configuration
+    # -------------------------------------------------------------------------
+    work_order_config:
+      statuses:
+        - code: "OPEN"
+          description: "Open, not started"
+          allow_edit: true
+        - code: "IN_PROGRESS"
+          description: "Work in progress"
+          allow_edit: true
+        - code: "ON_HOLD"
+          description: "Quality or material hold"
+          allow_edit: true
+        - code: "COMPLETE"
+          description: "Work complete, pending QA"
+          allow_edit: false
+        - code: "CLOSED"
+          description: "Closed and shipped"
+          allow_edit: false
+
+      priority_levels:
+        - code: "AOG"
+          description: "Aircraft on Ground - Immediate"
+          sla_hours: 24
+        - code: "CRITICAL"
+          description: "Critical path item"
+          sla_hours: 72
+        - code: "HIGH"
+          description: "High priority"
+          sla_hours: 168
+        - code: "NORMAL"
+          description: "Standard priority"
+          sla_hours: 336
+
+      required_fields:
+        creation:
+          - part_number
+          - quantity
+          - required_date
+          - program
+          - customer_po
+        update:
+          - work_order_id
+          - status
+          - completion_quantity
+
+    # -------------------------------------------------------------------------
+    # Approval Rules
+    # -------------------------------------------------------------------------
+    approvals:
+      status_changes:
+        to_complete:
+          requires_approval: true
+          approvers: ["qa_inspector", "manufacturing_supervisor"]
+        to_closed:
+          requires_approval: true
+          approvers: ["shipping_supervisor"]
+        to_on_hold:
+          requires_approval: false
+          notification: ["program_manager", "quality_engineer"]
+
+      creation:
+        aog_work_order:
+          requires_approval: false
+          notification: ["plant_manager", "program_manager"]
+        standard_work_order:
+          requires_approval: true
+          approvers: ["production_planner"]
+
+  # ===========================================================================
+  # RECIPE
+  # ===========================================================================
+  recipe: |
+    ## Work Order Management Workflow
+
+    ### Phase 1: Request Parsing
+    1. Parse user request for action type:
+       - Query (READ): Get work order status, documents
+       - Update (WRITE): Change status, log progress
+       - Create (WRITE): New work order creation
+    2. Validate user permissions for requested action
+    3. Log request to audit trail
+
+    ### Phase 2: Data Retrieval (READ)
+    For QUERY requests:
+    1. Query context.data_sources.govcloud_erp for work order data
+    2. Query context.data_sources.power_flow for associated documents
+    3. Query context.data_sources.quality_system for holds/NCRs
+    4. Aggregate and format results
+
+    ### Phase 3: Data Modification (WRITE)
+    For UPDATE requests:
+    1. Validate update against context.work_order_config.statuses
+    2. Check approval requirements per context.approvals.status_changes
+    3. If approved or no approval required:
+       - POST update to context.output_destinations.erp_updates
+       - Send notifications per context.output_destinations.status_notifications
+    4. Log update to audit trail
+
+    For CREATE requests:
+    1. Validate required fields per context.work_order_config.required_fields.creation
+    2. Check approval requirements per context.approvals.creation
+    3. If approved:
+       - POST to context.output_destinations.work_order_creation
+       - Return new work order ID
+    4. Send creation notifications
+
+    ### Phase 4: Response Generation
+    1. Format response with:
+       - Work order details
+       - Associated documents
+       - Quality status
+       - Action confirmation (for WRITE operations)
+    2. Include audit trail reference
+
+  # ===========================================================================
+  # FACTORY CHAIN
+  # ===========================================================================
+  factory_chain:
+    chainId: work_order_chain
+    description: "Work order management with READ/WRITE"
+    factories:
+      - id: request_parse
+        action: request_parse
+        context_keys: [work_order_config]
+        timeout_seconds: 15
+
+      - id: permission_check
+        action: permission_check
+        depends_on: [request_parse]
+        context_keys: [approvals]
+        timeout_seconds: 15
+
+      - id: erp_query
+        action: erp_query
+        depends_on: [permission_check]
+        context_keys: [data_sources.govcloud_erp]
+        mode: read
+        timeout_seconds: 45
+
+      - id: document_query
+        action: document_search
+        depends_on: [permission_check]
+        context_keys: [data_sources.power_flow]
+        mode: read
+        timeout_seconds: 45
+
+      - id: quality_query
+        action: quality_query
+        depends_on: [permission_check]
+        context_keys: [data_sources.quality_system]
+        mode: read
+        timeout_seconds: 30
+
+      - id: erp_update
+        action: erp_write
+        depends_on: [erp_query, permission_check]
+        context_keys: [output_destinations.erp_updates]
+        mode: write
+        conditional: "request_type == 'update'"
+        timeout_seconds: 30
+
+      - id: erp_create
+        action: erp_write
+        depends_on: [permission_check]
+        context_keys: [output_destinations.work_order_creation]
+        mode: write
+        conditional: "request_type == 'create'"
+        timeout_seconds: 30
+
+      - id: notification_send
+        action: notification_send
+        depends_on: [erp_update, erp_create]
+        context_keys: [output_destinations.status_notifications]
+        mode: write
+        timeout_seconds: 15
+
+      - id: audit_log
+        action: audit_log_write
+        depends_on: [erp_update, erp_create, erp_query]
+        context_keys: [output_destinations.audit_log]
+        mode: write
+        timeout_seconds: 15
+
+      - id: response_format
+        action: response_format
+        depends_on: [erp_query, document_query, quality_query, erp_update, erp_create]
+        timeout_seconds: 30
+
+  # ===========================================================================
+  # ACTIONS
+  # ===========================================================================
+  actions:
+    - id: request_parse
+      handler: core.request_parse
+      description: "Parse and route request"
+
+    - id: permission_check
+      handler: core.permission_check
+      description: "Validate user permissions"
+
+    - id: erp_query
+      handler: aerospace_defense.erp_query
+      description: "Query ERP for work orders (READ)"
+      mode: read
+
+    - id: document_search
+      handler: aerospace_defense.document_search
+      description: "Search PowerFlow documents (READ)"
+      mode: read
+
+    - id: quality_query
+      handler: aerospace_defense.quality_query
+      description: "Query quality system (READ)"
+      mode: read
+
+    - id: erp_write
+      handler: aerospace_defense.erp_write
+      description: "Update or create in ERP (WRITE)"
+      mode: write
+
+    - id: notification_send
+      handler: core.send_notification
+      description: "Send status notifications (WRITE)"
+      mode: write
+
+    - id: audit_log_write
+      handler: core.audit_log
+      description: "Write audit record (WRITE)"
+      mode: write
+
+    - id: response_format
+      handler: core.response_format
+      description: "Format final response"
+
+  # ===========================================================================
+  # CONNECTORS (READ/WRITE Showcase)
+  # ===========================================================================
+  connectors:
+    # READ Connectors
+    - id: govcloud_erp_read
+      type: rest_api
+      mode: read
+      auth: oauth2
+      description: "GovCloud ERP - Query work orders, inventory"
+      operations:
+        - GET /work-orders
+        - GET /work-orders/{id}
+        - GET /inventory
+        - GET /bill-of-materials/{part_number}
+
+    - id: power_flow_read
+      type: sql_server
+      mode: read
+      description: "PowerFlow - Query documents and work packages"
+      operations:
+        - SELECT from Documents
+        - SELECT from WorkPackages
+        - SELECT from Travelers
+
+    - id: quality_system_read
+      type: rest_api
+      mode: read
+      description: "Quality System - Query NCRs and holds"
+      operations:
+        - GET /ncrs
+        - GET /quality-holds
+        - GET /inspections
+
+    # WRITE Connectors
+    - id: govcloud_erp_write
+      type: rest_api
+      mode: write
+      auth: oauth2
+      description: "GovCloud ERP - Create/Update work orders"
+      operations:
+        - POST /work-orders
+        - PUT /work-orders/{id}
+        - PATCH /work-orders/{id}/status
+
+    - id: quality_system_write
+      type: rest_api
+      mode: write
+      description: "Quality System - Create NCRs and holds"
+      operations:
+        - POST /ncrs
+        - POST /quality-holds
+        - PUT /ncrs/{id}/status
+
+    - id: notification_write
+      type: notification
+      mode: write
+      channels: [email, teams, sms]
+      description: "Send notifications"
+
+    - id: audit_log_write
+      type: dynamodb
+      mode: write
+      description: "Write audit records"
+
+  # ===========================================================================
+  # METADATA
+  # ===========================================================================
+  metadata:
+    created_by: apex-platform
+    created_at: "2026-03-24"
+    tags:
+      - aerospace
+      - work-orders
+      - erp
+      - read-write
+      - manufacturing

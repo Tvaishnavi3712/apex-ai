@@ -1,0 +1,63 @@
+{
+  "_metadata": {
+    "blueprint": "apex-return-form-v1",
+    "document_type": "return_form",
+    "extraction_date": "2024-01-22T11:15:00Z",
+    "confidence_score": 0.94,
+    "source_file": "return_form.pdf"
+  },
+  "return_number": "RTN-2024-001234",
+  "original_receipt_number": "RCP-2024-00789456",
+  "original_transaction_date": "2024-01-20",
+  "return_date": "2024-01-22",
+  "store_info": {
+    "name": "Target",
+    "store_number": "1234",
+    "return_location": "1234"
+  },
+  "customer": {
+    "name": "Amanda Wilson",
+    "phone": "312-555-4321",
+    "email": "awilson@email.com",
+    "member_id": "XXX-XXX-1234"
+  },
+  "items_returned": [
+    {
+      "sku": "012345678903",
+      "description": "WIRELESS EARBUDS",
+      "quantity": 1,
+      "original_price": 29.99,
+      "refund_amount": 24.99,
+      "reason_code": "DEFECTIVE",
+      "reason_detail": "Left earbud not working",
+      "condition": "OPENED"
+    }
+  ],
+  "return_reason": {
+    "primary": "DEFECTIVE",
+    "secondary": "Product malfunction",
+    "customer_notes": "Left earbud stopped working after 2 days"
+  },
+  "refund": {
+    "method": "ORIGINAL_PAYMENT",
+    "card_type": "VISA",
+    "last_four": "4521",
+    "refund_amount": 24.99,
+    "tax_refund": 2.56,
+    "total_refund": 27.55
+  },
+  "inventory_action": {
+    "disposition": "DEFECTIVE_OUT",
+    "location": "RETURNS_BIN"
+  },
+  "associate": {
+    "id": "EMP-5678",
+    "name": "Jessica T."
+  },
+  "manager_approval": {
+    "required": false,
+    "approved_by": null
+  },
+  "customer_signature": true,
+  "signature_date": "2024-01-22"
+}

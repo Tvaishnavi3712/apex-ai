@@ -1,0 +1,474 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CBTS Apex AI Platform - Lambda Action Functions'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: development
+
+  ProjectName:
+    Type: String
+    Default: apex-ai-platform
+
+  LambdaRoleArn:
+    Type: String
+    Description: ARN of the Lambda execution role
+
+  DocumentsIncomingBucket:
+    Type: String
+    Description: Name of the incoming documents bucket
+
+  DocumentsProcessedBucket:
+    Type: String
+    Description: Name of the processed documents bucket
+
+Resources:
+  # ============================================================================
+  # Core Actions
+  # ============================================================================
+
+  # BDA Extract Action
+  BDAExtractFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${ProjectName}-action-bda-extract'
+      Runtime: python3.11
+      Handler: index.handler
+      Role: !Ref LambdaRoleArn
+      Timeout: 300
+      MemorySize: 512
+      Environment:
+        Variables:
+          DOCUMENTS_INCOMING_BUCKET: !Ref DocumentsIncomingBucket
+          DOCUMENTS_PROCESSED_BUCKET: !Ref DocumentsProcessedBucket
+      Code:
+        ZipFile: |
+          """
+          BDA Extract Action
+          Extracts structured data from documents using Bedrock Data Automation
+          """
+          import json
+          import boto3
+          import os
+          from datetime import datetime
+
+          bda_runtime = boto3.client('bedrock-data-automation-runtime')
+          s3 = boto3.client('s3')
+
+          def handler(event, context):
+              # Get tool name from context (AgentCore Gateway format)
+              tool_context = context.client_context.custom if hasattr(context, 'client_context') and context.client_context else {}
+              tool_name = tool_context.get('bedrockAgentCoreToolName', 'bda_extract')
+
+              # Input parameters
+              document_s3_uri = event.get('document_s3_uri')
+              blueprint_arn = event.get('blueprint_arn')
+              output_s3_uri = event.get('output_s3_uri')
+
+              if not document_s3_uri:
+                  return {
+                      'status': 'error',
+                      'error': 'document_s3_uri is required'
+                  }
+
+              try:
+                  # Invoke BDA
+                  response = bda_runtime.invoke_data_automation_async(
+                      inputConfiguration={
+                          's3Uri': document_s3_uri
+                      },
+                      outputConfiguration={
+                          's3Uri': output_s3_uri or f"s3://{os.environ['DOCUMENTS_PROCESSED_BUCKET']}/bda-output/"
+                      },
+                      blueprints=[
+                          {'blueprintArn': blueprint_arn}
+                      ] if blueprint_arn else [],
+                      dataAutomationProfileArn=f"arn:aws:bedrock:{os.environ.get('AWS_REGION', 'us-east-1')}:{context.invoked_function_arn.split(':')[4]}:data-automation-profile/us.data-automation-v1"
+                  )
+
+                  return {
+                      'status': 'processing',
+                      'invocation_arn': response['invocationArn'],
+                      'document_s3_uri': document_s3_uri,
+                      'message': 'BDA extraction initiated'
+                  }
+
+              except Exception as e:
+                  return {
+                      'status': 'error',
+                      'error': str(e)
+                  }
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: ActionType
+          Value: core
+
+  # DynamoDB Lookup Action
+  DynamoDBLookupFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${ProjectName}-action-dynamodb-lookup'
+      Runtime: python3.11
+      Handler: index.handler
+      Role: !Ref LambdaRoleArn
+      Timeout: 30
+      MemorySize: 256
+      Code:
+        ZipFile: |
+          """
+          DynamoDB Lookup Action
+          Lookup records in DynamoDB tables
+          """
+          import json
+          import boto3
+          from boto3.dynamodb.conditions import Key, Attr
+          from decimal import Decimal
+
+          dynamodb = boto3.resource('dynamodb')
+
+          def decimal_default(obj):
+              if isinstance(obj, Decimal):
+                  return float(obj)
+              raise TypeError
+
+          def handler(event, context):
+              table_name = event.get('table_name')
+              key = event.get('key')
+              key_value = event.get('key_value')
+              index_name = event.get('index_name')
+
+              if not table_name or not key or not key_value:
+                  return {
+                      'status': 'error',
+                      'error': 'table_name, key, and key_value are required'
+                  }
+
+              try:
+                  table = dynamodb.Table(table_name)
+
+                  if index_name:
+                      # Query using GSI
+                      response = table.query(
+                          IndexName=index_name,
+                          KeyConditionExpression=Key(key).eq(key_value)
+                      )
+                      items = response.get('Items', [])
+                  else:
+                      # Direct get
+                      response = table.get_item(Key={key: key_value})
+                      items = [response.get('Item')] if response.get('Item') else []
+
+                  return {
+                      'status': 'success',
+                      'found': len(items) > 0,
+                      'count': len(items),
+                      'items': json.loads(json.dumps(items, default=decimal_default))
+                  }
+
+              except Exception as e:
+                  return {
+                      'status': 'error',
+                      'error': str(e)
+                  }
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: ActionType
+          Value: core
+
+  # S3 Operations Action
+  S3OperationsFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${ProjectName}-action-s3-operations'
+      Runtime: python3.11
+      Handler: index.handler
+      Role: !Ref LambdaRoleArn
+      Timeout: 60
+      MemorySize: 256
+      Code:
+        ZipFile: |
+          """
+          S3 Operations Action
+          Read/write files from S3
+          """
+          import json
+          import boto3
+          import base64
+
+          s3 = boto3.client('s3')
+
+          def handler(event, context):
+              operation = event.get('operation', 'read')
+              bucket = event.get('bucket')
+              key = event.get('key')
+              content = event.get('content')
+              content_type = event.get('content_type', 'application/json')
+
+              if not bucket or not key:
+                  return {
+                      'status': 'error',
+                      'error': 'bucket and key are required'
+                  }
+
+              try:
+                  if operation == 'read':
+                      response = s3.get_object(Bucket=bucket, Key=key)
+                      body = response['Body'].read()
+
+                      # Try to decode as text
+                      try:
+                          content = body.decode('utf-8')
+                          if content_type == 'application/json':
+                              content = json.loads(content)
+                      except:
+                          content = base64.b64encode(body).decode('utf-8')
+
+                      return {
+                          'status': 'success',
+                          'operation': 'read',
+                          'content': content,
+                          'content_type': response.get('ContentType', 'unknown')
+                      }
+
+                  elif operation == 'write':
+                      if isinstance(content, dict):
+                          body = json.dumps(content)
+                      else:
+                          body = content
+
+                      s3.put_object(
+                          Bucket=bucket,
+                          Key=key,
+                          Body=body,
+                          ContentType=content_type
+                      )
+
+                      return {
+                          'status': 'success',
+                          'operation': 'write',
+                          's3_uri': f's3://{bucket}/{key}'
+                      }
+
+                  elif operation == 'list':
+                      prefix = event.get('prefix', '')
+                      response = s3.list_objects_v2(Bucket=bucket, Prefix=prefix, MaxKeys=100)
+                      files = [obj['Key'] for obj in response.get('Contents', [])]
+
+                      return {
+                          'status': 'success',
+                          'operation': 'list',
+                          'files': files,
+                          'count': len(files)
+                      }
+
+                  else:
+                      return {
+                          'status': 'error',
+                          'error': f'Unknown operation: {operation}'
+                      }
+
+              except Exception as e:
+                  return {
+                      'status': 'error',
+                      'error': str(e)
+                  }
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: ActionType
+          Value: core
+
+  # Send Notification Action
+  SendNotificationFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${ProjectName}-action-send-notification'
+      Runtime: python3.11
+      Handler: index.handler
+      Role: !Ref LambdaRoleArn
+      Timeout: 30
+      MemorySize: 256
+      Code:
+        ZipFile: |
+          """
+          Send Notification Action
+          Send notifications via SES, SNS, or other channels
+          """
+          import json
+          import boto3
+
+          ses = boto3.client('ses')
+          sns = boto3.client('sns')
+
+          def handler(event, context):
+              channel = event.get('channel', 'email')
+              recipient = event.get('recipient')
+              subject = event.get('subject', 'Apex AI Platform Notification')
+              message = event.get('message')
+              sender = event.get('sender', 'noreply@apex-ai.cbts.com')
+
+              if not recipient or not message:
+                  return {
+                      'status': 'error',
+                      'error': 'recipient and message are required'
+                  }
+
+              try:
+                  if channel == 'email':
+                      response = ses.send_email(
+                          Source=sender,
+                          Destination={'ToAddresses': [recipient]},
+                          Message={
+                              'Subject': {'Data': subject},
+                              'Body': {
+                                  'Text': {'Data': message},
+                                  'Html': {'Data': f'<html><body><p>{message}</p></body></html>'}
+                              }
+                          }
+                      )
+                      message_id = response['MessageId']
+
+                  elif channel == 'sms':
+                      response = sns.publish(
+                          PhoneNumber=recipient,
+                          Message=message
+                      )
+                      message_id = response['MessageId']
+
+                  elif channel == 'sns':
+                      # recipient is SNS topic ARN
+                      response = sns.publish(
+                          TopicArn=recipient,
+                          Subject=subject,
+                          Message=message
+                      )
+                      message_id = response['MessageId']
+
+                  else:
+                      return {
+                          'status': 'error',
+                          'error': f'Unknown channel: {channel}'
+                      }
+
+                  return {
+                      'status': 'success',
+                      'channel': channel,
+                      'recipient': recipient,
+                      'message_id': message_id
+                  }
+
+              except Exception as e:
+                  return {
+                      'status': 'error',
+                      'error': str(e)
+                  }
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: ActionType
+          Value: core
+
+  # Human Review Action
+  HumanReviewFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${ProjectName}-action-human-review'
+      Runtime: python3.11
+      Handler: index.handler
+      Role: !Ref LambdaRoleArn
+      Timeout: 30
+      MemorySize: 256
+      Code:
+        ZipFile: |
+          """
+          Human Review Action
+          Flag items for human review
+          """
+          import json
+          import boto3
+          import os
+          from datetime import datetime
+          import uuid
+
+          dynamodb = boto3.resource('dynamodb')
+
+          def handler(event, context):
+              work_item_id = event.get('work_item_id')
+              reason = event.get('reason', 'Flagged for review')
+              priority = event.get('priority', 'normal')
+              data = event.get('data', {})
+              assignee = event.get('assignee')
+
+              try:
+                  # Create review task
+                  review_id = str(uuid.uuid4())
+                  review_task = {
+                      'review_id': review_id,
+                      'work_item_id': work_item_id,
+                      'reason': reason,
+                      'priority': priority,
+                      'data': data,
+                      'assignee': assignee,
+                      'status': 'pending',
+                      'created_at': datetime.utcnow().isoformat()
+                  }
+
+                  # Store in work items table with special status
+                  if work_item_id:
+                      table = dynamodb.Table(os.environ.get('WORK_ITEMS_TABLE', 'apex-ai-platform-work-items'))
+                      table.update_item(
+                          Key={'work_item_id': work_item_id},
+                          UpdateExpression='SET #status = :status, needs_review_reason = :reason',
+                          ExpressionAttributeNames={'#status': 'status'},
+                          ExpressionAttributeValues={
+                              ':status': 'needs_review',
+                              ':reason': reason
+                          }
+                      )
+
+                  return {
+                      'status': 'success',
+                      'review_id': review_id,
+                      'work_item_id': work_item_id,
+                      'reason': reason,
+                      'message': 'Item flagged for human review'
+                  }
+
+              except Exception as e:
+                  return {
+                      'status': 'error',
+                      'error': str(e)
+                  }
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: ActionType
+          Value: core
+
+Outputs:
+  BDAExtractFunctionArn:
+    Value: !GetAtt BDAExtractFunction.Arn
+    Export:
+      Name: !Sub '${ProjectName}-action-bda-extract-arn'
+
+  DynamoDBLookupFunctionArn:
+    Value: !GetAtt DynamoDBLookupFunction.Arn
+    Export:
+      Name: !Sub '${ProjectName}-action-dynamodb-lookup-arn'
+
+  S3OperationsFunctionArn:
+    Value: !GetAtt S3OperationsFunction.Arn
+    Export:
+      Name: !Sub '${ProjectName}-action-s3-operations-arn'
+
+  SendNotificationFunctionArn:
+    Value: !GetAtt SendNotificationFunction.Arn
+    Export:
+      Name: !Sub '${ProjectName}-action-send-notification-arn'
+
+  HumanReviewFunctionArn:
+    Value: !GetAtt HumanReviewFunction.Arn
+    Export:
+      Name: !Sub '${ProjectName}-action-human-review-arn'

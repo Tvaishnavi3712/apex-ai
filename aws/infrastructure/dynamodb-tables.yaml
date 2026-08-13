@@ -1,0 +1,264 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Apex AI Platform — the DynamoDB tables that main.yaml does not create.
+
+  main.yaml provisions six tables (playbooks, agents, blueprints, actions,
+  work-items, sessions). The backend's configuration references sixteen. The ten
+  defined here are the remainder — without them the Review Queue, Pipelines,
+  ApexSignal and Simulator pages fail at runtime with ResourceNotFoundException.
+
+  Partition keys match what the seeders write; see backend/scripts/seed_apex_signal.py
+  and seed_stp_demo.py, which are the authoritative source for these names.
+
+  Deploy AFTER main.yaml:
+
+    aws cloudformation deploy \
+      --template-file infrastructure/dynamodb-tables.yaml \
+      --stack-name apex-ai-platform-tables \
+      --parameter-overrides ProjectName=apex-ai-platform \
+      --region us-east-1
+
+Parameters:
+  ProjectName:
+    Type: String
+    Default: apex-ai-platform
+    Description: Prefix for table names. Must match the backend's table settings.
+
+  Environment:
+    Type: String
+    Default: development
+    AllowedValues: [development, staging, production]
+    Description: Deployment environment (tagged onto every table).
+
+Conditions:
+  # Point-in-time recovery costs money and is pointless for a demo stack.
+  IsProduction: !Equals [!Ref Environment, production]
+
+Resources:
+
+  # ── Governance ─────────────────────────────────────────────────────────────
+
+  AuditLogsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-audit-logs'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: log_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: log_id
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: !If [IsProduction, true, false]
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  ReviewDecisionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-review-decisions'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: decision_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: decision_id
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: !If [IsProduction, true, false]
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  AgentAuditLogTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-agent-audit-log'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: run_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: run_id
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: !If [IsProduction, true, false]
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  # ── Human review & pipelines ───────────────────────────────────────────────
+
+  ReviewQueueTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-review-queue'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: review_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: review_id
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: !If [IsProduction, true, false]
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  PipelinesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-pipelines'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: pipeline_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: pipeline_id
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: !If [IsProduction, true, false]
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  SimulatorScenariosTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-simulator-scenarios'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: scenario_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: scenario_id
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: !If [IsProduction, true, false]
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  # ── ApexSignal (predictive / supply chain) ─────────────────────────────────
+
+  PredictiveEventsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-predictive-events'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: event_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: event_id
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: !If [IsProduction, true, false]
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  SuppliersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-suppliers'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: supplier_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: supplier_id
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: !If [IsProduction, true, false]
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  InventoryBomTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-inventory-bom'
+      BillingMode: PAY_PER_REQUEST
+      # Materials, plants, products, BOM lines and inventory are flattened into
+      # one table with a type-prefixed key (e.g. "MATERIAL#M-1004").
+      AttributeDefinitions:
+        - AttributeName: entity_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: entity_id
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: !If [IsProduction, true, false]
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  PurchaseOrdersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${ProjectName}-purchase-orders'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: po_number
+          AttributeType: S
+      KeySchema:
+        - AttributeName: po_number
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: !If [IsProduction, true, false]
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+Outputs:
+  AuditLogsTableName:
+    Description: Governance audit log
+    Value: !Ref AuditLogsTable
+    Export:
+      Name: !Sub '${AWS::StackName}-audit-logs'
+
+  ReviewQueueTableName:
+    Description: Human review queue
+    Value: !Ref ReviewQueueTable
+    Export:
+      Name: !Sub '${AWS::StackName}-review-queue'
+
+  PipelinesTableName:
+    Description: Pipeline definitions
+    Value: !Ref PipelinesTable
+    Export:
+      Name: !Sub '${AWS::StackName}-pipelines'
+
+  PredictiveEventsTableName:
+    Description: ApexSignal predictive events
+    Value: !Ref PredictiveEventsTable
+    Export:
+      Name: !Sub '${AWS::StackName}-predictive-events'
+
+  TablesCreated:
+    Description: Count of tables created by this stack
+    Value: '10'

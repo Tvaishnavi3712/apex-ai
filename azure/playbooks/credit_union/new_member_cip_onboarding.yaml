@@ -1,0 +1,108 @@
+playbook_id: pb-cwfcu-1
+name: new_member_cip_onboarding
+version: "1.0.0"
+description: "End-to-end Customer Identification Program (CIP) onboarding — ID verify, OFAC/PEP screen, risk-tier, exam-folder index."
+industry: credit_union
+category: member_onboarding
+
+intent: |
+  Onboard a new CWFCU member in a single agent-orchestrated pass:
+  ingest the application (CWAnyWhere / in-branch / online), verify the
+  government ID against AAMVA DLDV or DOS, screen against OFAC SDN +
+  Consolidated + PEP + adverse media + ChexSystems, calculate the risk
+  tier from the screen results + occupation + jurisdiction, and either
+  auto-approve LOW-risk profiles or escalate HITL for HIGH-risk + PEP
+  near-matches + OFAC near-matches. Every CIP packet is immediately
+  indexed into the NCUA exam folder so NCUA examiners can pull any
+  record by name, DOB, or member number. The risk tier assigned here
+  follows the member into the Compliance Agent's CDD watch.
+
+output:
+  - name: cip_packet
+    type: structured_data
+    description: "Fully extracted CIP packet conforming to 31 CFR § 1020.220"
+  - name: risk_tier
+    type: structured_data
+    description: "LOW / MEDIUM / HIGH risk tier with rationale"
+  - name: routing_decision
+    type: routing_decision
+    description: "auto_approve | hitl_pep | hitl_ofac | hitl_chex | reject"
+  - name: ncua_folder_entry
+    type: index_entry
+    description: "NCUA exam folder index entry — immutable audit ID"
+
+context:
+  business_rules:
+    - "Every member must have an unexpired government ID verified through DLDV / DOS"
+    - "OFAC near-match (>85% score) requires BSA Officer disposition"
+    - "PEP positive or near-match requires CDD enhanced-monitoring setup"
+    - "ChexSystems prior closure flags MEDIUM tier minimum"
+    - "Entity members require beneficial-ownership rule (31 CFR § 1010.230) satisfaction"
+  approval_thresholds:
+    auto_approve_risk_tier: LOW
+    hitl_risk_tier: [MEDIUM, HIGH]
+
+actions:
+  - name: ingest_application
+    action_id: credit_union.cip_ingest
+    description: "Ingest CIP application from CWAnyWhere / in-branch / online"
+    required: true
+  - name: verify_government_id
+    action_id: credit_union.verify_government_id
+    description: "Verify DL via AAMVA DLDV or passport via DOS API"
+    required: true
+  - name: ofac_screen
+    action_id: credit_union.ofac_screen
+    description: "Screen against OFAC SDN, Consolidated, 314(a), 594(a)"
+    required: true
+  - name: pep_screen
+    action_id: credit_union.pep_screen
+    description: "Screen against PEP database (WorldCheck / Dow Jones)"
+    required: true
+  - name: chexsystems_pull
+    action_id: credit_union.chexsystems_pull
+    description: "Pull ChexSystems history"
+    required: true
+  - name: calculate_risk_tier
+    action_id: credit_union.cip_calculate_risk_tier
+    description: "Risk-tier engine combining screen + occupation + jurisdiction"
+    required: true
+  - name: assemble_cip_packet
+    action_id: credit_union.cip_assemble_packet
+    description: "Assemble final CIP packet structure"
+    required: true
+  - name: index_to_ncua_folder
+    action_id: credit_union.ncua_folder_index
+    description: "Index CIP packet to NCUA exam folder"
+    required: true
+
+recipe: |
+  1. Ingest application via the CWAnyWhere submission webhook OR an
+     in-branch terminal upload. Extract every identity field via BDA
+     using the bp-cwfcu-cip blueprint.
+  2. Verify the government ID. State DLs → DLDV API. US Passports → DOS
+     verification. Reject expired IDs immediately with re-upload prompt.
+  3. Run OFAC SDN + Consolidated + FinCEN 314(a) + 594(a) secondary
+     screens in parallel. Any match score > 85% routes to BSA Officer
+     disposition.
+  4. Run PEP screen. Any positive or near-match triggers CDD
+     enhanced-monitoring setup downstream.
+  5. Pull ChexSystems history. Prior account closure or open alert
+     elevates risk tier minimum to MEDIUM.
+  6. Calculate final risk tier (LOW / MEDIUM / HIGH) using the
+     deterministic scoring engine.
+  7. For entity members: enforce beneficial-ownership rule per
+     31 CFR § 1010.230 — single beneficial owner certification, OR
+     each owner ≥ 25% + control prong identified.
+  8. Assemble CIP packet. Generate immutable audit ID. Persist.
+  9. Index to NCUA exam folder path. Pass risk tier + EDD flag to
+     Compliance Agent for ongoing CDD watch.
+  10. LOW-risk: auto-approve. MEDIUM/HIGH: route to HITL queue with
+      pre-populated officer decision template.
+
+triggers:
+  - type: webhook
+    source: cwanywhere
+    path: /onboarding/submit
+  - type: in_branch_upload
+    source: branch_terminal

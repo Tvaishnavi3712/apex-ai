@@ -1,0 +1,40 @@
+═══════════════════════════════════════════════════════════════════════════════
+                            INVOICE
+═══════════════════════════════════════════════════════════════════════════════
+
+VENDOR:                                      BILL TO:
+---------------------------------           ---------------------------------
+Acme Office Supplies                        Apex Financial Corp
+9876 Industrial Blvd                        500 Enterprise Way
+Chicago, IL 60601                           San Francisco, CA 94105
+Tax ID: 36-9876543
+Phone: (312) 555-0456
+Email: accounts@acmeoffice.com
+
+═══════════════════════════════════════════════════════════════════════════════
+Invoice Number:    AOS-2024-0892      <<<< DUPLICATE - SAME AS INVOICE #2
+Invoice Date:      March 11, 2024
+Due Date:          April 10, 2024
+PO Number:         PO-2024-7834
+Payment Terms:     Net 30
+═══════════════════════════════════════════════════════════════════════════════
+
+DESCRIPTION                          QTY      UNIT PRICE      AMOUNT
+-------------------------------------------------------------------------------
+Ergonomic Office Chair - Premium     10        $150.00      $1,500.00
+Standing Desk - Electric Adj.         5        $400.00      $2,000.00
+Monitor Arm - Dual Mount              8         $75.00        $600.00
+Keyboard Tray - Adjustable           10         $45.00        $450.00
+-------------------------------------------------------------------------------
+
+                                              Subtotal:     $4,550.00
+                                              Tax (8.25%):    $375.38
+                                              ─────────────────────────
+                                              TOTAL DUE:    $4,925.38
+
+═══════════════════════════════════════════════════════════════════════════════
+                        ** RESENDING - PLEASE PROCESS **
+═══════════════════════════════════════════════════════════════════════════════
+
+TEST SCENARIO: Duplicate Invoice
+Expected Result: REJECTED - Invoice AOS-2024-0892 already processed

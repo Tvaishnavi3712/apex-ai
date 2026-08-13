@@ -1,0 +1,37 @@
+{
+  // Point VS Code at the project venv so imports resolve and the debugger works.
+  "python.defaultInterpreterPath": "${workspaceFolder}/backend/venv/bin/python",
+  "python.analysis.extraPaths": ["${workspaceFolder}/backend"],
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": ["tests"],
+
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
+  "[typescript][typescriptreact][javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+
+  // Keep the file tree readable — these are generated, never edited by hand.
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "**/.next": true,
+    "**/node_modules": true,
+    "**/backend/venv": true,
+    "**/.localdata": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/backend/venv": true,
+    "**/.next": true,
+    "**/synthetic-data/output": true
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/backend/venv/**": true,
+    "**/.next/**": true
+  }
+}

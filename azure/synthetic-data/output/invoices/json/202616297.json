@@ -1,0 +1,65 @@
+{
+  "vendor": {
+    "name": "Industrial Partners LLC",
+    "address": {
+      "street": "456 Commerce Blvd",
+      "city": "Seattle",
+      "state": "WA",
+      "zip": "98101"
+    },
+    "tax_id": "22-3108686",
+    "phone": "(511) 398-2951",
+    "email": "billing@industrial.com"
+  },
+  "invoice": {
+    "number": "202616297",
+    "date": "2026-02-11",
+    "due_date": "2026-03-13",
+    "po_number": "PO-472195",
+    "terms": "NET30"
+  },
+  "bill_to": {
+    "company_name": "Contoso Industries",
+    "address": {
+      "street": "456 Commerce Blvd",
+      "city": "Seattle",
+      "state": "WA",
+      "zip": "98101"
+    }
+  },
+  "line_items": [
+    {
+      "description": "Cloud Hosting Services - Monthly",
+      "quantity": 14,
+      "unit_price": 802.62,
+      "amount": 11236.68,
+      "item_code": "LOI-3582"
+    },
+    {
+      "description": "Technical Consulting - Hourly",
+      "quantity": 19,
+      "unit_price": 160.39,
+      "amount": 3047.41,
+      "item_code": "WEF-7926"
+    },
+    {
+      "description": "Security Audit Services",
+      "quantity": 2,
+      "unit_price": 5289.26,
+      "amount": 10578.52,
+      "item_code": "MBQ-9588"
+    }
+  ],
+  "totals": {
+    "subtotal": 24862.61,
+    "tax_rate": 0.0625,
+    "tax_amount": 1553.91,
+    "shipping": 0,
+    "total": 26416.52
+  },
+  "payment": {
+    "bank_name": "First National Bank",
+    "account_number": "****1234",
+    "routing_number": "021000089"
+  }
+}

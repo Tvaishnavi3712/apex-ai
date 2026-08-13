@@ -1,0 +1,43 @@
+{
+  "blueprint_id": "bp-cwfcu-loan-app",
+  "name": "CWFCU Loan Application Packet",
+  "description": "Loan application packet (auto / HELOC / mortgage / personal) with all supporting income, identity, and collateral documents.",
+  "industry": "credit_union",
+  "document_type": "loan_application",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "CWFCU Loan Application Packet",
+    "description": "Loan packet schema covering applicant, requested terms, collateral, full documentation checklist, and decision telemetry.",
+    "extractionInstructions": "Extract every required field from the application form. Cross-validate against the supporting documents (paystubs, W-2, tax returns, bank statements, ID). Missing items must be itemized.",
+    "fields": {
+      "loan_reference":       { "type": "string", "description": "Internal loan reference (LN-YYYY-NNNN)", "required": true },
+      "loan_type":            { "type": "string", "description": "auto / heloc / mortgage / personal / business", "required": true },
+      "application_channel":  { "type": "string", "description": "CWAnyWhere / Encompass / in-branch", "required": true },
+      "submitted_at":         { "type": "string", "description": "Submission timestamp (ISO8601)", "required": true },
+      "member_id":            { "type": "string", "description": "CWFCU member number", "required": true },
+      "applicant_legal_name": { "type": "string", "description": "Applicant legal name", "required": true },
+      "applicant_dob":        { "type": "date",   "description": "Applicant DOB", "required": true },
+      "applicant_address":    { "type": "string", "description": "Applicant address", "required": true },
+      "applicant_employer":   { "type": "string", "description": "Employer + tenure", "required": false },
+      "applicant_annual_income": { "type": "number","description": "Annual income (verified)", "required": true },
+      "co_applicant":         { "type": "object", "description": "Optional co-applicant block (mirror of applicant)", "required": false },
+      "amount_requested":     { "type": "number", "description": "Requested loan amount (USD)", "required": true },
+      "term_months":          { "type": "number", "description": "Term in months", "required": true },
+      "rate_apr":             { "type": "number", "description": "Offered APR", "required": false },
+      "use_of_funds":         { "type": "string", "description": "Purpose of loan", "required": true },
+      "collateral":           { "type": "object", "description": "Collateral details (property / vehicle / N/A)", "required": false },
+      "documents_received":   { "type": "array",  "description": "Per-document receipt + extraction confidence", "required": true },
+      "documents_missing":    { "type": "array",  "description": "Itemized missing-doc list", "required": false },
+      "fico_score":           { "type": "number", "description": "Credit pull score", "required": false },
+      "dti_front":            { "type": "number", "description": "Front-end DTI (%)", "required": false },
+      "dti_back":             { "type": "number", "description": "Back-end DTI (%)", "required": false },
+      "ofac_rescreen":        { "type": "string", "description": "OFAC rescreen result at app", "required": true },
+      "source_of_funds_verified": { "type": "boolean","description": "SOF verification flag", "required": false },
+      "packet_confidence":    { "type": "number", "description": "Overall packet extraction confidence", "required": true },
+      "decision_status":      { "type": "string", "description": "APPROVED / PENDING / DECLINED", "required": true },
+      "decision_path":        { "type": "string", "description": "STRAIGHT_THROUGH / HITL_MISSING_DOCS / HITL_RATE_OVERRIDE", "required": true },
+      "ncua_exam_folder_path": { "type": "string","description": "NCUA exam folder index path", "required": true },
+      "hmda_reportable":      { "type": "boolean","description": "Whether HMDA-reportable (mortgage / HELOC / refi)", "required": false }
+    }
+  }
+}

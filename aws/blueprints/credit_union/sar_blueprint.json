@@ -1,0 +1,38 @@
+{
+  "blueprint_id": "bp-cwfcu-sar",
+  "name": "CWFCU SAR Filing (FinCEN Form 111)",
+  "description": "Suspicious Activity Report — FinCEN Form 111 — for BSA/AML compliance at CommunityWide FCU.",
+  "industry": "credit_union",
+  "document_type": "sar_filing",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "CWFCU SAR Filing",
+    "description": "SAR schema covering subject, suspicious activity, transaction detail, pattern analysis, and FinCEN-compliant narrative.",
+    "extractionInstructions": "Extract subject identifying information, activity type, statutory reference (31 U.S.C. § 5324 for structuring, etc.), all transactions in detail, and the auto-generated narrative. Filing deadline must be set to detection date + 30 days.",
+    "fields": {
+      "sar_id":               { "type": "string", "description": "Internal SAR reference (SAR-YYYY-NNNN)", "required": true },
+      "fincen_id":            { "type": "string", "description": "FinCEN-assigned ID (post-submission)", "required": false },
+      "filing_type":          { "type": "string", "description": "INITIAL / AMENDMENT / CONTINUING", "required": true },
+      "filing_status":        { "type": "string", "description": "DRAFT / PENDING_BSA / FILED / ACKNOWLEDGED", "required": true },
+      "detection_date":       { "type": "date",   "description": "When the pattern was first detected", "required": true },
+      "sar_deadline":         { "type": "date",   "description": "Detection date + 30 days", "required": true },
+      "subject_member_id":    { "type": "string", "description": "CWFCU member number", "required": true },
+      "subject_legal_name":   { "type": "string", "description": "Subject legal name", "required": true },
+      "subject_dob":          { "type": "date",   "description": "Subject DOB", "required": true },
+      "subject_address":      { "type": "string", "description": "Subject address", "required": true },
+      "activity_type":        { "type": "string", "description": "Structuring / Layering / Funnel / Rapid movement / etc.", "required": true },
+      "suspected_violation":  { "type": "string", "description": "Statutory cite (e.g. 31 U.S.C. § 5324)", "required": true },
+      "activity_start_date":  { "type": "date",   "description": "First activity in the pattern", "required": true },
+      "activity_end_date":    { "type": "date",   "description": "Last activity in the pattern", "required": true },
+      "total_amount":         { "type": "number", "description": "Total dollar amount across all transactions", "required": true },
+      "transaction_count":    { "type": "number", "description": "Number of transactions in pattern", "required": true },
+      "transactions":         { "type": "array",  "description": "List of transactions (date, branch, amount, type)", "required": true },
+      "narrative_part_iv":    { "type": "string", "description": "FinCEN-compliant Part IV narrative", "required": true },
+      "drafted_by":           { "type": "string", "description": "Agent or person who drafted (Compliance Agent vN.N.N)", "required": true },
+      "confidence_score":     { "type": "number", "description": "Agent confidence at draft (0-1)", "required": true },
+      "bsa_officer":          { "type": "string", "description": "BSA Officer responsible for sign-off", "required": true },
+      "attachments":          { "type": "array",  "description": "Attached supporting documents", "required": false },
+      "ncua_exam_folder_path": { "type": "string","description": "NCUA exam folder index path", "required": true }
+    }
+  }
+}

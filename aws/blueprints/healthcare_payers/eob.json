@@ -1,0 +1,166 @@
+{
+  "blueprintName": "apex-eob-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from Explanation of Benefits (EOB) documents",
+  "industry": "healthcare_payers",
+  "documentType": "eob",
+  "bdaSchema": {
+    "class": "ApexEOB",
+    "description": "Explanation of Benefits extraction for member communication",
+    "definitions": {
+      "EOB_SERVICE": {
+        "properties": {
+          "service_date": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "service_description": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "provider_name": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "billed_amount": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "allowed_amount": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "plan_paid": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "member_responsibility": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "deductible_applied": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "copay": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "coinsurance": {
+            "type": "number",
+            "inferenceType": "explicit"
+          },
+          "denial_reason": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "eob_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "EOB document number"
+      },
+      "eob_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date EOB was generated"
+      },
+      "claim_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Related claim number"
+      },
+      "member_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Member/patient name"
+      },
+      "member_id": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Member ID number"
+      },
+      "group_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Group number"
+      },
+      "plan_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Insurance plan name"
+      },
+      "payer_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Insurance company name"
+      },
+      "services": {
+        "type": "array",
+        "instruction": "All services listed on EOB",
+        "items": {
+          "$ref": "#/definitions/EOB_SERVICE"
+        }
+      },
+      "total_billed": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Total amount billed"
+      },
+      "total_allowed": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Total allowed amount"
+      },
+      "total_plan_paid": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Total amount plan paid"
+      },
+      "total_member_owes": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Total member responsibility"
+      },
+      "deductible_met_ytd": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Year-to-date deductible met"
+      },
+      "deductible_remaining": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Remaining deductible"
+      },
+      "oop_max_met_ytd": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Year-to-date out-of-pocket maximum met"
+      },
+      "appeal_deadline": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Deadline for filing appeal"
+      },
+      "has_denial": {
+        "type": "boolean",
+        "inferenceType": "inferred",
+        "instruction": "Does this EOB contain any denied services?"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "currencyFormat": "decimal",
+    "confidenceThreshold": 0.85
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  },
+  "blueprintArn": "arn:aws:bedrock:us-east-1:457795063704:blueprint/2f718a5a0ffb"
+}

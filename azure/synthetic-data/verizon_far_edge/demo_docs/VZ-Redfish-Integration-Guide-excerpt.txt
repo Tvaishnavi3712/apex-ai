@@ -1,0 +1,169 @@
+═══════════════════════════════════════════════════════════════════════════════
+VERIZON FAR EDGE · REDFISH API INTEGRATION GUIDE
+Document ID:    VZ-REDFISH-INTEGRATION-GUIDE-v3
+Revision:       Rev 3 · January 2026
+Classification: VERIZON CONFIDENTIAL — INTERNAL USE ONLY
+═══════════════════════════════════════════════════════════════════════════════
+
+This guide is the canonical reference for every automation team interacting
+with the Redfish APIs on Verizon Far Edge CaaS nodes. It covers authentication,
+TLS, endpoint usage patterns, field mappings, and the precise semantics of
+every assertion the certification suite makes.
+
+If a playbook or ROBOT test queries Redfish in a way not described in this
+document, that automation is unsupported and will not be maintained when the
+schema changes.
+
+───────────────────────────────────────────────────────────────────────────────
+1. SUPPORTED REDFISH IMPLEMENTATIONS
+───────────────────────────────────────────────────────────────────────────────
+
+  Wind River 23.06  →  DMTF Redfish v1.13.0
+  Wind River 23.12  →  DMTF Redfish v1.14.0
+  Wind River 24.01  →  DMTF Redfish v1.14.0
+  Wind River 24.06  →  DMTF Redfish v1.15.0
+  Wind River 24.12  →  DMTF Redfish v1.16.0  ★ contains 3 breaking changes
+  Wind River 25.01  →  DMTF Redfish v1.17.0  (planned, not yet certified)
+
+The v1.13 → v1.14 transition (between firmware 23.06 and 23.12) added the
+Telemetry MetricReports subsystem and was non-breaking for read paths.
+
+The v1.14 → v1.16 transition (between firmware 24.01 and 24.12) is breaking
+and is the root cause of the January 14, 2026 outage on the Northeast cluster.
+The breaking changes are catalogued in §4 of this guide and in the Wind River
+24.12 Release Notes §3.2.
+
+───────────────────────────────────────────────────────────────────────────────
+2. AUTHENTICATION AND TLS
+───────────────────────────────────────────────────────────────────────────────
+
+  2.1  Mutual TLS is required for ALL Redfish traffic to far-edge devices.
+       The Verizon Far Edge CA root certificate is distributed via Ansible
+       fact gathering. Devices reject HTTPS connections without a valid
+       client certificate signed by the Verizon Far Edge CA.
+
+  2.2  Basic auth is supported as a fallback for vendor support engagements
+       but MUST be disabled in production deployment after the engagement
+       closes. Enforce via the AccountService PATCH:
+         PATCH /redfish/v1/AccountService
+         { "BasicAuthEnabled": false }
+
+  2.3  Session tokens are valid for 30 minutes by default. The
+       session_service_validation.yml playbook asserts the timeout
+       configuration matches the security baseline.
+
+  2.4  TLS 1.2 minimum; TLS 1.3 preferred. Ciphers below
+       ECDHE-ECDSA-AES256-GCM-SHA384 are rejected.
+
+───────────────────────────────────────────────────────────────────────────────
+3. ENDPOINT REFERENCE
+───────────────────────────────────────────────────────────────────────────────
+
+The following endpoints are the authorized read paths. Endpoints NOT listed
+here are not guaranteed across the firmware versions Verizon Far Edge
+operates and should not be referenced from production automation.
+
+  3.1  /redfish/v1/Systems/1
+       Read   — overall system inventory, power state, BIOS version
+       Polled by:  power_check.yml, node_health_check.yml,
+                   pre_upgrade_validation.yml, site_readiness_check.yml,
+                   wave_deployment_preflight.yml, post_upgrade_validation.yml
+
+       Schema delta v1.14 → v1.16:
+         BEFORE: top-level PowerState
+         AFTER:  Status.PowerState (relocated)
+         IMPACT: 6 playbooks listed above must be updated.
+
+  3.2  /redfish/v1/Chassis/1/Thermal
+       Read   — temperature sensors and fan speed sensors
+       Polled by:  thermal_baseline.robot, thermal_regression.robot,
+                   thermal_stress_test.robot, fan_speed_monitor.yml,
+                   thermal_alert_check.yml
+
+       Schema delta v1.14 → v1.16:
+         BEFORE: FanSpeeds[].CurrentReading
+         AFTER:  Fans[].Reading (both renamed)
+         IMPACT: 5 scripts must be updated.
+
+  3.3  /redfish/v1/Managers/1/EthernetInterfaces/1
+       Read   — management interface configuration
+       Polled by:  interface_validation.robot,
+                   ipv6_enumeration_check.robot, network_baseline.yml
+
+       Schema delta v1.14 → v1.16:
+         BEFORE: IPv6Addresses optional, often omitted on IPv4-only configs
+         AFTER:  IPv6Addresses REQUIRED — must be present (empty array if
+                 the interface has no IPv6)
+         IMPACT: 3 scripts must populate IPv6Addresses.
+
+  3.4  /redfish/v1/Systems/1/Storage/1
+       Read   — local storage controllers + drives
+       Polled by:  storage_health_check.yml, drive_smart_check.yml
+
+       Schema delta v1.14 → v1.16:
+         BEFORE: StorageControllers embedded array
+         AFTER:  Controllers navigation link to
+                 /redfish/v1/Systems/1/Storage/1/Controllers
+         IMPACT: 1 script's assertions on Storage.StorageControllers
+                 must be updated to follow the new nav link.
+
+  3.5  /redfish/v1/UpdateService
+       Read   — firmware inventory, push endpoint
+       Polled by:  firmware_signature_chain.robot, bmc_firmware_inventory.yml,
+                   rollback_to_checkpoint.yml, firmware_apply_*.yml
+
+  3.6  /redfish/v1/AccountService
+       Read   — local users, LDAP configuration
+       Polled by:  ldap_auth_check.yml
+
+  3.7  /redfish/v1/SessionService
+       Read   — session timeout, active sessions
+       Polled by:  session_service_validation.yml
+
+  3.8  /redfish/v1/EventService
+       Read/Write — subscriptions for BMC alerting
+       Polled by:  event_service_subscribe.yml
+
+  3.9  /redfish/v1/Telemetry/MetricReports/RTKernel
+       Read   — on-demand RT kernel latency telemetry (introduced v1.15)
+       Polled by:  rt_kernel_cyclictest.robot
+
+  3.10 /redfish/v1/Systems/1/Bios
+       Read/Write — BIOS attributes, SecureBoot enable
+       Polled by:  secure_boot_chain.robot
+
+───────────────────────────────────────────────────────────────────────────────
+4. BREAKING-CHANGE MITIGATION POLICY
+───────────────────────────────────────────────────────────────────────────────
+
+A Redfish schema delta is considered breaking if at least one Verizon Far Edge
+playbook would return a different result against the new schema than against
+the previous one. Renames, relocations, and elevated-required fields all
+qualify.
+
+  4.1  Cadence
+       SchemaWatchAgent compares the live Redfish schema against the
+       APEX-maintained baseline every 6 hours. Pre-certification cycles
+       also trigger an on-demand comparison.
+
+  4.2  Detection-to-remediation SLA
+       The agent emits a remediation map within 5 minutes of detection.
+       The automation team owns a 48-hour SLA to merge the remediation PR
+       and re-run the affected playbooks.
+
+  4.3  Wave-deployment gate
+       Any wave that touches a firmware version with outstanding breaking
+       changes against the current playbook catalog is automatically held
+       by UpgradeAdvisorAgent. Override requires Distinguished Engineer
+       sign-off (HQ Planning) recorded in the Apex Audit Lens.
+
+  4.4  Vendor escalation
+       For schema deltas not documented in vendor release notes, open a
+       P1 ticket with Wind River support within 24 hours. The Cert Team
+       Lead is the escalation point on the Verizon side.
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF EXCERPT — full integration guide is 32 pages.
+Sections 5 (Schema versioning policy), 6 (Common pitfalls), and 7 (Quick
+reference cards) are not reproduced here.
+═══════════════════════════════════════════════════════════════════════════════

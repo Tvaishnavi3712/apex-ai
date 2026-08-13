@@ -1,0 +1,44 @@
+{
+  "merchant": {
+    "name": "Marriott Hotel",
+    "category": "Hotel",
+    "address": {
+      "street": "300 Michigan Ave",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60601"
+    },
+    "phone": "(813) 480-2068"
+  },
+  "transaction": {
+    "date": "2026-02-06",
+    "time": "18:50:09",
+    "receipt_number": "8493-505568"
+  },
+  "line_items": [
+    {
+      "description": "Cappuccino",
+      "quantity": 1,
+      "unit_price": 4.95,
+      "amount": 4.95
+    },
+    {
+      "description": "Muffin",
+      "quantity": 1,
+      "unit_price": 3.45,
+      "amount": 3.45
+    }
+  ],
+  "totals": {
+    "subtotal": 8.4,
+    "tax_rate": 0.0625,
+    "tax_amount": 0.53,
+    "tip": 0,
+    "total": 8.93
+  },
+  "payment": {
+    "method": "Debit Card",
+    "card_type": "Amex",
+    "last_four": "1684"
+  }
+}

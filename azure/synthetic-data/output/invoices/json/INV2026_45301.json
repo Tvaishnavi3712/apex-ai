@@ -1,0 +1,100 @@
+{
+  "vendor": {
+    "name": "Acme Corporation",
+    "address": {
+      "street": "321 Tech Center Ln",
+      "city": "San Jose",
+      "state": "CA",
+      "zip": "95110"
+    },
+    "tax_id": "37-6268087",
+    "phone": "(305) 306-7205",
+    "email": "billing@acmecorpor.com"
+  },
+  "invoice": {
+    "number": "INV2026-45301",
+    "date": "2026-01-25",
+    "due_date": "2026-02-24",
+    "po_number": "PO-303539",
+    "terms": "NET30"
+  },
+  "bill_to": {
+    "company_name": "Adventure Works",
+    "address": {
+      "street": "555 Enterprise Ave",
+      "city": "Denver",
+      "state": "CO",
+      "zip": "80202"
+    }
+  },
+  "line_items": [
+    {
+      "description": "Technical Consulting - Hourly",
+      "quantity": 5,
+      "unit_price": 206.27,
+      "amount": 1031.35,
+      "item_code": "NND-7817"
+    },
+    {
+      "description": "Security Audit Services",
+      "quantity": 17,
+      "unit_price": 2927.11,
+      "amount": 49760.87,
+      "item_code": "EKP-2767"
+    },
+    {
+      "description": "Network Equipment - Enterprise",
+      "quantity": 4,
+      "unit_price": 1500.28,
+      "amount": 6001.12,
+      "item_code": "SEF-2232"
+    },
+    {
+      "description": "Professional Software License - Annual",
+      "quantity": 8,
+      "unit_price": 2673.62,
+      "amount": 21388.96,
+      "item_code": "TWA-6248"
+    },
+    {
+      "description": "Professional Software License - Annual",
+      "quantity": 12,
+      "unit_price": 4110.92,
+      "amount": 49331.04,
+      "item_code": "NYG-3643"
+    },
+    {
+      "description": "Hardware Components - Server Grade",
+      "quantity": 16,
+      "unit_price": 1751.74,
+      "amount": 28027.84,
+      "item_code": "GAU-2266"
+    },
+    {
+      "description": "Network Equipment - Enterprise",
+      "quantity": 19,
+      "unit_price": 2826.61,
+      "amount": 53705.59,
+      "item_code": "NTW-6849"
+    },
+    {
+      "description": "Cloud Hosting Services - Monthly",
+      "quantity": 1,
+      "unit_price": 950.99,
+      "amount": 950.99,
+      "item_code": "AUH-4213"
+    }
+  ],
+  "totals": {
+    "subtotal": 210197.76,
+    "tax_rate": 0.0825,
+    "tax_amount": 17341.32,
+    "shipping": 42.41,
+    "total": 227581.49
+  },
+  "payment": {
+    "bank_name": "First National Bank",
+    "account_number": "****1234",
+    "routing_number": "021000089"
+  }
+}

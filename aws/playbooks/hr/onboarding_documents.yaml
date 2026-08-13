@@ -1,0 +1,265 @@
+# CBTS Apex AI Platform - Onboarding Documents Runbook
+# Natural Language Runbook for New Hire Processing
+# Intent -> Output -> Context -> Recipe
+
+name: onboarding_documents
+version: "1.0.0"
+description: "Automated processing of new hire onboarding documents (I-9, W-4, etc.)"
+industry: hr
+category: onboarding
+
+# =============================================================================
+# INTENT - What the agent should accomplish
+# =============================================================================
+intent: |
+  Process new hire onboarding documents by extracting I-9 and W-4 form data,
+  validating completeness and compliance, storing securely, and triggering
+  payroll setup with appropriate tax withholding information.
+
+# =============================================================================
+# OUTPUT - Expected deliverables from the runbook
+# =============================================================================
+output:
+  - name: employee_record
+    type: structured_data
+    description: "Complete employee record from onboarding documents"
+    schema:
+      employee_id: string
+      personal_info: object
+      employment_eligibility: object
+      tax_withholding: object
+      document_status: object
+
+  - name: compliance_check
+    type: validation_report
+    description: "Compliance verification results"
+    schema:
+      i9_complete: boolean
+      w4_complete: boolean
+      documents_verified: boolean
+      issues: array
+
+  - name: payroll_setup
+    type: action_request
+    description: "Payroll system setup request"
+    schema:
+      employee_id: string
+      filing_status: string
+      withholding_config: object
+      start_date: string
+
+# =============================================================================
+# CONTEXT - Business rules and domain knowledge
+# =============================================================================
+context:
+  business_rules:
+    - "I-9 Section 1 must be completed by employee on or before first day"
+    - "I-9 Section 2 must be completed by employer within 3 business days"
+    - "W-4 must be submitted before first payroll run"
+    - "Documents must be stored per retention requirements (3 years after termination)"
+    - "All PII must be encrypted at rest"
+
+  i9_requirements:
+    section1_deadline: "first_day"
+    section2_deadline: "3_business_days"
+    reverification_tracking: true
+    e_verify_required: true
+
+  w4_requirements:
+    form_year_minimum: 2020
+    exempt_status_annual_renewal: true
+
+  document_retention:
+    i9_retention_years: 3
+    w4_retention_years: 4
+    secure_storage_required: true
+
+# =============================================================================
+# DATA SOURCES - Where to retrieve information
+# =============================================================================
+data_sources:
+  - name: onboarding_documents
+    type: s3_document
+    description: "Uploaded onboarding document"
+    input_parameter: document_s3_uri
+
+  - name: employee_database
+    type: dynamodb
+    table: apex-employees
+    description: "Employee records"
+
+  - name: new_hire_records
+    type: dynamodb
+    table: apex-new-hires
+    description: "Pending new hire records"
+
+# =============================================================================
+# ACTIONS - Available tools for the agent
+# =============================================================================
+actions:
+  - name: i9_extract
+    action_id: hr.i9_extract
+    description: "Extract data from I-9 form"
+    required: false
+
+  - name: w4_extract
+    action_id: hr.w4_extract
+    description: "Extract data from W-4 form"
+    required: false
+
+  - name: document_classify
+    action_id: core.document_classify
+    description: "Classify document type"
+    required: true
+
+  - name: compliance_validate
+    action_id: hr.compliance_validate
+    description: "Validate document compliance"
+    required: true
+
+  - name: e_verify_submit
+    action_id: hr.e_verify_submit
+    description: "Submit to E-Verify system"
+    required: false
+
+  - name: payroll_setup
+    action_id: hr.payroll_setup
+    description: "Trigger payroll system setup"
+    required: false
+
+  - name: send_notification
+    action_id: core.send_notification
+    description: "Send status notifications"
+    required: false
+
+  - name: secure_store
+    action_id: core.secure_store
+    description: "Store document in secure archive"
+    required: true
+
+# =============================================================================
+# RECIPE - Natural language instructions for the agent
+# =============================================================================
+recipe: |
+  ## Onboarding Document Processing Workflow
+
+  ### Step 1: Document Classification
+  When a new document is received:
+  1. Use `document_classify` to identify document type (I-9, W-4, etc.)
+  2. Match document to pending new hire record
+  3. Validate document is not a duplicate
+  4. Check document is current version/year
+  5. Route to appropriate extraction workflow
+
+  ### Step 2: I-9 Processing (if I-9 form)
+  Process I-9 Employment Eligibility:
+  1. Use `i9_extract` to extract form data
+  2. Validate Section 1 completeness (employee info)
+  3. Check citizenship status and authorization
+  4. Verify document lists (A or B+C) are provided
+  5. Validate document numbers and expiration dates
+  6. Check Section 2 employer certification
+  7. Flag if within 3-day completion window
+
+  ### Step 3: W-4 Processing (if W-4 form)
+  Process W-4 Tax Withholding:
+  1. Use `w4_extract` to extract form data
+  2. Validate employee identification
+  3. Capture filing status selection
+  4. Record dependent claims if any
+  5. Capture additional withholding amounts
+  6. Validate signature and date
+  7. Check if exempt status claimed
+
+  ### Step 4: Compliance Validation
+  Verify compliance requirements:
+  1. Use `compliance_validate` with all extracted data
+  2. Check I-9 submission timing compliance
+  3. Verify document authenticity indicators
+  4. Validate against employee hire date
+  5. Flag any compliance concerns
+
+  ### Step 5: E-Verify Submission (if applicable)
+  Submit for employment verification:
+  1. If E-Verify required, use `e_verify_submit`
+  2. Wait for initial response (usually seconds)
+  3. Handle tentative non-confirmation if received
+  4. Track case number and status
+  5. Set reminder for follow-up if pending
+
+  ### Step 6: Payroll Setup Trigger
+  Initiate payroll configuration:
+  1. Once W-4 validated, use `payroll_setup`
+  2. Pass filing status and withholding config
+  3. Include start date for first pay period
+  4. Verify payroll system acknowledgment
+  5. Log setup completion
+
+  ### Step 7: Secure Storage
+  Archive documents securely:
+  1. Use `secure_store` for compliant archival
+  2. Apply retention policy metadata
+  3. Encrypt all PII fields
+  4. Create audit trail entry
+  5. Generate secure document reference
+
+  ### Step 8: Notifications & Follow-up
+  Complete processing:
+  1. Notify HR of completion status
+  2. Send confirmation to new hire
+  3. Flag any missing documents
+  4. Create tasks for incomplete items
+  5. Update onboarding checklist status
+
+  ### Exception Handling
+  - Missing documents: Send reminder to new hire
+  - Invalid documents: Request resubmission
+  - E-Verify issues: Escalate to HR manager
+  - Compliance violations: Alert compliance team
+  - Payroll setup failure: Create urgent work item
+
+# =============================================================================
+# TRIGGERS - How this runbook is activated
+# =============================================================================
+triggers:
+  - type: s3_event
+    bucket: apex-documents-incoming
+    prefix: onboarding/
+    events: ["s3:ObjectCreated:*"]
+    description: "Triggered when onboarding document uploaded"
+
+  - type: api
+    endpoint: /api/v1/process-onboarding
+    method: POST
+    description: "Manual document submission"
+
+  - type: event
+    source: hris_integration
+    event_type: new_hire_created
+    description: "Triggered when new hire record created in HRIS"
+
+# =============================================================================
+# WORKER CONFIGURATION
+# =============================================================================
+worker:
+  queue: apex-onboarding-queue
+  concurrency: 10
+  timeout_seconds: 240
+  retry_policy:
+    max_attempts: 3
+    backoff_multiplier: 2
+
+# =============================================================================
+# METADATA
+# =============================================================================
+metadata:
+  created_by: apex-platform
+  created_at: "2024-01-15"
+  last_updated: "2024-01-15"
+  tags:
+    - onboarding
+    - i9
+    - w4
+    - compliance
+    - hr
+    - payroll

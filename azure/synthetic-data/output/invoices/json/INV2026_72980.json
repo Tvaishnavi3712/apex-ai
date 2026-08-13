@@ -1,0 +1,51 @@
+{
+  "vendor": {
+    "name": "Premier Services Inc.",
+    "address": {
+      "street": "123 Business Park Dr",
+      "city": "Austin",
+      "state": "TX",
+      "zip": "78701"
+    },
+    "tax_id": "64-4805821",
+    "phone": "(431) 671-1167",
+    "email": "billing@premierser.com"
+  },
+  "invoice": {
+    "number": "INV2026-72980",
+    "date": "2026-02-16",
+    "due_date": "2026-03-03",
+    "po_number": "PO-375251",
+    "terms": "NET15"
+  },
+  "bill_to": {
+    "company_name": "Fabrikam Corp",
+    "address": {
+      "street": "321 Tech Center Ln",
+      "city": "San Jose",
+      "state": "CA",
+      "zip": "95110"
+    }
+  },
+  "line_items": [
+    {
+      "description": "Security Audit Services",
+      "quantity": 5,
+      "unit_price": 4326.69,
+      "amount": 21633.45,
+      "item_code": "NKJ-9615"
+    }
+  ],
+  "totals": {
+    "subtotal": 21633.45,
+    "tax_rate": 0.1,
+    "tax_amount": 2163.35,
+    "shipping": 1.56,
+    "total": 23798.36
+  },
+  "payment": {
+    "bank_name": "First National Bank",
+    "account_number": "****1234",
+    "routing_number": "021000089"
+  }
+}

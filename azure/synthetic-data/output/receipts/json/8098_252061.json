@@ -1,0 +1,44 @@
+{
+  "merchant": {
+    "name": "Shell",
+    "category": "Gas Station",
+    "address": {
+      "street": "200 Pike St",
+      "city": "Seattle",
+      "state": "WA",
+      "zip": "98101"
+    },
+    "phone": "(443) 816-5610"
+  },
+  "transaction": {
+    "date": "2026-02-11",
+    "time": "08:03:50",
+    "receipt_number": "8098-252061"
+  },
+  "line_items": [
+    {
+      "description": "Espresso",
+      "quantity": 1,
+      "unit_price": 3.25,
+      "amount": 3.25
+    },
+    {
+      "description": "Croissant",
+      "quantity": 1,
+      "unit_price": 3.95,
+      "amount": 3.95
+    }
+  ],
+  "totals": {
+    "subtotal": 7.2,
+    "tax_rate": 0.0625,
+    "tax_amount": 0.45,
+    "tip": 0,
+    "total": 7.65
+  },
+  "payment": {
+    "method": "Credit Card",
+    "card_type": "Amex",
+    "last_four": "5368"
+  }
+}

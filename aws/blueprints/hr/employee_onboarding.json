@@ -1,0 +1,126 @@
+{
+  "blueprintName": "apex-employee-onboarding-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Employee onboarding output schema for HR automation",
+  "industry": "hr",
+  "documentType": "onboarding_documents",
+  "processingType": "small_factory_chain",
+  "chainId": "new_hire_onboarding",
+  "bdaSchema": {
+    "class": "ApexEmployeeOnboarding",
+    "description": "Employee onboarding chain output schema",
+    "definitions": {
+      "VERIFIED_DOCUMENT": {
+        "properties": {
+          "document_type": {"type": "string"},
+          "document_number": {"type": "string"},
+          "verified": {"type": "boolean"},
+          "expiration_valid": {"type": "boolean"}
+        }
+      },
+      "I9_SECTION": {
+        "properties": {
+          "section": {"type": "string"},
+          "complete": {"type": "boolean"},
+          "issues": {"type": "array", "items": {"type": "string"}}
+        }
+      },
+      "BENEFIT_ENROLLMENT": {
+        "properties": {
+          "benefit_type": {"type": "string"},
+          "plan_selected": {"type": "string"},
+          "effective_date": {"type": "string"},
+          "status": {"type": "string"}
+        }
+      },
+      "SYSTEM_REQUEST": {
+        "properties": {
+          "system": {"type": "string"},
+          "access_level": {"type": "string"},
+          "status": {"type": "string"}
+        }
+      }
+    },
+    "properties": {
+      "job_id": {"type": "string"},
+      "employee_id": {"type": "string"},
+      "processing_status": {"type": "string", "enum": ["completed", "partial", "failed"]},
+
+      "identity_verify": {
+        "type": "object",
+        "properties": {
+          "verified": {"type": "boolean"},
+          "documents_verified": {"type": "array", "items": {"$ref": "#/definitions/VERIFIED_DOCUMENT"}},
+          "i9_satisfied": {"type": "boolean"},
+          "has_list_a_doc": {"type": "boolean"},
+          "issues": {"type": "array", "items": {"type": "string"}}
+        }
+      },
+
+      "i9_validate": {
+        "type": "object",
+        "properties": {
+          "valid": {"type": "boolean"},
+          "sections": {
+            "type": "object",
+            "properties": {
+              "section_1": {"$ref": "#/definitions/I9_SECTION"},
+              "section_2": {"$ref": "#/definitions/I9_SECTION"}
+            }
+          },
+          "ready_for_filing": {"type": "boolean"},
+          "e_verify_eligible": {"type": "boolean"}
+        }
+      },
+
+      "background_check": {
+        "type": "object",
+        "properties": {
+          "initiated": {"type": "boolean"},
+          "check_id": {"type": "string"},
+          "package": {"type": "string"},
+          "status": {"type": "string"},
+          "estimated_completion": {"type": "string"},
+          "can_proceed_with_hire": {"type": "boolean"}
+        }
+      },
+
+      "benefits_enroll": {
+        "type": "object",
+        "properties": {
+          "enrolled": {"type": "boolean"},
+          "enrollments": {"type": "array", "items": {"$ref": "#/definitions/BENEFIT_ENROLLMENT"}},
+          "effective_date": {"type": "string"},
+          "enrollment_deadline": {"type": "string"}
+        }
+      },
+
+      "provisioning_trigger": {
+        "type": "object",
+        "properties": {
+          "triggered": {"type": "boolean"},
+          "provisioning_id": {"type": "string"},
+          "profile": {"type": "string"},
+          "system_requests": {"type": "array", "items": {"$ref": "#/definitions/SYSTEM_REQUEST"}},
+          "equipment_requests": {"type": "array"},
+          "target_ready_date": {"type": "string"}
+        }
+      }
+    }
+  },
+  "extractionRules": {
+    "confidenceThreshold": 0.9,
+    "processingTimeout": 300
+  },
+  "factoryChain": {
+    "chainId": "new_hire_onboarding",
+    "factories": [
+      {"id": "document_classify", "action": "document_classify"},
+      {"id": "identity_verify", "action": "identity_verify"},
+      {"id": "i9_validate", "action": "i9_validate"},
+      {"id": "background_check", "action": "background_check"},
+      {"id": "benefits_enroll", "action": "benefits_enroll"},
+      {"id": "provisioning_trigger", "action": "provisioning_trigger"}
+    ]
+  }
+}

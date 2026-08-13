@@ -1,0 +1,138 @@
+{
+  "blueprintName": "apex-w4-form-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from W-4 Employee Withholding Certificate forms",
+  "industry": "hr",
+  "documentType": "w4_form",
+  "bdaSchema": {
+    "class": "ApexW4Form",
+    "description": "Apex AI Platform W-4 form extraction blueprint for payroll tax withholding",
+    "definitions": {},
+    "properties": {
+      "employee_first_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Employee's first name"
+      },
+      "employee_middle_initial": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Employee's middle initial"
+      },
+      "employee_last_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Employee's last name"
+      },
+      "ssn": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Social Security Number (last 4 digits only)"
+      },
+      "address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Home address including street, city, state, ZIP"
+      },
+      "filing_status": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Filing status: Single, Married filing jointly, Married filing separately, Head of household"
+      },
+      "multiple_jobs_box": {
+        "type": "boolean",
+        "inferenceType": "explicit",
+        "instruction": "Is Step 2(c) box checked for multiple jobs or spouse works?"
+      },
+      "claim_dependents_amount": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Total amount claimed for dependents in Step 3"
+      },
+      "qualifying_children_count": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Number of qualifying children under 17"
+      },
+      "other_dependents_count": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Number of other dependents"
+      },
+      "other_income_amount": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Other income amount from Step 4(a)"
+      },
+      "deductions_amount": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Deductions amount from Step 4(b)"
+      },
+      "extra_withholding_amount": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Extra withholding amount per pay period from Step 4(c)"
+      },
+      "employee_signature_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date employee signed the form"
+      },
+      "exempt_status": {
+        "type": "boolean",
+        "inferenceType": "explicit",
+        "instruction": "Is the employee claiming exempt status?"
+      },
+      "employer_name_address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Employer's name and address (if completed)"
+      },
+      "employer_ein": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Employer Identification Number"
+      },
+      "first_date_of_employment": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "First date of employment"
+      },
+      "form_year": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Tax year for this W-4 form"
+      },
+      "is_2020_or_later_form": {
+        "type": "boolean",
+        "inferenceType": "inferred",
+        "instruction": "Is this the 2020 or later version of W-4 (no allowances)?"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "currencyFormat": "decimal",
+    "confidenceThreshold": 0.85
+  },
+  "validationRules": [
+    {
+      "name": "filing_status_valid",
+      "description": "Filing status must be one of the valid options",
+      "expression": "filing_status in ['Single', 'Married filing jointly', 'Married filing separately', 'Head of household', 'Single or Married filing separately']"
+    },
+    {
+      "name": "amounts_non_negative",
+      "description": "All amounts should be non-negative",
+      "expression": "claim_dependents_amount >= 0 && extra_withholding_amount >= 0"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  },
+  "securityNotes": "This blueprint handles PII data. SSN should only extract last 4 digits. Full data redaction policies apply.",
+  "blueprintArn": "arn:aws:bedrock:us-east-1:457795063704:blueprint/a6686df10aee"
+}

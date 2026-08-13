@@ -1,0 +1,112 @@
+# CBTS Apex AI Platform - Flight Disruption Runbook
+name: flight_disruption
+version: "1.0.0"
+description: "Automated flight disruption management with rebooking and compensation"
+industry: airlines
+category: operations
+
+intent: |
+  Manage flight disruptions by identifying affected passengers, automating
+  rebooking on alternative flights, arranging accommodations when needed,
+  calculating compensation, and proactively communicating with passengers.
+
+output:
+  - name: rebooking_solution
+    type: itinerary
+    schema:
+      passenger: string
+      new_flights: array
+      confirmation: string
+  - name: passenger_assistance
+    type: voucher
+    schema:
+      type: string
+      amount: number
+      validity: string
+
+context:
+  business_rules:
+    - "Elite members rebooked first"
+    - "Families kept together"
+    - "Connection protection: min 45 min"
+    - "EU261 compensation when applicable"
+
+  eu261_compensation:
+    short_haul_delay_3h: 250
+    medium_haul_delay_3h: 400
+    long_haul_delay_4h: 600
+
+  assistance_rules:
+    meal_delay_2h: true
+    hotel_overnight: true
+    transport_to_hotel: true
+    phone_calls: 2
+
+actions:
+  - name: pax_identify
+    action_id: airlines.affected_passengers
+    required: true
+  - name: rebook
+    action_id: airlines.auto_rebook
+    required: true
+  - name: hotel_book
+    action_id: airlines.hotel_booking
+    required: false
+  - name: compensation_calc
+    action_id: airlines.eu261_compensation
+    required: false
+  - name: notify
+    action_id: core.send_notification
+    required: true
+
+recipe: |
+  ## Flight Disruption Workflow
+
+  ### Step 1: Impact Assessment
+  1. Use `pax_identify` for affected passengers
+  2. Calculate total passengers affected
+  3. Identify connecting passengers
+  4. Segment by status and needs
+
+  ### Step 2: Rebooking
+  1. Use `rebook` to find alternatives
+  2. Prioritize by status tier
+  3. Protect connections
+  4. Keep families/groups together
+  5. Confirm new itineraries
+
+  ### Step 3: Passenger Assistance
+  For delays > 2 hours:
+  1. Issue meal vouchers
+  For overnight delays:
+  2. Use `hotel_book` for accommodations
+  3. Arrange ground transportation
+  4. Issue incidental vouchers
+
+  ### Step 4: Compensation
+  For qualifying delays:
+  1. Use `compensation_calc` for EU261
+  2. Determine applicable amount
+  3. Generate voucher or payment
+  4. Document in passenger record
+
+  ### Step 5: Communications
+  1. Use `notify` via SMS/email/app
+  2. Provide rebooking confirmation
+  3. Include voucher details
+  4. Link to self-service options
+
+triggers:
+  - type: event
+    source: ops_control
+    event_type: flight_irregularity
+  - type: api
+    endpoint: /api/v1/flight-disruption
+
+worker:
+  queue: apex-disruption-queue
+  concurrency: 100
+  timeout_seconds: 120
+
+metadata:
+  tags: [disruption, rebooking, eu261, airlines, operations]

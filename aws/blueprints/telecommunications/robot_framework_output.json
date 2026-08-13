@@ -1,0 +1,155 @@
+{
+  "blueprintName": "robot-framework-certification-output",
+  "blueprintVersion": "1.0.0",
+  "description": "Extracts ROBOT Framework XML test output produced by Verizon Far Edge certification cycles. Captures every test case, its status, library, failure message, and execution metadata so CertificationAgent can classify and report.",
+  "industry": "telecommunications",
+  "documentType": "robot_framework_xml",
+  "bdaSchema": {
+    "class": "ApexRobotFrameworkOutput",
+    "description": "ROBOT Framework XML \u2014 far-edge certification test output (247 tests typical)",
+    "definitions": {
+      "TEST_RESULT": {
+        "properties": {
+          "test_id": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Test case ID, e.g. s1-t1"
+          },
+          "test_name": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Human-readable test name"
+          },
+          "status": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "PASS / FAIL / WARN"
+          },
+          "duration_ms": {
+            "type": "number",
+            "inferenceType": "inferred",
+            "instruction": "Difference between endtime and starttime in ms"
+          },
+          "library": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "ROBOT library that ran the keyword (e.g. VerizonEdgeLib, RedfishLibrary)"
+          },
+          "failure_message": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "First msg with level=FAIL, verbatim"
+          },
+          "redfish_endpoint": {
+            "type": "string",
+            "inferenceType": "inferred",
+            "instruction": "Redfish endpoint referenced if any, e.g. /redfish/v1/Systems/1"
+          },
+          "starttime": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "endtime": {
+            "type": "string",
+            "inferenceType": "explicit"
+          }
+        }
+      }
+    },
+    "properties": {
+      "test_suite_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Suite name attribute on /robot/suite"
+      },
+      "device_under_test": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Device name from suite metadata"
+      },
+      "firmware_version": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Firmware version under test"
+      },
+      "region": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Geographic region from metadata"
+      },
+      "cycle_id": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Certification cycle identifier"
+      },
+      "execution_timestamp": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Suite-level starttime"
+      },
+      "total_tests": {
+        "type": "number",
+        "inferenceType": "inferred",
+        "instruction": "count(//test)"
+      },
+      "passed_tests": {
+        "type": "number",
+        "inferenceType": "inferred",
+        "instruction": "count(//test/status[@status='PASS'])"
+      },
+      "failed_tests": {
+        "type": "number",
+        "inferenceType": "inferred",
+        "instruction": "count(//test/status[@status='FAIL'])"
+      },
+      "warn_tests": {
+        "type": "number",
+        "inferenceType": "inferred",
+        "instruction": "tests containing a WARN-level message"
+      },
+      "test_results": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/TEST_RESULT"
+        }
+      },
+      "categories": {
+        "type": "object",
+        "inferenceType": "inferred",
+        "instruction": "Tag-grouped statistics from /robot/statistics/tag"
+      }
+    }
+  },
+  "extractionRules": {
+    "rootTag": "robot",
+    "encoding": "UTF-8",
+    "confidenceThreshold": 0.95,
+    "classificationRules": [
+      {
+        "pattern": "latency.*exceeds threshold|threshold.*exceeded.*ms",
+        "category": "latency_threshold_breach",
+        "severity": "P1"
+      },
+      {
+        "pattern": "deprecated|field.*missing|schema.*changed|endpoint.*moved",
+        "category": "schema_drift_failure",
+        "severity": "P1"
+      },
+      {
+        "pattern": "regression|baseline.*not maintained|previous.*pass.*now fail",
+        "category": "regression_failure",
+        "severity": "P2"
+      },
+      {
+        "pattern": "borderline|within tolerance|monitor|P99.*threshold",
+        "category": "investigate",
+        "severity": "P3"
+      }
+    ]
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": true
+  }
+}

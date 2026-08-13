@@ -1,0 +1,171 @@
+{
+  "bank": {
+    "name": "Bank of America",
+    "routing_number": "026009593"
+  },
+  "account": {
+    "holder_name": "Northwind Traders Inc",
+    "account_number": "****1320",
+    "account_type": "Operating Account"
+  },
+  "statement_period": {
+    "start_date": "2025-12-01",
+    "end_date": "2025-12-31"
+  },
+  "balances": {
+    "beginning_balance": 279715.04,
+    "ending_balance": 208702.16
+  },
+  "summary": {
+    "total_deposits": 63380.47,
+    "total_withdrawals": 134309.15,
+    "total_fees": 84.2,
+    "transaction_count": 16
+  },
+  "transactions": [
+    {
+      "date": "2025-12-01",
+      "description": "ACH DEPOSIT - CUSTOMER PAYMENT",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 14335.49,
+      "balance": 294050.53,
+      "reference": "REF126353160"
+    },
+    {
+      "date": "2025-12-05",
+      "description": "ACH DEBIT - INSURANCE PREMIUM",
+      "type": "Withdrawal",
+      "debit": 3171.3,
+      "credit": 0,
+      "balance": 290879.23,
+      "reference": "REF991985103"
+    },
+    {
+      "date": "2025-12-08",
+      "description": "WIRE TRANSFER - VENDOR PAYMENT",
+      "type": "Withdrawal",
+      "debit": 3396.22,
+      "credit": 0,
+      "balance": 287483.01,
+      "reference": "REF428913709"
+    },
+    {
+      "date": "2025-12-12",
+      "description": "WIRE TRANSFER OUT",
+      "type": "Withdrawal",
+      "debit": 17241.44,
+      "credit": 0,
+      "balance": 270241.57,
+      "reference": "REF277700747"
+    },
+    {
+      "date": "2025-12-16",
+      "description": "WIRE TRANSFER OUT",
+      "type": "Withdrawal",
+      "debit": 16848.97,
+      "credit": 0,
+      "balance": 253392.6,
+      "reference": "REF723504673"
+    },
+    {
+      "date": "2025-12-18",
+      "description": "ACH DEBIT - INSURANCE PREMIUM",
+      "type": "Withdrawal",
+      "debit": 18175.46,
+      "credit": 0,
+      "balance": 235217.14,
+      "reference": "REF319673225"
+    },
+    {
+      "date": "2025-12-20",
+      "description": "ACH DEBIT - UTILITY PAYMENT",
+      "type": "Withdrawal",
+      "debit": 16312.38,
+      "credit": 0,
+      "balance": 218904.76,
+      "reference": "REF474706510"
+    },
+    {
+      "date": "2025-12-20",
+      "description": "ACH CREDIT - ACCOUNTS RECEIVABLE",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 49044.98,
+      "balance": 267949.74,
+      "reference": "REF633199542"
+    },
+    {
+      "date": "2025-12-21",
+      "description": "WIRE TRANSFER FEE",
+      "type": "Fee",
+      "debit": 19.77,
+      "credit": 0,
+      "balance": 267929.97,
+      "reference": "REF132131152"
+    },
+    {
+      "date": "2025-12-24",
+      "description": "ACH DEBIT - PAYROLL",
+      "type": "Withdrawal",
+      "debit": 17663.35,
+      "credit": 0,
+      "balance": 250266.62,
+      "reference": "REF724580782"
+    },
+    {
+      "date": "2025-12-27",
+      "description": "OVERDRAFT FEE",
+      "type": "Fee",
+      "debit": 19.76,
+      "credit": 0,
+      "balance": 250246.86,
+      "reference": "REF667109284"
+    },
+    {
+      "date": "2025-12-27",
+      "description": "STOP PAYMENT FEE",
+      "type": "Fee",
+      "debit": 44.67,
+      "credit": 0,
+      "balance": 250202.19,
+      "reference": "REF327381758"
+    },
+    {
+      "date": "2025-12-29",
+      "description": "ACH DEBIT - UTILITY PAYMENT",
+      "type": "Withdrawal",
+      "debit": 14260.79,
+      "credit": 0,
+      "balance": 235941.4,
+      "reference": "REF752711752"
+    },
+    {
+      "date": "2025-12-29",
+      "description": "ACH DEBIT - UTILITY PAYMENT",
+      "type": "Withdrawal",
+      "debit": 13934.97,
+      "credit": 0,
+      "balance": 222006.43,
+      "reference": "REF664500299"
+    },
+    {
+      "date": "2025-12-30",
+      "description": "ACH DEBIT - UTILITY PAYMENT",
+      "type": "Withdrawal",
+      "debit": 300.59,
+      "credit": 0,
+      "balance": 221705.84,
+      "reference": "REF823846305"
+    },
+    {
+      "date": "2025-12-31",
+      "description": "WIRE TRANSFER - VENDOR PAYMENT",
+      "type": "Withdrawal",
+      "debit": 13003.68,
+      "credit": 0,
+      "balance": 208702.16,
+      "reference": "REF600340604"
+    }
+  ]
+}

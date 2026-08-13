@@ -1,0 +1,30 @@
+{
+  "blueprint_id": "bp-eprod-tariff",
+  "name": "EPROD FERC Tariff Sheet",
+  "description": "Extract effective FERC tariff sheets for shipper pipelines (Enterprise NGL, Seaway Crude, Acadian Gas, Panhandle Eastern, Texas Eastern).",
+  "industry": "oil_gas_midstream",
+  "document_type": "ferc_tariff",
+  "version": "1.0",
+  "bdaSchema": {
+    "documentClass": "EPROD FERC Tariff Sheet",
+    "description": "FERC tariff schema covering docket, pipeline, commodity, effective window, zones, rate schedules, commodity + reservation charges, fuel retention, surcharges, PPI-FG indexing, and applicable shippers.",
+    "extractionInstructions": "Capture every rate schedule with effective_date, zones, and rate components separately. Commodity and reservation charges must be split.",
+    "fields": {
+      "tariff_id":              { "type": "string", "description": "Tariff sheet identifier", "required": true },
+      "ferc_docket":            { "type": "string", "description": "FERC docket number (RP / IS series)", "required": true },
+      "pipeline_name":          { "type": "string", "description": "Pipeline operator + system name", "required": true },
+      "commodity":              { "type": "string", "description": "Commodity (natural gas / crude / NGL / refined)", "required": true },
+      "effective_date":         { "type": "date",   "description": "Tariff effective date (gas-day start)", "required": true },
+      "expiration_date":        { "type": "date",   "description": "Tariff expiration / supersession date", "required": false },
+      "zones":                  { "type": "array",  "description": "Zone definitions (zone_id, receipt_points, delivery_points)", "required": true },
+      "rate_schedules":         { "type": "array",  "description": "Rate schedule entries (id, description, applicability)", "required": true },
+      "commodity_charges":      { "type": "array",  "description": "Commodity charge rows ($/unit) per zone", "required": true },
+      "reservation_charges":    { "type": "array",  "description": "Reservation charge rows ($/unit) per zone", "required": true },
+      "fuel_retention_pct":     { "type": "number", "description": "Fuel retention percentage", "required": false },
+      "surcharges":             { "type": "array",  "description": "Authorized surcharges (e.g. ACA, GHG)", "required": false },
+      "ppi_fg_index_link":      { "type": "string", "description": "BLS PPI-FG series id used for indexed annual adjustment", "required": false },
+      "applicable_shippers":    { "type": "array",  "description": "Shipper classes the tariff applies to", "required": true },
+      "filing_metadata":        { "type": "object", "description": "Filing metadata (filed_by, accepted_date, supersedes_tariff_id)", "required": true }
+    }
+  }
+}

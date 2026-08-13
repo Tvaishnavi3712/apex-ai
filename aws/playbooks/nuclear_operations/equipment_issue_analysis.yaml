@@ -1,0 +1,71 @@
+name: equipment_issue_analysis
+version: "1.0.0"
+description: "ChatSTP UC-3 — analyze the work-package corpus for an asset and rank common failure modes with cited evidence."
+industry: nuclear_operations
+category: reliability_intelligence
+
+intent: |
+  When the user asks about recurring problems on a specific asset (or
+  across an entire system), scan all indexed work packages + failure
+  events, aggregate failure modes by frequency, and present the top
+  modes with mitigation guidance plus the supporting WO ids as evidence.
+
+  Example user prompts the playbook resolves:
+    "What are the most common issues with Pump-3A?"
+    "Show me every WO in 2024 where root cause was vendor parts quality."
+    "What failure modes does the RCS see most often?"
+
+output:
+  - name: failure_mode_ranking
+    type: structured_data
+    description: "Top-N {mode_name, count, percentage, typical_lead_days, mitigation_actions[], cited_wo_ids[]}"
+  - name: corpus_stats
+    type: structured_data
+    description: "{ total_packages_indexed, total_failure_events, time_window_years }"
+
+context:
+  business_rules:
+    - "Always cite at least 3 WO ids per mode as evidence — this is the audit trail engineers expect."
+    - "If the corpus has zero events for the asset, say so explicitly — don't fabricate trends from thin data."
+    - "Rank by raw count, not percentage — 3 events out of 3 is more concerning than 5 of 200."
+
+actions:
+  - name: intent_classify
+    action_id: nuclear_operations.intent_classify
+    description: "Confirm issue-analysis intent and extract equipment_id or system_id."
+    required: true
+  - name: wp_corpus_search
+    action_id: nuclear_operations.wp_corpus_search
+    description: "Pull all WPs for the equipment with mode aggregation."
+    required: true
+  - name: failure_mode_aggregate
+    action_id: nuclear_operations.failure_mode_aggregate
+    description: "When scope is system-wide, aggregate across all equipment in the system."
+    required: false
+
+recipe: |
+  1. Run `intent_classify`. Confirm intent == "issue_analysis".
+     Extract equipment_id (single asset) OR system_id (whole system) from entities.
+  2. If equipment_id present:
+       call `wp_corpus_search(equipment_id)`
+     Else if system_id present:
+       call `failure_mode_aggregate(system_id=...)` for breadth.
+  3. Format the response:
+       Top issues for <scope>:
+       1. <mode_name> — <count> events (<percentage>%) — typical lead time <typical_lead_days> days
+          Mitigation: <mitigation_actions[0]>
+          Cited from: <cited_wo_ids[:3]>
+       2. ...
+  4. End with: "Total events analyzed: <total_failure_events> across <total_packages_indexed> work packages."
+
+triggers:
+  - type: chat_message
+    routed_by: chatstp_router
+  - type: api_invoke
+    endpoint: /api/v1/agents/DiagnosticsAgent/invoke
+
+agentcore_runtime: apex-stp-diagnostics-agent
+governance:
+  audit_log: true
+  human_review_threshold: 0.0
+  citation_required: true

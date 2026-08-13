@@ -1,0 +1,62 @@
+{
+  "_metadata": {
+    "blueprint": "apex-medical-claim-v1",
+    "document_type": "medical_claim",
+    "extraction_date": "2024-01-15T10:30:00Z",
+    "confidence_score": 0.95,
+    "source_file": "claim_cms1500_sample.pdf"
+  },
+  "claim_number": "CLM-2024-001234",
+  "claim_type": "Professional",
+  "patient_name": "John Michael Smith",
+  "patient_dob": "1965-03-15",
+  "patient_gender": "M",
+  "patient_address": "123 Oak Street, Springfield, IL 62701",
+  "member_id": "XYZ123456789",
+  "group_number": "GRP-98765",
+  "subscriber_name": "John Michael Smith",
+  "subscriber_relationship": "Self",
+  "payer_name": "Blue Cross Blue Shield of Illinois",
+  "payer_id": "00060",
+  "provider_name": "Springfield Medical Associates",
+  "provider_npi": "1234567890",
+  "provider_tax_id": "36-1234567",
+  "provider_address": "456 Medical Plaza, Suite 200, Springfield, IL 62702",
+  "rendering_provider_npi": "9876543210",
+  "referring_provider_npi": null,
+  "facility_npi": null,
+  "diagnoses": [
+    {"pointer": "A", "icd_code": "J06.9"},
+    {"pointer": "B", "icd_code": "R50.9"}
+  ],
+  "service_lines": [
+    {
+      "line_number": 1,
+      "date_of_service": "01/10/2024",
+      "place_of_service": "11",
+      "cpt_code": "99214",
+      "modifier": null,
+      "diagnosis_pointer": "A",
+      "units": 1,
+      "charge_amount": 185.00,
+      "ndc_code": null
+    },
+    {
+      "line_number": 2,
+      "date_of_service": "01/10/2024",
+      "place_of_service": "11",
+      "cpt_code": "87880",
+      "modifier": null,
+      "diagnosis_pointer": "AB",
+      "units": 1,
+      "charge_amount": 45.00,
+      "ndc_code": null
+    }
+  ],
+  "total_charge": 230.00,
+  "prior_auth_number": null,
+  "admission_date": null,
+  "discharge_date": null,
+  "type_of_bill": null,
+  "drg_code": null
+}

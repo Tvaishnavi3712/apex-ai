@@ -1,0 +1,47 @@
+CIGNA HEALTHCARE — MEDICAL PREMIUM INVOICE
+═══════════════════════════════════════════════════════════════
+Group:           The Boler Company (Master Group #4421-887)
+Period:          June 1-30, 2026
+Statement Date:  May 28, 2026 · Due Jun 15, 2026
+Carrier Contact: Patricia Reyes · cigna_groups@cigna.com
+
+─────────────── SUMMARY ───────────────
+Total Premium:     $1,284,320.00
+Total Lives:       847 employees (612 medical-only · 235 with dependents)
+Allocation Period: June 2026 (premium month)
+Average per EE:    $1,516.32
+
+─────────────── DIVISION BREAKDOWN ───────────────
+Hendrickson Intl       412 EE × avg $1,725 = $710,800.00 (55.4% of total)
+Boler Mfg Services     156 EE × avg $1,600 = $249,600.00 (19.4%)
+Boler Holdings         124 EE × avg $1,600 = $198,400.00 (15.4%)
+Boler Real Estate       89 EE × avg $713   = $63,440.00  (4.9%)
+Corporate/Shared        66 EE × avg $941   = $62,080.00  (4.8%)
+
+─────────────── COVERAGE TIER BREAKDOWN ───────────────
+EE-only PPO         412 employees × $637/mo  = $262,444 (contract rate $612 · +4.1%)
+EE+Spouse PPO       183 employees × $1,195   = $218,685 (contract rate $1,148 · +4.1%)
+EE+Children PPO     108 employees × $1,053   = $113,724 (contract rate $1,012 · +4.1%)
+Family PPO          122 employees × $1,753   = $213,866 (contract rate $1,684 · +4.1%)
+EE-only HDHP         22 employees × $483     = $10,626  (contract rate $464 · +4.1%)
+
+⚠ RATE DRIFT NOTICE: Billed rates are +4.1% above contracted rate card.
+   Contract: $612/$1,148/$1,012/$1,684/$464 (Apr 2024 - Jul 2026)
+   Billed:   $637/$1,195/$1,053/$1,753/$483 (Jun 2026)
+   Cumulative drift since Jan 2026: +4.1% (was +0.5% in January)
+   APEX Signal Agent has flagged this for negotiation review.
+
+─────────────── EXCEPTIONS ───────────────
+Martinez, Laura (EMP-3312) appears in this invoice ($1,240/mo for EE+Spouse PPO)
+AND in the Cigna COBRA billing file separately. Status: TERMINATED 04/30/2026.
+→ Cross-flagged as EXC-2026-0442 by APEX Benefits Allocation Agent.
+
+Chen, Robert (EMP-4821) listed under cost center 6200-001 (Hendrickson Intl)
+BUT HRIS shows transferred to Boler Holdings (CC 6200-004) effective 05/15/2026.
+→ Cross-flagged as EXC-2026-0441 by APEX Benefits Allocation Agent.
+
+─────────────── REMITTANCE ───────────────
+Payable to:   Cigna Health and Life Insurance Company
+Method:        ACH to Cigna Premium Collections (acct ending 4421)
+Reference:    BOLER-JUN26-MEDICAL
+Cycle:         Monthly billing — auto-debit on file

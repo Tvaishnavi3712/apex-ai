@@ -1,0 +1,50 @@
+================================================================================
+                          ENTERPRISE PRODUCTS OPERATING LLC
+                              1100 Louisiana Street
+                                Houston, TX 77002
+================================================================================
+
+                      BLANKET PURCHASE ORDER (12-MONTH)
+
+PO Number:         PO-2026-CHEM-0892
+PO Date:           04/30/2026
+Effective Period:  05/01/2026 through 04/30/2027
+Buyer:             L. Nguyen, Chemicals Category Mgr
+Cost Center:       IC-PIPE-CORR-PROG
+AFE Number:        AFE-CORR-2026-PROG
+MSA Reference:     MSA-SLB-2023-09
+Total Blanket NTE: USD 1,200,000.00 (cumulative draws)
+Payment Terms:     Net 30 per invoice draw
+
+Vendor:                                    Ship-To (multi-site):
+    Schlumberger Technology Corp.              EPROD Field Sites per Release Schedule
+    5599 San Felipe St.                        - Mont Belvieu, TX
+    Houston, TX 77056                          - Sealy, TX
+    Vendor ID: V-001284                        - Hobbs, NM
+                                               - Conway, KS
+
+--------------------------------------------------------------------------------
+LN  DESCRIPTION                                   UOM    QTY     UNIT $    EXT
+--------------------------------------------------------------------------------
+ 1  Corrosion Inhibitor - Filming Amine          gallon  72,000   8.20    590,400
+    blend, NGL service, drum/tote delivery
+ 2  Hydrate Inhibitor - MEG (re-gen quality)     gallon  48,000   6.10    292,800
+    bulk truck, multi-site
+ 3  Oxygen Scavenger - Bisulfite-based,          gallon  19,500   7.40    144,300
+    aqueous service
+ 4  On-call Field Service - Chemical Application LS      1.0     172,500  172,500
+    Engineer, periodic site visits & dosing
+    optimization
+--------------------------------------------------------------------------------
+                                              BLANKET NTE:    USD 1,200,000.00
+================================================================================
+
+Release Mechanism: Site superintendents issue Release-Against-Blanket numbers
+(RAB-NNNN) by email to vendor; vendor confirms delivery within 5 business days.
+Pricing held firm for full term; force-majeure adjustments per MSA Sec 12.
+
+Reporting: Monthly consumption report by site & line item due 5th of following
+month, sent to chemicals.program@eprod.com.
+
+Approved: L. Nguyen ___________   D. Cho (Director, Pipeline Ops) ___________
+================================================================================

@@ -1,0 +1,802 @@
+[
+  {
+    "equipment_id": "P-3A",
+    "pm_template_id": "PM-MOV-3",
+    "pm_template_name": "MOV Megger Test",
+    "frequency_days": 365,
+    "last_completed": "2026-06-17",
+    "next_due": "2027-06-17",
+    "regulatory_basis": "SR 3.7.8.3",
+    "procedure_doc": "0PMP-MOV-3"
+  },
+  {
+    "equipment_id": "P-3B",
+    "pm_template_id": "PM-7A",
+    "pm_template_name": "RCP Visual Surveillance",
+    "frequency_days": 90,
+    "last_completed": "2025-06-30",
+    "next_due": "2025-09-28",
+    "regulatory_basis": "SR 3.4.5.1",
+    "procedure_doc": "0PMP-RCS-7A"
+  },
+  {
+    "equipment_id": "P-3C",
+    "pm_template_id": "PM-EDG-2",
+    "pm_template_name": "EDG Surveillance Run",
+    "frequency_days": 30,
+    "last_completed": "2025-01-30",
+    "next_due": "2025-03-01",
+    "regulatory_basis": "SR 3.8.1.2",
+    "procedure_doc": "0PMP-EDG-2"
+  },
+  {
+    "equipment_id": "EDG-2",
+    "pm_template_id": "PM-1A",
+    "pm_template_name": "Pump Vibration Baseline",
+    "frequency_days": 365,
+    "last_completed": "2025-01-10",
+    "next_due": "2026-01-10",
+    "regulatory_basis": "ASME OM-6",
+    "procedure_doc": "0PMP-1A"
+  },
+  {
+    "equipment_id": "MOV-7B",
+    "pm_template_id": "PM-HX-2",
+    "pm_template_name": "HX Tube Cleaning",
+    "frequency_days": 730,
+    "last_completed": "2026-12-07",
+    "next_due": "2028-12-06",
+    "regulatory_basis": "ASME OM-3",
+    "procedure_doc": "0PMP-HX-2"
+  },
+  {
+    "equipment_id": "HX-22A",
+    "pm_template_id": "PM-MOV-3",
+    "pm_template_name": "MOV Megger Test",
+    "frequency_days": 365,
+    "last_completed": "2026-08-29",
+    "next_due": "2027-08-29",
+    "regulatory_basis": "SR 3.7.8.3",
+    "procedure_doc": "0PMP-MOV-3"
+  },
+  {
+    "equipment_id": "E-106",
+    "pm_template_id": "PM-MOV-2",
+    "pm_template_name": "MOV Stroke-Time Test",
+    "frequency_days": 90,
+    "last_completed": "2026-01-02",
+    "next_due": "2026-04-02",
+    "regulatory_basis": "SR 3.7.8.1",
+    "procedure_doc": "0PMP-MOV-2"
+  },
+  {
+    "equipment_id": "S-107",
+    "pm_template_id": "PM-EDG-2",
+    "pm_template_name": "EDG Surveillance Run",
+    "frequency_days": 30,
+    "last_completed": "2026-09-25",
+    "next_due": "2026-10-25",
+    "regulatory_basis": "SR 3.8.1.2",
+    "procedure_doc": "0PMP-EDG-2"
+  },
+  {
+    "equipment_id": "V-108",
+    "pm_template_id": "PM-HX-2",
+    "pm_template_name": "HX Tube Cleaning",
+    "frequency_days": 730,
+    "last_completed": "2025-03-13",
+    "next_due": "2027-03-13",
+    "regulatory_basis": "ASME OM-3",
+    "procedure_doc": "0PMP-HX-2"
+  },
+  {
+    "equipment_id": "P-109",
+    "pm_template_id": "PM-EDG-2",
+    "pm_template_name": "EDG Surveillance Run",
+    "frequency_days": 30,
+    "last_completed": "2025-11-19",
+    "next_due": "2025-12-19",
+    "regulatory_basis": "SR 3.8.1.2",
+    "procedure_doc": "0PMP-EDG-2"
+  },
+  {
+    "equipment_id": "V-110",
+    "pm_template_id": "PM-EDG-2",
+    "pm_template_name": "EDG Surveillance Run",
+    "frequency_days": 30,
+    "last_completed": "2025-02-05",
+    "next_due": "2025-03-07",
+    "regulatory_basis": "SR 3.8.1.2",
+    "procedure_doc": "0PMP-EDG-2"
+  },
+  {
+    "equipment_id": "M-111",
+    "pm_template_id": "PM-7A",
+    "pm_template_name": "RCP Visual Surveillance",
+    "frequency_days": 90,
+    "last_completed": "2026-05-04",
+    "next_due": "2026-08-02",
+    "regulatory_basis": "SR 3.4.5.1",
+    "procedure_doc": "0PMP-RCS-7A"
+  },
+  {
+    "equipment_id": "V-112",
+    "pm_template_id": "PM-EDG-3A",
+    "pm_template_name": "EDG Cooling Water Flow Verification",
+    "frequency_days": 365,
+    "last_completed": "2025-07-13",
+    "next_due": "2026-07-13",
+    "regulatory_basis": "SR 3.8.1.10",
+    "procedure_doc": "0PMP-EDG-3A"
+  },
+  {
+    "equipment_id": "S-113",
+    "pm_template_id": "PM-EDG-3A",
+    "pm_template_name": "EDG Cooling Water Flow Verification",
+    "frequency_days": 365,
+    "last_completed": "2025-02-20",
+    "next_due": "2026-02-20",
+    "regulatory_basis": "SR 3.8.1.10",
+    "procedure_doc": "0PMP-EDG-3A"
+  },
+  {
+    "equipment_id": "S-114",
+    "pm_template_id": "PM-MOV-3",
+    "pm_template_name": "MOV Megger Test",
+    "frequency_days": 365,
+    "last_completed": "2026-12-28",
+    "next_due": "2027-12-28",
+    "regulatory_basis": "SR 3.7.8.3",
+    "procedure_doc": "0PMP-MOV-3"
+  },
+  {
+    "equipment_id": "T-115",
+    "pm_template_id": "PM-MOV-2",
+    "pm_template_name": "MOV Stroke-Time Test",
+    "frequency_days": 90,
+    "last_completed": "2026-01-14",
+    "next_due": "2026-04-14",
+    "regulatory_basis": "SR 3.7.8.1",
+    "procedure_doc": "0PMP-MOV-2"
+  },
+  {
+    "equipment_id": "P-116",
+    "pm_template_id": "PM-HX-1",
+    "pm_template_name": "HX Heat Transfer Test",
+    "frequency_days": 365,
+    "last_completed": "2026-08-28",
+    "next_due": "2027-08-28",
+    "regulatory_basis": "SR 3.7.7.1",
+    "procedure_doc": "0PMP-HX-1"
+  },
+  {
+    "equipment_id": "S-117",
+    "pm_template_id": "PM-EDG-3A",
+    "pm_template_name": "EDG Cooling Water Flow Verification",
+    "frequency_days": 365,
+    "last_completed": "2026-05-11",
+    "next_due": "2027-05-11",
+    "regulatory_basis": "SR 3.8.1.10",
+    "procedure_doc": "0PMP-EDG-3A"
+  },
+  {
+    "equipment_id": "E-118",
+    "pm_template_id": "PM-MOV-2",
+    "pm_template_name": "MOV Stroke-Time Test",
+    "frequency_days": 90,
+    "last_completed": "2026-09-24",
+    "next_due": "2026-12-23",
+    "regulatory_basis": "SR 3.7.8.1",
+    "procedure_doc": "0PMP-MOV-2"
+  },
+  {
+    "equipment_id": "P-119",
+    "pm_template_id": "PM-EDG-2",
+    "pm_template_name": "EDG Surveillance Run",
+    "frequency_days": 30,
+    "last_completed": "2025-06-11",
+    "next_due": "2025-07-11",
+    "regulatory_basis": "SR 3.8.1.2",
+    "procedure_doc": "0PMP-EDG-2"
+  },
+  {
+    "equipment_id": "M-120",
+    "pm_template_id": "PM-7B",
+    "pm_template_name": "RCP Bearing Inspection",
+    "frequency_days": 730,
+    "last_completed": "2026-08-17",
+    "next_due": "2028-08-16",
+    "regulatory_basis": "TS 3.4.5",
+    "procedure_doc": "0PMP-RCS-7B"
+  },
+  {
+    "equipment_id": "S-121",
+    "pm_template_id": "PM-HX-2",
+    "pm_template_name": "HX Tube Cleaning",
+    "frequency_days": 730,
+    "last_completed": "2026-07-11",
+    "next_due": "2028-07-10",
+    "regulatory_basis": "ASME OM-3",
+    "procedure_doc": "0PMP-HX-2"
+  },
+  {
+    "equipment_id": "M-122",
+    "pm_template_id": "PM-1A",
+    "pm_template_name": "Pump Vibration Baseline",
+    "frequency_days": 365,
+    "last_completed": "2025-07-23",
+    "next_due": "2026-07-23",
+    "regulatory_basis": "ASME OM-6",
+    "procedure_doc": "0PMP-1A"
+  },
+  {
+    "equipment_id": "E-123",
+    "pm_template_id": "PM-MOV-2",
+    "pm_template_name": "MOV Stroke-Time Test",
+    "frequency_days": 90,
+    "last_completed": "2025-12-15",
+    "next_due": "2026-03-15",
+    "regulatory_basis": "SR 3.7.8.1",
+    "procedure_doc": "0PMP-MOV-2"
+  },
+  {
+    "equipment_id": "E-124",
+    "pm_template_id": "PM-EDG-3A",
+    "pm_template_name": "EDG Cooling Water Flow Verification",
+    "frequency_days": 365,
+    "last_completed": "2026-09-14",
+    "next_due": "2027-09-14",
+    "regulatory_basis": "SR 3.8.1.10",
+    "procedure_doc": "0PMP-EDG-3A"
+  },
+  {
+    "equipment_id": "S-125",
+    "pm_template_id": "PM-MOV-3",
+    "pm_template_name": "MOV Megger Test",
+    "frequency_days": 365,
+    "last_completed": "2025-02-19",
+    "next_due": "2026-02-19",
+    "regulatory_basis": "SR 3.7.8.3",
+    "procedure_doc": "0PMP-MOV-3"
+  },
+  {
+    "equipment_id": "P-126",
+    "pm_template_id": "PM-HX-1",
+    "pm_template_name": "HX Heat Transfer Test",
+    "frequency_days": 365,
+    "last_completed": "2025-05-06",
+    "next_due": "2026-05-06",
+    "regulatory_basis": "SR 3.7.7.1",
+    "procedure_doc": "0PMP-HX-1"
+  },
+  {
+    "equipment_id": "S-127",
+    "pm_template_id": "PM-7B",
+    "pm_template_name": "RCP Bearing Inspection",
+    "frequency_days": 730,
+    "last_completed": "2026-09-27",
+    "next_due": "2028-09-26",
+    "regulatory_basis": "TS 3.4.5",
+    "procedure_doc": "0PMP-RCS-7B"
+  },
+  {
+    "equipment_id": "T-128",
+    "pm_template_id": "PM-7A",
+    "pm_template_name": "RCP Visual Surveillance",
+    "frequency_days": 90,
+    "last_completed": "2025-10-06",
+    "next_due": "2026-01-04",
+    "regulatory_basis": "SR 3.4.5.1",
+    "procedure_doc": "0PMP-RCS-7A"
+  },
+  {
+    "equipment_id": "H-129",
+    "pm_template_id": "PM-MOV-3",
+    "pm_template_name": "MOV Megger Test",
+    "frequency_days": 365,
+    "last_completed": "2025-10-08",
+    "next_due": "2026-10-08",
+    "regulatory_basis": "SR 3.7.8.3",
+    "procedure_doc": "0PMP-MOV-3"
+  },
+  {
+    "equipment_id": "M-130",
+    "pm_template_id": "PM-HX-2",
+    "pm_template_name": "HX Tube Cleaning",
+    "frequency_days": 730,
+    "last_completed": "2026-10-04",
+    "next_due": "2028-10-03",
+    "regulatory_basis": "ASME OM-3",
+    "procedure_doc": "0PMP-HX-2"
+  },
+  {
+    "equipment_id": "M-131",
+    "pm_template_id": "PM-7B",
+    "pm_template_name": "RCP Bearing Inspection",
+    "frequency_days": 730,
+    "last_completed": "2025-10-14",
+    "next_due": "2027-10-14",
+    "regulatory_basis": "TS 3.4.5",
+    "procedure_doc": "0PMP-RCS-7B"
+  },
+  {
+    "equipment_id": "E-132",
+    "pm_template_id": "PM-7A",
+    "pm_template_name": "RCP Visual Surveillance",
+    "frequency_days": 90,
+    "last_completed": "2026-06-09",
+    "next_due": "2026-09-07",
+    "regulatory_basis": "SR 3.4.5.1",
+    "procedure_doc": "0PMP-RCS-7A"
+  },
+  {
+    "equipment_id": "P-133",
+    "pm_template_id": "PM-HX-2",
+    "pm_template_name": "HX Tube Cleaning",
+    "frequency_days": 730,
+    "last_completed": "2026-05-15",
+    "next_due": "2028-05-14",
+    "regulatory_basis": "ASME OM-3",
+    "procedure_doc": "0PMP-HX-2"
+  },
+  {
+    "equipment_id": "S-134",
+    "pm_template_id": "PM-HX-1",
+    "pm_template_name": "HX Heat Transfer Test",
+    "frequency_days": 365,
+    "last_completed": "2025-11-04",
+    "next_due": "2026-11-04",
+    "regulatory_basis": "SR 3.7.7.1",
+    "procedure_doc": "0PMP-HX-1"
+  },
+  {
+    "equipment_id": "T-135",
+    "pm_template_id": "PM-EDG-2",
+    "pm_template_name": "EDG Surveillance Run",
+    "frequency_days": 30,
+    "last_completed": "2026-07-15",
+    "next_due": "2026-08-14",
+    "regulatory_basis": "SR 3.8.1.2",
+    "procedure_doc": "0PMP-EDG-2"
+  },
+  {
+    "equipment_id": "V-136",
+    "pm_template_id": "PM-MOV-2",
+    "pm_template_name": "MOV Stroke-Time Test",
+    "frequency_days": 90,
+    "last_completed": "2025-09-16",
+    "next_due": "2025-12-15",
+    "regulatory_basis": "SR 3.7.8.1",
+    "procedure_doc": "0PMP-MOV-2"
+  },
+  {
+    "equipment_id": "E-137",
+    "pm_template_id": "PM-7C",
+    "pm_template_name": "RCP Oil Sample",
+    "frequency_days": 180,
+    "last_completed": "2025-03-18",
+    "next_due": "2025-09-14",
+    "regulatory_basis": "SR 3.4.5.2",
+    "procedure_doc": "0PMP-RCS-7C"
+  },
+  {
+    "equipment_id": "M-138",
+    "pm_template_id": "PM-MOV-2",
+    "pm_template_name": "MOV Stroke-Time Test",
+    "frequency_days": 90,
+    "last_completed": "2026-03-31",
+    "next_due": "2026-06-29",
+    "regulatory_basis": "SR 3.7.8.1",
+    "procedure_doc": "0PMP-MOV-2"
+  },
+  {
+    "equipment_id": "H-139",
+    "pm_template_id": "PM-1A",
+    "pm_template_name": "Pump Vibration Baseline",
+    "frequency_days": 365,
+    "last_completed": "2025-05-17",
+    "next_due": "2026-05-17",
+    "regulatory_basis": "ASME OM-6",
+    "procedure_doc": "0PMP-1A"
+  },
+  {
+    "equipment_id": "M-140",
+    "pm_template_id": "PM-HX-2",
+    "pm_template_name": "HX Tube Cleaning",
+    "frequency_days": 730,
+    "last_completed": "2026-05-31",
+    "next_due": "2028-05-30",
+    "regulatory_basis": "ASME OM-3",
+    "procedure_doc": "0PMP-HX-2"
+  },
+  {
+    "equipment_id": "S-141",
+    "pm_template_id": "PM-7B",
+    "pm_template_name": "RCP Bearing Inspection",
+    "frequency_days": 730,
+    "last_completed": "2026-12-20",
+    "next_due": "2028-12-19",
+    "regulatory_basis": "TS 3.4.5",
+    "procedure_doc": "0PMP-RCS-7B"
+  },
+  {
+    "equipment_id": "V-142",
+    "pm_template_id": "PM-HX-1",
+    "pm_template_name": "HX Heat Transfer Test",
+    "frequency_days": 365,
+    "last_completed": "2025-03-16",
+    "next_due": "2026-03-16",
+    "regulatory_basis": "SR 3.7.7.1",
+    "procedure_doc": "0PMP-HX-1"
+  },
+  {
+    "equipment_id": "T-143",
+    "pm_template_id": "PM-MOV-3",
+    "pm_template_name": "MOV Megger Test",
+    "frequency_days": 365,
+    "last_completed": "2026-12-10",
+    "next_due": "2027-12-10",
+    "regulatory_basis": "SR 3.7.8.3",
+    "procedure_doc": "0PMP-MOV-3"
+  },
+  {
+    "equipment_id": "P-144",
+    "pm_template_id": "PM-EDG-2",
+    "pm_template_name": "EDG Surveillance Run",
+    "frequency_days": 30,
+    "last_completed": "2025-05-15",
+    "next_due": "2025-06-14",
+    "regulatory_basis": "SR 3.8.1.2",
+    "procedure_doc": "0PMP-EDG-2"
+  },
+  {
+    "equipment_id": "E-145",
+    "pm_template_id": "PM-1A",
+    "pm_template_name": "Pump Vibration Baseline",
+    "frequency_days": 365,
+    "last_completed": "2026-01-10",
+    "next_due": "2027-01-10",
+    "regulatory_basis": "ASME OM-6",
+    "procedure_doc": "0PMP-1A"
+  },
+  {
+    "equipment_id": "H-146",
+    "pm_template_id": "PM-MOV-2",
+    "pm_template_name": "MOV Stroke-Time Test",
+    "frequency_days": 90,
+    "last_completed": "2025-11-30",
+    "next_due": "2026-02-28",
+    "regulatory_basis": "SR 3.7.8.1",
+    "procedure_doc": "0PMP-MOV-2"
+  },
+  {
+    "equipment_id": "M-147",
+    "pm_template_id": "PM-7B",
+    "pm_template_name": "RCP Bearing Inspection",
+    "frequency_days": 730,
+    "last_completed": "2025-03-22",
+    "next_due": "2027-03-22",
+    "regulatory_basis": "TS 3.4.5",
+    "procedure_doc": "0PMP-RCS-7B"
+  },
+  {
+    "equipment_id": "V-148",
+    "pm_template_id": "PM-MOV-3",
+    "pm_template_name": "MOV Megger Test",
+    "frequency_days": 365,
+    "last_completed": "2026-01-27",
+    "next_due": "2027-01-27",
+    "regulatory_basis": "SR 3.7.8.3",
+    "procedure_doc": "0PMP-MOV-3"
+  },
+  {
+    "equipment_id": "S-149",
+    "pm_template_id": "PM-HX-2",
+    "pm_template_name": "HX Tube Cleaning",
+    "frequency_days": 730,
+    "last_completed": "2026-04-05",
+    "next_due": "2028-04-04",
+    "regulatory_basis": "ASME OM-3",
+    "procedure_doc": "0PMP-HX-2"
+  },
+  {
+    "equipment_id": "T-150",
+    "pm_template_id": "PM-7C",
+    "pm_template_name": "RCP Oil Sample",
+    "frequency_days": 180,
+    "last_completed": "2026-12-10",
+    "next_due": "2027-06-08",
+    "regulatory_basis": "SR 3.4.5.2",
+    "procedure_doc": "0PMP-RCS-7C"
+  },
+  {
+    "equipment_id": "T-151",
+    "pm_template_id": "PM-7B",
+    "pm_template_name": "RCP Bearing Inspection",
+    "frequency_days": 730,
+    "last_completed": "2025-12-08",
+    "next_due": "2027-12-08",
+    "regulatory_basis": "TS 3.4.5",
+    "procedure_doc": "0PMP-RCS-7B"
+  },
+  {
+    "equipment_id": "V-152",
+    "pm_template_id": "PM-HX-2",
+    "pm_template_name": "HX Tube Cleaning",
+    "frequency_days": 730,
+    "last_completed": "2026-12-15",
+    "next_due": "2028-12-14",
+    "regulatory_basis": "ASME OM-3",
+    "procedure_doc": "0PMP-HX-2"
+  },
+  {
+    "equipment_id": "M-153",
+    "pm_template_id": "PM-7C",
+    "pm_template_name": "RCP Oil Sample",
+    "frequency_days": 180,
+    "last_completed": "2025-06-20",
+    "next_due": "2025-12-17",
+    "regulatory_basis": "SR 3.4.5.2",
+    "procedure_doc": "0PMP-RCS-7C"
+  },
+  {
+    "equipment_id": "M-154",
+    "pm_template_id": "PM-7B",
+    "pm_template_name": "RCP Bearing Inspection",
+    "frequency_days": 730,
+    "last_completed": "2025-03-21",
+    "next_due": "2027-03-21",
+    "regulatory_basis": "TS 3.4.5",
+    "procedure_doc": "0PMP-RCS-7B"
+  },
+  {
+    "equipment_id": "V-155",
+    "pm_template_id": "PM-MOV-3",
+    "pm_template_name": "MOV Megger Test",
+    "frequency_days": 365,
+    "last_completed": "2026-07-01",
+    "next_due": "2027-07-01",
+    "regulatory_basis": "SR 3.7.8.3",
+    "procedure_doc": "0PMP-MOV-3"
+  },
+  {
+    "equipment_id": "S-156",
+    "pm_template_id": "PM-EDG-2",
+    "pm_template_name": "EDG Surveillance Run",
+    "frequency_days": 30,
+    "last_completed": "2026-02-17",
+    "next_due": "2026-03-19",
+    "regulatory_basis": "SR 3.8.1.2",
+    "procedure_doc": "0PMP-EDG-2"
+  },
+  {
+    "equipment_id": "T-157",
+    "pm_template_id": "PM-7C",
+    "pm_template_name": "RCP Oil Sample",
+    "frequency_days": 180,
+    "last_completed": "2026-11-27",
+    "next_due": "2027-05-26",
+    "regulatory_basis": "SR 3.4.5.2",
+    "procedure_doc": "0PMP-RCS-7C"
+  },
+  {
+    "equipment_id": "H-158",
+    "pm_template_id": "PM-7A",
+    "pm_template_name": "RCP Visual Surveillance",
+    "frequency_days": 90,
+    "last_completed": "2025-11-26",
+    "next_due": "2026-02-24",
+    "regulatory_basis": "SR 3.4.5.1",
+    "procedure_doc": "0PMP-RCS-7A"
+  },
+  {
+    "equipment_id": "E-159",
+    "pm_template_id": "PM-MOV-2",
+    "pm_template_name": "MOV Stroke-Time Test",
+    "frequency_days": 90,
+    "last_completed": "2026-10-31",
+    "next_due": "2027-01-29",
+    "regulatory_basis": "SR 3.7.8.1",
+    "procedure_doc": "0PMP-MOV-2"
+  },
+  {
+    "equipment_id": "H-160",
+    "pm_template_id": "PM-EDG-2",
+    "pm_template_name": "EDG Surveillance Run",
+    "frequency_days": 30,
+    "last_completed": "2025-01-17",
+    "next_due": "2025-02-16",
+    "regulatory_basis": "SR 3.8.1.2",
+    "procedure_doc": "0PMP-EDG-2"
+  },
+  {
+    "equipment_id": "S-161",
+    "pm_template_id": "PM-EDG-3A",
+    "pm_template_name": "EDG Cooling Water Flow Verification",
+    "frequency_days": 365,
+    "last_completed": "2025-04-30",
+    "next_due": "2026-04-30",
+    "regulatory_basis": "SR 3.8.1.10",
+    "procedure_doc": "0PMP-EDG-3A"
+  },
+  {
+    "equipment_id": "H-162",
+    "pm_template_id": "PM-7C",
+    "pm_template_name": "RCP Oil Sample",
+    "frequency_days": 180,
+    "last_completed": "2025-03-19",
+    "next_due": "2025-09-15",
+    "regulatory_basis": "SR 3.4.5.2",
+    "procedure_doc": "0PMP-RCS-7C"
+  },
+  {
+    "equipment_id": "S-163",
+    "pm_template_id": "PM-7A",
+    "pm_template_name": "RCP Visual Surveillance",
+    "frequency_days": 90,
+    "last_completed": "2025-06-11",
+    "next_due": "2025-09-09",
+    "regulatory_basis": "SR 3.4.5.1",
+    "procedure_doc": "0PMP-RCS-7A"
+  },
+  {
+    "equipment_id": "T-164",
+    "pm_template_id": "PM-EDG-2",
+    "pm_template_name": "EDG Surveillance Run",
+    "frequency_days": 30,
+    "last_completed": "2026-01-22",
+    "next_due": "2026-02-21",
+    "regulatory_basis": "SR 3.8.1.2",
+    "procedure_doc": "0PMP-EDG-2"
+  },
+  {
+    "equipment_id": "E-165",
+    "pm_template_id": "PM-1A",
+    "pm_template_name": "Pump Vibration Baseline",
+    "frequency_days": 365,
+    "last_completed": "2025-10-09",
+    "next_due": "2026-10-09",
+    "regulatory_basis": "ASME OM-6",
+    "procedure_doc": "0PMP-1A"
+  },
+  {
+    "equipment_id": "P-166",
+    "pm_template_id": "PM-EDG-2",
+    "pm_template_name": "EDG Surveillance Run",
+    "frequency_days": 30,
+    "last_completed": "2026-02-19",
+    "next_due": "2026-03-21",
+    "regulatory_basis": "SR 3.8.1.2",
+    "procedure_doc": "0PMP-EDG-2"
+  },
+  {
+    "equipment_id": "S-167",
+    "pm_template_id": "PM-7C",
+    "pm_template_name": "RCP Oil Sample",
+    "frequency_days": 180,
+    "last_completed": "2026-05-07",
+    "next_due": "2026-11-03",
+    "regulatory_basis": "SR 3.4.5.2",
+    "procedure_doc": "0PMP-RCS-7C"
+  },
+  {
+    "equipment_id": "S-168",
+    "pm_template_id": "PM-HX-1",
+    "pm_template_name": "HX Heat Transfer Test",
+    "frequency_days": 365,
+    "last_completed": "2026-05-15",
+    "next_due": "2027-05-15",
+    "regulatory_basis": "SR 3.7.7.1",
+    "procedure_doc": "0PMP-HX-1"
+  },
+  {
+    "equipment_id": "S-169",
+    "pm_template_id": "PM-EDG-2",
+    "pm_template_name": "EDG Surveillance Run",
+    "frequency_days": 30,
+    "last_completed": "2026-12-07",
+    "next_due": "2027-01-06",
+    "regulatory_basis": "SR 3.8.1.2",
+    "procedure_doc": "0PMP-EDG-2"
+  },
+  {
+    "equipment_id": "P-170",
+    "pm_template_id": "PM-HX-1",
+    "pm_template_name": "HX Heat Transfer Test",
+    "frequency_days": 365,
+    "last_completed": "2026-05-24",
+    "next_due": "2027-05-24",
+    "regulatory_basis": "SR 3.7.7.1",
+    "procedure_doc": "0PMP-HX-1"
+  },
+  {
+    "equipment_id": "P-171",
+    "pm_template_id": "PM-HX-1",
+    "pm_template_name": "HX Heat Transfer Test",
+    "frequency_days": 365,
+    "last_completed": "2025-04-25",
+    "next_due": "2026-04-25",
+    "regulatory_basis": "SR 3.7.7.1",
+    "procedure_doc": "0PMP-HX-1"
+  },
+  {
+    "equipment_id": "V-172",
+    "pm_template_id": "PM-1A",
+    "pm_template_name": "Pump Vibration Baseline",
+    "frequency_days": 365,
+    "last_completed": "2025-07-17",
+    "next_due": "2026-07-17",
+    "regulatory_basis": "ASME OM-6",
+    "procedure_doc": "0PMP-1A"
+  },
+  {
+    "equipment_id": "E-173",
+    "pm_template_id": "PM-EDG-3A",
+    "pm_template_name": "EDG Cooling Water Flow Verification",
+    "frequency_days": 365,
+    "last_completed": "2026-05-07",
+    "next_due": "2027-05-07",
+    "regulatory_basis": "SR 3.8.1.10",
+    "procedure_doc": "0PMP-EDG-3A"
+  },
+  {
+    "equipment_id": "H-174",
+    "pm_template_id": "PM-7C",
+    "pm_template_name": "RCP Oil Sample",
+    "frequency_days": 180,
+    "last_completed": "2025-12-20",
+    "next_due": "2026-06-18",
+    "regulatory_basis": "SR 3.4.5.2",
+    "procedure_doc": "0PMP-RCS-7C"
+  },
+  {
+    "equipment_id": "H-175",
+    "pm_template_id": "PM-EDG-3A",
+    "pm_template_name": "EDG Cooling Water Flow Verification",
+    "frequency_days": 365,
+    "last_completed": "2026-03-11",
+    "next_due": "2027-03-11",
+    "regulatory_basis": "SR 3.8.1.10",
+    "procedure_doc": "0PMP-EDG-3A"
+  },
+  {
+    "equipment_id": "S-176",
+    "pm_template_id": "PM-7B",
+    "pm_template_name": "RCP Bearing Inspection",
+    "frequency_days": 730,
+    "last_completed": "2025-10-07",
+    "next_due": "2027-10-07",
+    "regulatory_basis": "TS 3.4.5",
+    "procedure_doc": "0PMP-RCS-7B"
+  },
+  {
+    "equipment_id": "S-177",
+    "pm_template_id": "PM-MOV-3",
+    "pm_template_name": "MOV Megger Test",
+    "frequency_days": 365,
+    "last_completed": "2025-04-10",
+    "next_due": "2026-04-10",
+    "regulatory_basis": "SR 3.7.8.3",
+    "procedure_doc": "0PMP-MOV-3"
+  },
+  {
+    "equipment_id": "H-178",
+    "pm_template_id": "PM-HX-2",
+    "pm_template_name": "HX Tube Cleaning",
+    "frequency_days": 730,
+    "last_completed": "2025-11-05",
+    "next_due": "2027-11-05",
+    "regulatory_basis": "ASME OM-3",
+    "procedure_doc": "0PMP-HX-2"
+  },
+  {
+    "equipment_id": "P-179",
+    "pm_template_id": "PM-EDG-3A",
+    "pm_template_name": "EDG Cooling Water Flow Verification",
+    "frequency_days": 365,
+    "last_completed": "2026-11-12",
+    "next_due": "2027-11-12",
+    "regulatory_basis": "SR 3.8.1.10",
+    "procedure_doc": "0PMP-EDG-3A"
+  }
+]

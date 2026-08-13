@@ -1,0 +1,122 @@
+# SharePoint GCC High Replacement - S3
+# Simulates Essex's ITAR document repository
+# Mode: READ only
+
+connector:
+  id: sharepoint_gcc
+  name: "SharePoint GCC High"
+  description: "ITAR controlled documents and work instructions (Demo: S3)"
+  type: s3_document_store
+  mode: read
+  industry: aerospace_defense
+  compliance:
+    - ITAR
+    - NIST-800-171
+    - CUI
+
+  # AWS Configuration
+  aws:
+    region: us-east-1
+    s3_bucket: apex-demo-sharepoint-docs
+    s3_prefix: itar-documents/
+
+    # Metadata stored in DynamoDB
+    metadata_table: apex-demo-doc-metadata
+
+  # Document Libraries (SharePoint equivalent)
+  libraries:
+    work_instructions:
+      s3_prefix: work-instructions/
+      document_types: [.pdf]
+      metadata_fields:
+        - wi_number
+        - revision
+        - title
+        - work_center
+        - approved_date
+
+    quality_procedures:
+      s3_prefix: quality/
+      document_types: [.pdf]
+      metadata_fields:
+        - qp_number
+        - revision
+        - title
+        - iso_reference
+
+    program_documents:
+      s3_prefix: programs/
+      document_types: [.pdf, .docx, .xlsx]
+      metadata_fields:
+        - program
+        - document_type
+        - classification
+        - distribution
+
+    rfp_templates:
+      s3_prefix: rfp/
+      document_types: [.docx, .xlsx]
+      metadata_fields:
+        - template_name
+        - version
+        - last_used
+
+  # Operations
+  operations:
+    get_work_instruction:
+      description: "Get work instruction by WI number"
+      method: get_object
+      path_template: "work-instructions/{wi_number}_Rev_{revision}.pdf"
+
+    list_program_docs:
+      description: "List all documents for a program"
+      method: query_metadata
+      table: apex-demo-doc-metadata
+      filter: program
+
+    search_documents:
+      description: "Full-text search across documents"
+      method: search
+      index: apex-demo-doc-search
+
+    get_rfp_template:
+      description: "Get RFP response template"
+      method: get_object
+      path_template: "rfp/{template_name}.docx"
+
+  # Sample Data Files (to upload for demo)
+  sample_files:
+    work_instructions:
+      - wi_number: WI-MILL-001
+        revision: B
+        title: "CNC Milling Operations - Titanium"
+        work_center: MAZAK-01
+        file: WI-MILL-001_Rev_B.pdf
+
+      - wi_number: WI-INSP-001
+        revision: A
+        title: "Final Inspection Procedure"
+        work_center: QC-01
+        file: WI-INSP-001_Rev_A.pdf
+
+    quality_procedures:
+      - qp_number: QP-NCR-001
+        revision: C
+        title: "Non-Conformance Reporting"
+        file: QP-NCR-001_Rev_C.pdf
+
+    program_documents:
+      - program: F-35
+        document_type: "Contract Requirements"
+        classification: CUI
+        file: F35_Contract_Requirements.pdf
+
+    rfp_templates:
+      - template_name: "Price_Proposal_Template"
+        version: "2.1"
+        file: Price_Proposal_Template_v2.1.docx
+
+  # Authentication
+  authentication:
+    type: iam_role
+    role_arn: arn:aws:iam::457795063704:role/apex-s3-read-role

@@ -1,0 +1,40 @@
+APEX EXCEPTION RECORD · LOW PRIORITY
+═══════════════════════════════════════════════════════════════
+EXCEPTION ID:     EXC-2026-0447
+Type:             Missing Cost Center Assignment
+Severity:         LOW
+Detection Time:   June 6, 2026 · 09:14:22 ET
+Detection Agent:  Benefits Allocation Agent (BEN)
+Status:           AWAITING BENEFITS DIRECTOR REVIEW
+
+─────────────── DETECTION ───────────────
+3 new hires appear in carrier files for the June cycle but have no
+cost center assignment in HRIS or the allocation system.
+
+Affected:
+  EMP-9112  Stanford, Tyrell    Hire date: 2026-05-19 · Division: TBD
+  EMP-9113  Okafor, Adaeze     Hire date: 2026-05-22 · Division: TBD
+  EMP-9114  Lambert, Jenna     Hire date: 2026-05-26 · Division: TBD
+
+Total unallocated: $6,840/mo (3 × Cigna Family + dental + 401k starter match)
+
+─────────────── ROOT CAUSE ───────────────
+New-hire benefits intake portal collects standard enrollment but the
+"division assignment + cost center" step is HR-driven and lags carrier
+enrollment by ~5-10 days.
+
+─────────────── RECOMMENDED ACTION ───────────────
+Sarah Mitchell to confirm with hiring managers:
+  • Stanford → likely Hendrickson Intl (CC 6200-001)
+  • Okafor → likely Mfg Services (CC 6200-004)
+  • Lambert → likely Real Estate (CC 6200-002)
+
+Once confirmed, allocate $6,840/mo to correct cost centers (catch-up to hire date).
+
+─────────────── ROUTING ───────────────
+  • Detected by:      Benefits Allocation Agent
+  • Routed to:        Sarah Mitchell (Benefits Director) — Stage 1
+  • Notification:     SES email
+
+Storage: DynamoDB · partition=2026-06 · sort=EXC-0447
+Audit ID: AUDIT-2026-06-06-09:14:22-EXC-0447

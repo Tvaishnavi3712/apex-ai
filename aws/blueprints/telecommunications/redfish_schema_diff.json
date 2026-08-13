@@ -1,0 +1,114 @@
+{
+  "blueprintName": "redfish-schema-diff-analyzer",
+  "blueprintVersion": "1.0.0",
+  "description": "Extracts Redfish API schemas (baseline + current) and identifies breaking changes \u2014 path migrations, field renames, new required fields, deprecations \u2014 and maps each change to impacted Ansible playbooks and ROBOT scripts.",
+  "industry": "telecommunications",
+  "documentType": "redfish_schema_json",
+  "bdaSchema": {
+    "class": "ApexRedfishSchemaDiff",
+    "description": "Redfish schema (DMTF v1.x) snapshot for drift detection",
+    "definitions": {
+      "BREAKING_CHANGE": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Unique change ID, e.g. SCHEMA-DRIFT-001"
+          },
+          "endpoint": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Redfish endpoint URI"
+          },
+          "field_old": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Field name as it existed in baseline"
+          },
+          "field_new": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Field name in the current schema"
+          },
+          "change_type": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "path_migration / field_rename / new_required / deprecated / removed_required"
+          },
+          "breaking": {
+            "type": "boolean",
+            "inferenceType": "inferred"
+          },
+          "scripts_impacted": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "instruction": "Ansible / ROBOT script files referencing the changed field"
+          },
+          "vendor_release_note_ref": {
+            "type": "string",
+            "inferenceType": "inferred",
+            "instruction": "Cross-reference to vendor release notes section"
+          },
+          "confidence": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "properties": {
+      "baseline_version": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Baseline schema version, e.g. v1.14.0"
+      },
+      "current_version": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Current schema version, e.g. v1.16.0"
+      },
+      "captured_at": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "source_device": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "endpoints": {
+        "type": "object",
+        "inferenceType": "explicit",
+        "instruction": "All endpoints with their field maps and required_fields lists"
+      },
+      "breaking_changes": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/BREAKING_CHANGE"
+        }
+      },
+      "breaking_changes_count": {
+        "type": "number",
+        "inferenceType": "inferred"
+      },
+      "scripts_impacted_count": {
+        "type": "number",
+        "inferenceType": "inferred"
+      }
+    }
+  },
+  "extractionRules": {
+    "confidenceThreshold": 0.92,
+    "comparators": [
+      "field_added",
+      "field_removed",
+      "field_renamed",
+      "required_changed",
+      "type_changed",
+      "path_migrated"
+    ]
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  }
+}

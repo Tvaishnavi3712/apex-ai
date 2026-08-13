@@ -1,0 +1,71 @@
+name: caas_node_certification_24_12
+version: 1.0.0
+description: Imported from Robot Framework suite “Verizon Far Edge Certification Suite
+  24.12”
+industry: telecommunications
+category: certification
+intent: Run the certification coverage previously held in the Robot Framework suite
+  “Verizon Far Edge Certification Suite 24.12”. The suite contributed 248 tests across
+  5 Apex actions. Failures are classified and raised as tickets rather than left in
+  a report no one reads.
+output:
+- name: certification_result
+  type: structured_data
+  description: Per-test outcome, classified failures, and raised tickets
+context:
+  business_rules:
+  - 'Source suite: Verizon Far Edge Certification Suite 24.12'
+  - 248 tests imported (12 FAIL, 236 PASS)
+  - 'Device Under Test: CaaS-Edge-Node-Type-B'
+  - 'Firmware Version: Wind River 24.12'
+  - 'Cycle Id: CYCLE-20260115-CAAS-B-2412'
+  - 'Region: Northeast'
+  - 'Operator: cert-eng-shift-day'
+actions:
+- name: run_test_iterations
+  action_id: telecommunications.run_test_iterations
+  description: Covers 62 tests from the imported suite (3 currently failing)
+  required: true
+- name: detect_schema_drift
+  action_id: telecommunications.detect_schema_drift
+  description: Covers 42 tests from the imported suite (6 currently failing)
+  required: true
+- name: parse_robot_output
+  action_id: telecommunications.parse_robot_output
+  description: Covers 94 tests from the imported suite (3 currently failing)
+  required: true
+- name: compute_risk_scores
+  action_id: telecommunications.compute_risk_scores
+  description: Covers 28 tests from the imported suite
+  required: true
+- name: validate_upgrade_path
+  action_id: telecommunications.validate_upgrade_path
+  description: Covers 22 tests from the imported suite
+  required: true
+recipe: 'Imported from the Robot Framework suite “Verizon Far Edge Certification Suite
+  24.12”.
+
+
+  1. telecommunications.run_test_iterations — 62 tests (e.g. CU-UP Interface Interface
+  Latency, CU-UP Interface Throughput Sustained 60s)
+
+  2. telecommunications.detect_schema_drift — 42 tests (e.g. Redfish API PowerState
+  /Systems/1, Redfish API Thermal FanSpeeds /Chassis/1/Thermal)
+
+  3. telecommunications.parse_robot_output — 94 tests (e.g. OpenShift Operator Operator
+  Health, OpenShift Operator Pod Scheduling SLA)
+
+  4. telecommunications.compute_risk_scores — 28 tests (e.g. Wind River CaaS Boot
+  Boot Sequence, Wind River CaaS Boot Boot Recovery After Reset)
+
+  5. telecommunications.validate_upgrade_path — 22 tests (e.g. Ansible Playbook Idempotency
+  pre_upgrade_validation.yml Idempotency, Ansible Playbook Idempotency post_upgrade_validation.yml
+  Idempotency)
+
+
+  6. Classify any failure against the known-issues knowledge base.
+
+  7. Raise a ticket per unmatched failure, after human approval.'
+triggers:
+- type: schedule
+  cadence: nightly

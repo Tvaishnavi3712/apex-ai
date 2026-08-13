@@ -1,0 +1,442 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply antialiased;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* Focus styles */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  @apply ring-2 ring-blue-500 ring-offset-2;
+}
+
+/* Animation classes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Prose overrides for chat */
+.prose pre {
+  @apply bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto;
+}
+
+.prose code {
+  @apply bg-gray-100 text-blue-600 px-1.5 py-0.5 rounded text-sm font-mono;
+}
+
+.prose pre code {
+  @apply bg-transparent text-gray-100 p-0;
+}
+
+/* Card hover effect */
+.card-hover {
+  @apply transition-all duration-200;
+}
+
+.card-hover:hover {
+  @apply shadow-lg -translate-y-1;
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
+}
+
+/* Loading skeleton */
+.skeleton {
+  @apply bg-gray-200 animate-pulse rounded;
+}
+
+/* Table styles */
+.table-container {
+  @apply overflow-x-auto;
+}
+
+.table-container table {
+  @apply w-full border-collapse;
+}
+
+.table-container th {
+  @apply bg-gray-50 text-left text-sm font-semibold text-gray-900 px-4 py-3 border-b border-gray-200;
+}
+
+.table-container td {
+  @apply px-4 py-3 text-sm text-gray-700 border-b border-gray-100;
+}
+
+.table-container tr:hover td {
+  @apply bg-gray-50;
+}
+
+/* Form field focus */
+input:focus,
+textarea:focus,
+select:focus {
+  @apply ring-2 ring-blue-500 ring-offset-0 border-blue-500;
+}
+
+/* Button active state */
+button:active {
+  @apply transform scale-[0.98];
+}
+
+/* Badge animation */
+.badge-pulse {
+  animation: badgePulse 2s infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Tooltip */
+.tooltip {
+  @apply invisible opacity-0 absolute z-50 px-3 py-2 text-sm text-white bg-gray-900 rounded-lg shadow-lg transition-all duration-200;
+}
+
+.tooltip-trigger:hover .tooltip {
+  @apply visible opacity-100;
+}
+
+/* Monaco editor overrides */
+.monaco-editor {
+  @apply rounded-lg overflow-hidden;
+}
+
+/* React Flow overrides */
+.react-flow__node {
+  @apply rounded-xl shadow-md;
+}
+
+.react-flow__handle {
+  @apply w-3 h-3 bg-blue-500 border-2 border-white;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    @apply text-black bg-white;
+  }
+}
+
+/* ============================================================
+ * APEX PROTOTYPE DESIGN TOKENS
+ * Scoped to .apex-proto — does not affect existing pages.
+ * Toggle light mode by adding `.apex-proto-light` alongside.
+ * ============================================================ */
+
+.apex-proto {
+  /* Surfaces (dark default) */
+  --surface-0: #0a0e17;
+  --surface-1: #111725;
+  --surface-2: #18202f;
+  --surface-3: #1f2a3d;
+  --surface-hi: rgba(255, 255, 255, 0.04);
+  --surface-border: rgba(255, 255, 255, 0.08);
+  --surface-ring: rgba(255, 255, 255, 0.14);
+
+  /* Ink */
+  --ink: #e7ecf3;
+  --ink-muted: #8a93a6;
+  --ink-dim: #5c6578;
+
+  /* Accent */
+  --accent: #5b8cff;
+  --accent-2: #8b5cf6;
+  --accent-ring: rgba(91, 140, 255, 0.35);
+  --accent-ink: #cddbff;
+
+  /* Semantic */
+  --ok: #3ecf8e;
+  --warn: #f0b429;
+  --err: #ff6b6b;
+
+  /* Radii / elevation */
+  --radius-card: 16px;
+  --radius-chip: 999px;
+  --elev-1: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 1px 2px rgba(0, 0, 0, 0.5);
+  --elev-2: 0 8px 24px -8px rgba(0, 0, 0, 0.6);
+  --glow: 0 0 0 1px var(--accent-ring), 0 0 30px -5px var(--accent-ring);
+
+  background: var(--surface-0);
+  color: var(--ink);
+  font-family: Inter, system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+.apex-proto-backdrop {
+  background-color: var(--surface-0);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: -1px -1px;
+}
+
+/* Surfaces */
+.apex-proto .surface    { background: var(--surface-1); border: 1px solid var(--surface-border); border-radius: var(--radius-card); }
+.apex-proto .surface-2  { background: var(--surface-2); border: 1px solid var(--surface-border); border-radius: var(--radius-card); }
+.apex-proto .surface-hi { background: var(--surface-hi); border: 1px solid var(--surface-border); border-radius: var(--radius-card); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+
+/* Typography */
+.apex-proto .t-display { font-size: 32px; line-height: 40px; letter-spacing: -0.02em; font-weight: 600; color: var(--ink); }
+.apex-proto .t-title   { font-size: 20px; line-height: 28px; letter-spacing: -0.01em; font-weight: 600; color: var(--ink); }
+.apex-proto .t-body    { font-size: 14px; line-height: 22px; color: var(--ink); }
+.apex-proto .t-dim     { color: var(--ink-muted); }
+.apex-proto .t-micro   { font-size: 11px; line-height: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; }
+.apex-proto .t-num     { font-family: 'JetBrains Mono', Menlo, monospace; font-variant-numeric: tabular-nums; }
+
+/* Status dots */
+.apex-proto .dot       { display: inline-block; width: 6px; height: 6px; border-radius: 999px; flex-shrink: 0; }
+.apex-proto .dot-ok    { background: var(--ok); box-shadow: 0 0 0 4px rgba(62, 207, 142, 0.15); }
+.apex-proto .dot-think { background: var(--accent); animation: apexPulse 1.6s infinite; }
+.apex-proto .dot-warn  { background: var(--warn); }
+.apex-proto .dot-err   { background: var(--err); }
+.apex-proto .dot-idle  { background: var(--ink-dim); }
+@keyframes apexPulse {
+  0%, 100% { box-shadow: 0 0 0 4px var(--accent-ring); }
+  50%      { box-shadow: 0 0 0 10px rgba(91, 140, 255, 0.04); }
+}
+
+/* Accent rail on cards */
+.apex-proto .rail { position: relative; overflow: hidden; }
+.apex-proto .rail::before {
+  content: ''; position: absolute; left: 0; top: 14%; bottom: 14%; width: 2px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  border-radius: 2px;
+}
+
+/* Chips / segmented */
+.apex-proto .chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px; border-radius: var(--radius-chip);
+  font-size: 12px; background: var(--surface-2);
+  border: 1px solid var(--surface-border); color: var(--ink-muted);
+  transition: all .15s ease;
+}
+.apex-proto .chip:hover { color: var(--ink); border-color: var(--surface-ring); }
+.apex-proto .chip-on {
+  background: rgba(91, 140, 255, 0.12); color: var(--accent-ink);
+  border-color: var(--accent-ring);
+}
+
+/* Command bar pill */
+.apex-proto .cmd-pill {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--surface-border);
+  border-radius: 999px;
+  box-shadow: var(--elev-2);
+  transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease;
+}
+.apex-proto .cmd-pill:hover {
+  box-shadow: var(--glow), var(--elev-2);
+  border-color: var(--accent-ring);
+}
+
+/* Apex conic mark */
+.apex-proto .apex-mark {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: conic-gradient(from 180deg, var(--accent), var(--accent-2), var(--accent));
+  position: relative; flex-shrink: 0;
+}
+.apex-proto .apex-mark::after {
+  content: ''; position: absolute; inset: 2px; border-radius: 8px;
+  background: var(--surface-1);
+}
+.apex-proto .apex-mark-sm { width: 24px; height: 24px; border-radius: 7px; }
+.apex-proto .apex-mark-sm::after { border-radius: 5px; }
+.apex-proto .apex-mark-spin { animation: apexSpin 8s linear infinite; }
+@keyframes apexSpin { to { transform: rotate(360deg); } }
+
+/* Flow nodes */
+.apex-proto .node {
+  background: var(--surface-2); border: 1px solid var(--surface-border);
+  border-radius: var(--radius-card); padding: 14px 16px;
+  box-shadow: var(--elev-1); min-width: 200px;
+  transition: border-color .15s ease, transform .15s ease;
+  position: relative;
+}
+.apex-proto .node:hover { border-color: var(--accent-ring); transform: translateY(-1px); }
+.apex-proto .node-active {
+  border-color: var(--accent-ring);
+  box-shadow: var(--glow), var(--elev-1);
+}
+.apex-proto .edge { stroke: var(--surface-ring); stroke-width: 1.5; fill: none; }
+.apex-proto .edge-active {
+  stroke: var(--accent); stroke-width: 2;
+  stroke-dasharray: 5 5; animation: apexDash 1s linear infinite;
+}
+@keyframes apexDash { to { stroke-dashoffset: -20; } }
+
+/* Keyboard hint */
+.apex-proto .kbd {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  padding: 2px 6px; border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--surface-border);
+  color: var(--ink-muted);
+  min-width: 20px; text-align: center;
+}
+
+/* Button (prototype) */
+.apex-proto .btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 10px;
+  font-size: 13px; font-weight: 500;
+  background: var(--surface-2); color: var(--ink);
+  border: 1px solid var(--surface-border);
+  transition: all .15s ease; cursor: pointer;
+}
+.apex-proto .btn:hover { border-color: var(--surface-ring); }
+.apex-proto .btn-primary {
+  background: linear-gradient(180deg, var(--accent), #4672e0);
+  border-color: var(--accent-ring); color: white;
+}
+.apex-proto .btn-primary:hover { box-shadow: var(--glow); }
+
+/* Sparkline / heatmap / gauge shared */
+.apex-proto .grid-cell {
+  border-radius: 3px; transition: transform .15s ease;
+}
+.apex-proto .grid-cell:hover { transform: scale(1.3); }
+
+/* ============================================================
+ * APEX REDESIGN — Sidebar & Layout Utilities
+ * ============================================================ */
+
+/* Dark sidebar scrollbar */
+.dark-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.dark-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dark-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+}
+.dark-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Sidebar nav active indicator */
+.nav-active-indicator {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 20px;
+  border-radius: 0 2px 2px 0;
+}
+
+/* Page transition */
+@keyframes pageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: pageSlideIn 0.25s ease-out;
+}
+
+/* Persona card hover */
+.persona-card {
+  transition: all 0.2s ease;
+}
+.persona-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.12);
+}
+
+/* Capability flow connector line */
+.capability-connector {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.3));
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Group label badge */
+.group-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+}

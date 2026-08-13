@@ -1,0 +1,101 @@
+playbook_id: pb-eprod-3
+name: non_po_msa_validation
+version: "1.0.0"
+description: "At-intake validation of non-PO transactions against active vendor MSAs — audit-ready evidence captured automatically."
+industry: oil_gas_midstream
+category: procurement
+
+intent: |
+  For every non-PO transaction (direct services, emergency work, retainer
+  draws), confirm an active MSA exists for the vendor, validate that the
+  requested scope is covered, check the requestor's approval threshold,
+  and document audit-ready evidence (MSA section reference + scope match
+  rationale). Flag any transaction with no MSA on file, expired MSA, or
+  scope mismatch. The output is a fully-documented validation packet —
+  not just a yes/no — so external auditors can reconstruct the decision.
+
+output:
+  - name: msa_validation_packet
+    type: structured_data
+    description: "Vendor MSA + scope citation + rationale for the non-PO transaction"
+  - name: routing_decision
+    type: routing_decision
+    description: "auto_approve | scope_review | reject_no_msa"
+  - name: audit_evidence_pack
+    type: document_pack
+    description: "Audit-ready PDF bundle with MSA pages + scope match notes"
+
+context:
+  business_rules:
+    - "Non-PO transaction requires an active vendor MSA"
+    - "Scope match must cite a specific MSA section"
+    - "Requestor must be inside DOA for the line"
+    - "Expired MSA = automatic reject"
+    - "Audit evidence pack must be generated even on auto-approve"
+
+actions:
+  - name: intake_non_po
+    action_id: oil_gas_midstream.intake_non_po
+    description: "Parse the non-PO request (form, email, or API call)"
+    required: true
+  - name: find_active_msa
+    action_id: oil_gas_midstream.find_active_msa
+    description: "Resolve vendor → active (non-expired) MSA"
+    required: true
+  - name: validate_scope_match
+    action_id: oil_gas_midstream.validate_scope_match
+    description: "Compare requested scope vs MSA scope categories; cite section"
+    required: true
+  - name: check_approval_threshold
+    action_id: oil_gas_midstream.check_approval_threshold
+    description: "Validate requestor DOA covers the amount"
+    required: true
+  - name: document_audit_evidence
+    action_id: oil_gas_midstream.document_audit_evidence
+    description: "Generate audit-ready PDF bundle with MSA pages + match notes"
+    required: true
+  - name: route_or_approve
+    action_id: oil_gas_midstream.route_or_approve
+    description: "Auto-approve clean txns; route to scope review otherwise"
+    required: true
+
+recipe: |
+  ## EPROD Non-PO MSA Validation Recipe
+
+  ### Step 1 · EXTRACT — intake_non_po
+  - Source: ServiceNow request, AP intake form, or email parse
+  - Capture: vendor, requestor, scope description, amount, asset_code
+
+  ### Step 2 · LOOKUP — find_active_msa
+  - Search vendor MSAs where effective_date <= today < expiration_date
+  - If none → reject_no_msa with explicit reason
+
+  ### Step 3 · VALIDATE — validate_scope_match
+  - Semantic match: requested scope vs MSA Schedule B
+  - Output: matched_section (e.g. "MSA-HAL-2024 §3.4 Wireline Services")
+  - If no match → scope_review
+
+  ### Step 4 · DECIDE — check_approval_threshold
+  - Compare amount vs requestor.doa_limit
+  - Out-of-DOA → escalation
+
+  ### Step 5 · DOCUMENT — document_audit_evidence
+  - Pull MSA pages cited in step 3
+  - Generate PDF: cover page + scope match notes + cited MSA excerpts
+  - Persist to s3://apex-eprod-audit/non-po-evidence/
+
+  ### Step 6 · ROUTE — route_or_approve
+  - All gates clean → auto_approve + audit pack archived
+  - Otherwise → scope_review queue with packet attached
+
+triggers:
+  - type: api
+    endpoint: /api/v1/eprod/non-po/validate
+    method: POST
+  - type: eventbridge
+    bus: apex-eprod-events
+    detail_type: "ServiceNow.NonPORequest"
+
+metadata:
+  created_by: apex-platform
+  tags: [eprod, oil_gas_midstream, msa_validation, audit]

@@ -1,0 +1,28 @@
+name: apex-workorder-bot
+description: AI agent for work order management with ERP read/write using Claude Opus 4.6
+version: 1.0.0
+
+runtime:
+  entrypoint: agent.py
+  handler: handler
+  python_version: "3.12"
+
+model:
+  provider: bedrock
+  model_id: us.anthropic.claude-opus-4-6-v1
+  region: us-east-1
+
+memory:
+  short_term: true
+  long_term: false
+
+observability:
+  enabled: true
+  log_level: INFO
+
+tags:
+  industry: aerospace_defense
+  category: operations
+  environment: production
+  compliance: ITAR
+  mode: read_write

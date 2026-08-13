@@ -1,0 +1,142 @@
+═══════════════════════════════════════════════════════════════════════════════
+VERIZON FAR EDGE · REAL-TIME KERNEL ERRATA + PATCH NOTES
+Document ID:    VZ-RT-KERNEL-ERRATA-v8
+Revision:       Rev 8 · January 2026
+Owner:          Cert Team · RT Kernel SME (D. Vargas)
+═══════════════════════════════════════════════════════════════════════════════
+
+This document tracks real-time kernel errata discovered against the firmware
+versions Verizon Far Edge runs on CaaS nodes. Every entry is reproduced from
+its source ticket (Wind River support, kernel.org bugzilla, or an internal
+discovery) and includes the workaround, the fix version, and the impact on
+the certification suite.
+
+───────────────────────────────────────────────────────────────────────────────
+ERR-RT-001 · CYCLICTEST P99 LATENCY REGRESSION ON CORE 4 (TYPE-B)
+───────────────────────────────────────────────────────────────────────────────
+
+Source:           Internal cert-team discovery 2025-09-18 (cycle CYCLE-20250918)
+Affected:         CaaS-Node-Type-B running Wind River 24.06 only
+Severity:         medium · certification-blocker if not waived
+Status:           Mitigated. Permanent fix scheduled for 25.01.
+
+Symptoms
+  cyclictest P99 latency on Core 4 measures 28-31 µs against a 30 µs
+  certification threshold. Cores 0, 8, and 12 are unaffected.
+
+Root Cause
+  Wind River 24.06 introduces a new tick broadcaster routine that briefly
+  raises preemption-disable latency on the core that owns the broadcast.
+  Core 4 is the broadcast owner on Type-B SKUs due to topology.
+
+Workaround
+  Pin the tick broadcaster to Core 0 by setting
+  isolcpus_force_broadcast=0 in the kernel command line. Validated to
+  bring P99 latency back to baseline (≤24 µs).
+
+Permanent Fix
+  Wind River 25.01 will eliminate the per-CPU broadcast routine entirely
+  and use a single cross-CPU IPI instead.
+
+ROBOT impact
+  rt_kernel_cyclictest.robot will report P99 28 µs as a WARN (within
+  tolerance) instead of FAIL. Override the WARN with the workaround above.
+
+───────────────────────────────────────────────────────────────────────────────
+ERR-RT-002 · SCHED_RT_RUNTIME_US DEFAULT REGRESSION
+───────────────────────────────────────────────────────────────────────────────
+
+Source:           KB-2026-0118 (cross-ref Wind River 24.12 Release Notes §3)
+Affected:         All CaaS-Node-Type-B with Wind River 24.06 and 24.12
+Severity:         high · production-blocker under sustained load
+Status:           Mitigation required. Permanent fix in 25.01.
+
+Symptoms
+  Sustained CU-UP P99 interface latency drifts from baseline 3.2 ms toward
+  6-8 ms over the first 30 minutes after boot, breaching the 5 ms
+  certification threshold during the warm-up window.
+
+Root Cause
+  kernel.sched_rt_runtime_us default of 950000 (95% of period) leaves
+  insufficient headroom for the CaaS-orchestrator pod scheduler under
+  cold-cache conditions on Type-B SKUs.
+
+Workaround (apply at boot)
+  Set kernel.sched_rt_runtime_us = 980000 in /etc/sysctl.d/99-rt-tune.conf
+  and apply with `sysctl -p`. Effective on next boot.
+
+  Ansible playbook reference:
+    apex-rt-tune.yml  (drops the sysctl file and reboots in maintenance window)
+
+Permanent Fix
+  Wind River 25.01 changes the default to 980000 in the base image.
+
+───────────────────────────────────────────────────────────────────────────────
+ERR-RT-003 · PREEMPT_RT PATCH MISSING IN MINIMAL BUILD
+───────────────────────────────────────────────────────────────────────────────
+
+Source:           Wind River support ticket WR-2025-44218
+Affected:         CaaS-Edge-Node-Type-C minimal builds 24.06 only
+Severity:         critical · safety-relevant for time-sensitive applications
+Status:           Patched in 24.06.2
+
+Symptoms
+  PREEMPT_RT patch not detected on Type-C nodes built with the minimal
+  rootfs profile. Cyclictest P99 latency degrades to non-RT levels (>200 µs).
+
+Root Cause
+  The minimal rootfs build script was missing the PREEMPT_RT_FULL kernel
+  config flag.
+
+Permanent Fix
+  Wind River 24.06.2 rebuilt rootfs from the correct kernel config.
+
+───────────────────────────────────────────────────────────────────────────────
+ERR-RT-004 · INTERRUPT-AFFINITY DRIFT AFTER BOOT
+───────────────────────────────────────────────────────────────────────────────
+
+Source:           kernel.org bug #2384921 (cross-ref VZ ticket VZ-RT-2024-0047)
+Affected:         All CaaS node types running Wind River 23.06 and 23.12
+Severity:         medium
+Status:           Mitigated. Workaround embedded in tuned profile.
+
+Symptoms
+  Interrupt affinity assignments drift from the configured housekeeping
+  CPU mask within the first 60 seconds after boot. Network interrupts
+  start landing on isolated RT cores.
+
+Workaround
+  Run `tuned-adm profile cpu-partitioning` after every boot. The 24.06
+  base image embeds this in /etc/rc.local.
+
+Permanent Fix
+  Wind River 23.12.4 hardens the irqbalance startup ordering.
+
+───────────────────────────────────────────────────────────────────────────────
+ERR-RT-005 · CGROUP V2 + RT-PRIORITY EXHAUSTION
+───────────────────────────────────────────────────────────────────────────────
+
+Source:           Wind River support ticket WR-2025-51109
+Affected:         CaaS-Node-Type-A and Type-B with > 200 RT containers
+Severity:         medium
+Status:           Open. Mitigation only.
+
+Symptoms
+  After ~200 RT-priority containers are scheduled, additional RT containers
+  fail with EAGAIN on sched_setscheduler().
+
+Root Cause
+  cgroup v2's RT-runtime quota is shared across the cgroup hierarchy and
+  exhausts under high RT-container counts.
+
+Workaround
+  Increase cpu.rt_runtime_us at the system slice level. Sample value:
+    echo 950000 > /sys/fs/cgroup/system.slice/cpu.rt_runtime_us
+
+Permanent Fix
+  Wind River 25.06 will partition the RT-runtime quota per-cgroup.
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF EXCERPT — full RT kernel errata is 19 pages, includes ERR-RT-006
+through ERR-RT-014 (additional minor errata not relevant for 24.12 cycles).
+═══════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,89 @@
+VENDOR CONTRACT · CORE BANKING SERVICES
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+NCUA Third-Party Risk Register Entry
+═══════════════════════════════════════════════════════════════
+
+Contract ID:           VND-FISERV-CORE-2024
+Vendor:                Fiserv Solutions LLC  (Brookfield, WI)
+Vendor Tier:           CRITICAL (Tier 1)
+Service Category:      Core Banking Platform (Cleartouch / DNA)
+Vendor Risk Score:     38 / 100 (LOW · long-relationship + strong SLAs)
+
+────────  CONTRACT TERMS  ────────
+Effective:             2024-07-01
+Initial Term:          2 years (2024-07-01 → 2026-07-01)
+Renewal Window:        2026-06-04 → 2026-06-30 (30-day notice)
+Auto-Renewal:          YES — 24 months unless 30-day notice provided
+                       ⚠ Notice deadline TODAY (Jun 4, 2026)
+Annual Value:          $2,100,000 / yr
+Total Contract Value:  $4,200,000 (initial) → $4,830,000 (proposed)
+Rate Escalator:        +3% / yr cap (per § 11.2)
+Termination for Cause: 30-day notice + cure period
+
+────────  SLA SUMMARY  ────────
+Uptime Guarantee:      99.95% (4 hr 22 min/mo max downtime)
+P1 Response:           1 hour
+P2 Response:           4 hours
+Performance Credits:   Up to 10% of monthly fee for breach
+Data Recovery (DR):    RTO 4 hr · RPO 1 hr (full DR test annual)
+
+────────  PERFORMANCE Q2 2026  ────────
+Uptime:                99.97% (target ✓)
+P1 Incidents:          0 (target ≤ 2/qtr ✓)
+P2 Incidents:          3 (target ≤ 8/qtr ✓)
+Average Ticket TTR:    2.4 hrs (target ≤ 4 hrs ✓)
+SLA Breaches YTD:      0
+Credits Owed:          $0
+
+────────  RATE DRIFT MONITORING ────────
+Contracted Rate:       +3.0% annual cap
+Q2 2026 Billed:        $185,400 / month (was $175,200 baseline)
+Drift:                 +5.8% vs baseline (+2.8 pts over cap)
+Estimated Exposure:    $58,200 / yr if uncontested
+Renewal Negotiation:   Open · CW FCU position: cap @ +2% or no renewal
+
+────────  POLICY OBLIGATIONS TRIGGERED  ────────
+1. Annual InfoSec Cert (per § 7.4):
+   ─ All 84 employees with CWFCU credentials must complete
+   ─ Current completion: 78 / 84 (93%)
+   ─ Hand-off → Policy & HR Agent for ack tracking
+
+2. Annual BSA Training Refresher (per § 9.1):
+   ─ Required for employees touching Fiserv member-data systems
+   ─ Current completion: 62 / 84 (74%) ← NCUA exam attention item
+   ─ 22 employees overdue · auto-reminder cycle active
+
+3. Vendor Data Residency Attestation (per § 14.3):
+   ─ Annual board attestation of data residency
+   ─ Board resolution BOARD-RES-2026-04 (in progress)
+   ─ Awaiting 2 of 7 board signatures
+
+────────  KEY RENEWAL CONSIDERATIONS  ────────
+If APPROVE today:
+  ─ Rate locked +2.4% (vs current escalator +3%)
+  ─ 2-yr term locked through 2028-07-01
+  ─ Negotiated SLA tightened (P1 → 30 min, was 1 hr)
+  ─ Estimated 2-yr savings vs auto-renewal: $116K
+
+If DELAY 30 days:
+  ─ Auto-renewal triggers at standard escalator +5.8%
+  ─ Lost negotiation leverage on rate cap
+  ─ Estimated 2-yr cost increase: $76K higher
+  ─ NCUA exam: potential vendor mgmt finding (no TPRM refresh)
+
+If REPLACE:
+  ─ Migration cost estimated $1.4M
+  ─ 6-9 month implementation timeline
+  ─ Member impact: temporary down during cutover
+  ─ NOT RECOMMENDED for this cycle
+
+────────  HAND-OFF NOTES  ────────
+→ Compliance Agent:    Data residency attestation indexed to BSA folder
+→ Loan Document Agent: No direct loan impact
+→ Policy & HR Agent:   BSA training + InfoSec acks tracked separately
+
+────────  NCUA EXAM FOLDER INDEX  ────────
+Folder Path:           ncua-exam-2026/third_party_risk/critical_vendors/
+Immutable Audit ID:    AUDIT-2024-07-01-12:00:00-VND-FISERV-CORE
+TPRM Refresh Due:      2026-06-30 · pending decision

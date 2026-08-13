@@ -1,0 +1,27 @@
+name: apex-eprod-vendor-bot
+description: EPROD non-PO transaction validation agent against active vendor MSAs at intake
+version: 1.0.0
+
+runtime:
+  entrypoint: agent.py
+  handler: handler
+  python_version: "3.12"
+
+model:
+  provider: bedrock
+  model_id: us.amazon.nova-pro-v1:0
+  region: us-east-1
+
+memory:
+  short_term: true
+  long_term: false
+
+observability:
+  enabled: true
+  log_level: INFO
+
+tags:
+  industry: oil_gas_midstream
+  customer: eprod
+  category: vendor_management
+  environment: production

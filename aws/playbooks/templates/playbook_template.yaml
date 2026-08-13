@@ -1,0 +1,102 @@
+# CBTS Apex AI Platform - Playbook Template
+# Use this template to create new playbooks
+
+name: my_playbook_name
+version: "1.0.0"
+description: "Brief description of what this playbook accomplishes"
+industry: industry_name
+category: category_name
+
+# =============================================================================
+# INTENT - What the agent should accomplish
+# =============================================================================
+intent: |
+  Describe in plain English what this playbook should accomplish.
+  Be specific about the business outcome.
+
+# =============================================================================
+# OUTPUT - Expected deliverables from the playbook
+# =============================================================================
+output:
+  - name: primary_output
+    type: structured_data  # or: validation_report, routing_decision, file_output
+    description: "Description of this output"
+    schema:
+      field1: string
+      field2: number
+
+# =============================================================================
+# CONTEXT - Business rules and domain knowledge
+# =============================================================================
+context:
+  business_rules:
+    - "Rule 1 that the agent must follow"
+    - "Rule 2 that the agent must follow"
+
+  thresholds:
+    key: value
+
+  sla_requirements:
+    processing_time: "5 minutes"
+
+# =============================================================================
+# DATA SOURCES - Where to retrieve information
+# =============================================================================
+data_sources:
+  - name: source_name
+    type: s3_document  # or: dynamodb, external_api, config
+    description: "What this data source provides"
+
+# =============================================================================
+# ACTIONS - Available tools for the agent
+# =============================================================================
+actions:
+  - name: action_name
+    action_id: namespace.action_name
+    description: "What this action does"
+    required: true  # or false
+
+# =============================================================================
+# RECIPE - Natural language instructions for the agent
+# =============================================================================
+recipe: |
+  ## Workflow Name
+
+  ### Step 1: First Step
+  Describe what the agent should do first:
+  1. Specific instruction
+  2. Another instruction
+
+  ### Step 2: Second Step
+  Continue with more instructions.
+
+  ### Exception Handling
+  - Condition: How to handle
+
+# =============================================================================
+# TRIGGERS - How this playbook is activated
+# =============================================================================
+triggers:
+  - type: s3_event  # or: api, schedule, form_submission, workflow
+    description: "When this trigger fires"
+
+# =============================================================================
+# WORKER CONFIGURATION
+# =============================================================================
+worker:
+  queue: queue-name
+  concurrency: 10
+  timeout_seconds: 300
+  retry_policy:
+    max_attempts: 3
+    backoff_multiplier: 2
+
+# =============================================================================
+# METADATA
+# =============================================================================
+metadata:
+  created_by: your-name
+  created_at: "YYYY-MM-DD"
+  tags:
+    - tag1
+    - tag2

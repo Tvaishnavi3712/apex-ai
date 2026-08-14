@@ -1,0 +1,86 @@
+{
+  "vendor": {
+    "name": "Elite Consulting Group",
+    "address": {
+      "street": "789 Industrial Way",
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60601"
+    },
+    "tax_id": "44-1296466",
+    "phone": "(640) 654-8823",
+    "email": "billing@eliteconsu.com"
+  },
+  "invoice": {
+    "number": "202666282",
+    "date": "2026-02-05",
+    "due_date": "2026-03-07",
+    "po_number": "PO-189244",
+    "terms": "NET30"
+  },
+  "bill_to": {
+    "company_name": "Fabrikam Corp",
+    "address": {
+      "street": "123 Business Park Dr",
+      "city": "Austin",
+      "state": "TX",
+      "zip": "78701"
+    }
+  },
+  "line_items": [
+    {
+      "description": "Professional Software License - Annual",
+      "quantity": 18,
+      "unit_price": 1887.61,
+      "amount": 33976.98,
+      "item_code": "XSL-4466"
+    },
+    {
+      "description": "Training Services - Per Person",
+      "quantity": 2,
+      "unit_price": 388.49,
+      "amount": 776.98,
+      "item_code": "ZPZ-8191"
+    },
+    {
+      "description": "Office Supplies - Bulk Order",
+      "quantity": 13,
+      "unit_price": 42.77,
+      "amount": 556.01,
+      "item_code": "XMF-7296"
+    },
+    {
+      "description": "Training Services - Per Person",
+      "quantity": 14,
+      "unit_price": 321.89,
+      "amount": 4506.46,
+      "item_code": "QIN-8773"
+    },
+    {
+      "description": "Cloud Hosting Services - Monthly",
+      "quantity": 3,
+      "unit_price": 796.49,
+      "amount": 2389.47,
+      "item_code": "WTC-7146"
+    },
+    {
+      "description": "Maintenance Support - Annual",
+      "quantity": 2,
+      "unit_price": 5166.83,
+      "amount": 10333.66,
+      "item_code": "BLD-2427"
+    }
+  ],
+  "totals": {
+    "subtotal": 52539.560000000005,
+    "tax_rate": 0.1,
+    "tax_amount": 5253.96,
+    "shipping": 0,
+    "total": 57793.52
+  },
+  "payment": {
+    "bank_name": "First National Bank",
+    "account_number": "****1234",
+    "routing_number": "021000089"
+  }
+}

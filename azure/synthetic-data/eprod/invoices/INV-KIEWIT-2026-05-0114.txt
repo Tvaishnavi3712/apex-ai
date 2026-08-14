@@ -1,0 +1,56 @@
+================================================================================
+                                KIEWIT ENERGY GROUP INC.
+                                  3555 Farnam Street
+                                    Omaha, NE 68131
+                       Tax ID: 47-0210877   Phone: (402) 346-8535
+                            Project Office: Tulsa, OK 74119
+================================================================================
+
+PROGRESS INVOICE - PARTIAL PAYMENT
+
+Invoice Number:    INV-KIEWIT-2026-05-0114
+Application No:    No. 7 of estimated 11
+Period Ending:     05/15/2026
+Project:           Seminole Lateral - 12" Construction, MP 22.0 - MP 41.8
+Project No:        EPD-LAT-2025-019
+Owner PO:          PO-2026-EPC-4521
+MSA Reference:     MSA-KIEWIT-2024-07
+Terms:             Net 30 (per MSA Sec 8.1)
+Due Date:          06/22/2026
+
+Bill To:
+    Enterprise Products Operating LLC
+    c/o Project Controls - Pipeline Projects
+    1100 Louisiana Street
+    Houston, TX 77002
+
+--------------------------------------------------------------------------------
+LN  WORK DESCRIPTION                              QTY     UOM       AMOUNT
+--------------------------------------------------------------------------------
+ 1  Clearing, Grading & ROW Restoration -         19.8    miles    495,000.00
+    period work, MP 22.0 - 41.8 corridor              @ 25,000/mi
+ 2  Pipe Stringing, Bending, Welding & X-ray      19.8    miles    910,800.00
+    (12" Gr X-65, .250 wall), AUT 100%                @ 46,000/mi
+ 3  Lowering-In, Tie-In Welds (14) & Backfill,    19.8    miles    324,500.00
+    including padding and topsoil replacement         @ 16,388/mi
+ 4  Two HDD crossings (FM-1488, BNSF tracks),      2     each      116,900.00
+    bore lengths 740 ft and 1,180 ft                  @ 58,450
+--------------------------------------------------------------------------------
+                                Subtotal Period Work:    1,847,200.00
+                                Less Retainage 10%:       (184,720.00)
+                                NET DUE THIS APPLICATION: 1,662,480.00
+
+                                Contract Sum to Date:    18,420,000.00
+                                Work Completed to Date:  14,820,500.00 (80.5%)
+                                Less Prior Payments:    (12,973,300.00)
+                                Less Current Retainage:  (1,482,050.00)
+                                BALANCE DUE THIS INVOICE: 1,847,200.00 *
+
+* Subject to AIA G702/G703 cert. Retainage release at substantial completion.
+================================================================================
+
+Submitted by: J. McAllister, Project Manager - Kiewit Energy Group
+Approved by Owner Engineer: ____________  Date: __________
+
+Remit: Kiewit Energy Group - Lockbox 3540, P.O. Box 3540, Omaha NE 68103
+================================================================================

@@ -1,0 +1,78 @@
+name: lease_extraction
+version: "1.0.0"
+description: "Agentic Enterprise UC-3 — Document AI pipeline that extracts tenant, expiration date, and liability clause from commercial lease PDFs, ingests them into a structured DuckDB table, and answers SQL queries against the table."
+industry: commercial_real_estate
+category: document_ai
+
+intent: |
+  When the user uploads a lease (or asks the agent to "extract this lease"):
+    1. lease_extract — pull tenant_name, expiration_date, liability_clause_text
+       with a confidence score per field.
+    2. lease_index   — insert the structured row into the DuckDB `leases`
+       table (creates the table on first run).
+    3. suggest a starter SQL query the user can run against the table.
+
+  When the user pastes a SQL query or says "run sql":
+    • duckdb_query — execute the query (SELECT-only) and render the result
+      as a Markdown table.
+
+  Example flows the playbook resolves:
+    Upload → "What's in this lease?"  → extraction summary + ingest receipt
+    "How many of my leases expire in 2026?"
+    "SELECT tenant_name, expiration_date FROM leases WHERE
+       liability_clause LIKE '%indemnify%' AND
+       EXTRACT(YEAR FROM expiration_date) = 2026"
+
+output:
+  - name: extracted_entities
+    type: structured_data
+    description: "{ tenant_name, expiration_date, liability_clause_text, confidence{...} }"
+  - name: ingested_lease_id
+    type: identifier
+    description: "Primary key of the row inserted into leases."
+  - name: query_result
+    type: tabular_data
+    description: "{ columns[], rows[] } when intent=query"
+
+context:
+  business_rules:
+    - "Always show per-field confidence — the demo's wow factor is making fuzzy extraction queryable, and reviewers don't trust black-box extraction."
+    - "Confidence < 0.7 on any required field ⇒ flag for human review, do not auto-ingest."
+    - "Only SELECT queries are permitted against the leases table; reject any DML to keep the demo deterministic."
+    - "When the user asks a question that maps to a SQL query (e.g., 'leases expiring in 2026'), generate the SQL, run it, and show both the SQL and the result."
+    - "Pre-populate the suggested query: SELECT tenant_name, expiration_date FROM leases WHERE liability_clause LIKE '%indemnify%' AND EXTRACT(YEAR FROM expiration_date) = 2026"
+
+actions:
+  - name: lease_extract
+    action_id: commercial_real_estate.lease_extract
+    description: "Run regex+VLM extraction over the lease text. Returns tenant, expiration, liability with per-field confidence."
+    required: true
+  - name: lease_index
+    action_id: commercial_real_estate.lease_index
+    description: "Insert the extracted row into the DuckDB leases table. Creates the table on first call. Idempotent on (tenant_name, expiration_date)."
+    required: true
+  - name: duckdb_query
+    action_id: commercial_real_estate.duckdb_query
+    description: "Execute a SELECT against the leases table. Returns columns + rows."
+    required: false
+
+recipe: |
+  Extraction path (default):
+    1. Call lease_extract.
+    2. If any required-field confidence < 0.7, return the extraction with a
+       'low confidence — review required' flag and STOP.
+    3. Call lease_index. Surface the new lease_id and total row count.
+    4. End with a suggested SQL query and offer to run it.
+
+  Query path:
+    1. If the prompt is a SELECT or contains 'from leases' or 'run sql',
+       extract the SQL (from a fenced ```sql block if present) and call
+       duckdb_query.
+    2. Render the result as a Markdown table.
+    3. If the query errored, surface the error verbatim — never invent rows.
+
+triggers:
+  - type: file_upload
+    surface: apex_lens
+  - type: chat
+    surface: agent_hub

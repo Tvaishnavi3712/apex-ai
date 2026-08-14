@@ -1,0 +1,28 @@
+{
+  "blueprint_id": "bp-eprod-quote",
+  "name": "EPROD Engineering Quote",
+  "description": "Extract engineering quotes from EPC vendors (Fluor, Bechtel, Emerson) with scope, milestones, unit pricing, and exclusions.",
+  "industry": "oil_gas_midstream",
+  "document_type": "engineering_quote",
+  "version": "1.0",
+  "documentSchema": {
+    "documentClass": "EPROD Engineering Quote",
+    "description": "Engineering quote schema covering vendor, scope, milestone pricing, total estimate, validity, terms, and exclusions.",
+    "extractionInstructions": "Each milestone must include description, duration_days, and price. Optional services must be flagged separately from base scope.",
+    "fields": {
+      "quote_number":       { "type": "string", "description": "Vendor quote / proposal number", "required": true },
+      "vendor_name":        { "type": "string", "description": "EPC vendor name", "required": true },
+      "project_name":       { "type": "string", "description": "EPROD project name or code", "required": true },
+      "scope_description":  { "type": "string", "description": "Free-text scope summary", "required": true },
+      "milestones":         { "type": "array",  "description": "Milestone entries (name, duration_days, price)", "required": true },
+      "unit_pricing":       { "type": "array",  "description": "Unit pricing rows for time + materials portions", "required": true },
+      "total_estimate":     { "type": "number", "description": "Quoted total estimate", "required": true },
+      "validity_until":     { "type": "date",   "description": "Quote validity expiration", "required": true },
+      "terms":              { "type": "string", "description": "Payment + execution terms", "required": true },
+      "optional_services":  { "type": "array",  "description": "Optional services priced separately", "required": false },
+      "references":         { "type": "array",  "description": "References / past-performance citations", "required": false },
+      "rfp_reference":      { "type": "string", "description": "Linked RFP / RFQ number if any", "required": false },
+      "exclusions":         { "type": "array",  "description": "Explicit scope exclusions", "required": true }
+    }
+  }
+}

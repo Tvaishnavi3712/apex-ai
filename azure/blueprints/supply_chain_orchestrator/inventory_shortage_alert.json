@@ -1,0 +1,73 @@
+{
+  "blueprintName": "apex-sco-inventory-shortage-alert-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Agentic Enterprise UC-1 — extracts the structured shortage trigger (SKU, demand quantity, campaign, deadline, requester) from the inbound shortage-alert email or system event that fires the Supply Chain Orchestrator playbook.",
+  "industry": "supply_chain_orchestrator",
+  "documentType": "inventory_shortage_alert",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "alert_id": {
+        "type": "string",
+        "description": "Source-system identifier (e.g. 'ALRT-2026-0044') if present in the subject or body."
+      },
+      "sku": {
+        "type": "string",
+        "description": "Stock-keeping unit identifier the shortage is for, e.g. 'SKU-892'."
+      },
+      "product_name": {
+        "type": "string",
+        "description": "Friendly product name the SKU maps to (e.g. 'Wireless Earbuds Pro')."
+      },
+      "demand_quantity": {
+        "type": "number",
+        "description": "Number of units required to fulfill the campaign or order."
+      },
+      "demand_unit": {
+        "type": "string",
+        "enum": ["units", "cases", "pallets", "kg", "lb"],
+        "description": "Unit of measure for demand_quantity."
+      },
+      "campaign": {
+        "type": "string",
+        "description": "Campaign or program the shortage relates to (e.g. 'Dallas Spring Promotion 2026')."
+      },
+      "campaign_start_date": {
+        "type": "string",
+        "format": "date",
+        "description": "Date the goods must be on shelf or in DC by, in ISO 8601."
+      },
+      "fulfillment_window_days": {
+        "type": "number",
+        "description": "Days until campaign_start_date — directly drives supplier ranking by lead time."
+      },
+      "priority": {
+        "type": "string",
+        "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+        "description": "Priority tag from the source system or inferred from urgency language."
+      },
+      "requester_email": {
+        "type": "string",
+        "format": "email",
+        "description": "Person who reported the shortage — used as the human approver target on the drafted PO."
+      },
+      "warehouse_hint": {
+        "type": "string",
+        "description": "Optional warehouse code the requester wants the goods routed to (e.g. 'WH-DAL-01')."
+      },
+      "narrative": {
+        "type": "string",
+        "description": "Free-text body of the alert preserved verbatim for audit + downstream context."
+      }
+    },
+    "required": ["sku", "demand_quantity", "campaign_start_date", "requester_email"]
+  },
+  "extractionRules": {
+    "preserveVerbatimText": true,
+    "verbatimFields": ["narrative"],
+    "dateFormat": "ISO8601",
+    "confidenceThreshold": 0.7,
+    "lowConfidenceAction": "flag_for_human_review"
+  },
+  "extractionInstructions": "This is a supply-chain shortage alert. Extract the SKU, demand quantity, campaign name, campaign start date, and requester. The alert may arrive as an email, an internal system notification, or an EDI 855 reject — the same fields apply. Compute fulfillment_window_days from (campaign_start_date - today) when present."
+}

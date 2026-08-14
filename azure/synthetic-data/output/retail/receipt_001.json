@@ -1,0 +1,85 @@
+{
+  "_metadata": {
+    "blueprint": "apex-retail-receipt-v1",
+    "document_type": "receipt",
+    "extraction_date": "2024-01-20T16:30:00Z",
+    "confidence_score": 0.95,
+    "source_file": "receipt_scan.jpg"
+  },
+  "receipt_number": "RCP-2024-00789456",
+  "transaction_id": "TXN-456789012",
+  "store_info": {
+    "name": "Target",
+    "store_number": "1234",
+    "address": "1500 State Street, Chicago, IL 60610",
+    "phone": "312-555-8000"
+  },
+  "transaction_date": "2024-01-20",
+  "transaction_time": "14:32:45",
+  "register": "REG-05",
+  "cashier": "TEAM MEMBER",
+  "items": [
+    {
+      "sku": "012345678901",
+      "description": "WOMEN'S CREW NECK TEE",
+      "department": "APPAREL",
+      "quantity": 2,
+      "unit_price": 12.99,
+      "total_price": 25.98,
+      "discount": null
+    },
+    {
+      "sku": "012345678902",
+      "description": "ORGANIC GRANOLA 12OZ",
+      "department": "GROCERY",
+      "quantity": 1,
+      "unit_price": 5.49,
+      "total_price": 5.49,
+      "discount": null
+    },
+    {
+      "sku": "012345678903",
+      "description": "WIRELESS EARBUDS",
+      "department": "ELECTRONICS",
+      "quantity": 1,
+      "unit_price": 29.99,
+      "total_price": 29.99,
+      "discount": {
+        "type": "CIRCLE OFFER",
+        "amount": 5.00
+      }
+    },
+    {
+      "sku": "012345678904",
+      "description": "LAUNDRY DETERGENT 100OZ",
+      "department": "HOUSEHOLD",
+      "quantity": 1,
+      "unit_price": 14.99,
+      "total_price": 14.99,
+      "discount": null
+    }
+  ],
+  "totals": {
+    "subtotal": 76.45,
+    "discounts": 5.00,
+    "tax_rate": 10.25,
+    "tax_amount": 7.32,
+    "total": 78.77
+  },
+  "payment": {
+    "method": "CREDIT CARD",
+    "card_type": "VISA",
+    "last_four": "4521",
+    "auth_code": "123456",
+    "amount_tendered": 78.77,
+    "change": 0.00
+  },
+  "rewards": {
+    "program": "Target Circle",
+    "member_id": "XXX-XXX-1234",
+    "points_earned": 78,
+    "points_balance": 1542
+  },
+  "return_policy": "Most items can be returned within 90 days. Electronics within 30 days.",
+  "barcode": "RCP20240078945612345"
+}

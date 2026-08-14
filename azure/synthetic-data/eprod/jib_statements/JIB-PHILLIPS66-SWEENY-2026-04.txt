@@ -1,0 +1,96 @@
+================================================================================
+                          PHILLIPS 66 COMPANY
+                          (Operator - Sweeny Fractionator JV)
+                          2331 CityWest Blvd, Houston TX 77042
+                          Tax ID: 43-1054019
+================================================================================
+
+                    JOINT INTEREST BILLING STATEMENT (JIB)
+
+JIB Statement No:        JIB-PHILLIPS66-SWEENY-2026-04
+Billing Month:           April 2026
+Issue Date:              May 15, 2026
+Property:                Sweeny Fractionator Joint Venture
+Property Code:           SWNY-FRAC-JV
+Operating Agreement:     JOA dated October 1, 2014, as amended
+Non-Operator Billed:     Enterprise Products Operating LLC
+Non-Operator Code:       NON-OP-EPD-014
+Payment Terms:           Net 15 days from receipt (per JOA Section 7.4)
+Due Date:                May 30, 2026
+
+Working Interest Schedule:
+    Operator (Phillips 66)                            50.0000%
+    Non-Operator (EPROD)                              50.0000%
+
+References - Authorizations For Expenditure (AFE):
+    AFE-SWEENY-2024-12   Frac VIII Construction (capital)       Active
+    AFE-SWEENY-2025-06   Common-stream debottleneck (capital)   Active
+    AFE-SWEENY-OPS-2026  2026 Operating Budget (rolling)        Active
+
+================================================================================
+SECTION A - CAPITAL EXPENDITURES (BILLED 50% TO NON-OPERATOR)
+================================================================================
+
+Line  AFE                  Description                       Gross     EPROD 50%
+----  -------------------  --------------------------------- ---------- ---------
+ 1    AFE-SWEENY-2024-12   Mechanical equipment - tower      482,400.00 241,200.00
+                           internals, Frac VIII deethanizer
+ 2    AFE-SWEENY-2024-12   Piping & pipe supports (April     318,750.00 159,375.00
+                           progress, contractor: Zachry)
+ 3    AFE-SWEENY-2024-12   Instrumentation & controls -      164,200.00  82,100.00
+                           DCS configuration & FATs
+ 4    AFE-SWEENY-2025-06   24" inbound header replacement,   612,500.00 306,250.00
+                           welding & X-ray (Kiewit)
+ 5    AFE-SWEENY-2025-06   Cooling tower expansion cell,     288,000.00 144,000.00
+                           structural & mech (S&B)
+ 6    AFE-SWEENY-2025-06   E&I tie-ins for new cell           96,400.00  48,200.00
+
+                                  Section A Subtotal:      1,962,250.00 981,125.00
+
+================================================================================
+SECTION B - OPERATING EXPENDITURES (BILLED 50% TO NON-OPERATOR)
+================================================================================
+
+Line  Account              Description                       Gross     EPROD 50%
+----  -------------------  --------------------------------- ---------- ---------
+ 7    OP-7100              Operations labor (24 FTE-mo)       428,500.00 214,250.00
+ 8    OP-7200              Maintenance labor & contract M&I   216,300.00 108,150.00
+ 9    OP-7310              Power purchased (electricity,      485,200.00 242,600.00
+                           19,408 MWh @ blended $25/MWh)
+10    OP-7320              Natural gas fuel (12,400 MMBtu)     38,440.00  19,220.00
+11    OP-7400              Chemicals - corrosion inhibitor,    72,800.00  36,400.00
+                           amine make-up, glycol
+12    OP-7500              Utilities - water, wastewater,      41,200.00  20,600.00
+                           steam allocation
+13    OP-7600              Materials & supplies (stockroom)    58,900.00  29,450.00
+14    OP-7700              Insurance allocation (Q2 portion)   84,000.00  42,000.00
+15    OP-7900              Operator overhead (per JOA          112,400.00  56,200.00
+                           Schedule A, COPAS 2005)
+
+                                  Section B Subtotal:      1,537,740.00 768,870.00
+
+================================================================================
+SECTION C - SUMMARY & NET DUE
+================================================================================
+
+    Capital Expenditures (Section A) - EPROD share         $   981,125.00
+    Operating Expenditures (Section B) - EPROD share       $   768,870.00
+                                                           ----------------
+    Total Current Period (April 2026)                      $ 1,749,995.00
+
+    Plus: Prior period adjustments (Mar 2026 reclass)      $    12,840.00
+    Less: Audit credit (2025 COPAS exception items)        $   (28,500.00)
+                                                           ----------------
+    NET DUE FROM EPROD                                     $ 1,734,335.00
+
+Remit to:
+    Phillips 66 Company - Joint Interest Billing
+    P.O. Box 730587, Dallas TX 75373-0587
+    Reference: SWNY-FRAC-JV / JIB 2026-04
+
+================================================================================
+Audit Rights:    Per JOA Section 9.3, Non-Operator retains 24-month audit
+                 window from receipt of this statement.
+Detail Backup:   Available via P66 Joint Interest Portal, JIB code 2026-04.
+Questions:       jib.midstream@p66.com  |  (713) 235-1118
+================================================================================

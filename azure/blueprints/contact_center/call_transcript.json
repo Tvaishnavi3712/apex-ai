@@ -1,0 +1,150 @@
+{
+  "blueprintName": "apex-call-transcript-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from contact center call transcripts",
+  "industry": "contact_center",
+  "documentType": "call_transcript",
+  "documentSchema": {
+    "class": "ApexCallTranscript",
+    "description": "Call transcript extraction for quality and analytics",
+    "definitions": {
+      "UTTERANCE": {
+        "properties": {
+          "speaker": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "timestamp": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "text": {
+            "type": "string",
+            "inferenceType": "explicit"
+          },
+          "sentiment": {
+            "type": "string",
+            "inferenceType": "inferred"
+          }
+        }
+      }
+    },
+    "properties": {
+      "call_id": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "call_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "call_time": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "call_duration_seconds": {
+        "type": "number",
+        "inferenceType": "explicit"
+      },
+      "agent_id": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "agent_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "customer_phone": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "customer_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "customer_account": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "queue_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "call_type": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Inbound, Outbound, Transfer"
+      },
+      "call_reason": {
+        "type": "string",
+        "inferenceType": "inferred"
+      },
+      "call_category": {
+        "type": "string",
+        "inferenceType": "inferred"
+      },
+      "transcript": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/UTTERANCE"
+        }
+      },
+      "customer_sentiment": {
+        "type": "string",
+        "inferenceType": "inferred"
+      },
+      "resolution_status": {
+        "type": "string",
+        "inferenceType": "inferred"
+      },
+      "first_call_resolution": {
+        "type": "boolean",
+        "inferenceType": "inferred"
+      },
+      "escalation_required": {
+        "type": "boolean",
+        "inferenceType": "inferred"
+      },
+      "products_mentioned": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "competitor_mentions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "compliance_flags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "action_items": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "callback_required": {
+        "type": "boolean",
+        "inferenceType": "inferred"
+      },
+      "satisfaction_score": {
+        "type": "number",
+        "inferenceType": "explicit"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.8
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeRawText": true
+  }
+}

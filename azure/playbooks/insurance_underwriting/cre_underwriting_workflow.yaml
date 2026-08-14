@@ -1,0 +1,498 @@
+# CBTS Apex AI Platform - Commercial Real Estate Underwriting Playbook
+name: cre_underwriting_workflow
+version: "2.0.0"
+description: "End-to-end CRE insurance underwriting with agentic processing, risk assessment, and approval routing"
+industry: insurance_underwriting
+category: commercial_real_estate
+
+# =====================================================
+# INTENT - What this playbook accomplishes
+# =====================================================
+intent: |
+  Process Commercial Real Estate insurance submissions through an automated
+  agentic workflow that extracts property data, validates information,
+  analyzes risk factors, calculates premiums, reviews loss history, and
+  makes underwriting decisions with appropriate routing for human approval
+  based on authority limits and risk thresholds.
+
+# =====================================================
+# PROCESSING STAGES - Agentic Workflow Steps
+# =====================================================
+processing_stages:
+  - stage: pending
+    description: "Submission received, awaiting processing"
+    duration_seconds: 0
+
+  - stage: queued
+    description: "Work item queued for agent processing"
+    duration_seconds: 1
+    agent: CREUnderwriteBot
+
+  - stage: extracting
+    description: "Extracting data from submission documents using BDA blueprint"
+    duration_seconds: 3
+    actions:
+      - document_extract
+    outputs:
+      - property_name
+      - property_type
+      - location
+      - total_insured_value
+      - construction_type
+      - year_built
+      - square_footage
+      - occupancy_rate
+      - submission_id
+
+  - stage: validating
+    description: "Validating extracted data against schema and business rules"
+    duration_seconds: 2
+    validations:
+      - required_fields_present
+      - tiv_within_range
+      - valid_property_type
+      - valid_construction_class
+    outputs:
+      - validation_status
+      - validation_errors
+      - fields_validated_count
+
+  - stage: analyzing_risk
+    description: "Analyzing risk factors and calculating risk score"
+    duration_seconds: 3
+    actions:
+      - risk_score
+    factors:
+      - location_risk (weight: 25%)
+      - property_characteristics (weight: 20%)
+      - protection_class (weight: 15%)
+      - loss_history (weight: 20%)
+      - financial_stability (weight: 10%)
+      - occupancy_operations (weight: 10%)
+    outputs:
+      - risk_score (0-100)
+      - risk_tier (Acceptable/Moderate/High)
+      - risk_factors_detail
+
+  - stage: calculating_premium
+    description: "Calculating premium using rate tables and risk adjustments"
+    duration_seconds: 2
+    actions:
+      - premium_calculate
+    calculations:
+      - base_rate_lookup
+      - apply_credits
+      - apply_debits
+      - final_premium
+    outputs:
+      - base_premium
+      - final_premium
+      - rate_per_100_tiv
+      - credits_applied
+      - debits_applied
+
+  - stage: checking_loss_history
+    description: "Retrieving and analyzing loss history from carrier records"
+    duration_seconds: 2
+    actions:
+      - loss_history
+    outputs:
+      - total_claims
+      - total_paid
+      - open_claims
+      - loss_ratio
+      - claims_detail
+
+  - stage: making_decision
+    description: "Applying underwriting rules to make recommendation"
+    duration_seconds: 3
+    actions:
+      - auto_decision
+    decision_types:
+      - APPROVE: "Auto-approve within authority limits"
+      - APPROVE_WITH_CONDITIONS: "Approve with specific terms/conditions"
+      - REFER_SENIOR_UW: "Refer to Senior Underwriter"
+      - REFER_MANAGER: "Refer to Underwriting Manager"
+      - DECLINE: "Decline based on risk criteria"
+    outputs:
+      - decision
+      - decision_text
+      - conditions
+      - confidence_score
+      - reasons
+
+  - stage: requires_approval
+    description: "Human approval required based on guardrails"
+    human_in_loop: true
+    outputs:
+      - recommended_approver
+      - approval_reason
+      - referral_package
+
+  - stage: approved
+    description: "Submission approved by human or auto-approved"
+    outputs:
+      - approved_by
+      - approved_at
+      - approval_comments
+
+  - stage: completed
+    description: "Processing complete, ready for policy issuance"
+    outputs:
+      - final_decision
+      - final_premium
+      - policy_terms
+      - effective_date
+
+# =====================================================
+# GUARDRAILS - Rules for Human Approval Routing
+# =====================================================
+guardrails:
+  description: "Rules determining when human approval is required"
+
+  # Authority Limits by Role
+  authority_limits:
+    junior_underwriter:
+      max_tiv: 10000000  # $10M
+      min_risk_score: 75
+      can_decline: false
+
+    senior_underwriter:
+      max_tiv: 50000000  # $50M
+      min_risk_score: 65
+      can_decline: true
+      max_decline_tiv: 25000000
+
+    underwriting_manager:
+      max_tiv: 250000000  # $250M
+      min_risk_score: 50
+      can_decline: true
+
+    underwriting_director:
+      max_tiv: 1000000000  # $1B
+      min_risk_score: 0
+      can_decline: true
+
+  # Automatic Referral Triggers
+  referral_triggers:
+    - trigger: tiv_exceeds_authority
+      description: "TIV exceeds underwriter's authority limit"
+      route_to: "next_authority_level"
+
+    - trigger: risk_score_below_threshold
+      description: "Risk score below minimum for auto-approval"
+      condition: "risk_score < min_risk_score"
+      route_to: "next_authority_level"
+
+    - trigger: open_claims_present
+      description: "Active open claims on the account"
+      condition: "open_claims > 0"
+      route_to: "senior_underwriter"
+
+    - trigger: loss_ratio_high
+      description: "Loss ratio exceeds acceptable threshold"
+      condition: "loss_ratio > 0.40"
+      route_to: "senior_underwriter"
+
+    - trigger: cat_exposure_high
+      description: "High catastrophe exposure (hurricane, earthquake, flood)"
+      conditions:
+        - "hurricane_zone IN ['CAT3', 'CAT4', 'CAT5']"
+        - "flood_zone IN ['A', 'AE', 'V', 'VE']"
+        - "earthquake_zone >= 4"
+      route_to: "underwriting_manager"
+
+    - trigger: hazardous_operations
+      description: "Specialized hazards requiring technical review"
+      conditions:
+        - "ammonia_refrigeration = true"
+        - "chemical_storage = true"
+        - "manufacturing_processes = true"
+      route_to: "technical_underwriter"
+
+    - trigger: new_venture
+      description: "New business with no operating history"
+      condition: "years_in_business < 3"
+      route_to: "senior_underwriter"
+
+    - trigger: prior_cancellation
+      description: "Prior policy cancellation or non-renewal"
+      condition: "prior_cancellation = true"
+      route_to: "senior_underwriter"
+
+  # Auto-Approve Criteria (no human review needed)
+  auto_approve_criteria:
+    all_conditions_must_be_true:
+      - tiv_max: 25000000  # $25M
+      - risk_score_min: 75
+      - occupancy_rate_min: 85
+      - claims_5yr_max: 1
+      - loss_ratio_max: 0.25
+      - no_open_claims: true
+      - no_cat_zone_high: true
+      - no_hazardous_operations: true
+      - no_prior_cancellation: true
+      - construction_class_acceptable: ["1", "2", "3", "4", "5", "6"]
+      - roof_age_max: 15
+
+  # Automatic Decline Criteria
+  auto_decline_criteria:
+    any_condition_triggers_decline:
+      - risk_score_below: 35
+      - occupancy_rate_below: 50
+      - flood_zone_prohibited: ["V", "VE"]
+      - roof_condition: "Failed"
+      - building_code_violations: true
+      - bankruptcy_within_years: 2
+
+# =====================================================
+# ACTIONS - Lambda Functions Called
+# =====================================================
+actions:
+  - name: document_extract
+    action_id: cre.document_extract
+    description: "Extract property and submission data from documents"
+    blueprint: cre_submission_blueprint
+    required: true
+
+  - name: risk_score
+    action_id: cre.risk_score
+    description: "Calculate risk score based on property factors"
+    required: true
+
+  - name: premium_calculate
+    action_id: cre.premium_calculate
+    description: "Calculate premium using rates and adjustments"
+    required: true
+
+  - name: loss_history
+    action_id: cre.loss_history
+    description: "Retrieve loss history from carrier systems"
+    required: true
+
+  - name: auto_decision
+    action_id: cre.auto_decision
+    description: "Apply underwriting rules to make decision"
+    required: true
+
+  - name: cat_model
+    action_id: cre.cat_model
+    description: "Run catastrophe modeling for CAT-exposed properties"
+    required: false
+    trigger_condition: "cat_zone_present = true"
+
+  - name: generate_referral
+    action_id: cre.generate_referral
+    description: "Generate referral package for human review"
+    required: false
+    trigger_condition: "requires_approval = true"
+
+# =====================================================
+# RECIPE - Detailed Processing Instructions
+# =====================================================
+recipe: |
+  ## CRE Underwriting Agentic Workflow
+
+  ### Stage 1: Queue & Initialize
+  1. Receive submission work item
+  2. Validate work item has required attachments
+  3. Assign to CREUnderwriteBot agent
+  4. Log processing start timestamp
+
+  ### Stage 2: Document Extraction
+  1. Load CRE submission documents from S3
+  2. Apply `cre_submission_blueprint` for BDA extraction
+  3. Extract all property fields:
+     - Property identification (name, address, type)
+     - Construction details (class, year built, sq ft)
+     - Valuation (TIV, replacement cost)
+     - Operations (occupancy, tenant info)
+  4. Validate extraction confidence > 90%
+  5. Flag low-confidence fields for review
+
+  ### Stage 3: Data Validation
+  1. Check all required fields present
+  2. Validate TIV is within acceptable range ($1M - $1B)
+  3. Verify property type is insurable
+  4. Check construction class is valid (ISO 1-6)
+  5. Validate address and geocode location
+  6. Return validation status with any errors
+
+  ### Stage 4: Risk Analysis
+  1. Call `risk_score` action with extracted data
+  2. Evaluate 6 risk factors:
+     - Location Risk (25%): Crime, CAT exposure, fire response
+     - Property Characteristics (20%): Age, construction, condition
+     - Protection Class (15%): Sprinklers, alarms, security
+     - Loss History (20%): Claims frequency, severity
+     - Financial Stability (10%): Occupancy, credit
+     - Operations (10%): Tenant mix, hazards
+  3. Calculate weighted risk score (0-100)
+  4. Assign risk tier:
+     - 75-100: Acceptable
+     - 60-74: Moderate
+     - 40-59: High Risk
+     - 0-39: Unacceptable
+  5. Document specific risk factors and concerns
+
+  ### Stage 5: Premium Calculation
+  1. Call `premium_calculate` action
+  2. Look up base rate for property type and territory
+  3. Apply rating factors:
+     CREDITS (reduce premium):
+     - Fire-resistive construction: -10%
+     - Full sprinkler system: -8%
+     - Central station alarm: -5%
+     - Low loss ratio (<20%): -5%
+     - Long-term account (5+ years): -3%
+
+     DEBITS (increase premium):
+     - Hurricane zone CAT 3+: +25%
+     - Flood zone A/AE: +15%
+     - High loss ratio (>40%): +10%
+     - Open claims: +5%
+     - Substandard construction: +15%
+     - Roof age >15 years: +10%
+  4. Calculate final premium
+  5. Verify premium is within market range
+
+  ### Stage 6: Loss History Review
+  1. Call `loss_history` action
+  2. Retrieve 5-year claims history
+  3. Calculate metrics:
+     - Total claims count
+     - Total paid amount
+     - Open claims and reserves
+     - Loss ratio (paid / premium)
+  4. Identify claim patterns or concerns
+  5. Flag accounts with adverse loss history
+
+  ### Stage 7: Underwriting Decision
+  1. Call `auto_decision` action
+  2. Apply guardrails to determine routing:
+
+     AUTO-APPROVE if ALL conditions met:
+     - TIV <= $25M
+     - Risk Score >= 75
+     - No open claims
+     - Loss ratio <= 25%
+     - No CAT zone high exposure
+     - No hazardous operations
+
+     REFER TO SENIOR UNDERWRITER if ANY:
+     - TIV > $25M and <= $50M
+     - Risk Score 65-74
+     - Open claims present
+     - Loss ratio 25-40%
+
+     REFER TO UNDERWRITING MANAGER if ANY:
+     - TIV > $50M and <= $250M
+     - Risk Score 50-64
+     - High CAT exposure
+     - Hazardous operations
+     - Loss ratio > 40%
+
+     REFER TO DIRECTOR if ANY:
+     - TIV > $250M
+     - Risk Score < 50
+
+     AUTO-DECLINE if ANY:
+     - Risk Score < 35
+     - Flood Zone V/VE
+     - Occupancy < 50%
+     - Failed roof inspection
+     - Building code violations
+     - Recent bankruptcy
+
+  3. Generate decision with:
+     - Recommendation (APPROVE/REFER/DECLINE)
+     - Confidence score
+     - Conditions (if any)
+     - Detailed reasons
+
+  ### Stage 8: Human Approval (if required)
+  1. Generate referral package including:
+     - Executive summary
+     - Property details
+     - Risk assessment summary
+     - Premium indication
+     - Loss history summary
+     - Recommendation with rationale
+     - Conditions proposed
+  2. Route to appropriate approver
+  3. Set status to "needs_review"
+  4. Wait for human action
+
+  ### Stage 9: Completion
+  1. Record final decision
+  2. Generate policy terms
+  3. Set effective date
+  4. Archive processing log
+  5. Notify broker/agent of decision
+
+# =====================================================
+# OUTPUTS - What the playbook produces
+# =====================================================
+outputs:
+  - name: underwriting_decision
+    type: decision
+    schema:
+      submission_id: string
+      decision: enum [APPROVE, APPROVE_WITH_CONDITIONS, REFER, DECLINE]
+      decision_text: string
+      premium: number
+      rate_per_100: number
+      conditions: array
+      effective_date: date
+
+  - name: risk_assessment
+    type: assessment
+    schema:
+      risk_score: number
+      risk_tier: string
+      factors: array
+      concerns: array
+
+  - name: processing_log
+    type: audit
+    schema:
+      stages_completed: array
+      timestamps: object
+      actions_executed: array
+      human_approvals: array
+
+# =====================================================
+# TRIGGERS - How processing is initiated
+# =====================================================
+triggers:
+  - type: api
+    endpoint: /api/v1/work-items/{id}/process
+    method: POST
+
+  - type: blob_event
+    bucket: apex-cre-submissions
+    prefix: submissions/
+
+  - type: manual
+    description: "User clicks Process button in Agent Hub"
+
+# =====================================================
+# WORKER CONFIGURATION
+# =====================================================
+worker:
+  agent: CREUnderwriteBot
+  queue: apex-cre-underwriting-queue
+  concurrency: 10
+  timeout_seconds: 300
+  retry_count: 3
+  retry_delay_seconds: 60
+
+# =====================================================
+# METADATA
+# =====================================================
+metadata:
+  author: CBTS APEX Team
+  created: 2026-01-15
+  updated: 2026-03-13
+  tags: [cre, underwriting, insurance, commercial, property, risk, premium]
+  compliance: [SOC2, HIPAA-adjacent]

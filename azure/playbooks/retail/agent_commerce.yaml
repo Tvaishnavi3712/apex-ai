@@ -1,0 +1,184 @@
+# CBTS Apex AI Platform - Agent Commerce Playbook
+name: agent_commerce
+version: "1.0.0"
+description: "AI-powered autonomous shopping assistant with full commerce capabilities"
+industry: retail
+category: commerce
+
+intent: |
+  Enable customers to shop through natural conversation with AI agents
+  that can search, compare, recommend, and purchase products autonomously.
+  The agent handles the entire shopping journey from discovery to checkout.
+
+output:
+  - name: product_search_results
+    type: list
+    schema:
+      products: array
+      total_count: number
+      filters_applied: object
+  - name: cart_state
+    type: object
+    schema:
+      items: array
+      subtotal: number
+      tax: number
+      total: number
+  - name: order_confirmation
+    type: object
+    schema:
+      order_id: string
+      status: string
+      estimated_delivery: string
+      total: number
+
+context:
+  business_rules:
+    - "Always confirm before making purchases"
+    - "Provide clear price breakdowns with tax"
+    - "Highlight deals and discounts"
+    - "Respect user budget constraints"
+    - "Require approval for orders over $500"
+
+  pricing_rules:
+    tax_rate: 0.08
+    free_shipping_threshold: 50
+    shipping_options:
+      standard: 5.99
+      express: 14.99
+      overnight: 29.99
+
+  fraud_prevention:
+    max_single_order: 5000
+    require_verification_above: 1000
+
+actions:
+  - name: product_search
+    action_id: retail.product_search
+    required: true
+    description: "Search products by criteria"
+  - name: cart_manage
+    action_id: retail.cart_manage
+    required: true
+    description: "Add/remove items from cart"
+  - name: checkout_process
+    action_id: retail.checkout_process
+    required: false
+    description: "Process order and payment"
+  - name: price_track
+    action_id: retail.price_track
+    required: false
+    description: "Set price alerts and track history"
+  - name: inventory_update
+    action_id: retail.inventory_update
+    required: false
+    description: "Check and update inventory"
+  - name: receipt_validate
+    action_id: retail.receipt_validate
+    required: false
+    description: "Validate receipts for returns"
+  - name: return_policy
+    action_id: retail.return_policy
+    required: false
+    description: "Check return policy for items"
+  - name: refund_process
+    action_id: retail.refund_process
+    required: false
+    description: "Process refunds for returns"
+
+recipe: |
+  ## Agent Commerce Shopping Flow
+
+  ### Step 1: Product Discovery
+  1. Understand user intent (browse, buy, compare, track)
+  2. Extract search criteria:
+     - Category (Electronics, Footwear, Home, etc.)
+     - Brand preferences
+     - Price range / budget
+     - Feature requirements
+     - Rating minimum
+  3. Use `product_search` with extracted criteria
+  4. Present top results with:
+     - Name, price, ratings
+     - Discounts/deals highlighted
+     - Key specifications
+     - Availability status
+
+  ### Step 2: Product Comparison
+  1. If user wants to compare, use `product_search` for alternatives
+  2. Present side-by-side comparison:
+     - Price comparison
+     - Feature comparison
+     - Rating comparison
+  3. Provide recommendation with reasoning:
+     - Best value (price/rating ratio)
+     - Highest rated
+     - Best deal (biggest discount)
+
+  ### Step 3: Cart Management
+  1. When user decides, use `cart_manage` to add item
+  2. Show updated cart summary:
+     - Item details
+     - Quantity
+     - Subtotal, tax, total
+  3. Ask if user wants to:
+     - Continue shopping
+     - Proceed to checkout
+     - Set price alert for later
+
+  ### Step 4: Checkout
+  1. Use `checkout_process` when user is ready
+  2. Show order summary before confirming:
+     - Items and quantities
+     - Pricing breakdown
+     - Shipping options and costs
+     - Estimated delivery
+  3. Require explicit confirmation for purchase
+  4. Provide order confirmation:
+     - Order ID
+     - Estimated delivery
+     - Next steps
+
+  ### Step 5: Post-Purchase Support
+  1. For returns, use `receipt_validate` to verify purchase
+  2. Use `return_policy` to check eligibility
+  3. If eligible, use `refund_process` to initiate return
+  4. Use `inventory_update` to track returned items
+
+  ### Step 6: Price Tracking (Optional)
+  1. If user wants to wait for price drop:
+     - Use `price_track` to set alert
+     - Provide current price history
+     - Suggest target price based on trends
+  2. Notify when price target is met
+
+triggers:
+  - type: api
+    endpoint: /api/v1/commerce/chat
+  - type: websocket
+    endpoint: /ws/commerce
+  - type: event
+    event_type: price_alert_triggered
+
+worker:
+  queue: apex-commerce-queue
+  concurrency: 50
+  timeout_seconds: 300
+
+agent:
+  name: ShopperBot
+  runtime: azure_openai-foundry_agent
+  arn: azure-foundry-agent/apex_shopper_bot-E20HMiEAtn
+  capabilities:
+    - product_search
+    - price_comparison
+    - cart_management
+    - checkout
+    - price_tracking
+    - returns_support
+
+metadata:
+  tags: [commerce, shopping, retail, ai-agent, conversational]
+  sla:
+    response_time_ms: 5000
+    availability: 99.9

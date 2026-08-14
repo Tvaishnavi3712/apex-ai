@@ -1,0 +1,333 @@
+{
+  "bank": {
+    "name": "Chase Bank",
+    "routing_number": "021000021"
+  },
+  "account": {
+    "holder_name": "Adventure Works Ltd",
+    "account_number": "****6393",
+    "account_type": "Business Checking"
+  },
+  "statement_period": {
+    "start_date": "2025-11-01",
+    "end_date": "2025-11-30"
+  },
+  "balances": {
+    "beginning_balance": 426946.16,
+    "ending_balance": 253321.41
+  },
+  "summary": {
+    "total_deposits": 161773.3,
+    "total_withdrawals": 335313.83,
+    "total_fees": 84.22,
+    "transaction_count": 34
+  },
+  "transactions": [
+    {
+      "date": "2025-11-01",
+      "description": "ACH DEBIT - INSURANCE PREMIUM",
+      "type": "Withdrawal",
+      "debit": 23456.24,
+      "credit": 0,
+      "balance": 403489.92,
+      "reference": "REF818074380"
+    },
+    {
+      "date": "2025-11-01",
+      "description": "WIRE TRANSFER OUT",
+      "type": "Withdrawal",
+      "debit": 20552.09,
+      "credit": 0,
+      "balance": 382937.83,
+      "reference": "REF717376829"
+    },
+    {
+      "date": "2025-11-01",
+      "description": "WIRE TRANSFER OUT",
+      "type": "Withdrawal",
+      "debit": 20613.78,
+      "credit": 0,
+      "balance": 362324.05,
+      "reference": "REF826233791"
+    },
+    {
+      "date": "2025-11-02",
+      "description": "MERCHANT SERVICES DEPOSIT",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 10449.75,
+      "balance": 372773.8,
+      "reference": "REF617600212"
+    },
+    {
+      "date": "2025-11-02",
+      "description": "WIRE TRANSFER OUT",
+      "type": "Withdrawal",
+      "debit": 1762.64,
+      "credit": 0,
+      "balance": 371011.16,
+      "reference": "REF358834469"
+    },
+    {
+      "date": "2025-11-03",
+      "description": "STOP PAYMENT FEE",
+      "type": "Fee",
+      "debit": 36.7,
+      "credit": 0,
+      "balance": 370974.46,
+      "reference": "REF511799086"
+    },
+    {
+      "date": "2025-11-04",
+      "description": "CHECK #4062",
+      "type": "Withdrawal",
+      "debit": 13806.17,
+      "credit": 0,
+      "balance": 357168.29,
+      "reference": "REF711268342"
+    },
+    {
+      "date": "2025-11-04",
+      "description": "DEBIT CARD PURCHASE",
+      "type": "Withdrawal",
+      "debit": 18050.98,
+      "credit": 0,
+      "balance": 339117.31,
+      "reference": "REF207899276"
+    },
+    {
+      "date": "2025-11-04",
+      "description": "WIRE TRANSFER - VENDOR PAYMENT",
+      "type": "Withdrawal",
+      "debit": 18727.23,
+      "credit": 0,
+      "balance": 320390.08,
+      "reference": "REF212033560"
+    },
+    {
+      "date": "2025-11-06",
+      "description": "WIRE TRANSFER - VENDOR REFUND",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 17620.25,
+      "balance": 338010.33,
+      "reference": "REF494047946"
+    },
+    {
+      "date": "2025-11-06",
+      "description": "ACH DEPOSIT - CUSTOMER PAYMENT",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 27325.08,
+      "balance": 365335.41,
+      "reference": "REF310901566"
+    },
+    {
+      "date": "2025-11-07",
+      "description": "MERCHANT SERVICES DEPOSIT",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 22544.68,
+      "balance": 387880.09,
+      "reference": "REF585782366"
+    },
+    {
+      "date": "2025-11-08",
+      "description": "DEBIT CARD PURCHASE",
+      "type": "Withdrawal",
+      "debit": 20670.41,
+      "credit": 0,
+      "balance": 367209.68,
+      "reference": "REF906151465"
+    },
+    {
+      "date": "2025-11-10",
+      "description": "DEBIT CARD PURCHASE",
+      "type": "Withdrawal",
+      "debit": 19956.13,
+      "credit": 0,
+      "balance": 347253.55,
+      "reference": "REF357690645"
+    },
+    {
+      "date": "2025-11-12",
+      "description": "ACH DEBIT - INSURANCE PREMIUM",
+      "type": "Withdrawal",
+      "debit": 9765.54,
+      "credit": 0,
+      "balance": 337488.01,
+      "reference": "REF183160070"
+    },
+    {
+      "date": "2025-11-13",
+      "description": "DEBIT CARD PURCHASE",
+      "type": "Withdrawal",
+      "debit": 5818.61,
+      "credit": 0,
+      "balance": 331669.4,
+      "reference": "REF422235565"
+    },
+    {
+      "date": "2025-11-14",
+      "description": "WIRE TRANSFER OUT",
+      "type": "Withdrawal",
+      "debit": 19207.19,
+      "credit": 0,
+      "balance": 312462.21,
+      "reference": "REF541306335"
+    },
+    {
+      "date": "2025-11-15",
+      "description": "WIRE TRANSFER IN",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 38416.29,
+      "balance": 350878.5,
+      "reference": "REF614567262"
+    },
+    {
+      "date": "2025-11-16",
+      "description": "CHECK DEPOSIT",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 9895.26,
+      "balance": 360773.76,
+      "reference": "REF798765928"
+    },
+    {
+      "date": "2025-11-17",
+      "description": "CHECK #8894",
+      "type": "Withdrawal",
+      "debit": 8977.37,
+      "credit": 0,
+      "balance": 351796.39,
+      "reference": "REF127403343"
+    },
+    {
+      "date": "2025-11-17",
+      "description": "WIRE TRANSFER IN",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 8342.18,
+      "balance": 360138.57,
+      "reference": "REF965067444"
+    },
+    {
+      "date": "2025-11-17",
+      "description": "ACH DEBIT - PAYROLL",
+      "type": "Withdrawal",
+      "debit": 11328.28,
+      "credit": 0,
+      "balance": 348810.29,
+      "reference": "REF786935762"
+    },
+    {
+      "date": "2025-11-19",
+      "description": "WIRE TRANSFER OUT",
+      "type": "Withdrawal",
+      "debit": 4376.9,
+      "credit": 0,
+      "balance": 344433.39,
+      "reference": "REF977310240"
+    },
+    {
+      "date": "2025-11-21",
+      "description": "MONTHLY SERVICE FEE",
+      "type": "Fee",
+      "debit": 47.52,
+      "credit": 0,
+      "balance": 344385.87,
+      "reference": "REF386830171"
+    },
+    {
+      "date": "2025-11-21",
+      "description": "CHECK #6914",
+      "type": "Withdrawal",
+      "debit": 8153.77,
+      "credit": 0,
+      "balance": 336232.1,
+      "reference": "REF347963986"
+    },
+    {
+      "date": "2025-11-22",
+      "description": "WIRE TRANSFER - VENDOR REFUND",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 26416.02,
+      "balance": 362648.12,
+      "reference": "REF381065629"
+    },
+    {
+      "date": "2025-11-22",
+      "description": "WIRE TRANSFER OUT",
+      "type": "Withdrawal",
+      "debit": 1840.32,
+      "credit": 0,
+      "balance": 360807.8,
+      "reference": "REF335671927"
+    },
+    {
+      "date": "2025-11-23",
+      "description": "ACH DEBIT - UTILITY PAYMENT",
+      "type": "Withdrawal",
+      "debit": 22849.1,
+      "credit": 0,
+      "balance": 337958.7,
+      "reference": "REF593876218"
+    },
+    {
+      "date": "2025-11-24",
+      "description": "ACH DEBIT - UTILITY PAYMENT",
+      "type": "Withdrawal",
+      "debit": 19377.2,
+      "credit": 0,
+      "balance": 318581.5,
+      "reference": "REF100221988"
+    },
+    {
+      "date": "2025-11-27",
+      "description": "ACH DEBIT - PAYROLL",
+      "type": "Withdrawal",
+      "debit": 19434.98,
+      "credit": 0,
+      "balance": 299146.52,
+      "reference": "REF208772133"
+    },
+    {
+      "date": "2025-11-28",
+      "description": "WIRE TRANSFER - VENDOR PAYMENT",
+      "type": "Withdrawal",
+      "debit": 17301.75,
+      "credit": 0,
+      "balance": 281844.77,
+      "reference": "REF447779913"
+    },
+    {
+      "date": "2025-11-29",
+      "description": "ACH DEBIT - UTILITY PAYMENT",
+      "type": "Withdrawal",
+      "debit": 24435.0,
+      "credit": 0,
+      "balance": 257409.77,
+      "reference": "REF250688452"
+    },
+    {
+      "date": "2025-11-29",
+      "description": "ACH DEBIT - UTILITY PAYMENT",
+      "type": "Withdrawal",
+      "debit": 4852.15,
+      "credit": 0,
+      "balance": 252557.62,
+      "reference": "REF224820215"
+    },
+    {
+      "date": "2025-11-29",
+      "description": "CHECK DEPOSIT",
+      "type": "Deposit",
+      "debit": 0,
+      "credit": 763.79,
+      "balance": 253321.41,
+      "reference": "REF246092125"
+    }
+  ]
+}

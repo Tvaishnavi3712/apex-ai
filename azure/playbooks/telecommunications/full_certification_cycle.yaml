@@ -1,0 +1,105 @@
+name: full_certification_cycle
+version: "1.0.0"
+description: "End-to-end far-edge certification — parses a ROBOT Framework XML output, classifies failures, runs schema-drift check in parallel, opens JIRA tickets, and emits a certification report with Audit Lens trace."
+industry: telecommunications
+category: certification_automation
+
+intent: |
+  When a ROBOT Framework XML output file lands in /data/robot-outputs/,
+  fully certify the run in under 15 minutes (vs. 40+ hours manual).
+  Lead with overall_status (PASS / CONDITIONAL_PASS / FAIL), then the
+  per-category failure breakdown, then deployment recommendation, then
+  end with the Audit Lens event ID.
+
+  Example prompts that resolve to this playbook:
+    "Run certification on robot_output_caas_node_v2412_full.xml"
+    "Process the latest ROBOT run for CaaS-Node-Type-B"
+    "Certify CYCLE-20260115-CAAS-B-2412"
+
+output:
+  - name: certification_report
+    type: structured_data
+    description: "Full certification report — executive_summary, failure_analysis, schema_drift_summary, deployment_recommendation, governance_trail"
+  - name: jira_ticket_ids
+    type: array
+    description: "JIRA ticket IDs opened for P1/P2 failures"
+  - name: audit_log_id
+    type: identifier
+    description: "Audit Lens trace id"
+
+context:
+  business_rules:
+    - "Lead with overall_status — operators triage by pass/conditional/fail before reading detail."
+    - "Every failure MUST have a category (latency / schema_drift / regression / investigate) and a severity (P1/P2/P3)."
+    - "Cite the exact ROBOT test_id and the verbatim failure message — never paraphrase."
+    - "If failure count > 20 OR breaking schema changes > 5, pause for HITL approval before report generation."
+    - "Always cross-reference KB articles for known failure patterns; report KB ID when matched."
+    - "Emit Audit Lens event with every step's outputs for full traceability."
+
+actions:
+  - name: parse_robot_output
+    action_id: verizon_far_edge.parse_robot_output
+    description: "Parse ROBOT Framework XML, extract test results + metadata"
+    required: true
+  - name: schema_drift_check
+    action_id: verizon_far_edge.schema_drift_check
+    description: "Compare current Redfish schema against baseline — runs in parallel with classify_failures"
+    required: true
+  - name: classify_failures
+    action_id: verizon_far_edge.classify_failures
+    description: "Apply classification rules to each FAIL/WARN test"
+    required: true
+  - name: build_jira_tickets
+    action_id: verizon_far_edge.build_jira_tickets
+    description: "Build JIRA payloads for P1/P2 failures with KB matches"
+    required: true
+  - name: generate_certification_report
+    action_id: verizon_far_edge.generate_certification_report
+    description: "Produce the structured certification report"
+    required: true
+
+recipe: |
+  1. Call `parse_robot_output(file_path)` and validate XML well-formedness.
+  2. In parallel:
+       a. Call `schema_drift_check(baseline_path, current_path, catalog_path)`.
+       b. Call `classify_failures(parsed_test_results)`.
+  3. HITL gate — if `classified.fail_count > 20` OR `drift.breaking_changes_count > 5`:
+       pause and notify james.patchett@verizon.com + cert-team-lead@verizon.com;
+       require approval before continuing.
+  4. Call `build_jira_tickets(classified, drift_report)`.
+  5. Call `generate_certification_report(classified, drift_report, jira_tickets)`.
+  6. Format the response (4-line structure):
+       <OVERALL_STATUS>: <device_name> <firmware_version> — <pass>/<total> tests passed
+       Schema drift: <breaking_changes> breaking changes · <scripts_impacted> scripts impacted
+       JIRA: <ticket_count> tickets opened (<P1>P1 · <P2>P2 · <P3>P3)
+       <recommendation_one_liner>
+       [Audit Lens event: <audit_log_id>]
+  7. Emit audit_log entry with all upstream tool outputs.
+
+triggers:
+  - type: file_watch
+    watch_path: /data/robot-outputs/
+    file_pattern: "robot_output_*.xml"
+    debounce_seconds: 30
+  - type: gcs_event
+    label: GCP Cloud Storage
+    bucket: apex-prod-intake
+    pattern: "gs://apex-prod-intake/firmware-reports/**"
+    notification: pubsub
+    detail: "gs://apex-prod-intake/firmware-reports/** · GCS + Pub/Sub notifications"
+  - type: chat_message
+    routed_by: verizon_router
+  - type: api_invoke
+    endpoint: /api/v1/agents/CertificationAgent/invoke
+
+hitl:
+  - condition: "fail_count > 20"
+    approvers: ["james.patchett@verizon.com", "cert-team-lead@verizon.com"]
+    sla_hours: 4
+  - condition: "breaking_changes_count > 5"
+    approvers: ["automation-team-lead@verizon.com", "james.patchett@verizon.com"]
+    sla_hours: 2
+
+governance:
+  audit_lens: required
+  immutable_log: true

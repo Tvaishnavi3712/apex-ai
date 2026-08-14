@@ -1,0 +1,29 @@
+{
+  "blueprint_id": "bp-eprod-invoice",
+  "name": "EPROD Vendor Invoice",
+  "description": "Extract vendor invoice fields for EPROD AP with MSA validation and asset code attribution.",
+  "industry": "oil_gas_midstream",
+  "document_type": "vendor_invoice",
+  "version": "1.0",
+  "documentSchema": {
+    "documentClass": "EPROD Vendor Invoice",
+    "description": "Vendor invoice schema covering header, line items, asset code, MSA reference, and tax code for EPROD accounts payable.",
+    "extractionInstructions": "Extract every line item with explicit asset_code attribution. If MSA reference is missing, surface as null. Tax code must match the asset class.",
+    "fields": {
+      "vendor_name":      { "type": "string", "description": "Legal vendor name as printed on the invoice", "required": true },
+      "invoice_number":   { "type": "string", "description": "Unique vendor invoice number", "required": true },
+      "invoice_date":     { "type": "date",   "description": "Date the invoice was issued", "required": true },
+      "po_reference":     { "type": "string", "description": "Referenced EPROD purchase order number (may be null for non-PO)", "required": false },
+      "msa_reference":    { "type": "string", "description": "Referenced master service agreement id", "required": true },
+      "asset_code":       { "type": "string", "description": "EPROD asset / cost center code (e.g. PIP-12345, REF-9001)", "required": true },
+      "line_items":       { "type": "array",  "description": "Line items with description, quantity, unit_price, line_total, asset_code", "required": true },
+      "subtotal":         { "type": "number", "description": "Pre-tax subtotal", "required": true },
+      "sales_tax":        { "type": "number", "description": "Sales / use tax amount", "required": true },
+      "tax_code":         { "type": "string", "description": "Tax classification (TX-E exempt / TX-I industrial / TX-S sales)", "required": true },
+      "total":            { "type": "number", "description": "Invoice total amount", "required": true },
+      "due_date":         { "type": "date",   "description": "Payment due date", "required": true },
+      "payment_terms":    { "type": "string", "description": "Net terms (NET30, NET45, etc.)", "required": true },
+      "currency":         { "type": "string", "description": "ISO currency code (USD default)", "required": true }
+    }
+  }
+}

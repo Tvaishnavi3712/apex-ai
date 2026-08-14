@@ -1,0 +1,92 @@
+playbook_id: pb-cwfcu-6
+name: vendor_renewal_sla_watch
+version: "1.0.0"
+description: "Continuous monitoring of 47 active vendor contracts — renewal windows, SLA breaches, rate drift, policy obligations."
+industry: credit_union
+category: vendor_risk
+
+intent: |
+  Watch every active vendor contract (Fiserv, Eltropy, CO-OP, Diebold,
+  Jack Henry, Heartland, and 40+ others) for renewal windows, SLA
+  breaches, rate drift over the contract escalation cap, and policy
+  obligations triggered (e.g. annual InfoSec training, board
+  attestation). Surface critical renewals 90 days out. Auto-assemble
+  the NCUA third-party risk dossier per vendor. Trigger downstream
+  policy obligations to the Policy & HR Agent.
+
+output:
+  - name: vendor_watchlist
+    type: structured_data
+    description: "Vendors by renewal proximity + risk score + SLA status"
+  - name: renewal_brief
+    type: structured_data
+    description: "Renewal package (rate drift, SLA history, market comp, recommendation)"
+  - name: policy_obligation_triggers
+    type: routing_decision
+    description: "Policy obligations passed to Policy & HR Agent"
+
+context:
+  business_rules:
+    - "Tier 1 (CRITICAL) vendors: 90-day renewal alert"
+    - "Tier 2 (HIGH) vendors: 60-day renewal alert"
+    - "Rate drift > 0 vs contract cap: alert"
+    - "SLA breach: alert + credit-owed calculation"
+    - "Renewal decisions on Tier 1 vendors require board attestation"
+
+actions:
+  - name: monitor_contracts
+    action_id: credit_union.vendor_monitor
+    description: "Continuous monitoring of all 47 active contracts"
+    required: true
+  - name: detect_renewal_window
+    action_id: credit_union.detect_renewal_window
+    description: "Identify contracts in active renewal window"
+    required: true
+  - name: detect_sla_breach
+    action_id: credit_union.detect_sla_breach
+    description: "Compare actual vs SLA-guaranteed performance"
+    required: true
+  - name: detect_rate_drift
+    action_id: credit_union.detect_rate_drift
+    description: "Compare billed rate to contract escalation cap"
+    required: true
+  - name: assemble_renewal_brief
+    action_id: credit_union.assemble_renewal_brief
+    description: "Build renewal package (rate, SLA, market comp, rec)"
+    required: false
+  - name: trigger_policy_obligations
+    action_id: credit_union.trigger_policy_obligations
+    description: "Pass policy obligations to Policy & HR Agent"
+    required: true
+  - name: index_to_ncua_folder
+    action_id: credit_union.ncua_folder_index
+    description: "Index vendor dossier to NCUA third-party risk folder"
+    required: true
+
+recipe: |
+  1. Continuously monitor all 47 active vendor contracts (Fiserv,
+     Eltropy, CO-OP, Diebold, Jack Henry, Heartland, etc).
+  2. Calculate days-to-renewal for each contract.
+       - Tier 1 (CRITICAL): alert when ≤ 90 days
+       - Tier 2 (HIGH):     alert when ≤ 60 days
+       - Tier 3 + below:    alert when ≤ 30 days
+  3. Pull SLA performance YTD. Calculate breaches and credits owed.
+  4. Pull billed rates and compare to contract escalation cap.
+     Calculate rate drift % and annualized exposure.
+  5. For contracts in renewal window, assemble renewal brief:
+       - Current term + proposed term
+       - Rate drift + recommended cap negotiation
+       - SLA history (Q-over-Q)
+       - Market comparator analysis (where available)
+       - Policy obligations triggered (training, attestation)
+       - Recommendation (APPROVE / RENEGOTIATE / TERMINATE)
+  6. Tier 1 vendor renewals trigger board attestation requirement.
+  7. Pass policy obligations to Policy & HR Agent (annual InfoSec
+     training, BSA training overlap, data residency, etc).
+  8. Index vendor dossier to NCUA third-party risk folder for exam.
+
+triggers:
+  - type: schedule
+    cron: "0 7 * * *"   # daily 07:00 ET
+  - type: event
+    source: vendor_event_bus

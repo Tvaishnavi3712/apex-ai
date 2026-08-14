@@ -1,0 +1,165 @@
+═══════════════════════════════════════════════════════════════════════════════
+WIND RIVER LINUX 24.12 — RELEASE NOTES
+For CaaS Edge Nodes
+Document Version:  24.12.0
+Release Date:      December 18, 2025
+Distribution:      Tier-1 carriers, partners under NDA
+═══════════════════════════════════════════════════════════════════════════════
+
+TABLE OF CONTENTS
+  1. What's New
+  2. Redfish API Changes
+  3. Known Issues
+  4. Upgrade Notes
+  5. Compatibility Matrix
+  6. Security Advisories
+
+───────────────────────────────────────────────────────────────────────────────
+1. WHAT'S NEW
+───────────────────────────────────────────────────────────────────────────────
+
+  1.1  Kernel
+       Rebased on Linux 6.6 LTS with the latest PREEMPT_RT patch set.
+       Cyclictest P99 latency improved by 18% on Type-B nodes compared to 24.06.
+
+  1.2  Container Runtime
+       containerd 1.7.13 with CRI-O parity for backward compatibility.
+
+  1.3  Redfish Implementation
+       Redfish API server upgraded from DMTF 1.14.0 to 1.16.0 with full
+       conformance to the OpenAPI 3.1 schema. See §2 for breaking changes.
+
+  1.4  OpenShift Operator Bundle
+       Compatible with OpenShift 4.14, 4.15, and 4.16. Earlier versions
+       (4.13 and below) are not supported and the boot sequence will halt
+       on operator scheduling.
+
+  1.5  RT Latency Telemetry
+       New /redfish/v1/Telemetry/MetricReports/RTKernel endpoint exposes
+       cyclictest-style metrics on demand without a SSH session.
+
+───────────────────────────────────────────────────────────────────────────────
+2. REDFISH API CHANGES — BREAKING (READ CAREFULLY)
+───────────────────────────────────────────────────────────────────────────────
+
+  2.1  /redfish/v1/Systems/1 — PowerState relocated
+
+       BEFORE (v1.14.0):
+         {
+           "@odata.type": "#ComputerSystem.v1_14_0.ComputerSystem",
+           "Id": "1",
+           "PowerState": "On",
+           "Status": { "Health": "OK", "State": "Enabled" }
+         }
+
+       AFTER (v1.16.0):
+         {
+           "@odata.type": "#ComputerSystem.v1_16_0.ComputerSystem",
+           "Id": "1",
+           "Status": {
+             "Health":     "OK",
+             "State":      "Enabled",
+             "PowerState": "On"
+           }
+         }
+
+       Change type:  path_migration
+       Top-level PowerState field is DEPRECATED and will be REMOVED in 25.06.
+       Scripts must be updated to read Status.PowerState.
+
+  2.2  /redfish/v1/Chassis/1/Thermal — FanSpeeds renamed to Fans
+
+       BEFORE:
+         "FanSpeeds": [
+           { "MemberId": "0", "CurrentReading": 4800, "Status": {...} }
+         ]
+
+       AFTER:
+         "Fans": [
+           { "MemberId": "0", "Reading": 4800, "Status": {...} }
+         ]
+
+       Change type:  field_rename_and_restructure
+       Both the parent array and the reading field are renamed. There is no
+       backward-compatible alias.
+
+  2.3  /redfish/v1/Managers/1/EthernetInterfaces/1 — IPv6Addresses now required
+
+       BEFORE: IPv6Addresses optional, omitted on IPv4-only configs.
+
+       AFTER:  IPv6Addresses is REQUIRED. If the interface has no IPv6
+               configured, the field MUST be present as an empty array [].
+
+       Change type:  new_required_field
+       Scripts that construct or validate interface payloads without
+       IPv6Addresses will fail schema validation.
+
+  2.4  /redfish/v1/Systems/1/Storage/1 — Controllers moved to sub-resource
+
+       The embedded StorageControllers array is replaced by a Controllers
+       navigation link to /redfish/v1/Systems/1/Storage/1/Controllers.
+       Existing assertions on Storage/1.StorageControllers will fail.
+
+───────────────────────────────────────────────────────────────────────────────
+3. KNOWN ISSUES
+───────────────────────────────────────────────────────────────────────────────
+
+  KB-2026-0118  CU-UP latency degradation on Type-B with kernel.sched_rt_runtime_us
+                set to 950000 (default). Workaround: set to 980000 in
+                /etc/sysctl.d/99-rt-tune.conf. Permanent fix: 25.01.
+
+  KB-2026-0091  Redfish Thermal endpoint returns 503 for first 20 seconds after
+                boot if fan controller firmware is older than v3.1.4. Workaround:
+                retry with exponential backoff. Permanent fix: vendor BMC update.
+
+  KB-2026-0073  IPv6 enumeration on management interface fails if
+                /etc/sysctl.d/40-ipv6.conf disables RA. Workaround: enable RA.
+                Permanent fix: 25.06.
+
+  KB-2026-0044  CaaS-orchestrator pod scheduling can stall if the previous
+                shutdown was non-graceful and journal was not flushed.
+                Workaround: clear /var/lib/caas/lock before boot. Permanent
+                fix: 25.01.
+
+───────────────────────────────────────────────────────────────────────────────
+4. UPGRADE NOTES
+───────────────────────────────────────────────────────────────────────────────
+
+  Supported upgrade sources:    24.01, 24.06
+  Conditionally supported:      23.12 (multi-step required via 24.01)
+  Not supported direct:         23.06 and earlier (multi-step required)
+
+  CRITICAL: Direct upgrades from 23.06 to 24.01 on CaaS-Node-Type-B in the
+  Northeast region have shown a 78% historical failure rate in customer
+  deployments between July 2025 and December 2025. Three of those failures
+  resulted in geographic-scale service outages. The path is technically
+  permitted by the compatibility matrix but is NOT RECOMMENDED for production
+  use without a pilot batch of fewer than 25 sites and an immediate-rollback
+  plan in place. See [APEX UpgradeAdvisorAgent](apex://upgrade-advisor) for
+  pre-flight risk scoring and approval gating.
+
+───────────────────────────────────────────────────────────────────────────────
+5. COMPATIBILITY MATRIX
+───────────────────────────────────────────────────────────────────────────────
+
+  OpenShift:  4.14 ✓   4.15 ✓   4.16 ✓   4.13 ✗   4.17 ✗
+  Ansible:    2.14 ✓   2.15 ✓   2.16 ✓   2.13 ✗   2.17 ✗
+  ROBOT:      6.1.x ✓  6.0.x ✗  5.x ✗
+  Redfish:    v1.16.0 native   v1.14.0 compatibility shim (deprecated 25.06)
+
+───────────────────────────────────────────────────────────────────────────────
+6. SECURITY ADVISORIES
+───────────────────────────────────────────────────────────────────────────────
+
+  CVE-2025-49118  containerd OCI hooks privilege escalation (HIGH).
+                  Mitigated in 24.12 base image.
+
+  CVE-2025-50204  Redfish AccountService LDAP bind credential cache
+                  poisoning (MEDIUM). Mitigated by upgrade.
+
+  CVE-2025-51009  IPMI passthrough information disclosure (LOW).
+                  Workaround: disable IPMI passthrough. Fix in 25.01.
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF EXCERPT — full release notes are 41 pages.
+═══════════════════════════════════════════════════════════════════════════════

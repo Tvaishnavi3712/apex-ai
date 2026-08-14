@@ -1,0 +1,207 @@
+{
+  "catalog_version": "2026-01-12",
+  "total_scripts": 47,
+  "_note": "Complete Verizon Far Edge automation catalog. Used by SchemaWatchAgent to map Redfish breaking changes to impacted files. The 14 entries flagged with redfish_v1.16_breaking=true are the scripts that fail under Wind River 24.12.",
+  "playbooks": [
+    { "file": "power_check.yml",                  "type": "ansible", "category": "health_check", "description": "Validates node power state via Redfish",
+      "redfish_endpoints": ["/redfish/v1/Systems/1"],                         "redfish_fields": ["PowerState", "Status"],
+      "last_modified": "2025-08-14", "owner": "automation-team", "lines_of_code": 187, "redfish_v1.16_breaking": true },
+
+    { "file": "node_health_check.yml",            "type": "ansible", "category": "health_check", "description": "Composite node health check rolling power + thermal + storage",
+      "redfish_endpoints": ["/redfish/v1/Systems/1", "/redfish/v1/Chassis/1"], "redfish_fields": ["PowerState", "Health"],
+      "last_modified": "2025-09-02", "owner": "automation-team", "lines_of_code": 412, "redfish_v1.16_breaking": true },
+
+    { "file": "pre_upgrade_validation.yml",       "type": "ansible", "category": "upgrade",      "description": "Pre-upgrade gate — checks power, IPv6, disk space, vendor ticket",
+      "redfish_endpoints": ["/redfish/v1/Systems/1", "/redfish/v1/Managers/1/EthernetInterfaces/1"], "redfish_fields": ["PowerState", "IPv6Addresses"],
+      "last_modified": "2025-11-04", "owner": "cert-team", "lines_of_code": 624, "redfish_v1.16_breaking": true },
+
+    { "file": "post_upgrade_validation.yml",      "type": "ansible", "category": "upgrade",      "description": "Post-upgrade smoke validation",
+      "redfish_endpoints": ["/redfish/v1/Systems/1"], "redfish_fields": ["PowerState", "BiosVersion"],
+      "last_modified": "2025-11-04", "owner": "cert-team", "lines_of_code": 487, "redfish_v1.16_breaking": true },
+
+    { "file": "site_readiness_check.yml",         "type": "ansible", "category": "wave_planning","description": "Site-level readiness sweep before wave authorization",
+      "redfish_endpoints": ["/redfish/v1/Systems/1"], "redfish_fields": ["PowerState", "Status"],
+      "last_modified": "2025-09-22", "owner": "wave-ops", "lines_of_code": 312, "redfish_v1.16_breaking": true },
+
+    { "file": "wave_deployment_preflight.yml",    "type": "ansible", "category": "wave_planning","description": "Wave-wide preflight orchestrating site_readiness across regions",
+      "redfish_endpoints": ["/redfish/v1/Systems/1"], "redfish_fields": ["PowerState"],
+      "last_modified": "2025-12-09", "owner": "wave-ops", "lines_of_code": 854, "redfish_v1.16_breaking": true },
+
+    { "file": "thermal_baseline.robot",           "type": "robot",   "category": "regression",   "description": "Thermal sensor baseline regression against previous cycle",
+      "redfish_endpoints": ["/redfish/v1/Chassis/1/Thermal"], "redfish_fields": ["FanSpeeds", "Temperatures"],
+      "last_modified": "2025-09-02", "owner": "cert-team", "lines_of_code": 268, "redfish_v1.16_breaking": true },
+
+    { "file": "thermal_regression.robot",         "type": "robot",   "category": "regression",   "description": "Cycle-over-cycle thermal drift detection",
+      "redfish_endpoints": ["/redfish/v1/Chassis/1/Thermal"], "redfish_fields": ["FanSpeeds.CurrentReading"],
+      "last_modified": "2025-08-18", "owner": "cert-team", "lines_of_code": 198, "redfish_v1.16_breaking": true },
+
+    { "file": "thermal_stress_test.robot",        "type": "robot",   "category": "load",         "description": "Thermal stress + fan ramp validation under sustained CPU load",
+      "redfish_endpoints": ["/redfish/v1/Chassis/1/Thermal"], "redfish_fields": ["FanSpeeds.CurrentReading"],
+      "last_modified": "2025-10-11", "owner": "cert-team", "lines_of_code": 421, "redfish_v1.16_breaking": true },
+
+    { "file": "fan_speed_monitor.yml",            "type": "ansible", "category": "monitoring",   "description": "Continuous fan speed monitor with alert thresholds",
+      "redfish_endpoints": ["/redfish/v1/Chassis/1/Thermal"], "redfish_fields": ["FanSpeeds"],
+      "last_modified": "2025-09-30", "owner": "automation-team", "lines_of_code": 167, "redfish_v1.16_breaking": true },
+
+    { "file": "thermal_alert_check.yml",          "type": "ansible", "category": "monitoring",   "description": "Thermal alert evaluation for nightly run",
+      "redfish_endpoints": ["/redfish/v1/Chassis/1/Thermal"], "redfish_fields": ["FanSpeeds", "Temperatures"],
+      "last_modified": "2025-10-02", "owner": "automation-team", "lines_of_code": 234, "redfish_v1.16_breaking": true },
+
+    { "file": "interface_validation.robot",       "type": "robot",   "category": "network",      "description": "EthernetInterface schema + address validation",
+      "redfish_endpoints": ["/redfish/v1/Managers/1/EthernetInterfaces/1"], "redfish_fields": ["IPv4Addresses", "IPv6Addresses"],
+      "last_modified": "2025-07-22", "owner": "cert-team", "lines_of_code": 312, "redfish_v1.16_breaking": true },
+
+    { "file": "ipv6_enumeration_check.robot",     "type": "robot",   "category": "network",      "description": "IPv6 address enumeration across every interface",
+      "redfish_endpoints": ["/redfish/v1/Managers/1/EthernetInterfaces/1"], "redfish_fields": ["IPv6Addresses"],
+      "last_modified": "2025-07-22", "owner": "cert-team", "lines_of_code": 187, "redfish_v1.16_breaking": true },
+
+    { "file": "network_baseline.yml",             "type": "ansible", "category": "network",      "description": "Network configuration baseline capture",
+      "redfish_endpoints": ["/redfish/v1/Managers/1/EthernetInterfaces/1"], "redfish_fields": ["IPv4Addresses"],
+      "last_modified": "2025-09-14", "owner": "automation-team", "lines_of_code": 248, "redfish_v1.16_breaking": true },
+
+    { "file": "openshift_operator_health.robot",  "type": "robot",   "category": "openshift",    "description": "OpenShift operator-bundle health + version compatibility",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-10-08", "owner": "platform-team", "lines_of_code": 412, "redfish_v1.16_breaking": false },
+
+    { "file": "openshift_pod_scheduling.robot",   "type": "robot",   "category": "openshift",    "description": "Pod scheduling SLA — measures time-to-running for all caas-system pods",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-09-19", "owner": "platform-team", "lines_of_code": 287, "redfish_v1.16_breaking": false },
+
+    { "file": "openshift_etcd_health.robot",      "type": "robot",   "category": "openshift",    "description": "etcd cluster sync + member-count validation",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-08-12", "owner": "platform-team", "lines_of_code": 198, "redfish_v1.16_breaking": false },
+
+    { "file": "openshift_csi_driver_check.yml",   "type": "ansible", "category": "openshift",    "description": "CSI driver health + storage class validation",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-11-22", "owner": "platform-team", "lines_of_code": 224, "redfish_v1.16_breaking": false },
+
+    { "file": "windriver_caas_boot.robot",        "type": "robot",   "category": "boot",         "description": "Wind River CaaS boot sequence step-by-step validation",
+      "redfish_endpoints": ["/redfish/v1/Systems/1"], "redfish_fields": ["BiosVersion"],
+      "last_modified": "2025-10-30", "owner": "cert-team", "lines_of_code": 521, "redfish_v1.16_breaking": false },
+
+    { "file": "windriver_caas_recovery.robot",    "type": "robot",   "category": "boot",         "description": "Recovery boot validation after non-graceful shutdown",
+      "redfish_endpoints": ["/redfish/v1/Systems/1"], "redfish_fields": ["PowerState"],
+      "last_modified": "2025-11-14", "owner": "cert-team", "lines_of_code": 312, "redfish_v1.16_breaking": true },
+
+    { "file": "ansible_idempotency_suite.yml",    "type": "ansible", "category": "regression",   "description": "Idempotency check — runs all playbooks twice, expects zero changed_tasks on second run",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-12-01", "owner": "automation-team", "lines_of_code": 612, "redfish_v1.16_breaking": false },
+
+    { "file": "rt_kernel_cyclictest.robot",       "type": "robot",   "category": "rt_kernel",    "description": "Real-time kernel interrupt latency via cyclictest",
+      "redfish_endpoints": ["/redfish/v1/Telemetry/MetricReports/RTKernel"], "redfish_fields": ["MetricValues"],
+      "last_modified": "2025-12-15", "owner": "cert-team", "lines_of_code": 287, "redfish_v1.16_breaking": false },
+
+    { "file": "rt_kernel_preempt_check.robot",    "type": "robot",   "category": "rt_kernel",    "description": "PREEMPT_RT presence + sched_rt_runtime_us validation",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-11-08", "owner": "cert-team", "lines_of_code": 142, "redfish_v1.16_breaking": false },
+
+    { "file": "firmware_signature_chain.robot",   "type": "robot",   "category": "security",     "description": "Validates signed boot chain — U-Boot, kernel, initrd, BMC",
+      "redfish_endpoints": ["/redfish/v1/UpdateService"], "redfish_fields": ["FirmwareInventory"],
+      "last_modified": "2025-08-28", "owner": "security-team", "lines_of_code": 412, "redfish_v1.16_breaking": false },
+
+    { "file": "secure_boot_chain.robot",          "type": "robot",   "category": "security",     "description": "Secure Boot + TPM PCR validation",
+      "redfish_endpoints": ["/redfish/v1/Systems/1/Bios"], "redfish_fields": ["SecureBoot"],
+      "last_modified": "2025-09-04", "owner": "security-team", "lines_of_code": 287, "redfish_v1.16_breaking": true },
+
+    { "file": "bmc_health_check.yml",             "type": "ansible", "category": "bmc",          "description": "BMC IPMI + Redfish health validation",
+      "redfish_endpoints": ["/redfish/v1/Managers/1"], "redfish_fields": ["FirmwareVersion", "Health"],
+      "last_modified": "2025-07-15", "owner": "automation-team", "lines_of_code": 287, "redfish_v1.16_breaking": false },
+
+    { "file": "bmc_firmware_inventory.yml",       "type": "ansible", "category": "bmc",          "description": "BMC firmware inventory snapshot for upgrade decisions",
+      "redfish_endpoints": ["/redfish/v1/UpdateService"], "redfish_fields": ["FirmwareInventory"],
+      "last_modified": "2025-10-25", "owner": "automation-team", "lines_of_code": 198, "redfish_v1.16_breaking": false },
+
+    { "file": "cu_up_latency_baseline.robot",     "type": "robot",   "category": "ran",          "description": "Sustained CU-UP P99 interface latency baseline",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-12-20", "owner": "ran-team", "lines_of_code": 421, "redfish_v1.16_breaking": false },
+
+    { "file": "cu_up_throughput.robot",           "type": "robot",   "category": "ran",          "description": "CU-UP sustained throughput 60s window",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-12-20", "owner": "ran-team", "lines_of_code": 312, "redfish_v1.16_breaking": false },
+
+    { "file": "cu_up_handover.robot",             "type": "robot",   "category": "ran",          "description": "Inter-cell handover latency",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-11-30", "owner": "ran-team", "lines_of_code": 287, "redfish_v1.16_breaking": false },
+
+    { "file": "gnb_du_config_push.robot",         "type": "robot",   "category": "ran",          "description": "gNB-DU configuration push + diff validation",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-12-01", "owner": "ran-team", "lines_of_code": 412, "redfish_v1.16_breaking": false },
+
+    { "file": "oam_packet_loss.robot",            "type": "robot",   "category": "oam",          "description": "OAM interface packet-loss validation",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-11-12", "owner": "oam-team", "lines_of_code": 198, "redfish_v1.16_breaking": false },
+
+    { "file": "oam_ntp_sync.robot",               "type": "robot",   "category": "oam",          "description": "NTP stratum + drift validation across far-edge fleet",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-10-04", "owner": "oam-team", "lines_of_code": 147, "redfish_v1.16_breaking": false },
+
+    { "file": "oam_ssh_banner.robot",             "type": "robot",   "category": "security",     "description": "SSH banner + cipher policy validation",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-08-22", "owner": "security-team", "lines_of_code": 124, "redfish_v1.16_breaking": false },
+
+    { "file": "ldap_auth_check.yml",              "type": "ansible", "category": "security",     "description": "LDAP bind validation via Redfish AccountService",
+      "redfish_endpoints": ["/redfish/v1/AccountService"], "redfish_fields": ["LDAP"],
+      "last_modified": "2025-09-30", "owner": "security-team", "lines_of_code": 198, "redfish_v1.16_breaking": false },
+
+    { "file": "session_service_validation.yml",   "type": "ansible", "category": "security",     "description": "Redfish SessionService keep-alive + timeout validation",
+      "redfish_endpoints": ["/redfish/v1/SessionService"], "redfish_fields": ["SessionTimeout"],
+      "last_modified": "2025-10-18", "owner": "security-team", "lines_of_code": 147, "redfish_v1.16_breaking": false },
+
+    { "file": "event_service_subscribe.yml",      "type": "ansible", "category": "monitoring",   "description": "Redfish EventService subscription to BMC alerts",
+      "redfish_endpoints": ["/redfish/v1/EventService"], "redfish_fields": ["Subscriptions"],
+      "last_modified": "2025-11-04", "owner": "monitoring-team", "lines_of_code": 224, "redfish_v1.16_breaking": false },
+
+    { "file": "storage_health_check.yml",         "type": "ansible", "category": "storage",      "description": "Local storage controller + drive health",
+      "redfish_endpoints": ["/redfish/v1/Systems/1/Storage/1"], "redfish_fields": ["StorageControllers", "Drives"],
+      "last_modified": "2025-09-12", "owner": "automation-team", "lines_of_code": 312, "redfish_v1.16_breaking": true },
+
+    { "file": "drive_smart_check.yml",            "type": "ansible", "category": "storage",      "description": "SMART attribute reporting across all drives",
+      "redfish_endpoints": ["/redfish/v1/Systems/1/Storage/1"], "redfish_fields": ["Drives"],
+      "last_modified": "2025-10-08", "owner": "automation-team", "lines_of_code": 187, "redfish_v1.16_breaking": false },
+
+    { "file": "memory_health_check.yml",          "type": "ansible", "category": "memory",       "description": "ECC error reporting + memory health",
+      "redfish_endpoints": ["/redfish/v1/Systems/1/Memory"], "redfish_fields": ["MemorySummary"],
+      "last_modified": "2025-08-30", "owner": "automation-team", "lines_of_code": 224, "redfish_v1.16_breaking": false },
+
+    { "file": "rollback_to_checkpoint.yml",       "type": "ansible", "category": "upgrade",      "description": "Roll back firmware to the last good BMC snapshot",
+      "redfish_endpoints": ["/redfish/v1/UpdateService"], "redfish_fields": ["FirmwareInventory"],
+      "last_modified": "2025-12-09", "owner": "cert-team", "lines_of_code": 412, "redfish_v1.16_breaking": false },
+
+    { "file": "caas_drain.yml",                   "type": "ansible", "category": "upgrade",      "description": "Drain CaaS workloads before maintenance window",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-11-15", "owner": "platform-team", "lines_of_code": 287, "redfish_v1.16_breaking": false },
+
+    { "file": "caas_uncordon.yml",                "type": "ansible", "category": "upgrade",      "description": "Uncordon CaaS workloads after maintenance",
+      "redfish_endpoints": [], "redfish_fields": [],
+      "last_modified": "2025-11-15", "owner": "platform-team", "lines_of_code": 187, "redfish_v1.16_breaking": false },
+
+    { "file": "firmware_apply_24_12.yml",         "type": "ansible", "category": "upgrade",      "description": "Apply Wind River 24.12 firmware via BMC update",
+      "redfish_endpoints": ["/redfish/v1/UpdateService"], "redfish_fields": ["FirmwareInventory"],
+      "last_modified": "2025-12-20", "owner": "cert-team", "lines_of_code": 421, "redfish_v1.16_breaking": false },
+
+    { "file": "firmware_apply_24_06.yml",         "type": "ansible", "category": "upgrade",      "description": "Apply Wind River 24.06 firmware via BMC update",
+      "redfish_endpoints": ["/redfish/v1/UpdateService"], "redfish_fields": ["FirmwareInventory"],
+      "last_modified": "2025-09-10", "owner": "cert-team", "lines_of_code": 412, "redfish_v1.16_breaking": false },
+
+    { "file": "firmware_apply_24_01.yml",         "type": "ansible", "category": "upgrade",      "description": "Apply Wind River 24.01 firmware via BMC update",
+      "redfish_endpoints": ["/redfish/v1/UpdateService"], "redfish_fields": ["FirmwareInventory"],
+      "last_modified": "2025-04-22", "owner": "cert-team", "lines_of_code": 387, "redfish_v1.16_breaking": false },
+
+    { "file": "post_upgrade_smoke.robot",         "type": "robot",   "category": "upgrade",      "description": "Post-upgrade smoke suite — runs 12 quick assertions",
+      "redfish_endpoints": ["/redfish/v1/Systems/1", "/redfish/v1/Chassis/1/Thermal"], "redfish_fields": ["PowerState", "FanSpeeds"],
+      "last_modified": "2025-12-09", "owner": "cert-team", "lines_of_code": 312, "redfish_v1.16_breaking": true }
+  ],
+  "summary": {
+    "total_scripts":           47,
+    "total_ansible":           24,
+    "total_robot":             23,
+    "redfish_v1.16_breaking_count": 14,
+    "by_category": {
+      "health_check":   2, "upgrade":     11, "wave_planning": 2,
+      "regression":     3, "monitoring":   3, "openshift":     4,
+      "boot":           2, "rt_kernel":    2, "security":      5,
+      "bmc":            2, "ran":          4, "oam":           2,
+      "storage":        2, "memory":       1, "network":       2
+    }
+  }
+}

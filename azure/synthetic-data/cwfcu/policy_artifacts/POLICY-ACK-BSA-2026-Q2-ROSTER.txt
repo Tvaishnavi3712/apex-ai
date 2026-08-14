@@ -1,0 +1,98 @@
+POLICY ACKNOWLEDGMENT ROSTER — BSA/AML TRAINING 2026
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+Policy: P-COMP-201 (BSA/AML Updated Procedures · Annual)
+Reporting Period: 2026 Annual Training Cycle
+═══════════════════════════════════════════════════════════════
+
+Tracking Source:       APEX Policy & HR Agent · v2.4.1
+Generated:             2026-06-04 09:00 ET (daily refresh)
+NCUA Exam Folder:      ncua-exam-2026/hr_policy/training_records/2026/
+
+──────── PROGRAM SUMMARY ────────
+Total Employees:       84
+Completed:             62 (74%)
+Outstanding:           22
+Original Deadline:     2026-05-31
+Reminders Sent:        2 rounds (May 31 + Jun 3)
+Escalation Trigger:    Jun 10 (to dept managers)
+Final Deadline:        2026-07-15 (NCUA exam window opens Jul 21)
+
+──────── COMPLETED (62) — BY DEPARTMENT ────────
+Lending (12 of 12 · 100%):
+  ✓ Patel, A.  ✓ Mendez, C.  ✓ Greene, J.  ✓ Holloway, M.  ✓ Singer, K.
+  ✓ Patel, S.  ✓ Williams, A. ✓ Chen, R.   ✓ Rosales, E.  ✓ Brown, P.
+  ✓ Garcia, T. ✓ Johnson, L.
+
+Operations (24 of 24 · 100%):
+  ✓ Rodriguez, M. ✓ Okafor, A. ✓ Walsh, B. ✓ Park, J. ✓ + 20 others
+
+Member Services (23 of 24 · 96%):
+  ✓ 23 acknowledged
+  ✗ 1 OUTSTANDING: Carter, R.
+
+IT / InfoSec (6 of 6 · 100%):
+  ✓ Vargas, D. ✓ Singh, R. ✓ + 4 others
+
+Compliance (4 of 4 · 100%):
+  ✓ Williams, A. ✓ Bryant, N. ✓ Kim, M. ✓ Lopez, F.
+
+Branch (Tellers, 9 of 14 · 64%):
+  ✓ 9 acknowledged · 5 OUTSTANDING
+
+Collections (2 of 2 · 100%)
+Executive (5 of 5 · 100%)
+
+──────── OUTSTANDING (22) — BY DEPARTMENT ────────
+Member Services (1):
+  ✗ Carter, R. (Member Rep · South Bend)
+
+Branch / Tellers (18) — HIGHEST RISK ROLE:
+  ✗ Murphy, K. (Teller · South Bend)
+  ✗ Diaz, L. (Teller · South Bend)
+  ✗ Thompson, B. (Teller · Mishawaka)
+  ✗ Watson, T. (Teller · Mishawaka)
+  ✗ Hernandez, R. (Teller · Mishawaka)
+  ✗ Webb, K. (Teller · Mishawaka)
+  ✗ Olsen, P. (Teller · Granger)
+  ✗ Reilly, S. (Teller · Granger)
+  ✗ Powell, J. (Teller · Granger)
+  ✗ Coleman, D. (Teller · Granger)
+  ✗ Stewart, J. (Teller · Elkhart)
+  ✗ Adams, B. (Teller · Elkhart)
+  ✗ Carlson, M. (Teller · Elkhart)
+  ✗ Edwards, T. (Teller · Elkhart)
+  ✗ Quintero, A. (Teller · Elkhart)
+  ✗ Howard, J. (Sr Teller · South Bend)
+  ✗ Hayes, D. (Sr Teller · Mishawaka)
+  ✗ Bell, S. (Sr Teller · Granger)
+
+Loan Officers (2):
+  ✗ Reeves, A.  ✗ Bostick, T.
+
+Collections (1):
+  ✗ Pearson, M.
+
+──────── REMINDER STATUS ────────
+Cycle 1 sent:          2026-05-25  (early notice · 32 outstanding)
+Cycle 2 sent:          2026-05-31  (deadline · 28 outstanding)
+Cycle 3 sent:          2026-06-03  (overdue · 22 outstanding)
+Cycle 4 scheduled:     2026-06-10  (manager escalation)
+Final escalation:      2026-06-17  (to VP Operations · Rodriguez, M.)
+Forecast completion:   18/22 by Jun 10 · 22/22 by Jun 17 (per pace model)
+
+──────── NCUA EXAM IMPACT ────────
+Policy & HR contribution to NCUA exam readiness: 88%
+This roster's contribution if all 22 complete: +9 pts → 97%
+Required by NCUA exam window: ALL 22 complete by Jul 15
+
+──────── HAND-OFF NOTES ────────
+→ Compliance Agent:    Notified · BSA program effectiveness depends on 100%
+→ Branch Managers:     CC'd on Jun 10 escalation
+→ HR Director:         Final escalation Jun 17 (if needed)
+
+──────── AUDIT TRAIL ────────
+Each acknowledgment: DocuSign signature + IP + timestamp + module score
+Module pass score:   ≥ 80% (12 of 15 questions)
+Avg score (62 complete): 91.4%
+Avg time-to-complete:    47 min (target 45-60 min)

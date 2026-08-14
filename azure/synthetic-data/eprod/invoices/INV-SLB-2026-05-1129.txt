@@ -1,0 +1,53 @@
+================================================================================
+                            SCHLUMBERGER TECHNOLOGY CORPORATION
+                                  5599 San Felipe St.
+                                  Houston, TX 77056
+                       Tax ID: 75-1004429   Phone: (713) 513-2000
+================================================================================
+
+INVOICE
+
+Invoice No:        INV-SLB-2026-05-1129
+Invoice Date:      05/14/2026
+Service Period:    04/15/2026 - 05/12/2026
+Customer PO:       PO-2026-CHEM-0892
+Project:           NGL Flow Assurance Program - Mont Belvieu Hub
+Terms:             Net 30
+Due Date:          06/13/2026
+
+Bill To:
+    Enterprise Products Partners L.P.
+    Accounts Payable Dept.
+    1100 Louisiana Street, 10th Floor
+    Houston, TX 77002
+
+Remit To: Schlumberger - Lockbox 732149, Dallas TX 75373-2149
+Wire: JPMorgan Chase, Acct ********4218, ABA 021000021
+
+--------------------------------------------------------------------------------
+LN   DESCRIPTION                                       QTY   UOM     AMOUNT
+--------------------------------------------------------------------------------
+ 1   Corrosion Coupon Pull & Lab Analysis (LPR),       48    each      28,800.00
+     14 monitoring stations, ethane-propane service          @ 600.00
+ 2   Flow Assurance Modeling - OLGA simulation,        220   hours     74,800.00
+     Mont Belvieu - Sweeny corridor, multiphase             @ 340.00/hr
+ 3   Hydrate Inhibitor Field Trial (MEG),               1    lot      112,500.00
+     2-week pilot, 18" Y-grade line MP-104 to MP-127
+ 4   Real-time Multiphase Flow Meter Calibration       12    units     43,200.00
+     (Vx-Spectra), pump-station discharge                   @ 3,600.00
+ 5   Iron-Sulfide Solids Characterization,              1    project   38,000.00
+     XRD + SEM analysis, 6 sample matrices
+ 6   Engineering Report & Mitigation Roadmap,           1    deliv.   115,000.00
+     "Sweeny-MtBV Internal Corrosion Strategy 2026"
+--------------------------------------------------------------------------------
+                                              Subtotal:      412,300.00
+                                              Tax (Resale Cert on file):  0.00
+                                              TOTAL DUE:    USD 412,300.00
+================================================================================
+
+Notes: Deliverables uploaded to Enterprise SharePoint > Integrity > 2026 > Q2.
+Field samples retained at SLB Sugar Land lab for 12 months per procedure
+QA-MID-2415. Invoice covers all rates per agreed work scope dated 03/28/2026.
+
+Inquiries: midstream-ar.houston@slb.com
+================================================================================

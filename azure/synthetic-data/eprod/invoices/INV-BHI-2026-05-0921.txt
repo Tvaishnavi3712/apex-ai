@@ -1,0 +1,55 @@
+================================================================================
+                              BAKER HUGHES OILFIELD OPERATIONS LLC
+                                17021 Aldine Westfield Rd
+                                   Houston, TX 77073
+                       Tax ID: 76-0207995   Phone: (713) 439-8600
+================================================================================
+
+INVOICE
+
+Invoice #:         INV-BHI-2026-05-0921
+Date Issued:       05/19/2026
+Customer:          Enterprise Products Operating LLC
+PO Number:         PO-2026-OPS-2189
+Ship-To Site:      Sealy Compressor Station, Sealy TX 77474
+Terms:             Net 30
+Due Date:          06/18/2026
+
+Bill To:
+    Enterprise Products Operating LLC
+    Attn: AP - Operations & Maintenance
+    P.O. Box 4324
+    Houston, TX 77210-4324
+
+--------------------------------------------------------------------------------
+LN  P/N / DESCRIPTION                              QTY   UNIT $   EXT $
+--------------------------------------------------------------------------------
+ 1  Centrifugal Compressor Impeller, PCL-803,        2    18,400   36,800.00
+    stage-2 replacement, P/N BH-IMP-803-S2
+ 2  Dry Gas Seal Cartridge Assembly (tandem),        4    11,250   45,000.00
+    P/N BH-DGS-T22-7B, OEM rebuild
+ 3  Magnetic Bearing Sensor Kit, axial,              6     2,850   17,100.00
+    P/N BH-MBS-AX-04
+ 4  Lube Oil Filter Element, 10-micron,             24       175    4,200.00
+    P/N BH-LOF-10M-A
+ 5  Field Service Engineer - mechanical,            96       235   22,560.00
+    onsite overhaul support, day rate hourly basis
+ 6  Vibration Analysis (Bently Nevada 3500),         1     8,400    8,400.00
+    pre/post-overhaul baseline, full train
+ 7  Rotor Balance Service (offsite),                 2     6,800   13,600.00
+    Houston Service Center, ISO 1940/1 G2.5
+ 8  Freight - Sealy TX, expedited,                   1     9,090    9,090.00
+    HazClass non-regulated
+--------------------------------------------------------------------------------
+                                              Subtotal:      156,750.00
+                                              TX Sales Tax (resale): 0.00
+                                              TOTAL DUE:    USD 156,750.00
+================================================================================
+
+Warranty: 12 months on rebuilt components per Baker Hughes Standard Terms
+(BHST-2024). All work documented in Service Report SR-26-0814 transmitted to
+operations.sealy@eprod.com.
+
+Remit: Baker Hughes - Dept CH 14068, Palatine IL 60055-4068
+Ref invoice number on all payments.
+================================================================================

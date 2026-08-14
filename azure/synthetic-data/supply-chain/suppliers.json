@@ -1,0 +1,94 @@
+[
+  {
+    "supplier_id": "SUP-0044",
+    "name": "Chemours Vinyl Resins",
+    "material_ids": [
+      "VR-4400"
+    ],
+    "role": "Primary",
+    "country": "USA",
+    "on_time_pct": 94.0,
+    "qc_pass_pct": 99.1,
+    "lead_time_days_avg": 12,
+    "lead_time_days_stddev": 2.1,
+    "risk_score": "Low",
+    "risk_trend": "stable",
+    "credit_rating": "A-",
+    "yoy_price_change_pct": 3.2,
+    "last_qc_test": "2026-04-15"
+  },
+  {
+    "supplier_id": "SUP-0081",
+    "name": "Formosa Plastics Corp",
+    "material_ids": [
+      "VR-4400"
+    ],
+    "role": "Secondary",
+    "country": "Taiwan",
+    "on_time_pct": 81.0,
+    "qc_pass_pct": 93.4,
+    "lead_time_days_avg": 28,
+    "lead_time_days_stddev": 6.4,
+    "risk_score": "High",
+    "risk_trend": "declining",
+    "credit_rating": "BBB",
+    "yoy_price_change_pct": -1.1,
+    "last_qc_test": "2026-04-18",
+    "notes": "QC pass rate has declined 3 consecutive lots; 61% probability of non-conforming next shipment."
+  },
+  {
+    "supplier_id": "SUP-0102",
+    "name": "Novelis Inc.",
+    "material_ids": [
+      "AL-2024"
+    ],
+    "role": "Primary",
+    "country": "USA",
+    "on_time_pct": 97.0,
+    "qc_pass_pct": 98.8,
+    "lead_time_days_avg": 9,
+    "lead_time_days_stddev": 1.4,
+    "risk_score": "Low",
+    "risk_trend": "improving",
+    "credit_rating": "A",
+    "yoy_price_change_pct": 6.0,
+    "last_qc_test": "2026-04-19"
+  },
+  {
+    "supplier_id": "SUP-0113",
+    "name": "Nucor Steel",
+    "material_ids": [
+      "ST-1008"
+    ],
+    "role": "Primary",
+    "country": "USA",
+    "on_time_pct": 99.0,
+    "qc_pass_pct": 99.7,
+    "lead_time_days_avg": 7,
+    "lead_time_days_stddev": 0.9,
+    "risk_score": "Very Low",
+    "risk_trend": "stable",
+    "credit_rating": "A+",
+    "yoy_price_change_pct": 1.8,
+    "last_qc_test": "2026-04-20"
+  },
+  {
+    "supplier_id": "SUP-0119",
+    "name": "Westlake Chemical Corp",
+    "material_ids": [
+      "VR-4400",
+      "PVC-7700"
+    ],
+    "role": "Primary",
+    "country": "USA",
+    "on_time_pct": 94.0,
+    "qc_pass_pct": 99.1,
+    "lead_time_days_avg": 11,
+    "lead_time_days_stddev": 1.7,
+    "risk_score": "Low",
+    "risk_trend": "stable",
+    "credit_rating": "A-",
+    "yoy_price_change_pct": 2.4,
+    "last_qc_test": "2026-04-17"
+  }
+]

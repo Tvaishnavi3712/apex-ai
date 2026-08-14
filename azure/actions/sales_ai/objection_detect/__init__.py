@@ -1,0 +1,1 @@
+"""objection_detect factory"""

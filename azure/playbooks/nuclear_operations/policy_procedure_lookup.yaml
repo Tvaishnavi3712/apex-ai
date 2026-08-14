@@ -1,0 +1,69 @@
+name: policy_procedure_lookup
+version: "1.0.0"
+description: "ChatSTP UC-1 — answer engineer questions about HR policies, plant procedures and Tech Specs with verbatim citations."
+industry: nuclear_operations
+category: knowledge_retrieval
+
+intent: |
+  When a user asks a natural-language question about an STP policy
+  (STP-4xx series), an operating procedure (0POP-...), a PM procedure
+  (0PMP-...), or Tech Spec section, retrieve the most relevant section
+  text and present it with the document header (doc_number, section,
+  effective_date, owner) cited verbatim. NEVER paraphrase the cited text.
+
+  Example user prompts the playbook resolves:
+    "What is the max meal allowance for site-meeting business travel?"
+    "Per Tech Spec 3.4.5, when must ESW be operable?"
+    "Is overtime over 16 hours allowed without manager approval?"
+
+output:
+  - name: cited_answer
+    type: structured_data
+    description: "{ doc_number, section, verbatim_text, citation_string, effective_date, owner }"
+  - name: source_pdf
+    type: document_link
+    description: "S3 link to the underlying policy PDF for the audience to verify"
+
+context:
+  business_rules:
+    - "Cite the doc header (doc_number, section, effective_date) verbatim — do not invent or paraphrase."
+    - "If the corpus contains no matching section above the relevance threshold, say 'no policy on file' rather than fabricate."
+    - "Tech Spec citations are public; HR policies are Internal — surface the nrc_classification chip on the response."
+
+actions:
+  - name: intent_classify
+    action_id: nuclear_operations.intent_classify
+    description: "Classify the user query — confirms it's a policy lookup and not a maintenance / predictive question."
+    required: true
+  - name: policy_search
+    action_id: nuclear_operations.policy_search
+    description: "Rank policy/procedure sections by relevance to the user query."
+    required: true
+  - name: policy_cite_extract
+    action_id: nuclear_operations.policy_cite_extract
+    description: "Pull the verbatim text of the top section for citation."
+    required: true
+
+recipe: |
+  1. Run `intent_classify` on the user query. If intent != "policy_lookup",
+     bail out and return control to ChatSTP router.
+  2. Call `policy_search` with the query. Take the top result's doc_id +
+     section.
+  3. Call `policy_cite_extract` with (doc_id, original query as topic) to
+     get the verbatim text + citation_string.
+  4. Format the response:
+       <verbatim_text>
+       Source: <citation_string> · effective <effective_date> · owner: <owner>
+  5. Attach the PDF link from the cover_sheet_data when available.
+
+triggers:
+  - type: chat_message
+    routed_by: chatstp_router
+  - type: api_invoke
+    endpoint: /api/v1/agents/PolicyAgent/invoke
+
+foundry_agent: apex-stp-policy-agent
+governance:
+  audit_log: true
+  human_review_threshold: 0.0
+  citation_required: true

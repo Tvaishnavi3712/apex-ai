@@ -1,0 +1,77 @@
+{
+  "_metadata": {
+    "blueprint": "apex-patient-intake-v1",
+    "document_type": "patient_intake",
+    "extraction_date": "2024-01-15T08:30:00Z",
+    "confidence_score": 0.96,
+    "source_file": "patient_intake_form.pdf"
+  },
+  "patient_info": {
+    "first_name": "Sarah",
+    "middle_name": "Lynn",
+    "last_name": "Williams",
+    "date_of_birth": "1982-09-14",
+    "ssn_last_four": "4521",
+    "gender": "Female",
+    "preferred_language": "English",
+    "marital_status": "Married"
+  },
+  "contact_info": {
+    "address": "789 Maple Avenue, Apt 4B",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": "60614",
+    "home_phone": "312-555-7890",
+    "mobile_phone": "312-555-7891",
+    "email": "swilliams@email.com",
+    "preferred_contact": "Mobile"
+  },
+  "emergency_contact": {
+    "name": "Michael Williams",
+    "relationship": "Spouse",
+    "phone": "312-555-7892"
+  },
+  "insurance": {
+    "primary": {
+      "company": "Aetna",
+      "plan_name": "PPO Choice",
+      "member_id": "W123456789",
+      "group_number": "AET-98765",
+      "subscriber_name": "Sarah Williams",
+      "subscriber_dob": "1982-09-14",
+      "relationship": "Self"
+    },
+    "secondary": null
+  },
+  "medical_history": {
+    "conditions": ["Hypertension", "Seasonal allergies"],
+    "surgeries": [
+      {"procedure": "Appendectomy", "year": 2005}
+    ],
+    "hospitalizations": [],
+    "family_history": {
+      "diabetes": "Father",
+      "heart_disease": "Grandfather",
+      "cancer": null
+    }
+  },
+  "medications": [
+    {"name": "Lisinopril", "dosage": "10mg", "frequency": "Daily"},
+    {"name": "Zyrtec", "dosage": "10mg", "frequency": "As needed"}
+  ],
+  "allergies": [
+    {"allergen": "Penicillin", "reaction": "Hives"},
+    {"allergen": "Shellfish", "reaction": "Anaphylaxis"}
+  ],
+  "pharmacy": {
+    "name": "Walgreens",
+    "address": "123 State St, Chicago, IL",
+    "phone": "312-555-3456"
+  },
+  "consent": {
+    "hipaa_acknowledgment": true,
+    "treatment_consent": true,
+    "financial_responsibility": true,
+    "signature_date": "2024-01-15"
+  }
+}

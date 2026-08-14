@@ -1,0 +1,115 @@
+playbook_id: pb-eprod-5
+name: ferc_tariff_sheet_validation
+version: "1.0.0"
+description: "WOW · Extract effective FERC tariff + validate every shipper invoice line against gas-day-effective rates. Calculate monthly overbilling exposure."
+industry: oil_gas_midstream
+category: regulatory_compliance
+
+intent: |
+  Track every FERC tariff filing for the pipelines EPROD ships on
+  (Enterprise NGL, Seaway Crude, Acadian Gas, Panhandle Eastern, Texas
+  Eastern). Index the BLS PPI-FG series for next-cycle rate prediction
+  (annual July 1 indexed adjustment). For every shipper invoice line,
+  resolve the gas-day-effective tariff and validate the billed rate.
+  Flag any rate > 1.5% above the effective FERC rate as overbilling.
+  Compute rolling monthly overbilling exposure across all pipelines and
+  surface to Treasury + Regulatory Affairs. Critical variances escalate
+  to a Compliance Director with the FERC docket and tariff page cited.
+
+output:
+  - name: ferc_tariff_index
+    type: structured_data
+    description: "Indexed FERC tariff sheets with effective_date windows + rate schedules"
+  - name: invoice_validation_report
+    type: structured_data
+    description: "Per-line rate validation with FERC docket citation"
+  - name: monthly_overbilling_exposure
+    type: structured_data
+    description: "Rolling monthly USD exposure across pipelines"
+  - name: escalation_packet
+    type: document_pack
+    description: "Director-ready packet with docket, tariff page, variance"
+
+context:
+  business_rules:
+    - "Every shipper invoice line must match a gas-day-effective FERC tariff"
+    - "Billed rate > 1.5% above FERC rate = flagged overbilling"
+    - "PPI-FG indexed adjustments take effect every July 1"
+    - "Reservation + commodity charges validated independently"
+    - "Director escalation required for monthly exposure > $250K"
+
+actions:
+  - name: extract_ferc_tariff
+    action_id: oil_gas_midstream.extract_ferc_tariff
+    description: "BDA extraction of FERC tariff sheet — rate schedules + effective dates"
+    required: true
+  - name: index_ppi_fg
+    action_id: oil_gas_midstream.index_ppi_fg
+    description: "Index BLS PPI-FG series for July 1 rate prediction"
+    required: true
+  - name: lookup_gas_day_rate
+    action_id: oil_gas_midstream.lookup_gas_day_rate
+    description: "Resolve the effective tariff rate for a specific gas day + zone"
+    required: true
+  - name: validate_shipper_invoice_rate
+    action_id: oil_gas_midstream.validate_shipper_invoice_rate
+    description: "Compare billed rate vs gas-day-effective FERC rate"
+    required: true
+  - name: compute_variance
+    action_id: oil_gas_midstream.compute_variance
+    description: "Per-line variance % vs FERC; flag if > 1.5%"
+    required: true
+  - name: compute_monthly_exposure
+    action_id: oil_gas_midstream.compute_monthly_exposure
+    description: "Aggregate USD overbilling across all flagged lines per month"
+    required: true
+  - name: escalate_hitl
+    action_id: oil_gas_midstream.escalate_hitl
+    description: "Director escalation with docket + tariff page citation"
+    required: true
+
+recipe: |
+  ## EPROD FERC Tariff Sheet Validation Recipe (WOW use case)
+
+  ### Step 1 · EXTRACT — extract_ferc_tariff
+  - Source: FERC.gov filing alerts → S3 ingestion of tariff PDFs
+  - Capture: docket, pipeline, zones, rate schedules, effective_date
+  - BDA blueprint: bp-eprod-tariff (15 fields)
+
+  ### Step 2 · INDEX — index_ppi_fg
+  - Pull BLS PPI-FG monthly series
+  - Compute YoY index → forecast July 1 annual adjustment
+  - Persist forecast for next-cycle exposure modeling
+
+  ### Step 3 · LOOKUP — lookup_gas_day_rate
+  - For each shipper invoice line: resolve effective tariff for gas_day + zone
+  - Apply reservation + commodity rate components separately
+
+  ### Step 4 · VALIDATE — validate_shipper_invoice_rate
+  - Compare billed_rate vs effective_ferc_rate
+  - Apply tolerance: 1.5% (FERC settlement convention)
+
+  ### Step 5 · COMPUTE — compute_variance
+  - Per-line variance_pct + variance_usd
+  - Flag any line > 1.5%
+
+  ### Step 6 · AGGREGATE — compute_monthly_exposure
+  - Sum variance_usd across all flagged lines per month + pipeline
+  - Trend rolling 6-month exposure
+
+  ### Step 7 · ESCALATE — escalate_hitl
+  - If monthly exposure > $250K → director_packet with docket + page citations
+  - Treasury + Regulatory Affairs notified
+
+triggers:
+  - type: blob_event
+    bucket: apex-eprod-ferc-tariffs
+    prefix: tariffs/
+    events: ["s3:ObjectCreated:*"]
+  - type: schedule
+    cron: "0 6 1 * *"
+    description: "Monthly exposure aggregation on the 1st of each month"
+
+metadata:
+  created_by: apex-platform
+  tags: [eprod, oil_gas_midstream, ferc, regulatory, wow]

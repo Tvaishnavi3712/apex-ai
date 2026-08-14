@@ -1,0 +1,66 @@
+{
+  "blueprintName": "apex-patient-intake-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from patient intake forms for registration",
+  "industry": "healthcare_providers",
+  "documentType": "patient_intake",
+  "documentSchema": {
+    "class": "ApexPatientIntake",
+    "description": "Patient intake form extraction for provider registration",
+    "definitions": {
+      "INSURANCE_INFO": {
+        "properties": {
+          "payer_name": {"type": "string", "inferenceType": "explicit"},
+          "member_id": {"type": "string", "inferenceType": "explicit"},
+          "group_number": {"type": "string", "inferenceType": "explicit"},
+          "subscriber_name": {"type": "string", "inferenceType": "explicit"},
+          "subscriber_relationship": {"type": "string", "inferenceType": "explicit"},
+          "subscriber_dob": {"type": "string", "inferenceType": "explicit"}
+        }
+      },
+      "EMERGENCY_CONTACT": {
+        "properties": {
+          "name": {"type": "string", "inferenceType": "explicit"},
+          "relationship": {"type": "string", "inferenceType": "explicit"},
+          "phone": {"type": "string", "inferenceType": "explicit"}
+        }
+      }
+    },
+    "properties": {
+      "patient_first_name": {"type": "string", "inferenceType": "explicit"},
+      "patient_last_name": {"type": "string", "inferenceType": "explicit"},
+      "patient_middle_name": {"type": "string", "inferenceType": "explicit"},
+      "date_of_birth": {"type": "string", "inferenceType": "explicit"},
+      "ssn_last_four": {"type": "string", "inferenceType": "explicit"},
+      "gender": {"type": "string", "inferenceType": "explicit"},
+      "address": {"type": "string", "inferenceType": "explicit"},
+      "city": {"type": "string", "inferenceType": "explicit"},
+      "state": {"type": "string", "inferenceType": "explicit"},
+      "zip_code": {"type": "string", "inferenceType": "explicit"},
+      "phone_home": {"type": "string", "inferenceType": "explicit"},
+      "phone_mobile": {"type": "string", "inferenceType": "explicit"},
+      "email": {"type": "string", "inferenceType": "explicit"},
+      "preferred_contact_method": {"type": "string", "inferenceType": "explicit"},
+      "marital_status": {"type": "string", "inferenceType": "explicit"},
+      "employer_name": {"type": "string", "inferenceType": "explicit"},
+      "employer_phone": {"type": "string", "inferenceType": "explicit"},
+      "primary_insurance": {"type": "object", "items": {"$ref": "#/definitions/INSURANCE_INFO"}},
+      "secondary_insurance": {"type": "object", "items": {"$ref": "#/definitions/INSURANCE_INFO"}},
+      "emergency_contacts": {"type": "array", "items": {"$ref": "#/definitions/EMERGENCY_CONTACT"}},
+      "primary_care_physician": {"type": "string", "inferenceType": "explicit"},
+      "referring_physician": {"type": "string", "inferenceType": "explicit"},
+      "pharmacy_name": {"type": "string", "inferenceType": "explicit"},
+      "pharmacy_phone": {"type": "string", "inferenceType": "explicit"},
+      "allergies": {"type": "array", "items": {"type": "string"}},
+      "current_medications": {"type": "array", "items": {"type": "string"}},
+      "medical_conditions": {"type": "array", "items": {"type": "string"}},
+      "surgical_history": {"type": "array", "items": {"type": "string"}},
+      "family_history": {"type": "string", "inferenceType": "explicit"},
+      "hipaa_consent_signed": {"type": "boolean", "inferenceType": "explicit"},
+      "financial_responsibility_signed": {"type": "boolean", "inferenceType": "explicit"},
+      "signature_date": {"type": "string", "inferenceType": "explicit"}
+    }
+  },
+  "extractionRules": {"dateFormat": "MM/DD/YYYY", "confidenceThreshold": 0.85},
+  "outputConfiguration": {"includeConfidenceScores": true}
+}

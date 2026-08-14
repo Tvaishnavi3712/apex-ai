@@ -1,0 +1,92 @@
+================================================================================
+                            TARGA RESOURCES CORP.
+                          (Operator - Mont Belvieu Storage JV)
+                          811 Louisiana Street, Suite 2100
+                                Houston, TX 77002
+                                Tax ID: 20-3701075
+================================================================================
+
+                    JOINT INTEREST BILLING STATEMENT (JIB)
+
+JIB Statement No:        JIB-TARGA-MONT-BELVIEU-2026-03
+Billing Month:           March 2026
+Issue Date:              April 22, 2026
+Property:                Mont Belvieu Storage JV (Caverns MBV-4, MBV-5, MBV-6)
+Property Code:           MBV-STOR-JV
+Operating Agreement:     JOA dated June 1, 2020, as amended Mar 2024
+Non-Operator Billed:     Enterprise Products Operating LLC
+Non-Operator Code:       NON-OP-EPD-022
+Payment Terms:           Net 15 days from receipt
+Due Date:                May 07, 2026
+
+Working Interest Schedule:
+    Non-Operator (EPROD)                              60.0000%
+    Operator (Targa)                                  40.0000%
+
+AFE References:
+    AFE-MTBV-2025-04     Cavern MBV-6 Lifecycle Workover         Active
+    AFE-MTBV-OPS-2026    2026 Operating Budget                    Active
+
+================================================================================
+SECTION A - CAPITAL EXPENDITURES (BILLED 60% TO NON-OPERATOR)
+================================================================================
+
+Ln  AFE                Description                          Gross    EPROD 60%
+--  -----------------  ----------------------------------  ---------  ---------
+ 1  AFE-MTBV-2025-04   Cavern MBV-6 sonar survey,           38,400    23,040
+                       baseline & post-leach comparison
+ 2  AFE-MTBV-2025-04   Brine system pump retrofit -        184,200   110,520
+                       VFD upgrade & motor replacement
+ 3  AFE-MTBV-2025-04   Wellhead Christmas-tree              92,750    55,650
+                       refurbishment, MBV-6A & MBV-6B
+ 4  AFE-MTBV-2025-04   ESD valve replacement (3 units),    134,500    80,700
+                       16" trunnion ball valves
+ 5  AFE-MTBV-2025-04   Cathodic protection upgrade -        56,300    33,780
+                       new rectifier station east yard
+
+                                Section A Subtotal:       506,150    303,690
+
+================================================================================
+SECTION B - OPERATING EXPENDITURES (BILLED 60% TO NON-OPERATOR)
+================================================================================
+
+Ln  Account            Description                          Gross    EPROD 60%
+--  -----------------  ----------------------------------  ---------  ---------
+ 6  OP-6100            Operations labor (18 FTE-month)     312,800    187,680
+ 7  OP-6200            Maintenance contract services -      94,200     56,520
+                       routine M&I, brine handling
+ 8  OP-6310            Power purchased (3,840 MWh)          96,000     57,600
+ 9  OP-6400            Brine disposal / makeup water        72,400     43,440
+10  OP-6500            Chemicals - corrosion, biocide       28,900     17,340
+11  OP-6700            Site security, perimeter,            42,500     25,500
+                       gate operations
+12  OP-6900            Operator overhead (COPAS 2005,       46,800     28,080
+                       Schedule A)
+
+                                Section B Subtotal:       693,600    416,160
+
+================================================================================
+SECTION C - SUMMARY & NET DUE
+================================================================================
+
+    Capital Expenditures (Section A) - EPROD share         $ 303,690.00
+    Operating Expenditures (Section B) - EPROD share       $ 416,160.00
+                                                           --------------
+    Total Current Period (March 2026)                      $ 719,850.00
+
+    Plus: Prior period revenue accrual reversal             $   8,420.00
+    Less: Credit - Q1 power true-up                         $ (14,300.00)
+                                                           --------------
+    NET DUE FROM EPROD                                     $ 713,970.00
+
+Remit to:
+    Targa Resources - JIB Settlements
+    P.O. Box 4346, Department 1242, Houston TX 77210-4346
+    Reference: MBV-STOR-JV / JIB 2026-03
+
+================================================================================
+Audit Rights:    Per JOA Section 9.3, Non-Operator retains 24-month audit
+                 window from receipt of this statement.
+Detail Backup:   PDF backup available via Targa Owner Relations Portal.
+Questions:       jib.owner.relations@targaresources.com | (713) 584-1118
+================================================================================

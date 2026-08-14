@@ -1,0 +1,104 @@
+# SolidWorks PDM Replacement - Blob Storage
+# Simulates Essex's CAD data and drawings repository
+# Mode: READ only
+
+connector:
+  id: solidworks_pdm
+  name: "SolidWorks PDM Vault"
+  description: "CAD drawings and technical data (Demo: Blob Storage + Cosmos DB metadata)"
+  type: s3_document_store
+  mode: read
+  industry: aerospace_defense
+  compliance:
+    - ITAR
+    - NIST-800-171
+
+  # Azure Configuration
+  aws:
+    region: us-east-1
+    s3_bucket: apex-demo-cad-vault
+    s3_prefix: drawings/
+
+    # Metadata stored in Cosmos DB for fast queries
+    metadata_table: apex-demo-cad-metadata
+
+  # Document Types
+  document_types:
+    drawing:
+      extensions: [.pdf, .dxf, .dwg]
+      s3_prefix: drawings/
+      metadata_fields:
+        - part_number
+        - revision
+        - description
+        - material
+        - created_date
+        - approved_by
+
+    model:
+      extensions: [.sldprt, .sldasm, .step, .iges]
+      s3_prefix: models/
+      metadata_fields:
+        - part_number
+        - revision
+        - file_size
+        - created_date
+
+    specification:
+      extensions: [.pdf, .docx]
+      s3_prefix: specs/
+      metadata_fields:
+        - spec_number
+        - revision
+        - title
+        - category
+
+  # Operations
+  operations:
+    get_drawing:
+      description: "Retrieve drawing PDF by part number and revision"
+      method: get_object
+      path_template: "drawings/{part_number}/{part_number}_Rev_{revision}.pdf"
+
+    list_revisions:
+      description: "List all revisions for a part number"
+      method: list_objects
+      path_template: "drawings/{part_number}/"
+
+    search_by_material:
+      description: "Find drawings by material type"
+      method: query_metadata
+      table: apex-demo-cad-metadata
+      index: material-index
+
+    get_latest_revision:
+      description: "Get most recent revision of a drawing"
+      method: query_metadata
+      table: apex-demo-cad-metadata
+      sort: revision DESC
+      limit: 1
+
+  # Sample Data Files (to upload for demo)
+  sample_files:
+    - part_number: TG-5842-001
+      revision: D
+      description: "Throttle Grip Assembly, F-35"
+      material: Ti-6Al-4V
+      file: TG-5842-001_Rev_D.pdf
+
+    - part_number: SS-5842-002
+      revision: C
+      description: "Sidestick Grip Assembly, F-35"
+      material: 7075-T6
+      file: SS-5842-002_Rev_C.pdf
+
+    - part_number: CG-7621-001
+      revision: B
+      description: "Collective Grip Assembly, UH-60"
+      material: Ti-6Al-4V
+      file: CG-7621-001_Rev_B.pdf
+
+  # Authentication
+  authentication:
+    type: iam_role
+    managed_identity: <managed-identity>/apex-blob-read

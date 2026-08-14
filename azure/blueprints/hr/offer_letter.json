@@ -1,0 +1,188 @@
+{
+  "blueprintName": "apex-offer-letter-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from employment offer letters",
+  "industry": "hr",
+  "documentType": "offer_letter",
+  "documentSchema": {
+    "class": "ApexOfferLetter",
+    "description": "Apex AI Platform offer letter extraction blueprint for HR",
+    "definitions": {
+      "BENEFIT": {
+        "properties": {
+          "benefit_type": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Type of benefit (health, dental, 401k, etc.)"
+          },
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Description of the benefit"
+          },
+          "eligibility_date": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Date when benefit becomes effective"
+          }
+        }
+      }
+    },
+    "properties": {
+      "candidate_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Name of the candidate receiving the offer"
+      },
+      "candidate_address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Candidate's mailing address"
+      },
+      "offer_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date the offer letter was issued"
+      },
+      "position_title": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Job title being offered"
+      },
+      "department": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Department or team"
+      },
+      "reporting_to": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Name and/or title of direct manager"
+      },
+      "work_location": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Primary work location"
+      },
+      "employment_type": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Employment type (Full-time, Part-time, Contract)"
+      },
+      "start_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Proposed start date"
+      },
+      "base_salary": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Base annual salary amount"
+      },
+      "pay_frequency": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Pay frequency (bi-weekly, monthly, etc.)"
+      },
+      "currency": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Currency of compensation (USD, EUR, etc.)"
+      },
+      "signing_bonus": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "One-time signing bonus amount"
+      },
+      "annual_bonus_target": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Annual bonus target percentage or amount"
+      },
+      "equity_grant": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Stock options or RSU grant details"
+      },
+      "vesting_schedule": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Equity vesting schedule"
+      },
+      "pto_days": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Number of PTO/vacation days"
+      },
+      "benefits": {
+        "type": "array",
+        "instruction": "List of benefits offered",
+        "items": {
+          "$ref": "#/definitions/BENEFIT"
+        }
+      },
+      "relocation_assistance": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Relocation package details if offered"
+      },
+      "offer_expiration_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date by which offer must be accepted"
+      },
+      "contingencies": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Conditions of employment (background check, drug test, etc.)"
+      },
+      "at_will_statement": {
+        "type": "boolean",
+        "inferenceType": "inferred",
+        "instruction": "Does the letter include at-will employment language?"
+      },
+      "company_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Name of the hiring company"
+      },
+      "hr_contact": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "HR contact name for questions"
+      },
+      "hr_email": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "HR contact email"
+      },
+      "total_compensation": {
+        "type": "number",
+        "inferenceType": "inferred",
+        "instruction": "Total first-year compensation estimate"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "currencyFormat": "decimal",
+    "confidenceThreshold": 0.85
+  },
+  "validationRules": [
+    {
+      "name": "salary_positive",
+      "description": "Salary must be positive",
+      "expression": "base_salary > 0"
+    },
+    {
+      "name": "start_date_after_offer",
+      "description": "Start date should be after offer date",
+      "expression": "start_date > offer_date"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "blueprintName": "apex-clinical-notes-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from clinical notes and progress notes",
+  "industry": "healthcare_clinical",
+  "documentType": "clinical_notes",
+  "documentSchema": {
+    "class": "ApexClinicalNotes",
+    "description": "Clinical note extraction for documentation and coding",
+    "definitions": {
+      "VITAL_SIGNS": {
+        "properties": {
+          "blood_pressure": {"type": "string", "inferenceType": "explicit"},
+          "heart_rate": {"type": "number", "inferenceType": "explicit"},
+          "respiratory_rate": {"type": "number", "inferenceType": "explicit"},
+          "temperature": {"type": "number", "inferenceType": "explicit"},
+          "oxygen_saturation": {"type": "number", "inferenceType": "explicit"},
+          "weight": {"type": "string", "inferenceType": "explicit"},
+          "height": {"type": "string", "inferenceType": "explicit"},
+          "bmi": {"type": "number", "inferenceType": "explicit"}
+        }
+      }
+    },
+    "properties": {
+      "note_type": {"type": "string", "inferenceType": "explicit", "instruction": "Progress Note, H&P, Consult, etc."},
+      "patient_name": {"type": "string", "inferenceType": "explicit"},
+      "mrn": {"type": "string", "inferenceType": "explicit"},
+      "date_of_service": {"type": "string", "inferenceType": "explicit"},
+      "provider_name": {"type": "string", "inferenceType": "explicit"},
+      "provider_specialty": {"type": "string", "inferenceType": "explicit"},
+      "chief_complaint": {"type": "string", "inferenceType": "explicit"},
+      "history_of_present_illness": {"type": "string", "inferenceType": "explicit"},
+      "review_of_systems": {"type": "string", "inferenceType": "explicit"},
+      "past_medical_history": {"type": "string", "inferenceType": "explicit"},
+      "medications": {"type": "array", "items": {"type": "string"}},
+      "allergies": {"type": "array", "items": {"type": "string"}},
+      "social_history": {"type": "string", "inferenceType": "explicit"},
+      "family_history": {"type": "string", "inferenceType": "explicit"},
+      "vital_signs": {"type": "object", "items": {"$ref": "#/definitions/VITAL_SIGNS"}},
+      "physical_exam": {"type": "string", "inferenceType": "explicit"},
+      "assessment": {"type": "string", "inferenceType": "explicit"},
+      "diagnoses": {"type": "array", "items": {"type": "string"}},
+      "icd10_codes": {"type": "array", "items": {"type": "string"}},
+      "plan": {"type": "string", "inferenceType": "explicit"},
+      "orders": {"type": "array", "items": {"type": "string"}},
+      "follow_up": {"type": "string", "inferenceType": "explicit"},
+      "time_spent": {"type": "number", "inferenceType": "explicit"},
+      "complexity_level": {"type": "string", "inferenceType": "inferred", "instruction": "E&M complexity"}
+    }
+  },
+  "extractionRules": {"dateFormat": "MM/DD/YYYY", "confidenceThreshold": 0.80},
+  "outputConfiguration": {"includeConfidenceScores": true, "includeRawText": true}
+}

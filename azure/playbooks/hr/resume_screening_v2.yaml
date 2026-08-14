@@ -1,0 +1,674 @@
+# =============================================================================
+# APEX AI Platform - Resume Screening Playbook v2.0
+# =============================================================================
+# Context-Driven Architecture: All business rules live in context section.
+# Actions read from context instead of using hardcoded values.
+# =============================================================================
+
+playbook:
+  name: resume_screening_v2
+  version: "2.0.0"
+  industry: hr
+  category: talent_acquisition
+  description: "Production-ready resume screening with context-driven scoring"
+
+  # ---------------------------------------------------------------------------
+  # Configuration Inheritance
+  # ---------------------------------------------------------------------------
+  inherits:
+    - config/base_configuration.yaml
+
+  # ---------------------------------------------------------------------------
+  # INTENT
+  # ---------------------------------------------------------------------------
+  intent: |
+    Screen incoming resumes through a complete workflow:
+    1. Extract candidate data using AI with confidence thresholds from context
+    2. Normalize skills against taxonomy defined in context
+    3. Match against job requirements using weights from context
+    4. Score candidates using thresholds from context
+    5. Route qualified candidates based on context-driven rules
+    6. Track all decisions for compliance and analytics
+
+  # ---------------------------------------------------------------------------
+  # OUTPUT
+  # ---------------------------------------------------------------------------
+  output:
+    schema:
+      type: object
+      properties:
+        candidate_id:
+          type: string
+        extraction_results:
+          type: object
+        skills_analysis:
+          type: object
+        job_matches:
+          type: array
+        overall_score:
+          type: number
+        screening_decision:
+          type: object
+        routing_info:
+          type: object
+
+  # ===========================================================================
+  # CONTEXT SECTION - ALL BUSINESS RULES LIVE HERE
+  # ===========================================================================
+  context:
+    # -------------------------------------------------------------------------
+    # AWS Resources (environment-parameterized)
+    # -------------------------------------------------------------------------
+    aws_resources:
+      s3_buckets:
+        incoming: "apex-${APEX_ENVIRONMENT}-documents-incoming"
+        processed: "apex-${APEX_ENVIRONMENT}-documents-processed"
+        archive: "apex-${APEX_ENVIRONMENT}-documents-archive"
+      cosmos_containers:
+        candidates: "apex-${APEX_ENVIRONMENT}-candidates"
+        job_requisitions: "apex-${APEX_ENVIRONMENT}-job-requisitions"
+        skills_taxonomy: "apex-${APEX_ENVIRONMENT}-skills-taxonomy"
+        audit_log: "apex-${APEX_ENVIRONMENT}-audit-log"
+      sqs_queues:
+        processing: "apex-${APEX_ENVIRONMENT}-resume-screening-queue"
+        dlq: "apex-${APEX_ENVIRONMENT}-resume-screening-dlq"
+
+    # -------------------------------------------------------------------------
+    # Extraction Configuration
+    # -------------------------------------------------------------------------
+    extraction_config:
+      blueprint_id: "apex-resume-extraction-v2"
+      confidence_thresholds:
+        high: 95
+        acceptable: 80
+        review_required: 65
+        reject: 50
+
+      required_fields:
+        name:
+          type: string
+          confidence_min: 90
+        email:
+          type: email
+          confidence_min: 95
+          validation: "valid email format"
+        phone:
+          type: phone
+          confidence_min: 85
+        experience:
+          type: array
+          min_items: 0
+        education:
+          type: array
+          min_items: 0
+        skills:
+          type: array
+          min_items: 1
+
+      experience_fields:
+        company:
+          type: string
+          required: true
+        title:
+          type: string
+          required: true
+        start_date:
+          type: date
+          required: true
+        end_date:
+          type: date
+          required: false
+        description:
+          type: string
+          required: false
+
+      education_fields:
+        institution:
+          type: string
+          required: true
+        degree:
+          type: string
+          required: true
+        field:
+          type: string
+          required: false
+        graduation_date:
+          type: date
+          required: false
+        gpa:
+          type: number
+          required: false
+
+    # -------------------------------------------------------------------------
+    # Skills Taxonomy and Matching
+    # -------------------------------------------------------------------------
+    skills_config:
+      # Skill categories
+      categories:
+        technical:
+          weight: 1.0
+          examples: ["Python", "Java", "AWS", "SQL", "React"]
+        soft:
+          weight: 0.7
+          examples: ["Leadership", "Communication", "Problem Solving"]
+        industry:
+          weight: 0.9
+          examples: ["Healthcare", "Finance", "Manufacturing"]
+        tools:
+          weight: 0.8
+          examples: ["Salesforce", "SAP", "Jira", "Git"]
+        certifications:
+          weight: 1.0
+          examples: ["PMP", "AWS Certified", "CPA", "CISSP"]
+
+      # Skill aliases for normalization
+      aliases:
+        "JavaScript":
+          - "JS"
+          - "Javascript"
+          - "ECMAScript"
+        "Python":
+          - "python3"
+          - "Python 3"
+          - "py"
+        "Amazon Web Services":
+          - "AWS"
+          - "Amazon AWS"
+        "Machine Learning":
+          - "ML"
+          - "machine learning"
+          - "AI/ML"
+        "PostgreSQL":
+          - "Postgres"
+          - "PSQL"
+        "Kubernetes":
+          - "K8s"
+          - "k8s"
+
+      # Skill proficiency levels
+      proficiency_levels:
+        expert:
+          min_years: 5
+          keywords: ["expert", "lead", "architect", "senior"]
+          score_multiplier: 1.0
+        advanced:
+          min_years: 3
+          keywords: ["advanced", "proficient", "experienced"]
+          score_multiplier: 0.85
+        intermediate:
+          min_years: 1
+          keywords: ["intermediate", "familiar", "working knowledge"]
+          score_multiplier: 0.7
+        beginner:
+          min_years: 0
+          keywords: ["beginner", "learning", "exposure", "basic"]
+          score_multiplier: 0.5
+
+    # -------------------------------------------------------------------------
+    # Scoring Configuration
+    # -------------------------------------------------------------------------
+    scoring_config:
+      # Category weights (must sum to 1.0)
+      weights:
+        required_skills: 0.35
+        preferred_skills: 0.15
+        experience_years: 0.25
+        education: 0.15
+        certifications: 0.10
+
+      # Score thresholds
+      thresholds:
+        excellent:
+          min_score: 85
+          label: "Excellent Match"
+          action: "fast_track"
+          priority: "high"
+        qualified:
+          min_score: 70
+          label: "Qualified"
+          action: "standard_review"
+          priority: "normal"
+        marginal:
+          min_score: 60
+          label: "Marginal"
+          action: "hold_for_pipeline"
+          priority: "low"
+        unqualified:
+          min_score: 0
+          label: "Does Not Meet Requirements"
+          action: "decline"
+          priority: "none"
+
+      # Experience scoring rules
+      experience_rules:
+        exact_match:
+          score: 100
+        within_one_year:
+          score: 90
+        within_two_years:
+          score: 75
+        over_qualified:
+          penalty: 5
+          max_penalty: 15
+        under_qualified:
+          penalty_per_year: 15
+          max_penalty: 50
+
+      # Education scoring rules
+      education_rules:
+        degree_levels:
+          phd:
+            score: 100
+            aliases: ["Ph.D.", "Doctorate", "PhD"]
+          masters:
+            score: 85
+            aliases: ["M.S.", "M.A.", "MBA", "Master's"]
+          bachelors:
+            score: 70
+            aliases: ["B.S.", "B.A.", "Bachelor's", "BS", "BA"]
+          associates:
+            score: 55
+            aliases: ["A.S.", "A.A.", "Associate's"]
+          high_school:
+            score: 40
+            aliases: ["High School", "GED"]
+
+        field_match:
+          exact: 100
+          related: 80
+          unrelated: 50
+
+    # -------------------------------------------------------------------------
+    # Job Requirement Templates
+    # -------------------------------------------------------------------------
+    job_requirements:
+      # Default requirements by job level
+      level_defaults:
+        entry:
+          min_experience_years: 0
+          max_experience_years: 2
+          education_required: "bachelors"
+          education_preferred: "masters"
+        mid:
+          min_experience_years: 3
+          max_experience_years: 6
+          education_required: "bachelors"
+          education_preferred: "masters"
+        senior:
+          min_experience_years: 7
+          max_experience_years: 12
+          education_required: "bachelors"
+          education_preferred: "masters"
+        lead:
+          min_experience_years: 8
+          max_experience_years: 15
+          education_required: "bachelors"
+          education_preferred: "masters"
+        director:
+          min_experience_years: 12
+          max_experience_years: null
+          education_required: "bachelors"
+          education_preferred: "masters"
+
+      # Experience flexibility
+      flexibility:
+        exceptional_skills_offset_years: 2
+        certifications_offset_years: 1
+        advanced_degree_offset_years: 2
+
+    # -------------------------------------------------------------------------
+    # Candidate Routing Configuration
+    # -------------------------------------------------------------------------
+    routing_config:
+      # Assignment rules
+      assignment:
+        by_department: true
+        by_location: true
+        round_robin: true
+        max_queue_size: 50
+
+      # Recruiter capacity
+      recruiter_capacity:
+        max_active_candidates: 30
+        priority_slots: 5
+
+      # Auto-actions
+      auto_actions:
+        acknowledge_candidate: true
+        acknowledge_delay_hours: 24
+        decline_notification: true
+        decline_delay_hours: 48
+
+      # Escalation
+      escalation:
+        high_priority_sla_hours: 24
+        normal_priority_sla_hours: 72
+        escalate_after_breach: true
+
+    # -------------------------------------------------------------------------
+    # Duplicate Detection
+    # -------------------------------------------------------------------------
+    duplicate_detection:
+      enabled: true
+      match_fields:
+        - email
+        - phone
+        - name_fuzzy
+      lookback_days: 365
+      same_job_cooldown_days: 180
+      actions:
+        duplicate_found: "merge_profiles"
+        recent_application: "notify_recruiter"
+        previously_rejected: "flag_for_review"
+
+    # -------------------------------------------------------------------------
+    # Compliance Configuration
+    # -------------------------------------------------------------------------
+    compliance:
+      # EEO compliance
+      eeo:
+        enabled: true
+        blind_screening: true
+        exclude_fields: ["photo", "age", "gender", "race"]
+        collect_voluntary_data: true
+
+      # Data retention
+      retention:
+        active_candidates_days: 365
+        declined_candidates_days: 180
+        hired_candidates_days: 2555
+
+      # Audit
+      audit:
+        log_all_decisions: true
+        require_rejection_reason: true
+        track_source_effectiveness: true
+
+    # -------------------------------------------------------------------------
+    # Notification Configuration
+    # -------------------------------------------------------------------------
+    notifications:
+      channels:
+        email:
+          enabled: true
+          templates_path: "templates/email/hr/"
+        slack:
+          enabled: true
+          channel: "#recruiting"
+        sms:
+          enabled: false
+
+      events:
+        extraction_complete:
+          channels: []
+          recipients: []
+
+        candidate_qualified:
+          channels: ["email", "slack"]
+          recipients: ["recruiter"]
+          include_summary: true
+
+        high_priority_candidate:
+          channels: ["email", "slack"]
+          recipients: ["recruiter", "hiring_manager"]
+          urgent: true
+
+        candidate_declined:
+          channels: ["email"]
+          recipients: ["candidate"]
+          delay_hours: 48
+          template: "candidate_declined"
+
+        duplicate_detected:
+          channels: ["slack"]
+          recipients: ["recruiter"]
+
+    # -------------------------------------------------------------------------
+    # Integration Configuration
+    # -------------------------------------------------------------------------
+    integrations:
+      ats:
+        enabled: true
+        system: "Greenhouse"
+        sync_on_screening: true
+        fields_to_sync:
+          - candidate_id
+          - score
+          - skills
+          - experience_years
+
+      hris:
+        enabled: false
+        system: "Workday"
+
+      background_check:
+        enabled: true
+        provider: "Checkr"
+        auto_initiate_score: 80
+
+  # ===========================================================================
+  # RECIPE
+  # ===========================================================================
+  recipe: |
+    ## Resume Screening Workflow (Context-Driven)
+
+    ### Phase 1: Document Intake
+    1. Receive resume from context.aws_resources.s3_buckets.incoming
+    2. Validate file format (PDF, DOCX, image)
+    3. Generate unique candidate_id for tracking
+    4. Log intake to context.aws_resources.cosmos_containers.audit_log
+
+    ### Phase 2: Data Extraction
+    1. Use blueprint context.extraction_config.blueprint_id
+    2. Extract all fields from context.extraction_config.required_fields
+    3. Apply confidence thresholds from context.extraction_config.confidence_thresholds
+    4. If confidence < context.extraction_config.confidence_thresholds.acceptable:
+       - Flag for human review
+    5. Parse experience entries per context.extraction_config.experience_fields
+    6. Parse education entries per context.extraction_config.education_fields
+
+    ### Phase 3: Skills Normalization
+    1. Map extracted skills using context.skills_config.aliases
+    2. Categorize skills per context.skills_config.categories
+    3. Determine proficiency using context.skills_config.proficiency_levels
+    4. Apply category weights from context.skills_config.categories.{category}.weight
+
+    ### Phase 4: Duplicate Detection
+    If context.duplicate_detection.enabled:
+    1. Check for existing candidate using context.duplicate_detection.match_fields
+    2. If duplicate found, apply context.duplicate_detection.actions.duplicate_found
+    3. If recent application, apply context.duplicate_detection.actions.recent_application
+    4. If previously rejected, apply context.duplicate_detection.actions.previously_rejected
+
+    ### Phase 5: Job Matching
+    1. Retrieve open requisitions from context.aws_resources.cosmos_containers.job_requisitions
+    2. For each requisition, score using context.scoring_config.weights:
+       - Required skills (35%): Match extracted skills to requirements
+       - Preferred skills (15%): Bonus for matching preferred skills
+       - Experience (25%): Apply context.scoring_config.experience_rules
+       - Education (15%): Apply context.scoring_config.education_rules
+       - Certifications (10%): Match certifications from context.skills_config.categories.certifications
+
+    ### Phase 6: Screening Decision
+    1. Compare overall score to context.scoring_config.thresholds
+    2. If score >= context.scoring_config.thresholds.excellent.min_score:
+       - Action: fast_track, Priority: high
+    3. If score >= context.scoring_config.thresholds.qualified.min_score:
+       - Action: standard_review, Priority: normal
+    4. If score >= context.scoring_config.thresholds.marginal.min_score:
+       - Action: hold_for_pipeline, Priority: low
+    5. If score < context.scoring_config.thresholds.marginal.min_score:
+       - Action: decline
+
+    ### Phase 7: Routing
+    1. Apply routing rules from context.routing_config.assignment
+    2. Check recruiter capacity per context.routing_config.recruiter_capacity
+    3. Apply SLA from context.routing_config.escalation
+    4. Create work item with priority from screening decision
+
+    ### Phase 8: Notifications & Completion
+    1. Send notifications per context.notifications.events
+    2. Sync to ATS if context.integrations.ats.enabled
+    3. Archive document per context.compliance.retention
+    4. Log decision for audit per context.compliance.audit
+
+  # ===========================================================================
+  # FACTORY CHAIN
+  # ===========================================================================
+  factory_chain:
+    chainId: resume_screening_chain
+    description: "Context-driven resume screening factory chain"
+    factories:
+      - id: document_intake
+        action: document_intake
+        context_keys: [aws_resources, extraction_config]
+        timeout_seconds: 30
+
+      - id: resume_extract
+        action: resume_extract
+        depends_on: [document_intake]
+        context_keys: [extraction_config]
+        ai_enhanced: true
+        timeout_seconds: 60
+
+      - id: skills_normalize
+        action: skills_normalize
+        depends_on: [resume_extract]
+        context_keys: [skills_config]
+        timeout_seconds: 30
+
+      - id: duplicate_check
+        action: candidate_lookup
+        depends_on: [resume_extract]
+        context_keys: [duplicate_detection, aws_resources]
+        timeout_seconds: 30
+
+      - id: job_match
+        action: job_requirement_match
+        depends_on: [skills_normalize, duplicate_check]
+        context_keys: [job_requirements, scoring_config, aws_resources]
+        ai_enhanced: true
+        timeout_seconds: 60
+
+      - id: candidate_score
+        action: candidate_score
+        depends_on: [job_match]
+        context_keys: [scoring_config]
+        timeout_seconds: 30
+
+      - id: screening_decision
+        action: screening_decision
+        depends_on: [candidate_score]
+        context_keys: [scoring_config, routing_config]
+        timeout_seconds: 30
+
+      - id: routing
+        action: candidate_route
+        depends_on: [screening_decision]
+        context_keys: [routing_config, compliance]
+        timeout_seconds: 30
+
+      - id: notification
+        action: send_notification
+        depends_on: [routing]
+        context_keys: [notifications]
+        timeout_seconds: 30
+
+      - id: completion
+        action: completion
+        depends_on: [notification]
+        context_keys: [aws_resources, compliance, integrations]
+        timeout_seconds: 30
+
+  # ===========================================================================
+  # ACTIONS
+  # ===========================================================================
+  actions:
+    - id: document_intake
+      handler: core.document_intake
+      description: "Receive and validate resume document"
+
+    - id: resume_extract
+      handler: hr.resume_extract
+      description: "Extract structured data from resume using AI"
+
+    - id: skills_normalize
+      handler: hr.skills_normalize
+      description: "Normalize skills against taxonomy"
+
+    - id: candidate_lookup
+      handler: hr.candidate_lookup
+      description: "Check for duplicate candidates"
+
+    - id: job_requirement_match
+      handler: hr.job_requirement_match
+      description: "Match candidate against job requirements"
+
+    - id: candidate_score
+      handler: hr.candidate_score
+      description: "Calculate overall candidate score"
+
+    - id: screening_decision
+      handler: hr.screening_decision
+      description: "Determine screening outcome"
+
+    - id: candidate_route
+      handler: hr.candidate_route
+      description: "Route candidate to appropriate recruiter"
+
+    - id: send_notification
+      handler: core.send_notification
+      description: "Send notifications"
+
+    - id: completion
+      handler: core.completion
+      description: "Archive and complete processing"
+
+  # ===========================================================================
+  # TRIGGERS
+  # ===========================================================================
+  triggers:
+    - type: s3
+      bucket: "${aws_resources.s3_buckets.incoming}"
+      prefix: "hr/resumes/"
+      events: ["s3:ObjectCreated:*"]
+
+    - type: api
+      path: "/api/v2/hr/screen-resume"
+      methods: ["POST"]
+
+    - type: webhook
+      source: "ats_integration"
+      events: ["resume.received"]
+
+    - type: email
+      address: "careers@${APEX_DOMAIN}"
+      parser: "attachment_extractor"
+
+  # ===========================================================================
+  # WORKER
+  # ===========================================================================
+  worker:
+    queue: "${aws_resources.sqs_queues.processing}"
+    dead_letter_queue: "${aws_resources.sqs_queues.dlq}"
+    concurrency: 20
+    timeout_seconds: 180
+    visibility_timeout: 60
+    max_retries: 3
+    batch_size: 1
+
+  # ===========================================================================
+  # METADATA
+  # ===========================================================================
+  metadata:
+    created_by: apex-platform
+    created_at: "2024-01-15"
+    updated_at: "2025-03-19"
+    version_notes: "v2.0.0 - Context-driven architecture"
+    tags:
+      - recruiting
+      - resume
+      - screening
+      - hr
+      - talent-acquisition
+      - context-driven

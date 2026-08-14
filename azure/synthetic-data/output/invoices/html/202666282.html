@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice 202666282</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            color: #333;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+        .vendor-info {
+            max-width: 300px;
+        }
+        .invoice-info {
+            text-align: right;
+        }
+        .invoice-title {
+            font-size: 32px;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        .invoice-number {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .addresses {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .address-block {
+            width: 45%;
+        }
+        .address-label {
+            font-weight: bold;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .totals {
+            width: 300px;
+            margin-left: auto;
+        }
+        .totals table {
+            margin-bottom: 0;
+        }
+        .totals td {
+            padding: 8px;
+        }
+        .totals .total-row {
+            font-weight: bold;
+            font-size: 18px;
+            background-color: #2c3e50;
+            color: white;
+        }
+        .payment-info {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="vendor-info">
+            <h2 style="margin: 0; color: #2c3e50;">Elite Consulting Group</h2>
+            <p>
+                789 Industrial Way<br>
+                Chicago, IL 60601<br>
+                Phone: (640) 654-8823<br>
+                Email: billing@eliteconsu.com<br>
+                Tax ID: 44-1296466
+            </p>
+        </div>
+        <div class="invoice-info">
+            <div class="invoice-title">INVOICE</div>
+            <div class="invoice-number">
+                Invoice #: 202666282<br>
+                Date: 2026-02-05<br>
+                Due Date: 2026-03-07<br>
+                PO #: PO-189244<br>
+                Terms: NET30
+            </div>
+        </div>
+    </div>
+
+    <div class="addresses">
+        <div class="address-block">
+            <div class="address-label">Bill To:</div>
+            <div>
+                Fabrikam Corp<br>
+                123 Business Park Dr<br>
+                Austin, TX 78701
+            </div>
+        </div>
+        <div class="address-block">
+            <div class="address-label">Ship To:</div>
+            <div>
+                Fabrikam Corp<br>
+                123 Business Park Dr<br>
+                Austin, TX 78701
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Item Code</th>
+                <th>Description</th>
+                <th>Qty</th>
+                <th>Unit Price</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        <tr>
+            <td>1</td>
+            <td>XSL-4466</td>
+            <td>Professional Software License - Annual</td>
+            <td>18</td>
+            <td>$1,887.61</td>
+            <td>$33,976.98</td>
+        </tr>
+        
+        <tr>
+            <td>2</td>
+            <td>ZPZ-8191</td>
+            <td>Training Services - Per Person</td>
+            <td>2</td>
+            <td>$388.49</td>
+            <td>$776.98</td>
+        </tr>
+        
+        <tr>
+            <td>3</td>
+            <td>XMF-7296</td>
+            <td>Office Supplies - Bulk Order</td>
+            <td>13</td>
+            <td>$42.77</td>
+            <td>$556.01</td>
+        </tr>
+        
+        <tr>
+            <td>4</td>
+            <td>QIN-8773</td>
+            <td>Training Services - Per Person</td>
+            <td>14</td>
+            <td>$321.89</td>
+            <td>$4,506.46</td>
+        </tr>
+        
+        <tr>
+            <td>5</td>
+            <td>WTC-7146</td>
+            <td>Cloud Hosting Services - Monthly</td>
+            <td>3</td>
+            <td>$796.49</td>
+            <td>$2,389.47</td>
+        </tr>
+        
+        <tr>
+            <td>6</td>
+            <td>BLD-2427</td>
+            <td>Maintenance Support - Annual</td>
+            <td>2</td>
+            <td>$5,166.83</td>
+            <td>$10,333.66</td>
+        </tr>
+        
+        </tbody>
+    </table>
+
+    <div class="totals">
+        <table>
+            <tr>
+                <td>Subtotal:</td>
+                <td style="text-align: right;">$52,539.56</td>
+            </tr>
+            <tr>
+                <td>Tax (10.00%):</td>
+                <td style="text-align: right;">$5,253.96</td>
+            </tr>
+            <tr>
+                <td>Shipping:</td>
+                <td style="text-align: right;">$0.00</td>
+            </tr>
+            <tr class="total-row">
+                <td>Total Due:</td>
+                <td style="text-align: right;">$57,793.52</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="payment-info">
+        <strong>Payment Information:</strong><br>
+        Bank: First National Bank<br>
+        Account: ****1234<br>
+        Routing: 021000089<br>
+        <br>
+        Please include invoice number 202666282 with your payment.
+    </div>
+
+    <div class="footer">
+        Thank you for your business!<br>
+        Questions? Contact billing@eliteconsu.com
+    </div>
+</body>
+</html>
+    

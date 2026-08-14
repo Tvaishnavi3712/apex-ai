@@ -1,0 +1,152 @@
+{
+  "_note": "8 prior deployment waves spanning 2024-Q3 through 2026-Q1. Used by UpgradeAdvisorAgent and ApexSignal to surface historical patterns at wave-planning time. Includes one high-risk Type-B Northeast wave that exhibits the canonical skip-level failure pattern.",
+  "waves": [
+    {
+      "wave_id":            "WAVE-2024-Q3-PILOT",
+      "wave_name":          "Far Edge Pilot — Northeast (20 sites)",
+      "scheduled_start":    "2024-07-22T08:00:00Z",
+      "actual_start":       "2024-07-22T08:14:00Z",
+      "completion":         "2024-07-25T18:32:00Z",
+      "site_count":         20,
+      "device_mix":         { "CaaS-Node-Type-A": 8, "CaaS-Node-Type-B": 12, "CaaS-Node-Type-C": 0 },
+      "firmware_from_to":   { "from": "22.06", "to": "22.12" },
+      "regions":            ["Northeast"],
+      "outcome":            "SUCCESS",
+      "test_pass_rate":     0.98,
+      "post_upgrade_incidents_30d": 0,
+      "duration_hours":     82,
+      "notes":              "Clean pilot. Established the 95% certification gate as the working baseline."
+    },
+    {
+      "wave_id":            "WAVE-2024-Q4-EXPAND",
+      "wave_name":          "Far Edge Expansion — Northeast + Southeast (1,140 sites)",
+      "scheduled_start":    "2024-11-04T07:00:00Z",
+      "actual_start":       "2024-11-04T07:11:00Z",
+      "completion":         "2024-11-22T22:48:00Z",
+      "site_count":         1140,
+      "device_mix":         { "CaaS-Node-Type-A": 524, "CaaS-Node-Type-B": 412, "CaaS-Node-Type-C": 204 },
+      "firmware_from_to":   { "from": "22.12", "to": "23.06" },
+      "regions":            ["Northeast", "Southeast"],
+      "outcome":            "SUCCESS",
+      "test_pass_rate":     0.96,
+      "post_upgrade_incidents_30d": 2,
+      "duration_hours":     448,
+      "notes":              "First multi-region wave. 2 minor incidents both resolved within 12 hours."
+    },
+    {
+      "wave_id":            "WAVE-2025-Q1-CONTINENTAL",
+      "wave_name":          "Continental Far Edge — all 6 regions (4,820 sites)",
+      "scheduled_start":    "2025-02-10T07:00:00Z",
+      "actual_start":       "2025-02-10T07:00:00Z",
+      "completion":         "2025-03-09T19:14:00Z",
+      "site_count":         4820,
+      "device_mix":         { "CaaS-Node-Type-A": 2018, "CaaS-Node-Type-B": 1812, "CaaS-Node-Type-C": 990 },
+      "firmware_from_to":   { "from": "23.06", "to": "23.12" },
+      "regions":            ["Northeast", "Southeast", "Midwest", "South_Central", "Northwest", "Southwest"],
+      "outcome":            "SUCCESS",
+      "test_pass_rate":     0.94,
+      "post_upgrade_incidents_30d": 7,
+      "duration_hours":     648,
+      "notes":              "First wave to span all 6 regions. Pass rate dipped below 95% but cleared after schema-validation manual review. Established the 'cycle-over-cycle' regression check that became thermal_regression.robot."
+    },
+    {
+      "wave_id":            "WAVE-2025-Q2-INCREMENTAL",
+      "wave_name":          "Incremental Refresh — Northeast pilot 24.01 (640 sites)",
+      "scheduled_start":    "2025-05-12T08:00:00Z",
+      "actual_start":       "2025-05-12T08:00:00Z",
+      "completion":         "2025-05-15T22:11:00Z",
+      "site_count":         640,
+      "device_mix":         { "CaaS-Node-Type-A": 256, "CaaS-Node-Type-B": 256, "CaaS-Node-Type-C": 128 },
+      "firmware_from_to":   { "from": "23.12", "to": "24.01" },
+      "regions":            ["Northeast"],
+      "outcome":            "SUCCESS",
+      "test_pass_rate":     0.97,
+      "post_upgrade_incidents_30d": 1,
+      "duration_hours":     86
+    },
+    {
+      "wave_id":            "WAVE-2025-Q3-WIDE",
+      "wave_name":          "Wide Refresh — all 6 regions 24.06 (8,140 sites)",
+      "scheduled_start":    "2025-08-04T07:00:00Z",
+      "actual_start":       "2025-08-04T07:08:00Z",
+      "completion":         "2025-09-22T23:48:00Z",
+      "site_count":         8140,
+      "device_mix":         { "CaaS-Node-Type-A": 3256, "CaaS-Node-Type-B": 2848, "CaaS-Node-Type-C": 2036 },
+      "firmware_from_to":   { "from": "24.01", "to": "24.06" },
+      "regions":            ["Northeast", "Southeast", "Midwest", "South_Central", "Northwest", "Southwest"],
+      "outcome":            "SUCCESS_WITH_FOLLOWUP",
+      "test_pass_rate":     0.93,
+      "post_upgrade_incidents_30d": 11,
+      "duration_hours":     1192,
+      "notes":              "Pass rate dipped to 93%. Cert team flagged the 5% gate as too tight under the new Wind River 24.06 load profile. ⚠ Gate temporarily reduced to 60% via change GATE-CHG-20250924-001 — INTENDED TO BE REVERTED 30 DAYS LATER; not reverted as scheduled."
+    },
+    {
+      "wave_id":            "WAVE-2025-Q4-CONSOLIDATION",
+      "wave_name":          "Consolidation — Northeast 23.06 holdovers to 24.01 (252 sites)",
+      "scheduled_start":    "2025-12-22T07:00:00Z",
+      "actual_start":       "2025-12-22T07:14:00Z",
+      "completion":         "2026-01-04T18:11:00Z",
+      "site_count":         252,
+      "device_mix":         { "CaaS-Node-Type-A": 0, "CaaS-Node-Type-B": 252, "CaaS-Node-Type-C": 0 },
+      "firmware_from_to":   { "from": "23.06", "to": "24.01" },
+      "regions":            ["Northeast"],
+      "outcome":            "CONDITIONAL_PASS_PROCEEDED",
+      "test_pass_rate":     0.61,
+      "post_upgrade_incidents_30d": 18,
+      "duration_hours":     320,
+      "notes":              "⚠ THIS IS THE PRE-OUTAGE WAVE. Cycle CYCLE-20251014-CAAS-B-2306 passed at 61% under the temporarily-reduced 60% gate. Pre-cycle schema drift detection NOT run (SchemaWatchAgent did not exist yet). Wave proceeded against engineering judgement."
+    },
+    {
+      "wave_id":            "WAVE-2026-Q1-NORTHEAST-INCIDENT",
+      "wave_name":          "Type-B Northeast High-Risk Reference Wave",
+      "scheduled_start":    "2026-01-15T07:00:00Z",
+      "actual_start":       "2026-01-15T07:00:00Z",
+      "completion":         "2026-01-16T02:48:00Z",
+      "site_count":         247,
+      "device_mix":         { "CaaS-Node-Type-A": 0, "CaaS-Node-Type-B": 247, "CaaS-Node-Type-C": 0 },
+      "firmware_from_to":   { "from": "23.06", "to": "24.01" },
+      "regions":            ["Northeast"],
+      "outcome":            "OUTAGE_GEOGRAPHIC",
+      "test_pass_rate":     0.61,
+      "post_upgrade_incidents_30d": 12,
+      "outage": {
+        "occurred":           true,
+        "severity":           "geographic",
+        "impact_window_start":"2026-01-15T14:22:00Z",
+        "impact_window_end":  "2026-01-16T02:48:00Z",
+        "impact_duration_hours": 12.4,
+        "affected_subscribers_estimated": 1850000,
+        "incident_report_id": "IR-2026-0114-NE",
+        "regulatory_disclosure_filed": true
+      },
+      "root_causes": [
+        "Reactive schema drift detection (SchemaWatchAgent did not exist; drift discovered during the cycle, not before)",
+        "Temporarily-reduced 60% certification gate not reverted on schedule",
+        "78% historical failure rate for 23.06→24.01 Type-B Northeast path was in the data but not surfaced to the wave-deployment approver"
+      ],
+      "post_incident_actions": [
+        "Deploy SchemaWatchAgent platform-wide (6-hour cadence + pre-cycle trigger)",
+        "Deploy UpgradeAdvisorAgent with mandatory HITL approval for paths with > 15% historical failure rate",
+        "Audit Lens captures every gate threshold change with reviewer signature",
+        "Reinstate 95% gate. Any future reduction requires SRO + HQ Planning co-signature.",
+        "Establish ApexSignal wave-risk scoring as the single source of truth for wave authorization."
+      ]
+    },
+    {
+      "wave_id":            "WAVE-2026-Q1-PLANNED",
+      "wave_name":          "Q1 2026 Far Edge Refresh — Continental (16,247 sites)",
+      "scheduled_start":    "2026-01-21T07:00:00Z",
+      "status":             "HELD_PENDING_REMEDIATION",
+      "site_count":         16247,
+      "device_mix":         { "CaaS-Node-Type-A": 6500, "CaaS-Node-Type-B": 5687, "CaaS-Node-Type-C": 4060 },
+      "firmware_from_to":   { "from": "varied", "to": "24.12" },
+      "regions":            ["Northeast", "Southeast", "Midwest", "South_Central", "Northwest", "Southwest"],
+      "_apex_assessment": {
+        "schema_watch_status":           "3 breaking changes detected 6 days ahead of cycle; 14 scripts in remediation epic APEXVZ-SCHEMA-EPIC-2026-01",
+        "upgrade_advisor_status":        "252 Northeast sites match high-risk Type-B pattern → wave_3, HITL approval required",
+        "apex_signal_recommendation":    "Wave_1: 14,593 sites · Wave_2: 1,240 sites · Wave_3: 414 sites (252 of which pattern-match)",
+        "audit_lens_event":              "DVR-20260112-031844-001 (wave hold authorized by james.patchett@verizon.com)"
+      }
+    }
+  ]
+}

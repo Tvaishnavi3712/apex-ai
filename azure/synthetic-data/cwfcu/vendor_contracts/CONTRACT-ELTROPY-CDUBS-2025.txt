@@ -1,0 +1,64 @@
+VENDOR CONTRACT · MEMBER ENGAGEMENT (CHATBOT)
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+═══════════════════════════════════════════════════════════════
+
+Contract ID:           VND-ELTROPY-CDUBS-2025
+Vendor:                Eltropy Inc.  (Milpitas, CA)
+Vendor Tier:           HIGH (Tier 2 · member-facing)
+Service Category:      C-Dubs Chatbot (digital member engagement)
+Vendor Risk Score:     42 / 100 (MEDIUM)
+
+────────  CONTRACT TERMS  ────────
+Effective:             2024-07-15
+Initial Term:          2 years (2024-07-15 → 2026-07-15)
+Renewal Window:        2026-05-15 → 2026-07-15
+Auto-Renewal:          NO (explicit renewal required)
+Notice Required:       60 days
+Notice Deadline:       2026-05-15 (passed — in negotiation)
+Current Annual Value:  $180,000 / yr
+Proposed Renewal:      $192,000 / yr (+6.7%) · 2-yr term
+Rate Escalator:        +3% / yr cap
+
+────────  SLA SUMMARY  ────────
+Uptime:                99.90% guaranteed
+Response Time (P95):   ≤ 200 ms
+P1 Response:           2 hours
+Performance Credits:   5% of monthly fee for first SLA miss
+
+────────  PERFORMANCE Q2 2026  ────────
+Uptime:                99.94% (target ✓)
+P95 Response Time:     208 ms (target 200 ms — minor breach)
+P1 Incidents:          0
+P2 Incidents:          2
+SLA Breaches YTD:      1 (Jun 1, 2026 · 38 min P95 elevation · credit applied)
+
+────────  RATE DRIFT MONITORING  ────────
+Contracted Rate:       +3.0% cap
+Q2 2026 Billed:        $15,150 / mo (was $14,520)
+Drift:                 +4.2% over baseline (+1.2 pts over cap)
+Estimated Exposure:    $7,560 / yr if uncontested
+
+────────  POLICY OBLIGATIONS TRIGGERED  ────────
+1. Data Residency Clause (§ 12.4):
+   ─ All member chat transcripts stored in US-only region
+   ─ Annual board attestation required
+   ─ Status: PENDING — board action requested at Jun 17 meeting
+
+2. PII Handling Training (§ 8.2):
+   ─ Member-services staff (24 employees) annual cert
+   ─ Status: 24/24 complete
+
+────────  MEMBER METRICS Q2 2026  ────────
+Active C-Dubs Sessions:   18,400 / mo (+14% YoY)
+Auth Success Rate:        78%
+Digital Containment:      62% (resolved without agent transfer)
+Member NPS (chat):        61 (industry avg 52)
+
+────────  HAND-OFF NOTES  ────────
+→ Policy & HR Agent:   Annual PII training acks current
+→ Compliance Agent:    Data residency attestation queued for board
+
+────────  NCUA EXAM FOLDER INDEX  ────────
+Folder Path:           ncua-exam-2026/third_party_risk/tier2_vendors/
+Immutable Audit ID:    AUDIT-2024-07-15-12:00:00-VND-ELTROPY

@@ -1,0 +1,17 @@
+{
+  // Extensions an Apex engineer needs. VS Code offers these on first open.
+  "recommendations": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-python.black-formatter",
+    "charliermarsh.ruff",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "redhat.vscode-yaml",
+    "ms-azuretools.vscode-docker",
+    "humao.rest-client",
+    "ms-azuretools.vscode-azurefunctions",
+    "ms-azuretools.vscode-bicep"
+  ]
+}

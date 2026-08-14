@@ -1,0 +1,89 @@
+{
+  "blueprintName": "apex-compliance-cert-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from compliance and regulatory certificates",
+  "industry": "cpg",
+  "documentType": "compliance_certificate",
+  "documentSchema": {
+    "class": "ApexComplianceCertificate",
+    "description": "Compliance certificate extraction for regulatory tracking",
+    "properties": {
+      "certificate_number": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "certificate_type": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "FDA, USDA Organic, Kosher, Halal, etc."
+      },
+      "issuing_authority": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "issue_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "expiration_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "company_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "facility_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "facility_address": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "products_covered": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "scope_of_certification": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "standards_met": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "audit_date": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "auditor_name": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "conditions": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "status": {
+        "type": "string",
+        "inferenceType": "explicit"
+      },
+      "is_valid": {
+        "type": "boolean",
+        "inferenceType": "inferred"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "MM/DD/YYYY",
+    "confidenceThreshold": 0.9
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true
+  }
+}

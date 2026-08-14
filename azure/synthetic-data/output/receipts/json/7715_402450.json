@@ -1,0 +1,44 @@
+{
+  "merchant": {
+    "name": "Panera Bread",
+    "category": "Restaurant",
+    "address": {
+      "street": "100 Congress Ave",
+      "city": "Austin",
+      "state": "TX",
+      "zip": "78701"
+    },
+    "phone": "(997) 383-2903"
+  },
+  "transaction": {
+    "date": "2026-02-10",
+    "time": "18:24:09",
+    "receipt_number": "7715-402450"
+  },
+  "line_items": [
+    {
+      "description": "Pasta Primavera",
+      "quantity": 1,
+      "unit_price": 18.99,
+      "amount": 18.99
+    },
+    {
+      "description": "Iced Tea",
+      "quantity": 1,
+      "unit_price": 2.99,
+      "amount": 2.99
+    }
+  ],
+  "totals": {
+    "subtotal": 21.979999999999997,
+    "tax_rate": 0.07,
+    "tax_amount": 1.54,
+    "tip": 4.4,
+    "total": 27.92
+  },
+  "payment": {
+    "method": "Debit Card",
+    "card_type": "Amex",
+    "last_four": "3947"
+  }
+}

@@ -1,0 +1,258 @@
+# CBTS Apex AI Platform - Purchase Order Processing Runbook
+# Natural Language Runbook for Manufacturing Operations
+# Intent -> Output -> Context -> Recipe
+
+name: po_processing
+version: "1.0.0"
+description: "Automated purchase order processing with inventory validation and approval routing"
+industry: manufacturing
+category: procurement
+
+# =============================================================================
+# INTENT - What the agent should accomplish
+# =============================================================================
+intent: |
+  Process incoming purchase orders by extracting data, validating against
+  inventory levels, verifying vendor status, checking budget allocation,
+  and routing for appropriate approval based on amount and priority.
+
+# =============================================================================
+# OUTPUT - Expected deliverables from the runbook
+# =============================================================================
+output:
+  - name: processed_po
+    type: structured_data
+    description: "Fully extracted and validated purchase order data"
+    schema:
+      po_number: string
+      vendor: object
+      line_items: array
+      totals: object
+      validation_status: string
+
+  - name: inventory_check
+    type: validation_report
+    description: "Inventory availability check results"
+    schema:
+      all_available: boolean
+      items_checked: array
+      backorder_items: array
+
+  - name: approval_decision
+    type: routing_decision
+    description: "Approval routing with assigned approver"
+    schema:
+      routing: string
+      approver_email: string
+      priority: string
+
+# =============================================================================
+# CONTEXT - Business rules and domain knowledge
+# =============================================================================
+context:
+  business_rules:
+    - "All POs must have valid vendor in approved vendor list"
+    - "Inventory must be checked for stock items before approval"
+    - "POs over $50,000 require multiple approvals"
+    - "Rush orders (delivery < 7 days) require manager override"
+    - "New vendors require procurement manager approval"
+
+  approval_thresholds:
+    auto_approve: 5000
+    supervisor: 25000
+    manager: 50000
+    director: 100000
+    vp_operations: 500000
+
+  inventory_rules:
+    - check_safety_stock: true
+    - allow_backorder: true
+    - max_backorder_days: 30
+    - reorder_trigger_percent: 20
+
+  lead_time_requirements:
+    standard: 14
+    expedited: 7
+    rush: 3
+    emergency: 1
+
+# =============================================================================
+# DATA SOURCES - Where to retrieve information
+# =============================================================================
+data_sources:
+  - name: po_document
+    type: s3_document
+    description: "Source PO document (PDF, image, or EDI)"
+    input_parameter: document_s3_uri
+
+  - name: vendor_database
+    type: cosmos_db
+    table: apex-vendors
+    description: "Approved vendor master data"
+
+  - name: inventory_system
+    type: cosmos_db
+    table: apex-inventory
+    description: "Current inventory levels"
+
+  - name: budget_allocation
+    type: cosmos_db
+    table: apex-budgets
+    description: "Department budget allocations"
+
+# =============================================================================
+# ACTIONS - Available tools for the agent
+# =============================================================================
+actions:
+  - name: po_extract
+    action_id: manufacturing.po_extract
+    description: "Extract structured data from purchase order using BDA"
+    required: true
+
+  - name: vendor_lookup
+    action_id: financial_services.vendor_lookup
+    description: "Lookup vendor in approved vendor database"
+    required: true
+
+  - name: inventory_check
+    action_id: manufacturing.inventory_lookup
+    description: "Check inventory availability for ordered items"
+    required: true
+
+  - name: carrier_validate
+    action_id: manufacturing.carrier_validation
+    description: "Validate shipping carrier and terms"
+    required: false
+
+  - name: budget_check
+    action_id: financial_services.budget_check
+    description: "Verify budget availability"
+    required: true
+
+  - name: approval_route
+    action_id: financial_services.approval_route
+    description: "Determine approval routing"
+    required: true
+
+  - name: send_notification
+    action_id: core.send_notification
+    description: "Send notification to approver or stakeholder"
+    required: false
+
+  - name: create_work_item
+    action_id: core.create_work_item
+    description: "Create work item for manual review"
+    required: false
+
+# =============================================================================
+# RECIPE - Natural language instructions for the agent
+# =============================================================================
+recipe: |
+  ## Purchase Order Processing Workflow
+
+  ### Step 1: Document Extraction
+  When a new purchase order document arrives:
+  1. Use the `po_extract` action to extract structured data from the document
+  2. Wait for extraction to complete (up to 60 seconds)
+  3. Validate that key fields were extracted: PO number, vendor, line items, total
+  4. If extraction confidence is below 85%, flag for human review
+  5. Check for duplicate PO numbers in the system
+
+  ### Step 2: Vendor Validation
+  With the extracted vendor information:
+  1. Use `vendor_lookup` to find the vendor in our approved vendor database
+  2. If vendor is not found, check if vendor code or name has variations
+  3. For new or unapproved vendors, route to vendor onboarding workflow
+  4. Verify vendor is not on hold or blocked
+  5. Check vendor payment terms match PO terms
+
+  ### Step 3: Inventory Availability Check
+  For each line item on the PO:
+  1. Use `inventory_check` to verify current stock levels
+  2. Check against safety stock requirements
+  3. Calculate available-to-promise quantity
+  4. For items below reorder point, trigger reorder notification
+  5. If items unavailable, check for substitute parts
+  6. Calculate expected availability date for backorder items
+
+  ### Step 4: Shipping Validation
+  If shipping method specified:
+  1. Use `carrier_validate` to verify carrier is approved
+  2. Validate shipping terms (FOB, CIF, etc.) match vendor agreement
+  3. Check lead time against requested delivery date
+  4. Flag if expedited shipping is needed to meet date
+
+  ### Step 5: Budget Verification
+  Check budget allocation:
+  1. Use `budget_check` with department and cost center
+  2. Verify sufficient budget remains for this PO
+  3. Check if this exceeds single-transaction limits
+  4. For capital expenditures, verify capex approval
+  5. If budget exceeded, route to budget owner for exception
+
+  ### Step 6: Approval Routing
+  Determine the appropriate approval path:
+  1. Use `approval_route` with the PO amount and type
+  2. Factor in any inventory or budget exceptions
+  3. For amounts under $5,000 with no issues, auto-approve
+  4. For larger amounts, route to appropriate approver level
+  5. Rush orders always require manager review
+  6. Set priority based on delivery date urgency
+
+  ### Step 7: Notification & Tracking
+  Complete the processing:
+  1. Send notification to assigned approver (if not auto-approved)
+  2. Send confirmation to requestor with status
+  3. Update work item status in the queue
+  4. If approved, transmit PO to vendor system
+  5. Log all decisions and actions for audit trail
+
+  ### Exception Handling
+  - If extraction fails: Request human review with original document
+  - If vendor not approved: Route to procurement for vendor setup
+  - If inventory insufficient: Offer alternatives or backorder option
+  - If budget exceeded: Escalate to department head
+  - If delivery date impossible: Notify requestor with options
+
+# =============================================================================
+# TRIGGERS - How this runbook is activated
+# =============================================================================
+triggers:
+  - type: blob_event
+    bucket: apex-documents-incoming
+    prefix: purchase-orders/
+    events: ["s3:ObjectCreated:*"]
+    description: "Triggered when PO uploaded to S3"
+
+  - type: api
+    endpoint: /api/v1/process-po
+    method: POST
+    description: "Manual trigger via API"
+
+  - type: edi
+    transaction_set: "850"
+    description: "Triggered by EDI 850 Purchase Order"
+
+# =============================================================================
+# WORKER CONFIGURATION
+# =============================================================================
+worker:
+  queue: apex-po-processing-queue
+  concurrency: 10
+  timeout_seconds: 300
+  retry_policy:
+    max_attempts: 3
+    backoff_multiplier: 2
+
+# =============================================================================
+# METADATA
+# =============================================================================
+metadata:
+  created_by: apex-platform
+  created_at: "2024-01-15"
+  last_updated: "2024-01-15"
+  tags:
+    - procurement
+    - purchase-order
+    - manufacturing
+    - inventory

@@ -1,0 +1,55 @@
+{
+  "blueprintName": "apex-stp-work-order-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured fields from Oracle work-order records (Maximo / SAP-PM proxy)",
+  "industry": "nuclear_operations",
+  "documentType": "work_order",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "wo_id":       {"type": "string", "description": "Work order id, e.g. WO-2026-00871",
+                      "pattern": "^WO-\\d{4}-\\d{5}$"},
+      "equipment_id": {"type": "string", "description": "Target equipment, e.g. P-3A"},
+      "type":         {"type": "string", "enum": ["corrective", "preventive", "surveillance", "modification"]},
+      "status":       {"type": "string", "enum": ["open", "in_progress", "closed", "cancelled"]},
+      "opened":       {"type": "string", "format": "date-time"},
+      "closed":       {"type": "string", "format": "date-time"},
+      "lead_engineer_id": {"type": "string"},
+      "technician_ids": {"type": "array", "items": {"type": "string"}},
+      "root_cause_code": {
+        "type": "string",
+        "enum": ["bearing_wear", "seal_leak", "seismic", "thermal_cycling",
+                 "vendor_quality", "operator_error", "design_deficiency", "age_wear"],
+        "description": "Required when type == 'corrective'"
+      },
+      "parts_used": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "part_id":  {"type": "string"},
+            "qty":      {"type": "integer"},
+            "cost":     {"type": "number"}
+          },
+          "required": ["part_id", "qty"]
+        }
+      },
+      "hours_charged": {"type": "number"},
+      "narrative":     {"type": "string", "description": "Free-text technician summary"},
+      "regulatory_basis": {"type": "string", "description": "TS / SR / 10 CFR cite when applicable"}
+    },
+    "required": ["wo_id", "equipment_id", "type", "status", "opened"]
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "currencyFormat": "decimal",
+    "decimalPrecision": 2,
+    "confidenceThreshold": 0.95
+  },
+  "validationRules": [
+    {"name": "corrective_requires_root_cause",
+     "expression": "type != 'corrective' || root_cause_code != null"},
+    {"name": "closed_requires_closed_timestamp",
+     "expression": "status != 'closed' || closed != null"}
+  ]
+}

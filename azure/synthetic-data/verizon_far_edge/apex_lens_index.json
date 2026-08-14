@@ -1,0 +1,198 @@
+{
+  "_note": "Apex Lens index manifest — the catalog of every document indexed into the Verizon Far Edge knowledge base. MentorAgent queries this manifest to know which corpora to search. Each entry includes chunk-level statistics, the blueprint used for extraction, and citation anchor points.",
+  "index_id":         "VZ-FAR-EDGE-LENS-INDEX-v1",
+  "version":          "1.0.0",
+  "last_full_reindex":"2026-01-12T03:00:00Z",
+  "embedding_model":  "amazon.titan-embed-text-v2",
+  "embedding_dimension": 1024,
+  "chunk_strategy":   "semantic_overlap_128",
+  "total_documents":  8,
+  "total_pages":      364,
+  "total_chunks":     2418,
+  "total_storage_mb": 142,
+
+  "documents": [
+    {
+      "doc_id":           "VZ-RUNBOOK-CAAS-v24",
+      "title":            "CaaS Node Deployment & Recovery Runbook",
+      "format":           "pdf",
+      "pages":            48,
+      "chunks":           312,
+      "language":         "en",
+      "blueprint_used":   "upgrade-runbook-extractor",
+      "owner":            "Network Operations · HQ Planning",
+      "classification":   "VERIZON CONFIDENTIAL",
+      "first_indexed":    "2025-12-10T08:00:00Z",
+      "last_updated":     "2026-01-08T14:22:00Z",
+      "citation_anchors": [
+        "§1 Purpose and Applicability",
+        "§3 Pre-Deployment Checklist",
+        "§4 Wind River CaaS Boot Sequence",
+        "§5 Redfish Interface Validation",
+        "§6 Post-Boot Validation",
+        "§7 Recovery Procedures",
+        "§8 Rollback Steps",
+        "§9 Sign-off and Audit Trail"
+      ],
+      "demo_file":        "VZ-RUNBOOK-CAAS-v24-excerpt.txt"
+    },
+    {
+      "doc_id":           "VZ-REDFISH-INTEGRATION-GUIDE-v3",
+      "title":            "Redfish API Integration Guide",
+      "format":           "pdf",
+      "pages":            32,
+      "chunks":           198,
+      "blueprint_used":   "upgrade-runbook-extractor",
+      "owner":            "Automation Team",
+      "classification":   "VERIZON CONFIDENTIAL",
+      "first_indexed":    "2025-11-20T08:00:00Z",
+      "last_updated":     "2026-01-04T12:14:00Z",
+      "citation_anchors": [
+        "§1 Supported Redfish Implementations",
+        "§2 Authentication and TLS",
+        "§3 Endpoint Reference",
+        "§4 Breaking-Change Mitigation Policy"
+      ],
+      "demo_file":        "VZ-Redfish-Integration-Guide-excerpt.txt"
+    },
+    {
+      "doc_id":           "VZ-UPGRADE-PROC-2026",
+      "title":            "Upgrade Procedures — 2026 (Rev 4)",
+      "format":           "pdf",
+      "pages":            67,
+      "chunks":           412,
+      "blueprint_used":   "upgrade-runbook-extractor",
+      "owner":            "Cert Team",
+      "classification":   "VERIZON CONFIDENTIAL",
+      "first_indexed":    "2025-09-14T08:00:00Z",
+      "last_updated":     "2026-01-10T16:48:00Z",
+      "citation_anchors": [
+        "§1 Supported Upgrade Paths — CaaS-Node-Type-B",
+        "§2 Step-by-Step — 22.12 to 24.12",
+        "§3 Pre-Check Checklist",
+        "§4 Rollback Procedure"
+      ],
+      "demo_file":        "VZ-Upgrade-Procedures-2026-excerpt.txt"
+    },
+    {
+      "doc_id":           "VZ-KB-2026-Q1",
+      "title":            "Known Issues KB",
+      "format":           "pdf",
+      "pages":            94,
+      "chunks":           688,
+      "blueprint_used":   "known-issues-kb-extractor",
+      "owner":            "Cert Team · Knowledge Management",
+      "first_indexed":    "2025-04-22T08:00:00Z",
+      "last_updated":     "2026-01-12T08:00:00Z",
+      "citation_anchors": [
+        "KB-2026-0118 · CU-UP Latency Degradation Under Default RT Tuning",
+        "KB-2026-0091 · Redfish Thermal Endpoint Returns 503 During Boot Window",
+        "KB-2026-0073 · IPv6 Management Interface Enumeration Failure",
+        "KB-2026-0044 · CaaS Orchestrator Pod Stall After Non-Graceful Shutdown",
+        "KB-2025-0288 · Type-B Northeast High-Risk Pattern — Root Cause Summary"
+      ],
+      "kb_article_count": 217,
+      "demo_file":        "VZ-KB-Known-Issues-excerpt.txt"
+    },
+    {
+      "doc_id":           "VZ-ANSIBLE-CATALOG-v6",
+      "title":            "Ansible Playbook Catalog (Narrative Overview)",
+      "format":           "pdf",
+      "pages":            28,
+      "chunks":           172,
+      "blueprint_used":   "upgrade-runbook-extractor",
+      "owner":            "Automation Team",
+      "first_indexed":    "2025-09-04T08:00:00Z",
+      "last_updated":     "2026-01-08T14:00:00Z",
+      "citation_anchors": [
+        "§1 Health-Check Playbooks",
+        "§2 Upgrade Playbooks",
+        "§3 Wave-Planning Playbooks",
+        "§4 Regression Playbooks (ROBOT)",
+        "§5 Monitoring + Alert Playbooks",
+        "§6 RAN-Layer Playbooks (ROBOT)",
+        "§7 Security Playbooks"
+      ],
+      "demo_file":        "VZ-Ansible-Playbook-Catalog-excerpt.txt"
+    },
+    {
+      "doc_id":           "VZ-RT-KERNEL-ERRATA-v8",
+      "title":            "Real-Time Kernel Errata + Patch Notes",
+      "format":           "pdf",
+      "pages":            19,
+      "chunks":           124,
+      "blueprint_used":   "known-issues-kb-extractor",
+      "owner":            "Cert Team · RT Kernel SME",
+      "first_indexed":    "2025-08-12T08:00:00Z",
+      "last_updated":     "2026-01-08T11:14:00Z",
+      "citation_anchors": [
+        "ERR-RT-001 · Cyclictest P99 Latency Regression on Core 4",
+        "ERR-RT-002 · sched_rt_runtime_us Default Regression",
+        "ERR-RT-003 · PREEMPT_RT Patch Missing in Minimal Build",
+        "ERR-RT-004 · Interrupt-Affinity Drift After Boot",
+        "ERR-RT-005 · Cgroup v2 + RT-Priority Exhaustion"
+      ],
+      "demo_file":        "VZ-RT-Kernel-Errata-excerpt.txt"
+    },
+    {
+      "doc_id":           "WIND-RIVER-24.12-RELEASE-NOTES",
+      "title":            "Wind River Linux 24.12 Release Notes",
+      "format":           "pdf",
+      "pages":            41,
+      "chunks":           284,
+      "blueprint_used":   "vendor-release-note-analyzer",
+      "owner":            "Wind River Systems Inc.",
+      "vendor_distributed_under_nda": true,
+      "first_indexed":    "2025-12-22T08:00:00Z",
+      "last_updated":     "2025-12-22T08:00:00Z",
+      "citation_anchors": [
+        "§1 What's New",
+        "§2 Redfish API Changes (BREAKING — 3 changes)",
+        "§3 Known Issues",
+        "§4 Upgrade Notes",
+        "§5 Compatibility Matrix",
+        "§6 Security Advisories"
+      ],
+      "breaking_changes_referenced": ["SCHEMA-DRIFT-001", "SCHEMA-DRIFT-002", "SCHEMA-DRIFT-003"],
+      "demo_file":        "WindRiver-24.12-ReleaseNotes-excerpt.txt"
+    },
+    {
+      "doc_id":           "VZ-OPENSHIFT-OPERATOR-GUIDE-v5",
+      "title":            "OpenShift Operator Health & Troubleshooting Guide",
+      "format":           "pdf",
+      "pages":            35,
+      "chunks":           228,
+      "blueprint_used":   "upgrade-runbook-extractor",
+      "owner":            "Platform Team",
+      "first_indexed":    "2025-10-04T08:00:00Z",
+      "last_updated":     "2026-01-05T09:00:00Z",
+      "citation_anchors": [
+        "§1 Supported OpenShift Versions by Firmware",
+        "§2 Operator Health Runbook",
+        "§3 Pod Scheduling SLA",
+        "§4 etcd Health",
+        "§5 Day-2 Operations — Upgrade Flow",
+        "§6 Security Posture"
+      ],
+      "demo_file":        "VZ-OpenShift-Operator-Guide-excerpt.txt"
+    }
+  ],
+
+  "retrieval_settings": {
+    "default_top_k":           5,
+    "hybrid_search":           true,
+    "keyword_weight":          0.30,
+    "semantic_weight":         0.70,
+    "minimum_confidence":      0.50,
+    "production_change_safety_flag_enabled": true
+  },
+
+  "_quality_metrics": {
+    "_note": "Recent retrieval quality observed in evaluation harness",
+    "test_set_questions":         50,
+    "answer_accuracy":            0.94,
+    "citation_correctness":       0.98,
+    "hallucination_incidents":    0,
+    "production_change_flag_recall": 1.00
+  }
+}

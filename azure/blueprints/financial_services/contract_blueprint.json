@@ -1,0 +1,344 @@
+{
+  "blueprintName": "apex-contract-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Extract structured data from business contracts for vendor and legal management",
+  "industry": "financial_services",
+  "documentType": "contract",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "contract_details": {
+        "type": "object",
+        "description": "Core contract identification",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Contract title",
+            "extraction_hints": ["Agreement:", "Contract:", "Master Service Agreement"]
+          },
+          "contract_number": {
+            "type": "string",
+            "description": "Contract reference number",
+            "extraction_hints": ["Contract #:", "Agreement No.:"]
+          },
+          "contract_type": {
+            "type": "string",
+            "description": "Type of contract",
+            "enum": [
+              "Master Service Agreement",
+              "Statement of Work",
+              "Purchase Agreement",
+              "License Agreement",
+              "Non-Disclosure Agreement",
+              "Employment Agreement",
+              "Lease Agreement",
+              "Service Level Agreement",
+              "Maintenance Agreement"
+            ]
+          },
+          "effective_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date contract becomes effective",
+            "extraction_hints": ["Effective Date:", "As of:"]
+          },
+          "expiration_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Contract expiration date",
+            "extraction_hints": ["Expiration:", "End Date:", "Termination Date:"]
+          },
+          "execution_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date contract was signed",
+            "extraction_hints": ["Signed:", "Executed:"]
+          },
+          "term_length": {
+            "type": "string",
+            "description": "Contract term (e.g., '12 months', '3 years')"
+          },
+          "auto_renewal": {
+            "type": "boolean",
+            "description": "Whether contract auto-renews"
+          },
+          "renewal_notice_days": {
+            "type": "integer",
+            "description": "Days notice required to prevent auto-renewal"
+          }
+        },
+        "required": ["title", "effective_date"]
+      },
+      "parties": {
+        "type": "array",
+        "description": "Contracting parties",
+        "items": {
+          "type": "object",
+          "properties": {
+            "role": {
+              "type": "string",
+              "description": "Party's role in contract",
+              "enum": ["Buyer", "Seller", "Licensor", "Licensee", "Service Provider", "Client", "Landlord", "Tenant", "Party A", "Party B"]
+            },
+            "legal_name": {
+              "type": "string",
+              "description": "Legal entity name",
+              "extraction_hints": ["between", "and", "Party:"]
+            },
+            "address": {
+              "type": "object",
+              "properties": {
+                "street": {"type": "string"},
+                "city": {"type": "string"},
+                "state": {"type": "string"},
+                "postal_code": {"type": "string"},
+                "country": {"type": "string"}
+              }
+            },
+            "signatory": {
+              "type": "object",
+              "description": "Person who signed on behalf of party",
+              "properties": {
+                "name": {"type": "string"},
+                "title": {"type": "string"},
+                "email": {"type": "string", "format": "email"}
+              }
+            },
+            "jurisdiction": {
+              "type": "string",
+              "description": "State/country of incorporation"
+            }
+          },
+          "required": ["legal_name"]
+        },
+        "minItems": 2
+      },
+      "financial_terms": {
+        "type": "object",
+        "description": "Payment and pricing terms",
+        "properties": {
+          "total_value": {
+            "type": "number",
+            "description": "Total contract value",
+            "extraction_hints": ["Total:", "Contract Value:", "Not to Exceed:"]
+          },
+          "currency": {
+            "type": "string",
+            "default": "USD"
+          },
+          "payment_terms": {
+            "type": "string",
+            "description": "Payment terms (NET30, etc.)",
+            "extraction_hints": ["Payment Terms:", "Payment:"]
+          },
+          "pricing_model": {
+            "type": "string",
+            "description": "How pricing is structured",
+            "enum": ["Fixed Fee", "Time and Materials", "Cost Plus", "Per Unit", "Subscription", "Milestone Based"]
+          },
+          "unit_price": {
+            "type": "number",
+            "description": "Price per unit (if applicable)"
+          },
+          "hourly_rate": {
+            "type": "number",
+            "description": "Hourly rate (for T&M contracts)"
+          },
+          "minimum_commitment": {
+            "type": "number",
+            "description": "Minimum purchase commitment"
+          },
+          "price_escalation": {
+            "type": "string",
+            "description": "Annual price increase terms"
+          }
+        }
+      },
+      "payment_schedule": {
+        "type": "array",
+        "description": "Scheduled payments or milestones",
+        "items": {
+          "type": "object",
+          "properties": {
+            "milestone": {"type": "string"},
+            "due_date": {"type": "string", "format": "date"},
+            "amount": {"type": "number"},
+            "percentage": {"type": "number"}
+          }
+        }
+      },
+      "services_products": {
+        "type": "array",
+        "description": "Services or products covered by contract",
+        "items": {
+          "type": "object",
+          "properties": {
+            "description": {"type": "string"},
+            "quantity": {"type": "number"},
+            "unit_price": {"type": "number"},
+            "total": {"type": "number"}
+          }
+        }
+      },
+      "sla_terms": {
+        "type": "object",
+        "description": "Service level agreement terms",
+        "properties": {
+          "uptime_guarantee": {
+            "type": "number",
+            "description": "Uptime percentage (e.g., 99.9)"
+          },
+          "response_time": {
+            "type": "string",
+            "description": "Response time SLA"
+          },
+          "resolution_time": {
+            "type": "string",
+            "description": "Resolution time SLA"
+          },
+          "penalties": {
+            "type": "string",
+            "description": "Penalties for SLA breach"
+          },
+          "credits": {
+            "type": "string",
+            "description": "Service credits for SLA breach"
+          }
+        }
+      },
+      "legal_clauses": {
+        "type": "object",
+        "description": "Key legal provisions",
+        "properties": {
+          "governing_law": {
+            "type": "string",
+            "description": "Governing law jurisdiction",
+            "extraction_hints": ["Governing Law:", "governed by the laws of"]
+          },
+          "dispute_resolution": {
+            "type": "string",
+            "description": "How disputes are resolved",
+            "enum": ["Arbitration", "Mediation", "Litigation", "Arbitration then Litigation"]
+          },
+          "arbitration_venue": {
+            "type": "string",
+            "description": "Location for arbitration"
+          },
+          "limitation_of_liability": {
+            "type": "string",
+            "description": "Liability cap or limitations"
+          },
+          "indemnification": {
+            "type": "boolean",
+            "description": "Whether indemnification clause exists"
+          },
+          "confidentiality": {
+            "type": "boolean",
+            "description": "Whether confidentiality clause exists"
+          },
+          "non_compete": {
+            "type": "boolean",
+            "description": "Whether non-compete clause exists"
+          },
+          "non_solicitation": {
+            "type": "boolean",
+            "description": "Whether non-solicitation clause exists"
+          },
+          "ip_ownership": {
+            "type": "string",
+            "description": "Intellectual property ownership terms"
+          }
+        }
+      },
+      "termination": {
+        "type": "object",
+        "description": "Contract termination provisions",
+        "properties": {
+          "termination_for_convenience": {
+            "type": "boolean",
+            "description": "Can terminate without cause"
+          },
+          "notice_period_days": {
+            "type": "integer",
+            "description": "Days notice required for termination"
+          },
+          "termination_fee": {
+            "type": "number",
+            "description": "Early termination fee"
+          },
+          "termination_triggers": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Events that trigger termination rights"
+          }
+        }
+      },
+      "insurance_requirements": {
+        "type": "object",
+        "description": "Required insurance coverage",
+        "properties": {
+          "general_liability": {
+            "type": "number",
+            "description": "General liability coverage required"
+          },
+          "professional_liability": {
+            "type": "number",
+            "description": "E&O coverage required"
+          },
+          "cyber_liability": {
+            "type": "number",
+            "description": "Cyber insurance coverage required"
+          },
+          "workers_comp": {
+            "type": "boolean",
+            "description": "Workers comp required"
+          }
+        }
+      },
+      "compliance_requirements": {
+        "type": "array",
+        "description": "Regulatory compliance requirements",
+        "items": {
+          "type": "string"
+        }
+      },
+      "amendments": {
+        "type": "array",
+        "description": "Contract amendments",
+        "items": {
+          "type": "object",
+          "properties": {
+            "amendment_number": {"type": "string"},
+            "date": {"type": "string", "format": "date"},
+            "description": {"type": "string"}
+          }
+        }
+      },
+      "metadata": {
+        "type": "object",
+        "description": "Extraction metadata",
+        "properties": {
+          "page_count": {"type": "integer"},
+          "extraction_confidence": {"type": "number"},
+          "exhibits_count": {"type": "integer"},
+          "schedules_count": {"type": "integer"}
+        }
+      }
+    },
+    "required": ["contract_details", "parties"]
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "currencyFormat": "decimal",
+    "decimalPrecision": 2,
+    "confidenceThreshold": 0.80,
+    "extractExhibits": true,
+    "extractSchedules": true
+  },
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": true,
+    "includeRawText": false,
+    "flagMissingClauses": true
+  }
+}

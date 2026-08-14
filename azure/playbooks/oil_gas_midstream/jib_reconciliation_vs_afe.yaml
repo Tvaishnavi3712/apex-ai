@@ -1,0 +1,115 @@
+playbook_id: pb-eprod-6
+name: jib_reconciliation_vs_afe
+version: "1.0.0"
+description: "WOW · JIB partner statements matched to AFEs + working-interest math + AFE-bounds enforcement. Catches AFE overruns before they're paid."
+industry: oil_gas_midstream
+category: joint_venture_accounting
+
+intent: |
+  Reconcile Joint Interest Billing (JIB) statements from JV operators
+  (Phillips 66 Sweeny, Targa Mont Belvieu, EPROD-operated). For every
+  JIB charge, match to its underlying AFE (Authorization for
+  Expenditure), validate the working-interest split per the JOA,
+  apply EPROD's partner share, and check whether the cumulative
+  charges have breached the AFE remaining balance. Flag any JIB
+  charge that would push cumulative-to-date above the AFE ceiling —
+  these are AFE overruns requiring escalation to Joint Venture
+  Accounting before the next billing cycle closes.
+
+output:
+  - name: jib_recon_report
+    type: structured_data
+    description: "Per-line JIB match to AFE with working-interest math"
+  - name: afe_balance_status
+    type: structured_data
+    description: "AFE remaining balance + variance vs cumulative JIB charges"
+  - name: overrun_flags
+    type: structured_data
+    description: "Lines that breach AFE balance with overrun USD"
+  - name: jv_escalation_packet
+    type: document_pack
+    description: "JV accounting packet with JOA + AFE citations"
+
+context:
+  business_rules:
+    - "Every JIB charge must reference a valid AFE"
+    - "Working-interest math: partner_share = gross * wi_pct per JOA"
+    - "AFE remaining balance must cover cumulative JIB to date"
+    - "Overrun > 5% of AFE = critical escalation to JV Accounting"
+    - "Prior-period adjustments must reference their original billing cycle"
+
+actions:
+  - name: extract_jib_statement
+    action_id: oil_gas_midstream.extract_jib_statement
+    description: "BDA extraction of JIB statement — JV, operator, AFE refs, charges"
+    required: true
+  - name: lookup_afe_balance
+    action_id: oil_gas_midstream.lookup_afe_balance
+    description: "Resolve AFE record + remaining balance per JV ERP"
+    required: true
+  - name: compute_partner_share
+    action_id: oil_gas_midstream.compute_partner_share
+    description: "Apply working-interest pct from JOA to gross charges"
+    required: true
+  - name: check_jib_vs_afe
+    action_id: oil_gas_midstream.check_jib_vs_afe
+    description: "Validate cumulative JIB <= AFE ceiling per line"
+    required: true
+  - name: flag_afe_overrun
+    action_id: oil_gas_midstream.flag_afe_overrun
+    description: "Flag lines breaching AFE balance with overrun USD"
+    required: true
+  - name: escalate_jv_accounting
+    action_id: oil_gas_midstream.escalate_jv_accounting
+    description: "JV escalation packet with JOA + AFE citations"
+    required: true
+  - name: audit_lens_log
+    action_id: oil_gas_midstream.audit_lens_log
+    description: "Audit trail for JV partner reconciliation"
+    required: true
+
+recipe: |
+  ## EPROD JIB Reconciliation vs AFE Recipe (WOW use case)
+
+  ### Step 1 · EXTRACT — extract_jib_statement
+  - Source: monthly JIB statement PDF/CSV from JV operator
+  - BDA blueprint: bp-eprod-jib (14 fields)
+  - Capture: jv_name, operator, afe_refs, line charges, gross totals
+
+  ### Step 2 · LOOKUP — lookup_afe_balance
+  - For each afe_ref: pull current AFE record from JV accounting ERP
+  - Compute remaining_balance = afe_ceiling - cumulative_charges_to_date
+
+  ### Step 3 · COMPUTE — compute_partner_share
+  - From JOA: working_interest_pct (e.g. EPROD 35%)
+  - partner_share = gross_charge * wi_pct
+  - Validate against operator's stated partner_share
+
+  ### Step 4 · VALIDATE — check_jib_vs_afe
+  - For each AFE: would (cumulative_to_date + this_jib_share) breach the ceiling?
+  - Compute breach_amount if yes
+
+  ### Step 5 · FLAG — flag_afe_overrun
+  - Critical: breach > 5% of AFE → critical_overrun
+  - Warning: breach > 0% → warning_overrun
+  - Clean: within ceiling → pass
+
+  ### Step 6 · ESCALATE — escalate_jv_accounting
+  - Critical flags → JV Accounting packet with JOA section + AFE history
+  - Block payment until reviewed
+
+  ### Step 7 · AUDIT — audit_lens_log
+  - Persist recon decisions with JV/AFE/JOA references
+
+triggers:
+  - type: blob_event
+    bucket: apex-eprod-jib-incoming
+    prefix: jib-statements/
+    events: ["s3:ObjectCreated:*"]
+  - type: schedule
+    cron: "0 6 * * MON"
+    description: "Weekly JIB recon sweep across all active JVs"
+
+metadata:
+  created_by: apex-platform
+  tags: [eprod, oil_gas_midstream, joint_venture, afe, wow]

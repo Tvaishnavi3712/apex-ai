@@ -1,0 +1,36 @@
+HARTFORD LIFE — GROUP TERM LIFE & AD&D INVOICE
+═══════════════════════════════════════════════════════════════
+Group:           The Boler Company (Hartford Policy #HL-44178)
+Period:          June 1-30, 2026
+Statement Date:  May 28, 2026
+
+─────────────── SUMMARY ───────────────
+Total Premium:     $98,760.00
+Total Lives:       847 employees (full population — basic life is non-elective)
+Average per EE:    $116.60
+
+─────────────── DIVISION BREAKDOWN ───────────────
+Hendrickson Intl       412 EE  $48,200
+Boler Mfg Services     156 EE  $18,400
+Boler Holdings         124 EE  $14,640
+Boler Real Estate       89 EE  $10,520
+Corporate/Shared        66 EE  $7,000
+
+─────────────── COVERAGE TIERS ───────────────
+Basic Life @ $50K     847 employees × $4.65/mo  = $3,938 (employer-paid)
+Voluntary Life avg    624 employees × $98/mo    = $61,152 (employee-paid · payroll deducted)
+Voluntary AD&D avg    412 employees × $52/mo    = $21,424 (employee-paid · payroll deducted)
+Spouse/Child rider    298 employees × $42/mo    = $12,516 (employee-paid)
+                                                  ────────
+                                                  $99,030
+
+Adjustments for 5 new hires (partial month): -$270 → $98,760 net
+
+─────────────── DRIFT NOTICE ───────────────
+Rate drift this cycle: +0.4% above contract.
+Status: Within tolerance. No Signal alert.
+
+─────────────── REMITTANCE ───────────────
+Payable to:   Hartford Life and Accident Insurance
+Reference:    BOLER-JUN26-LIFE
+Method:        ACH (auto-debit)

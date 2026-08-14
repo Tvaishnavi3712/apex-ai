@@ -1,0 +1,54 @@
+{
+  "matrix_version": "2026-01-08",
+  "compatibility_matrix": {
+    "CaaS-Node-Type-B": {
+      "22.06": { "valid_targets": ["22.12"],          "skip_targets": [],         "blocked_targets": ["23.06","23.12","24.01","24.06","24.12"] },
+      "22.12": { "valid_targets": ["23.06","23.12"],  "skip_targets": ["23.06"],  "blocked_targets": ["24.01","24.06","24.12"] },
+      "23.06": { "valid_targets": ["23.12","24.01"],  "skip_targets": [],         "blocked_targets": ["24.06","24.12"] },
+      "23.12": { "valid_targets": ["24.01","24.06"],  "skip_targets": ["24.01"],  "blocked_targets": ["24.12"] },
+      "24.01": { "valid_targets": ["24.06","24.12"],  "skip_targets": [],         "blocked_targets": [] },
+      "24.06": { "valid_targets": ["24.12"],          "skip_targets": [],         "blocked_targets": [] }
+    },
+    "CaaS-Node-Type-A": {
+      "22.12": { "valid_targets": ["23.06","23.12"],  "skip_targets": [],         "blocked_targets": ["24.01","24.06","24.12"] },
+      "23.06": { "valid_targets": ["23.12","24.01"],  "skip_targets": [],         "blocked_targets": ["24.06","24.12"] },
+      "23.12": { "valid_targets": ["24.01","24.06"],  "skip_targets": [],         "blocked_targets": ["24.12"] },
+      "24.01": { "valid_targets": ["24.06","24.12"],  "skip_targets": [],         "blocked_targets": [] },
+      "24.06": { "valid_targets": ["24.12"],          "skip_targets": [],         "blocked_targets": [] }
+    },
+    "CaaS-Node-Type-C": {
+      "22.12": { "valid_targets": ["23.06","23.12"],  "skip_targets": [],         "blocked_targets": ["24.01","24.06","24.12"] },
+      "23.06": { "valid_targets": ["23.12","24.01"],  "skip_targets": [],         "blocked_targets": ["24.06","24.12"] },
+      "23.12": { "valid_targets": ["24.01","24.06"],  "skip_targets": [],         "blocked_targets": ["24.12"] },
+      "24.01": { "valid_targets": ["24.06","24.12"],  "skip_targets": [],         "blocked_targets": [] },
+      "24.06": { "valid_targets": ["24.12"],          "skip_targets": [],         "blocked_targets": [] }
+    }
+  },
+  "upgrade_paths": {
+    "22.12_to_24.12_TypeB": {
+      "device_type": "CaaS-Node-Type-B",
+      "steps": ["22.12", "23.06", "24.01", "24.12"],
+      "estimated_duration_minutes": 262,
+      "risks": [
+        { "step": "22.12→23.06", "risk": "low",    "note": "Well-tested path, 98% success rate." },
+        { "step": "23.06→24.01", "risk": "medium", "note": "Redfish schema v1.14 → v1.16 transition occurs at this step." },
+        { "step": "24.01→24.12", "risk": "low",    "note": "Standard incremental upgrade." }
+      ],
+      "rollback_checkpoints": ["22.12", "23.06", "24.01"],
+      "pre_checks_required":  ["disk_space_min_20gb", "ansible_version_min_2.14", "redfish_baseline_snapshot"]
+    },
+    "23.06_to_24.01_TypeB_Northeast": {
+      "device_type": "CaaS-Node-Type-B",
+      "region":      "Northeast",
+      "steps":       ["23.06", "24.01"],
+      "estimated_duration_minutes": 92,
+      "historical_failure_rate":    0.78,
+      "risks": [
+        { "step": "23.06→24.01", "risk": "critical", "note": "78% historical failure rate on Type-B Northeast — matches the documented high-risk Type-B Northeast skip-level pattern." }
+      ],
+      "rollback_checkpoints": ["23.06"],
+      "pre_checks_required":  ["redfish_schema_v1.16_compatibility_check", "ipv6_addresses_populated", "ansible_version_min_2.14", "disk_space_min_30gb"],
+      "_critical_flag":       "REQUIRES_HUMAN_APPROVAL"
+    }
+  }
+}

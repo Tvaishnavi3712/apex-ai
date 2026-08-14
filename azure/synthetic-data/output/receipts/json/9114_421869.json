@@ -1,0 +1,50 @@
+{
+  "merchant": {
+    "name": "BP",
+    "category": "Gas Station",
+    "address": {
+      "street": "100 Congress Ave",
+      "city": "Austin",
+      "state": "TX",
+      "zip": "78701"
+    },
+    "phone": "(402) 307-7221"
+  },
+  "transaction": {
+    "date": "2026-02-10",
+    "time": "08:16:13",
+    "receipt_number": "9114-421869"
+  },
+  "line_items": [
+    {
+      "description": "Drip Coffee - Large",
+      "quantity": 3,
+      "unit_price": 2.95,
+      "amount": 8.85
+    },
+    {
+      "description": "Cappuccino",
+      "quantity": 1,
+      "unit_price": 4.95,
+      "amount": 4.95
+    },
+    {
+      "description": "Croissant",
+      "quantity": 1,
+      "unit_price": 3.95,
+      "amount": 3.95
+    }
+  ],
+  "totals": {
+    "subtotal": 17.75,
+    "tax_rate": 0.0825,
+    "tax_amount": 1.46,
+    "tip": 0,
+    "total": 19.21
+  },
+  "payment": {
+    "method": "Debit Card",
+    "card_type": "Amex",
+    "last_four": "5925"
+  }
+}

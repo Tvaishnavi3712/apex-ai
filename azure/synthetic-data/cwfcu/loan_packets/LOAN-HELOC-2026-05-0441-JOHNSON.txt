@@ -1,0 +1,89 @@
+LOAN APPLICATION PACKET — HELOC
+═══════════════════════════════════════════════════════════════
+CommunityWide Federal Credit Union  ·  South Bend, Indiana
+═══════════════════════════════════════════════════════════════
+
+Loan Reference:        LN-2026-0441
+Application Channel:   CWAnyWhere mobile app
+Submitted:             2026-05-30 08:14:18 ET
+Processing Agent:      Loan Document Agent · v2.4.1
+Decision Status:       PENDING · HITL · Missing W-2 (2024)
+
+──────── APPLICANT ────────
+Member Number:         #51122
+Legal Name:            JOHNSON, Marcus Antoine
+Date of Birth:         1981-04-19 (44)
+Address:               5808 Cleveland Rd, Granger, IN 46530
+Employer:              St Joseph Regional Med Ctr · IT Director (4 years)
+Annual Income:         $94,200 (estimated · W-2 missing)
+Co-applicant:          None
+CIP On File:           ✓ (member since 2018-03-22)
+Risk Tier:             LOW
+Prior CDD Concerns:    None · annual review current
+
+──────── LOAN REQUEST ────────
+Type:                  HELOC (Home Equity Line of Credit)
+Amount Requested:      $85,000
+Term:                  10-year draw / 20-year repay
+Rate (offered):        Prime + 1.0% APR variable
+Use of Funds:          Home renovation (kitchen + primary bath)
+
+──────── COLLATERAL ────────
+Property:              5808 Cleveland Rd, Granger, IN 46530
+Type:                  Single-family residence (4BR/3BA, built 2008)
+Tax Assessment 2025:   $342,500
+Estimated Value:       $385,000 (member-stated · appraisal pending)
+Mortgage Balance:      $192,400 (Notre Dame FCU · refi 2022)
+Estimated Equity:      $192,600
+HELOC LTV (target):    ≤ 85% combined · 72% w/ requested $85K
+
+──────── DOCUMENTATION ────────
+Loan Application:      ✓ Signed (DocuSign · audit ID 88301)
+Indiana DL:            ✓ Verified (expires 2029-04-19)
+2025 Paystubs:         ✓ 3 most recent (Apr, May 1, May 16)
+2024 W-2:              ✗ MISSING ← BLOCKER
+2024 Tax Return:       ✓ Form 1040 + Schedule 1 (no W-2 attached)
+First-Mortgage Statement: ✓ (Notre Dame FCU current as of May 2026)
+Title Search:          ◐ Ordered 2026-05-30 · expected 2026-06-04
+Property Tax Receipt:  ✓ 2025 paid in full
+HOI Binder:            ✓ State Farm · effective 2026-04-01
+
+──────── AGENT VALIDATION ────────
+Income Verification:   INCOMPLETE — W-2 missing for 2024
+  ─ Paystubs verify YTD 2026 income
+  ─ Tax return shows $94,200 AGI but no W-2 attached
+  ─ Underwriting policy requires 2 years W-2 evidence
+DTI Calculation:       Front 21.4% · Back 39.8% (within HELOC policy)
+                       Note: DTI uses unverified income — will recalc
+                       after W-2 receipt
+Credit Pull:           FICO 742 (within LOW tier)
+Property Valuation:    Appraisal scheduled Jun 10 (Heartland Valuation)
+OFAC Re-screen:        ✓ Clear
+Source of Funds:       N/A (no member contribution)
+
+──────── MISSING DOC ROUTING ────────
+Item:                  2024 W-2 (employer: St Joseph Regional)
+Notification Sent:     ✓ CWAnyWhere push + email at 2026-05-30 09:42 ET
+Reminder #1:           ✓ Sent 2026-06-01 09:00 ET
+Reminder #2:           Scheduled 2026-06-04 09:00 ET
+Escalation:            Branch officer call follow-up scheduled 2026-06-08
+
+──────── PACKET CONFIDENCE ────────
+Completeness:          94% (1 of 16 required docs missing)
+Extracted accuracy:    96.7% across 15 received documents
+
+──────── DECISION TIMELINE ────────
+Submitted:             2026-05-30 08:14:18 ET
+Extraction complete:   2026-05-30 08:18:42 ET
+Missing-doc flagged:   2026-05-30 09:41 ET (auto-routed to HITL queue)
+Status:                PENDING member upload + appraisal
+
+──────── HAND-OFF NOTES ────────
+→ Vendor Agent:        Heartland Valuation engaged (appraisal SOW)
+→ Member:              CWAnyWhere reminder cycle active
+→ Underwriter:         Queue position: hold until W-2 + appraisal complete
+
+──────── NCUA EXAM FOLDER INDEX ────────
+Folder Path:           ncua-exam-2026/credit_risk/heloc/2026-Q2/
+Immutable Audit ID:    AUDIT-2026-05-30-08:14:18-LN-0441
+HITL Status:           IN QUEUE · Priority MEDIUM · Wait 5d 6h

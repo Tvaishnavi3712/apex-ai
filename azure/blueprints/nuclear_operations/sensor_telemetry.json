@@ -1,0 +1,43 @@
+{
+  "blueprintName": "apex-stp-sensor-telemetry-v1",
+  "blueprintVersion": "1.0.0",
+  "description": "Schema definition for streaming sensor telemetry consumed by ApexSignal RUL / anomaly / failure-class endpoints",
+  "industry": "nuclear_operations",
+  "documentType": "sensor_telemetry",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "timestamp":   {"type": "string", "format": "date-time", "description": "5-minute interval grid"},
+      "equipment_id": {"type": "string"},
+      "channel":      {
+        "type": "string",
+        "enum": ["vibration_mm_s", "vibration_axial_in_per_s",
+                 "bearing_temp_c", "bearing_oil_temp_f",
+                 "motor_current_a", "oil_pressure_kpa"]
+      },
+      "value":        {"type": "number"},
+      "quality":      {"type": "string", "enum": ["good", "uncertain", "bad"]},
+      "data_source":  {"type": "string", "description": "PI tag / OPC tag / sensor serial"}
+    },
+    "required": ["timestamp", "equipment_id", "channel", "value"]
+  },
+  "extractionRules": {
+    "format": "parquet",
+    "partitioning": ["equipment_id", "channel"],
+    "compression": "snappy"
+  },
+  "validationRules": [
+    {"name": "timestamp_grid",
+     "expression": "timestamp aligns to 5-minute boundary"},
+    {"name": "value_in_range",
+     "description": "Each channel has min/max sanity bounds"}
+  ],
+  "channelMetadata": {
+    "vibration_mm_s":            {"unit": "mm/s",    "alarm_high": 4.5,  "trip_high": 7.0},
+    "vibration_axial_in_per_s":  {"unit": "in/s",    "alarm_high": 0.30, "trip_high": 0.40},
+    "bearing_temp_c":            {"unit": "°C",      "alarm_high": 85,   "trip_high": 95},
+    "bearing_oil_temp_f":        {"unit": "°F",      "alarm_high": 180,  "trip_high": 200},
+    "motor_current_a":           {"unit": "A",       "alarm_high": 95,   "trip_high": 110},
+    "oil_pressure_kpa":          {"unit": "kPa",     "alarm_low":  380,  "trip_low":  340}
+  }
+}

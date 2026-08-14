@@ -1,0 +1,87 @@
+playbook_id: pb-cwfcu-7
+name: policy_ack_training_tracking
+version: "1.0.0"
+description: "Continuous tracking of employee policy acknowledgments and training completion across all 84 CWFCU employees."
+industry: credit_union
+category: hr_policy
+
+intent: |
+  Own the entire policy + training acknowledgment lifecycle for the 84
+  CWFCU employees. Track every policy ack (BSA/AML, PCI-DSS, code of
+  conduct, InfoSec, vendor-mgmt). Track every training completion (BSA,
+  cash handling, network security). Send automated reminders. Escalate
+  to department managers and ultimately to the VP Operations as
+  deadlines approach. Maintain board resolution records with
+  signature-status tracking. Close the final 13 points of the NCUA
+  exam readiness score.
+
+output:
+  - name: ack_roster
+    type: structured_data
+    description: "Per-employee ack status across all active policies"
+  - name: outstanding_list
+    type: structured_data
+    description: "Itemized list of overdue acks + training completions"
+  - name: ncua_folder_entry
+    type: index_entry
+    description: "Updated HR/Policy folder index entry"
+
+context:
+  business_rules:
+    - "BSA/AML training: 100% required before NCUA exam window opens"
+    - "Reminder cadence: 14d before deadline, day-of, day-after, +7d, +14d"
+    - "Escalation: deadline + 7d → dept manager, + 14d → VP Operations"
+    - "Board resolutions require all required signatures before effective"
+    - "All acks DocuSign-signed (or equivalent) + IP + timestamp + hash"
+
+actions:
+  - name: track_acks
+    action_id: credit_union.policy_ack_track
+    description: "Continuous tracking of acks across all 84 employees"
+    required: true
+  - name: send_reminders
+    action_id: credit_union.policy_send_reminders
+    description: "Automated reminder cadence"
+    required: true
+  - name: detect_overdue
+    action_id: credit_union.policy_detect_overdue
+    description: "Detect overdue acks + training completions"
+    required: true
+  - name: escalate
+    action_id: credit_union.policy_escalate
+    description: "Escalation to dept manager + VP Operations"
+    required: true
+  - name: track_board_resolutions
+    action_id: credit_union.board_resolution_track
+    description: "Board resolution signature tracking"
+    required: true
+  - name: index_to_ncua_folder
+    action_id: credit_union.ncua_folder_index
+    description: "Index HR/Policy section to NCUA exam folder"
+    required: true
+
+recipe: |
+  1. Daily job iterates all active policies and training assignments.
+  2. For each employee × policy combo, check ack status.
+     If acked: record signature hash, IP, timestamp, training score
+     (if applicable).
+     If not acked + deadline > 14d: skip.
+     If not acked + deadline 14d-1d: queue reminder email/portal.
+     If not acked + deadline < 1d: queue final reminder.
+     If overdue ≤ 7d: send daily reminder.
+     If overdue 7d: escalate to department manager.
+     If overdue 14d: escalate to VP Operations.
+  3. For board resolutions: track each required signature. When all
+     signatures collected, mark resolution EFFECTIVE.
+  4. Build daily roster summary: completion % by department, by
+     policy, by training module.
+  5. Index updated HR/Policy folder to NCUA exam folder so the section
+     is exam-ready at any moment.
+  6. Surface the policy-driven NCUA exam readiness contribution (this
+     playbook owns the final 13 points).
+
+triggers:
+  - type: schedule
+    cron: "0 5 * * *"   # daily 05:00 ET
+  - type: event
+    source: training_lms

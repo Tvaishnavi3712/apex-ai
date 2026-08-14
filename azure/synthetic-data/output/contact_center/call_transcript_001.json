@@ -1,0 +1,121 @@
+{
+  "_metadata": {
+    "blueprint": "apex-call-transcript-v1",
+    "document_type": "call_transcript",
+    "extraction_date": "2024-01-20T15:45:00Z",
+    "confidence_score": 0.92,
+    "source_file": "call_recording_001.wav"
+  },
+  "call_id": "CALL-2024-789012",
+  "call_date": "2024-01-20",
+  "call_time": "14:32:15",
+  "call_duration_seconds": 485,
+  "call_type": "INBOUND",
+  "queue": "BILLING",
+  "agent": {
+    "id": "AGT-5678",
+    "name": "Jennifer Adams",
+    "team": "Billing Support"
+  },
+  "customer": {
+    "id": "CUST-123456",
+    "name": "Robert Martinez",
+    "phone": "+1-555-123-4567",
+    "account_number": "ACCT-789012"
+  },
+  "ivr_path": ["Main Menu", "Billing", "Payment Questions"],
+  "transcript": [
+    {
+      "speaker": "AGENT",
+      "timestamp": "00:00:05",
+      "text": "Thank you for calling customer support. This call may be recorded for quality purposes. My name is Jennifer. How can I help you today?"
+    },
+    {
+      "speaker": "CUSTOMER",
+      "timestamp": "00:00:15",
+      "text": "Hi Jennifer. I'm calling about my bill. I received a charge that I don't recognize."
+    },
+    {
+      "speaker": "AGENT",
+      "timestamp": "00:00:22",
+      "text": "I'd be happy to help you with that. May I have your account number please?"
+    },
+    {
+      "speaker": "CUSTOMER",
+      "timestamp": "00:00:28",
+      "text": "Sure, it's 789012."
+    },
+    {
+      "speaker": "AGENT",
+      "timestamp": "00:00:35",
+      "text": "Thank you, Mr. Martinez. I can see your account. Can you tell me which charge you're referring to?"
+    },
+    {
+      "speaker": "CUSTOMER",
+      "timestamp": "00:00:45",
+      "text": "There's a $49.99 charge from January 15th. I didn't authorize that."
+    },
+    {
+      "speaker": "AGENT",
+      "timestamp": "00:00:55",
+      "text": "I see that charge. Let me look into it for you. One moment please."
+    },
+    {
+      "speaker": "AGENT",
+      "timestamp": "00:02:30",
+      "text": "Mr. Martinez, I found that this charge was for the premium service upgrade. It looks like it was added to your account on January 14th."
+    },
+    {
+      "speaker": "CUSTOMER",
+      "timestamp": "00:02:45",
+      "text": "Oh, I didn't realize that went through. Can you remove it?"
+    },
+    {
+      "speaker": "AGENT",
+      "timestamp": "00:02:52",
+      "text": "Absolutely. I'll cancel the upgrade and issue a refund for the $49.99. You should see the credit within 3-5 business days."
+    },
+    {
+      "speaker": "CUSTOMER",
+      "timestamp": "00:03:05",
+      "text": "Great, thank you so much!"
+    },
+    {
+      "speaker": "AGENT",
+      "timestamp": "00:03:10",
+      "text": "You're welcome. Is there anything else I can help you with today?"
+    },
+    {
+      "speaker": "CUSTOMER",
+      "timestamp": "00:03:15",
+      "text": "No, that's all. Thanks again."
+    },
+    {
+      "speaker": "AGENT",
+      "timestamp": "00:03:20",
+      "text": "Thank you for calling. Have a great day!"
+    }
+  ],
+  "disposition": {
+    "primary": "BILLING_INQUIRY",
+    "secondary": "REFUND_PROCESSED",
+    "resolution": "RESOLVED_FIRST_CALL"
+  },
+  "sentiment": {
+    "overall": "POSITIVE",
+    "start": "NEUTRAL",
+    "end": "POSITIVE"
+  },
+  "compliance": {
+    "recording_disclosed": true,
+    "identity_verified": true,
+    "proper_greeting": true,
+    "proper_closing": true
+  },
+  "actions_taken": [
+    "Reviewed account charges",
+    "Cancelled premium service upgrade",
+    "Processed $49.99 refund"
+  ],
+  "follow_up_required": false
+}

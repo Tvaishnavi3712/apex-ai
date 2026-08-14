@@ -1,0 +1,59 @@
+[
+  {
+    "event_id": "RSK-001",
+    "type": "delay",
+    "severity": "CRITICAL",
+    "probability_pct": 92,
+    "title": "Vinyl Resin Shipment Delay",
+    "description": "PO #88921 inbound to Port of Savannah forecast to arrive 7 days late \u2014 model: apex-signal-lead-time",
+    "affected_material_id": "VR-4400",
+    "affected_supplier_id": "SUP-0044",
+    "affected_plants": [
+      "PLT-OH-07",
+      "PLT-TX-14",
+      "PLT-GA-31"
+    ],
+    "po_number": "PO-88921",
+    "origin_port": "Port of Savannah",
+    "financial_exposure_usd": 1092560.0,
+    "days_until_impact": 7,
+    "agent_playbook_ready": true,
+    "detected_at": "2026-04-21T09:08:00Z"
+  },
+  {
+    "event_id": "RSK-002",
+    "type": "price_surge",
+    "severity": "HIGH",
+    "probability_pct": 78,
+    "title": "Aluminum Price Surge",
+    "description": "Section 232 tariff extension detected \u2014 12 SKUs exposed to +30% material cost impact",
+    "affected_material_id": "AL-2024",
+    "affected_supplier_id": "SUP-0102",
+    "affected_plants": [
+      "PLT-TX-14",
+      "PLT-GA-31",
+      "PLT-PA-09"
+    ],
+    "financial_exposure_usd": 450000.0,
+    "days_until_impact": 21,
+    "agent_playbook_ready": true,
+    "detected_at": "2026-04-21T11:22:00Z"
+  },
+  {
+    "event_id": "RSK-003",
+    "type": "quality_degradation",
+    "severity": "MEDIUM",
+    "probability_pct": 61,
+    "title": "Supplier Quality Degradation",
+    "description": "Formosa Plastics QC pass rate declined 3 consecutive lots \u2014 model flags 61% probability of non-conforming next batch",
+    "affected_material_id": "VR-4400",
+    "affected_supplier_id": "SUP-0081",
+    "affected_plants": [
+      "PLT-OH-07"
+    ],
+    "financial_exposure_usd": 320000.0,
+    "days_until_impact": 30,
+    "agent_playbook_ready": true,
+    "detected_at": "2026-04-21T13:40:00Z"
+  }
+]

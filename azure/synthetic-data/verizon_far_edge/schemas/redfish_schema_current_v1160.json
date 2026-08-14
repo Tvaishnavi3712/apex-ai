@@ -1,0 +1,77 @@
+{
+  "schema_version": "v1.16.0",
+  "captured_at": "2026-01-12T03:18:44Z",
+  "source_device": "CaaS-Edge-Node-Type-B",
+  "_note": "Pulled after Wind River 24.12 firmware staging — contains 3 breaking changes from v1.14.0 baseline.",
+  "endpoints": {
+    "/redfish/v1/Systems/1": {
+      "@odata.type": "#ComputerSystem.v1_16_0.ComputerSystem",
+      "required_fields": ["Id", "Name", "SystemType", "Status"],
+      "fields": {
+        "Id":             { "type": "string" },
+        "Name":           { "type": "string" },
+        "SystemType":     { "type": "string" },
+        "Status": {
+          "type": "object",
+          "properties": {
+            "Health":     { "type": "string" },
+            "State":      { "type": "string" },
+            "PowerState": { "type": "string", "enum": ["On", "Off", "PoweringOn", "PoweringOff"], "_moved_from": "PowerState" }
+          }
+        },
+        "BiosVersion":    { "type": "string" },
+        "MemorySummary":  { "type": "object" }
+      },
+      "deprecated_fields": ["PowerState"],
+      "_change_note": "PowerState moved from top-level to Status.PowerState — top-level field is now deprecated."
+    },
+    "/redfish/v1/Chassis/1/Thermal": {
+      "@odata.type": "#Thermal.v1_16_0.Thermal",
+      "required_fields": ["Id", "Name", "Temperatures", "Fans"],
+      "fields": {
+        "Id":           { "type": "string" },
+        "Name":         { "type": "string" },
+        "Temperatures": { "type": "array" },
+        "Fans": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "MemberId": { "type": "string" },
+              "Reading":  { "type": "integer", "units": "RPM", "_renamed_from": "CurrentReading" },
+              "Status":   { "type": "object" }
+            }
+          }
+        }
+      },
+      "deprecated_fields": ["FanSpeeds"],
+      "_change_note": "FanSpeeds[] array renamed to Fans[]; CurrentReading field renamed to Reading."
+    },
+    "/redfish/v1/Managers/1/EthernetInterfaces/1": {
+      "@odata.type": "#EthernetInterface.v1_16_0.EthernetInterface",
+      "required_fields": ["Id", "Name", "MACAddress", "InterfaceEnabled", "IPv6Addresses"],
+      "fields": {
+        "Id":               { "type": "string" },
+        "Name":             { "type": "string" },
+        "MACAddress":       { "type": "string" },
+        "InterfaceEnabled": { "type": "boolean" },
+        "IPv4Addresses":    { "type": "array" },
+        "IPv6Addresses":    { "type": "array", "_now_required": true }
+      },
+      "deprecated_fields": [],
+      "_change_note": "IPv6Addresses elevated from optional to required field — existing scripts must populate."
+    },
+    "/redfish/v1/Systems/1/Storage/1": {
+      "@odata.type": "#Storage.v1_16_0.Storage",
+      "required_fields": ["Id", "Name", "Drives", "Controllers"],
+      "fields": {
+        "Id":          { "type": "string" },
+        "Name":        { "type": "string" },
+        "Drives":      { "type": "array" },
+        "Controllers": { "type": "@odata.id", "_moved_to": "/redfish/v1/Systems/1/Storage/1/Controllers" }
+      },
+      "deprecated_fields": ["StorageControllers"],
+      "_change_note": "StorageControllers embedded array replaced by Controllers navigation link to a new sub-resource."
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "_metadata": {
+    "blueprint": "apex-demand-forecast-v1",
+    "document_type": "demand_forecast",
+    "extraction_date": "2024-01-21T08:00:00Z",
+    "confidence_score": 0.94,
+    "source_file": "forecast_report.xlsx"
+  },
+  "forecast_id": "FCT-2024-Q1-001",
+  "generation_date": "2024-01-21",
+  "forecast_period": {
+    "start": "2024-02-01",
+    "end": "2024-04-30",
+    "granularity": "WEEKLY"
+  },
+  "product": {
+    "sku": "SKU-12345",
+    "name": "Premium Widget Assembly",
+    "category": "Industrial Components",
+    "unit_of_measure": "EACH"
+  },
+  "forecast_method": "WEIGHTED_MOVING_AVERAGE",
+  "historical_periods_used": 52,
+  "forecast_data": [
+    {"week_start": "2024-02-05", "forecast_qty": 1250, "lower_bound": 1100, "upper_bound": 1400},
+    {"week_start": "2024-02-12", "forecast_qty": 1300, "lower_bound": 1150, "upper_bound": 1450},
+    {"week_start": "2024-02-19", "forecast_qty": 1275, "lower_bound": 1125, "upper_bound": 1425},
+    {"week_start": "2024-02-26", "forecast_qty": 1350, "lower_bound": 1200, "upper_bound": 1500},
+    {"week_start": "2024-03-04", "forecast_qty": 1400, "lower_bound": 1250, "upper_bound": 1550},
+    {"week_start": "2024-03-11", "forecast_qty": 1425, "lower_bound": 1275, "upper_bound": 1575},
+    {"week_start": "2024-03-18", "forecast_qty": 1450, "lower_bound": 1300, "upper_bound": 1600},
+    {"week_start": "2024-03-25", "forecast_qty": 1500, "lower_bound": 1350, "upper_bound": 1650},
+    {"week_start": "2024-04-01", "forecast_qty": 1550, "lower_bound": 1400, "upper_bound": 1700},
+    {"week_start": "2024-04-08", "forecast_qty": 1525, "lower_bound": 1375, "upper_bound": 1675},
+    {"week_start": "2024-04-15", "forecast_qty": 1475, "lower_bound": 1325, "upper_bound": 1625},
+    {"week_start": "2024-04-22", "forecast_qty": 1450, "lower_bound": 1300, "upper_bound": 1600},
+    {"week_start": "2024-04-29", "forecast_qty": 1400, "lower_bound": 1250, "upper_bound": 1550}
+  ],
+  "summary": {
+    "total_forecast_qty": 18350,
+    "avg_weekly_qty": 1412,
+    "trend": "INCREASING",
+    "seasonality": "MODERATE",
+    "confidence_level": 0.85
+  },
+  "accuracy_metrics": {
+    "mape": 8.5,
+    "mad": 95,
+    "bias": 2.3
+  },
+  "assumptions": [
+    "No major supply disruptions",
+    "Economic conditions stable",
+    "Promotional calendar as planned"
+  ],
+  "analyst": {
+    "name": "Supply Planning Team",
+    "approved_by": "Director of Supply Chain"
+  }
+}

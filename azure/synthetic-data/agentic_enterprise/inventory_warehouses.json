@@ -1,0 +1,58 @@
+{
+  "_description": "Mock inventory across distribution centers for the Agentic Enterprise Supply Chain Orchestrator demo. SKU-892 is intentionally at zero everywhere to drive the demo storyline (Dallas promotion shortage).",
+  "as_of": "2026-05-04T07:00:00Z",
+  "warehouses": [
+    {
+      "warehouse_id": "WH-DAL-01",
+      "name": "Dallas Distribution Center",
+      "region": "South Central",
+      "city": "Dallas, TX",
+      "inventory": [
+        { "sku": "SKU-892", "name": "Wireless Earbuds Pro",  "on_hand": 0,    "reserved": 0,   "available": 0,    "reorder_point": 250, "max_stock": 1500 },
+        { "sku": "SKU-104", "name": "Phone Case — Premium",  "on_hand": 8200, "reserved": 320, "available": 7880, "reorder_point": 1500, "max_stock": 12000 },
+        { "sku": "SKU-577", "name": "USB-C Charger 30W",     "on_hand": 4100, "reserved": 110, "available": 3990, "reorder_point": 1000, "max_stock": 8000 },
+        { "sku": "SKU-301", "name": "Smart Watch Band",      "on_hand": 950,  "reserved": 60,  "available": 890,  "reorder_point": 400, "max_stock": 3000 }
+      ]
+    },
+    {
+      "warehouse_id": "WH-MEM-02",
+      "name": "Memphis Hub",
+      "region": "Mid-South",
+      "city": "Memphis, TN",
+      "inventory": [
+        { "sku": "SKU-892", "name": "Wireless Earbuds Pro",  "on_hand": 0,    "reserved": 0,   "available": 0,    "reorder_point": 250, "max_stock": 1500 },
+        { "sku": "SKU-104", "name": "Phone Case — Premium",  "on_hand": 6400, "reserved": 0,   "available": 6400, "reorder_point": 1500, "max_stock": 12000 },
+        { "sku": "SKU-577", "name": "USB-C Charger 30W",     "on_hand": 0,    "reserved": 0,   "available": 0,    "reorder_point": 1000, "max_stock": 8000 }
+      ]
+    },
+    {
+      "warehouse_id": "WH-LAX-03",
+      "name": "Los Angeles Forward DC",
+      "region": "Pacific",
+      "city": "Los Angeles, CA",
+      "inventory": [
+        { "sku": "SKU-892", "name": "Wireless Earbuds Pro",  "on_hand": 0,    "reserved": 0,   "available": 0,    "reorder_point": 250, "max_stock": 1500 },
+        { "sku": "SKU-301", "name": "Smart Watch Band",      "on_hand": 4400, "reserved": 200, "available": 4200, "reorder_point": 400, "max_stock": 3000 }
+      ]
+    },
+    {
+      "warehouse_id": "WH-NJ-04",
+      "name": "Edison NJ Crossdock",
+      "region": "Northeast",
+      "city": "Edison, NJ",
+      "inventory": [
+        { "sku": "SKU-892", "name": "Wireless Earbuds Pro",  "on_hand": 12,   "reserved": 12,  "available": 0,    "reorder_point": 250, "max_stock": 1500 }
+      ]
+    }
+  ],
+  "demand_forecast": {
+    "SKU-892": {
+      "campaign": "Dallas Spring Promotion 2026",
+      "campaign_start": "2026-05-15",
+      "expected_units": 500,
+      "fulfillment_window_days": 11,
+      "priority": "HIGH",
+      "owner": "merchandising@example.com"
+    }
+  }
+}

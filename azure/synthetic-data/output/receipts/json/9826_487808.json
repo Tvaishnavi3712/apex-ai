@@ -1,0 +1,56 @@
+{
+  "merchant": {
+    "name": "Office Depot",
+    "category": "Office Supplies",
+    "address": {
+      "street": "400 Market St",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "94102"
+    },
+    "phone": "(465) 935-4311"
+  },
+  "transaction": {
+    "date": "2026-02-01",
+    "time": "16:05:31",
+    "receipt_number": "9826-487808"
+  },
+  "line_items": [
+    {
+      "description": "Ink Cartridge - Color",
+      "quantity": 1,
+      "unit_price": 44.99,
+      "amount": 44.99
+    },
+    {
+      "description": "Notebooks - 3 Pack",
+      "quantity": 1,
+      "unit_price": 15.99,
+      "amount": 15.99
+    },
+    {
+      "description": "Ink Cartridge - Black",
+      "quantity": 1,
+      "unit_price": 34.99,
+      "amount": 34.99
+    },
+    {
+      "description": "Folders - 25 Pack",
+      "quantity": 1,
+      "unit_price": 8.99,
+      "amount": 8.99
+    }
+  ],
+  "totals": {
+    "subtotal": 104.96000000000001,
+    "tax_rate": 0.0625,
+    "tax_amount": 6.56,
+    "tip": 0,
+    "total": 111.52
+  },
+  "payment": {
+    "method": "Debit Card",
+    "card_type": "Visa",
+    "last_four": "1978"
+  }
+}

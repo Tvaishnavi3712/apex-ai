@@ -1,0 +1,54 @@
+PAYSTUB · EXTRACTION REFERENCE
+═══════════════════════════════════════════════════════════════
+Supporting document for self-employed CDD case
+═══════════════════════════════════════════════════════════════
+
+Source Document:       NGUYEN Tax Services LLC — Member draw statement
+Document Type:         Self-employment income summary
+Reference Period:      May 1 — May 31, 2026
+Extracted By:          Loan Document Agent · v2.4.1
+
+──────── HEADER ────────
+Filer / Member:        Nguyen, Tuan K.  (Member #29402)
+SSN:                   XXX-XX-8814
+Entity:                Nguyen Tax Services LLC (Indiana)
+EIN:                   XX-3947112
+Pay Period:            2026-05-01 → 2026-05-31
+
+──────── EARNINGS ────────
+Gross Receipts:        $14,820.00
+─ Tax prep fees:       $11,200 (43 returns @ $260 avg)
+─ Advisory fees:       $2,400 (8 consultations @ $300)
+─ Bookkeeping retainers: $1,220 (2 clients monthly)
+
+Operating Expenses:    $4,418.00
+─ Office rent:         $1,850
+─ Software (TaxWise + QBO):  $618
+─ Marketing:           $200
+─ Vehicle/Travel:      $1,750
+
+Net Self-Employment Income: $10,402.00
+
+──────── YTD SUMMARY (2026 through May 31) ────────
+Gross YTD:             $74,200.00
+Expenses YTD:          $22,090.00
+Net YTD:               $52,110.00 (annualized $125,064)
+
+──────── BANK DEPOSIT LINK ────────
+Linked Deposits to CWFCU Account #29402:
+  ─ 2026-05-04 · $5,200 (5 client checks batch)
+  ─ 2026-05-11 · $3,400 (tax-prep batch)
+  ─ 2026-05-18 · $4,700 (bookkeeping + 2 returns)
+  ─ 2026-05-25 · $1,520 (final May intake)
+  Total deposited: $14,820.00 (100% match to gross receipts)
+
+──────── AGENT VALIDATION ────────
+Cross-reference:       ✓ Deposits match gross receipts (100%)
+Source consistency:    ✓ Tax prep fees consistent w/ Schedule C 2024
+Anomaly flags:         None
+Trend:                 +6.4% YoY growth (consistent w/ stated business)
+
+──────── HAND-OFF NOTES ────────
+→ Compliance Agent:    Cash deposit pattern consistent — no SAR concern
+→ Use case:            Self-employment income verification for any
+                       future loan / HELOC application from Member #29402

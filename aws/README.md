@@ -10,10 +10,13 @@ Apex AI Platform enables enterprise clients to describe their work in plain Engl
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| Blueprints | 34 | Document extraction schemas |
-| Runbooks | 25 | Workflow automations |
-| Actions | 56+ | Lambda business logic handlers |
-| Industries | 12 | Complete vertical coverage |
+| Blueprints | 42 | Document extraction schemas (JSON) |
+| Playbooks | 38 | Workflow automations (YAML) |
+| Actions | 202 | Action handler files (Python) |
+| Industries | 13 | Vertical coverage |
+
+> Counts measured directly from the repo (Aug 2026): `Get-ChildItem -Recurse`
+> over `blueprints/*.json`, `playbooks/*.yaml`, and `actions/*.py`.
 
 ---
 
@@ -22,7 +25,7 @@ Apex AI Platform enables enterprise clients to describe their work in plain Engl
 ### Option 1: Automated Startup (Recommended)
 
 ```bash
-cd /Users/babbu/Documents/CBTS/Accelerator/apex-ai-platform/aws
+cd cbts-tool-apexai/aws
 ./start.sh
 ```
 
@@ -84,87 +87,69 @@ npm run dev
 ```
 aws/
 ├── frontend/              # Next.js React application
-│   ├── src/
-│   │   ├── components/    # UI components (BlueprintDesigner, WorkRoom, etc.)
-│   │   ├── pages/         # Next.js pages
-│   │   ├── lib/           # API client, Zustand store
-│   │   └── styles/        # Tailwind CSS
-│   └── package.json
+│   └── src/               # components, pages, lib (API client, Zustand), styles
 │
 ├── backend/               # FastAPI application
-│   ├── api/               # REST endpoints (7 routers)
+│   ├── api/               # REST endpoints (8 routers: actions, agents,
+│   │                      #   blueprints, chat, documents, playbooks,
+│   │                      #   voice, work_items)
 │   ├── models/            # Pydantic models
-│   ├── services/          # DynamoDB, S3, Action Registry
+│   ├── services/          # DynamoDB, S3, Bedrock, Action Registry
 │   ├── core/              # Configuration
 │   └── main.py
 │
-├── blueprints/            # Document extraction schemas (34 JSON files)
-│   ├── financial_services/
-│   ├── healthcare_payers/
-│   ├── healthcare_providers/
-│   └── ... (12 industries)
+├── agentcore-agents/      # Strands/AgentCore agents + deploy scripts
 │
-├── runbooks/              # Workflow definitions (25 YAML files)
-│   ├── financial_services/
-│   ├── healthcare_payers/
-│   └── ... (11 industries)
+├── blueprints/            # 42 document extraction schemas (JSON, 13 industries)
 │
-├── actions/               # Lambda handlers (56+ handlers)
+├── playbooks/             # 38 workflow definitions (YAML, 13 industries
+│   │                      #   + config/ + templates/)
+│
+├── actions/               # 202 handler files
 │   ├── sdk/               # Apex Action SDK
 │   ├── core/              # Core actions (BDA, DynamoDB, S3)
-│   ├── healthcare_payers/ # 5 actions
-│   ├── airlines/          # 5 actions
-│   └── ... (11 industries)
+│   ├── integrations/      # External system integrations
+│   └── ... (13 industry folders, incl. sales_ai/)
 │
-├── tests/                 # Test suite (30 files)
-│   ├── unit/              # Unit tests
-│   ├── integration/       # Integration tests
-│   └── api/               # API tests
-│
-├── synthetic-data/        # Test documents (50+ files)
-├── infrastructure/        # CloudFormation templates
-└── docs/                  # Documentation
+├── docs/                  # Documentation
+├── infrastructure/        # CloudFormation/SAM templates
+├── synthetic-data/        # Test documents
+├── tests/                 # Test suite (unit, integration, api)
+├── CLAUDE.md              # Claude Code project instructions
+└── start.sh               # One-command local startup
 ```
 
 ---
 
 ## 🏭 Industries Supported
 
-| Industry | Blueprints | Runbooks | Actions |
-|----------|------------|----------|---------|
-| Financial Services | 5 | 4 | 7 |
-| Healthcare Payers | 3 | 2 | 5 |
-| Healthcare Providers | 3 | 2 | 5 |
-| Healthcare Clinical | 3 | 2 | 5 |
-| Manufacturing | 4 | 3 | 3 |
-| HR / Recruitment | 4 | 3 | 3 |
-| Insurance Underwriting | 2 | 1 | 5 |
-| Retail | 2 | 1 | 5 |
-| CPG | 2 | 1 | 5 |
-| Contact Center | 2 | 1 | 5 |
-| Airlines | 2 | 2 | 5 |
-| Supply Chain | 2 | 2 | 7 |
+Industry content lives in per-industry folders under `playbooks/`, `blueprints/`, and `actions/`:
+
+| | | |
+|---|---|---|
+| airlines | contact_center | cpg |
+| financial_services | healthcare_clinical | healthcare_payers |
+| healthcare_providers | hr | insurance_underwriting |
+| manufacturing | retail | sales_ai |
+| supply_chain | | |
 
 ---
 
 ## 🔌 API Endpoints
+
+All endpoints are under `/api/v1` (8 routers — see `backend/api/`).
+
+### Playbooks
+- `GET /api/v1/playbooks` - List all playbooks
+- `POST /api/v1/playbooks` - Create playbook
 
 ### Blueprints
 - `GET /api/v1/blueprints` - List all blueprints
 - `POST /api/v1/blueprints` - Create blueprint
 - `GET /api/v1/blueprints/{id}` - Get blueprint details
 
-### Runbooks
-- `GET /api/v1/runbooks` - List all runbooks
-- `POST /api/v1/runbooks` - Create runbook
-- `POST /api/v1/runbooks/{id}/deploy` - Deploy runbook
-
 ### Actions
-- `GET /api/v1/actions` - List all actions
-- `GET /api/v1/actions/gallery` - Action gallery by category
-- `GET /api/v1/actions/packs` - Industry action packs
-- `GET /api/v1/actions/registry/discover` - Discover all handlers
-- `POST /api/v1/actions/registry/register-all` - Register all actions
+- `GET /api/v1/actions` - List all actions (registry, gallery, packs)
 
 ### Agents
 - `GET /api/v1/agents` - List agents
@@ -174,6 +159,11 @@ aws/
 ### Documents
 - `POST /api/v1/documents/upload` - Upload document
 - `POST /api/v1/documents/{id}/extract` - Extract with blueprint
+
+### Other routers
+`chat` · `voice` · `work-items`
+
+See Swagger at `/docs` for the complete, always-accurate list.
 
 ---
 
@@ -252,7 +242,7 @@ Ensure backend is running on port 8000 before starting frontend.
 | Backend | Python FastAPI |
 | State Management | Zustand |
 | Styling | Tailwind CSS |
-| Agent Runtime | Bedrock AgentCore |
+| Agent Runtime | Bedrock AgentCore (Strands agents in `agentcore-agents/`) |
 | Document Processing | Bedrock Data Automation |
 | Actions/Tools | AgentCore Gateway + Lambda |
 | Database | DynamoDB |

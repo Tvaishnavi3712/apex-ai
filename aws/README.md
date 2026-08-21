@@ -10,10 +10,13 @@ Apex AI Platform enables enterprise clients to describe their work in plain Engl
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| Blueprints | 34 | Document extraction schemas |
-| Runbooks | 25 | Workflow automations |
-| Actions | 56+ | Lambda business logic handlers |
-| Industries | 12 | Complete vertical coverage |
+| Blueprints | 82 | Document extraction schemas |
+| Playbooks | 71 | Workflow automations |
+| Actions | 100 | Lambda business logic handlers |
+| Industries | 20 | Complete vertical coverage |
+
+> Counts reflect the verified seeded state (see the seeding step below). The
+> same content ships in the `azure/` build.
 
 ---
 
@@ -22,7 +25,7 @@ Apex AI Platform enables enterprise clients to describe their work in plain Engl
 ### Option 1: Automated Startup (Recommended)
 
 ```bash
-cd /Users/babbu/Documents/CBTS/Accelerator/apex-ai-platform/aws
+cd apex-ai/aws
 ./start.sh
 ```
 
@@ -92,72 +95,70 @@ aws/
 │   └── package.json
 │
 ├── backend/               # FastAPI application
-│   ├── api/               # REST endpoints (7 routers)
+│   ├── api/               # REST endpoints (22 routers)
 │   ├── models/            # Pydantic models
-│   ├── services/          # DynamoDB, S3, Action Registry
+│   ├── services/          # DynamoDB, S3, SQS, SageMaker, Bedrock, Action Registry
 │   ├── core/              # Configuration
 │   └── main.py
 │
-├── blueprints/            # Document extraction schemas (34 JSON files)
+├── agentcore-agents/      # 32 Strands/AgentCore agents + deploy scripts
+│
+├── blueprints/            # Document extraction schemas (JSON, per industry)
 │   ├── financial_services/
 │   ├── healthcare_payers/
-│   ├── healthcare_providers/
-│   └── ... (12 industries)
+│   ├── nuclear_operations/
+│   └── ... (22 industry folders)
 │
-├── runbooks/              # Workflow definitions (25 YAML files)
+├── playbooks/             # Workflow definitions (YAML, per industry)
 │   ├── financial_services/
 │   ├── healthcare_payers/
-│   └── ... (11 industries)
+│   └── ... (20 industry folders + config/ + templates/)
 │
-├── actions/               # Lambda handlers (56+ handlers)
+├── actions/               # Action handlers (per industry)
 │   ├── sdk/               # Apex Action SDK
 │   ├── core/              # Core actions (BDA, DynamoDB, S3)
-│   ├── healthcare_payers/ # 5 actions
-│   ├── airlines/          # 5 actions
-│   └── ... (11 industries)
+│   └── ... (20+ industry folders)
 │
-├── tests/                 # Test suite (30 files)
-│   ├── unit/              # Unit tests
-│   ├── integration/       # Integration tests
-│   └── api/               # API tests
-│
-├── synthetic-data/        # Test documents (50+ files)
-├── infrastructure/        # CloudFormation templates
-└── docs/                  # Documentation
+├── connectors/            # External system connectors
+├── infrastructure/        # CloudFormation/SAM templates
+├── sample-files/          # Sample input documents
+├── synthetic-data/        # Test documents
+├── scripts/               # Utility scripts
+├── test-scripts/          # Ad-hoc test scripts
+└── tests/                 # Test suite (unit, integration, api)
 ```
 
 ---
 
 ## 🏭 Industries Supported
 
-| Industry | Blueprints | Runbooks | Actions |
-|----------|------------|----------|---------|
-| Financial Services | 5 | 4 | 7 |
-| Healthcare Payers | 3 | 2 | 5 |
-| Healthcare Providers | 3 | 2 | 5 |
-| Healthcare Clinical | 3 | 2 | 5 |
-| Manufacturing | 4 | 3 | 3 |
-| HR / Recruitment | 4 | 3 | 3 |
-| Insurance Underwriting | 2 | 1 | 5 |
-| Retail | 2 | 1 | 5 |
-| CPG | 2 | 1 | 5 |
-| Contact Center | 2 | 1 | 5 |
-| Airlines | 2 | 2 | 5 |
-| Supply Chain | 2 | 2 | 7 |
+Industry content lives in per-industry folders under `playbooks/`,
+`blueprints/`, and `actions/`:
+
+| | | | |
+|---|---|---|---|
+| aerospace_defense | agentic_enterprise | airlines | contact_center |
+| cpg | credit_union | financial_services | healthcare_clinical |
+| healthcare_payers | healthcare_providers | hr | insurance_underwriting |
+| manufacturing | manufacturing_multi_division | nuclear_operations | oil_gas_midstream |
+| retail | sales_ai | supply_chain | telecommunications |
 
 ---
 
 ## 🔌 API Endpoints
 
+All endpoints are under `/api/v1`. Main resources:
+
+### Playbooks
+- `GET /api/v1/playbooks` - List all playbooks
+- `POST /api/v1/playbooks` - Create playbook
+- `POST /api/v1/playbooks/seed?industry={ind}` - Seed playbooks for an industry
+
 ### Blueprints
 - `GET /api/v1/blueprints` - List all blueprints
 - `POST /api/v1/blueprints` - Create blueprint
 - `GET /api/v1/blueprints/{id}` - Get blueprint details
-
-### Runbooks
-- `GET /api/v1/runbooks` - List all runbooks
-- `POST /api/v1/runbooks` - Create runbook
-- `POST /api/v1/runbooks/{id}/deploy` - Deploy runbook
+- `POST /api/v1/blueprints/seed?industry={ind}` - Seed blueprints for an industry
 
 ### Actions
 - `GET /api/v1/actions` - List all actions
@@ -174,6 +175,13 @@ aws/
 ### Documents
 - `POST /api/v1/documents/upload` - Upload document
 - `POST /api/v1/documents/{id}/extract` - Extract with blueprint
+
+### Other routers
+`work-items` · `chat` · `voice` · `pipelines` · `metrics` · `simulator` ·
+`signals` · `llm` · `review-queue` · `aws` (admin) · `telecommunications` ·
+`eprod` · `cwfcu` · `boler` · `inventory` · `jobs` · `import`
+
+See Swagger at `/docs` for the full, always-accurate list.
 
 ---
 
@@ -252,11 +260,13 @@ Ensure backend is running on port 8000 before starting frontend.
 | Backend | Python FastAPI |
 | State Management | Zustand |
 | Styling | Tailwind CSS |
-| Agent Runtime | Bedrock AgentCore |
+| Agent Runtime | Bedrock AgentCore (Strands agents in `agentcore-agents/`) |
 | Document Processing | Bedrock Data Automation |
 | Actions/Tools | AgentCore Gateway + Lambda |
 | Database | DynamoDB |
 | Storage | S3 |
+| Queue | SQS |
+| Predictive ML | SageMaker |
 | Infrastructure | CloudFormation/SAM |
 
 ---

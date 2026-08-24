@@ -101,6 +101,8 @@ aws/
 
 ## Key Commands
 
+See `README.md` → Prerequisites for AWS CLI v2 setup (install from the official AWS source, never from a binary committed to this repo).
+
 ### Development
 ```bash
 # Start everything

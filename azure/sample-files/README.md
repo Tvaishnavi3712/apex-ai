@@ -4,15 +4,17 @@ Real, uploadable files you can drop into **ApexLens** (`/apex-lens`) to test the
 end-to-end flow: upload → pipeline selector → 5-stage pipeline → Agent Hub
 conversation.
 
-All files live in this folder. Drop any of them into the drop zone or click
-**Upload File** in the ApexLens toolbar.
+Most files live directly in this folder. File #2 is generated on demand into
+`generated/` (gitignored — run `python3 generate_samples.py` first if it's not
+there yet). Drop any of them into the drop zone or click **Upload File** in the
+ApexLens toolbar.
 
 ## What's here
 
 | # | File                                       | Size   | Pipeline (auto-selected)          | Demo |
 |---|--------------------------------------------|--------|-----------------------------------|------|
 | 1 | `01-Order_Mod_Request_1044.pdf`            |  2.7 KB| Zero-Touch Order Modification     | CBB §1 |
-| 2 | `02-QC_Batch_50_Certificates.zip`          |   77 KB| QC Batch Ingestion & Hold         | CBB §2 |
+| 2 | `generated/02-QC_Batch_50_Certificates.zip`|   77 KB| QC Batch Ingestion & Hold         | CBB §2 |
 | 3 | `03-Port_Strike_Alert_VinylResin.xml`      |  1.5 KB| Disruption Impact & Reroute       | CBB §3 |
 | 4 | `04-Invoice_Globex_GLX-2024-0441.pdf`      |  2.7 KB| Invoice Processing & Validation   | — |
 | 5 | `05-Claim_CL-8821_WaterDamage.pdf`         |  2.8 KB| Claims Intake & Triage            | — |

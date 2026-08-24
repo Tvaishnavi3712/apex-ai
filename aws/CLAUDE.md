@@ -46,39 +46,43 @@ aws/
 │   └── package.json
 │
 ├── backend/                  # FastAPI application
-│   ├── api/                  # REST endpoints (7 routers)
+│   ├── api/                  # REST endpoints (8 router files)
 │   │   ├── playbooks.py
 │   │   ├── agents.py
 │   │   ├── blueprints.py
 │   │   ├── documents.py
 │   │   ├── work_items.py
 │   │   ├── chat.py
+│   │   ├── voice.py
 │   │   └── actions.py
 │   ├── models/               # Pydantic models (5 models)
 │   ├── services/             # DynamoDB, S3, ActionRegistry
 │   ├── core/                 # Configuration
 │   └── main.py
 │
-├── blueprints/               # Document extraction schemas (34 JSON)
-│   ├── financial_services/   # 5 blueprints
-│   ├── healthcare_payers/    # 3 blueprints
-│   ├── healthcare_providers/ # 3 blueprints
-│   ├── healthcare_clinical/  # 3 blueprints
-│   ├── manufacturing/        # 4 blueprints
-│   ├── hr/                   # 4 blueprints
-│   └── ... (12 industries)
+├── agentcore-agents/         # Strands/AgentCore agents + deploy scripts
 │
-├── playbooks/                 # Workflow definitions (24 YAML)
-│   ├── financial_services/   # 4 playbooks
-│   ├── healthcare_payers/    # 2 playbooks
-│   └── ... (11 industries)
+├── blueprints/               # Document extraction schemas (42 JSON)
+│   ├── financial_services/
+│   ├── healthcare_payers/
+│   ├── healthcare_providers/
+│   ├── healthcare_clinical/
+│   ├── manufacturing/
+│   ├── hr/
+│   └── ... (13 industries)
 │
-├── actions/                  # Lambda handlers (57 handlers)
+├── playbooks/                # Workflow definitions (38 YAML)
+│   ├── financial_services/
+│   ├── healthcare_payers/
+│   └── ... (13 industries + config/ + templates/)
+│
+├── actions/                  # Action handlers (202 Python files)
 │   ├── sdk/                  # Apex Action SDK
 │   ├── core/                 # BDA, DynamoDB, S3, Notification
-│   ├── financial_services/   # 4 actions
-│   ├── healthcare_payers/    # 5 actions
-│   └── ... (12 industries)
+│   ├── integrations/         # External system integrations
+│   ├── financial_services/
+│   ├── healthcare_payers/
+│   └── ... (13 industries, incl. sales_ai/)
 │
 ├── tests/                    # Test suite (23 files)
 │   ├── unit/                 # Unit tests
@@ -149,13 +153,16 @@ cd frontend && npm test
 |-----------|-------|
 | Frontend Pages | 13 |
 | Frontend Components | 17 |
-| Backend API Routers | 7 |
-| Blueprints | 34 |
-| Playbooks | 24 |
-| Actions | 57 |
+| Backend API Routers | 8 |
+| Blueprints | 42 |
+| Playbooks | 38 |
+| Actions | 202 |
 | Tests | 23 |
-| Industries | 12 |
-| **Total Artifacts** | **187** |
+| Industries | 13 |
+| **Total Artifacts** | **343** |
+
+> Blueprint/playbook/action/industry counts measured from the repo (Aug 2026);
+> frontend/test counts need verification in the baseline audit (APEX-17).
 
 ## Industries Supported
 1. Financial Services
@@ -170,6 +177,7 @@ cd frontend && npm test
 10. Contact Center
 11. Airlines
 12. Supply Chain
+13. Sales AI
 
 ## Important Notes
 

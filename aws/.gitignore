@@ -33,3 +33,6 @@ Thumbs.db
 
 # AWS
 .aws/
+
+# Locally generated CA bundles (machine-specific, e.g. corporate TLS proxy roots)
+backend/.certs/

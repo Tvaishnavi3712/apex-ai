@@ -20,6 +20,18 @@ Apex AI Platform enables enterprise clients to describe their work in plain Engl
 
 ---
 
+## ✅ Prerequisites
+
+- Python 3.11+
+- Node.js 18+
+- **AWS CLI v2** — install from the official source for your platform, never from a binary committed to this repo:
+  - macOS: `curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg" && sudo installer -pkg AWSCLIV2.pkg -target /` (or `brew install awscli`)
+  - Linux: `curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sudo ./aws/install`
+  - Windows: [official MSI installer](https://awscli.amazonaws.com/AWSCLIV2.msi), or `winget install Amazon.AWSCLI`
+  - Verify with `aws --version` (expect `aws-cli/2.x`)
+  - Note: the `awscli` package on PyPI (`pip install awscli`) tracks CLI **v1** — it is not a drop-in replacement for v2
+- Configured AWS credentials (`aws configure` or `aws configure sso`) with access to the target account's Bedrock, DynamoDB, and S3 resources
+
 ## 🚀 Quick Start
 
 ### Option 1: Automated Startup (Recommended)

@@ -5,7 +5,7 @@ Generate robust sample files for ApexLens upload testing.
 Produces 9 files in ./sample-files/ — one per pipeline the UI supports:
 
   01-Order_Mod_Request_1044.pdf        → Zero-Touch Order Modification (CBB Demo 1)
-  02-QC_Batch_50_Certificates.zip      → QC Batch Ingestion & Hold     (CBB Demo 2)
+  generated/02-QC_Batch_50_Certificates.zip → QC Batch Ingestion & Hold (CBB Demo 2)
   03-Port_Strike_Alert_VinylResin.xml  → Disruption Impact & Reroute   (CBB Demo 3)
   04-Invoice_Globex_GLX-2024-0441.pdf  → Invoice Processing & Validation
   05-Claim_CL-8821_WaterDamage.pdf     → Claims Intake & Triage
@@ -175,7 +175,9 @@ def build_qc_cert_pdf(stream: io.BytesIO, lot_id: str, supplier: str, tensile: f
 
 
 def build_qc_batch():
-    out = HERE / "02-QC_Batch_50_Certificates.zip"
+    out_dir = HERE / "generated"
+    out_dir.mkdir(exist_ok=True)
+    out = out_dir / "02-QC_Batch_50_Certificates.zip"
     passing_tensile = [40.0 + (i % 6) * 0.4 for i in range(50)]  # 40.0 .. 42.0, all ≥ 38.0 spec
     passing_delta   = [0.8 + (i % 5) * 0.15 for i in range(50)]  # 0.80 .. 1.40
 

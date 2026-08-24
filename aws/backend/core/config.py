@@ -53,9 +53,24 @@ class Settings(BaseSettings):
     COGNITO_USER_POOL_ID: str = ""
     COGNITO_CLIENT_ID: str = ""
 
+    # Atlassian JIRA Cloud
+    JIRA_URL: str = ""
+    JIRA_EMAIL: str = ""
+    JIRA_TOKEN: str = ""
+    JIRA_PROJECT_KEY: str = ""
+    JIRA_MOCK_MODE: bool = False
+
     class Config:
         env_file = ".env"
         case_sensitive = True
 
 
 settings = Settings()
+
+# On networks with a TLS-inspecting proxy (e.g. corporate MITM firewalls),
+# botocore's bundled certifi CA bundle won't trust the proxy's injected cert.
+# Point boto3 at a combined bundle if one has been generated locally
+# (see aws/backend/.certs/README.md) without forcing it on every machine.
+_corp_ca_bundle = os.path.join(os.path.dirname(__file__), "..", ".certs", "combined-ca-bundle.pem")
+if os.path.isfile(_corp_ca_bundle) and "AWS_CA_BUNDLE" not in os.environ:
+    os.environ["AWS_CA_BUNDLE"] = os.path.abspath(_corp_ca_bundle)

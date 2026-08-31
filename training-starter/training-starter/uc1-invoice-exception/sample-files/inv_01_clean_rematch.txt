@@ -1,0 +1,43 @@
+═══════════════════════════════════════════════════════════════════════════════
+                            INVOICE
+═══════════════════════════════════════════════════════════════════════════════
+
+VENDOR:                                      BILL TO:
+---------------------------------           ---------------------------------
+Acme Corp                                   Cascade Ridge Manufacturing, Inc.
+8800 Freeport Parkway, Suite 200            2200 Innovation Way
+Irving, TX 75063                            Plano, TX 75024
+Tax ID: 74-2091883                          Attn: T. Alvarez
+Email: ar@acmecorp-supply.com               Cost Center: MFG-100-PLANO
+
+═══════════════════════════════════════════════════════════════════════════════
+Invoice Number:    ACM-88231
+Invoice Date:      July 14, 2026
+Due Date:          August 13, 2026
+PO Number:         PO-5000
+Receipt/GRN:       GRN-77201
+Payment Terms:     NET30
+Currency:          USD
+═══════════════════════════════════════════════════════════════════════════════
+
+LN  SKU              DESCRIPTION                              QTY  UOM  UNIT PRICE    AMOUNT
+-------------------------------------------------------------------------------------------
+1   ACM-TAPE-24       Industrial Packaging Tape 2in x 110yd    20   CS     $42.50       $850.00
+                       (36 rolls/case)
+2   ACM-STRAP-12       Poly Strapping Coil 1/2in x 3000ft      10   CS     $15.00       $150.00
+-------------------------------------------------------------------------------------------
+
+                                              Subtotal:      $1,000.00
+                                              Tax (TX State Sales Tax, 8.25%): $82.50
+                                              ─────────────────────────
+                                              TOTAL DUE:     $1,082.50
+
+═══════════════════════════════════════════════════════════════════════════════
+                    Thank you for your business!
+          Payment can be made via ACH, wire transfer, or check.
+═══════════════════════════════════════════════════════════════════════════════
+
+TRAINING SCENARIO: inv_01_clean_rematch
+This invoice re-matches PO-5000 exactly on price and quantity — the goods
+receipt (GRN-77201) confirms the same 20 CS / 10 CS quantities. The original
+STP failure was transient (a queue timeout, not a real exception).

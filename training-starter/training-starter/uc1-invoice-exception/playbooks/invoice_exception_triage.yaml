@@ -1,0 +1,357 @@
+# =============================================================================
+# CBTS Apex AI Platform — AP Invoice Exception Triage
+# TRAINING USE CASE 1 (Financial Services)
+#
+# FLAT FORMAT — no `playbook:` wrapper. See CLAUDE.md.
+# Every action_id follows industry.action_name and every action listed here
+# MUST exist as actions/<industry>/<action_name>/handler.py AND be listed in
+# backend/services/action_registry.py::INDUSTRY_ACTIONS. If you skip the
+# registry step the action silently never registers.
+# =============================================================================
+
+name: invoice_exception_triage
+version: "1.0.0"
+description: "Triage and auto-resolve accounts-payable invoice exceptions that failed straight-through processing"
+industry: financial_services
+category: accounts_payable
+
+# =============================================================================
+# INTENT — what the agent is accountable for
+# =============================================================================
+intent: |
+  Take a vendor invoice that has already FAILED straight-through processing and
+  resolve the exception without human involvement wherever policy permits.
+
+  For each exception: classify why it failed, gather the evidence needed to
+  decide (purchase order, goods receipt, vendor master, payment history),
+  apply the tolerance and duplicate-detection policy, and then either
+  auto-resolve it back into the payment run or route it to the right human with
+  a complete resolution packet so the human decides in under two minutes
+  instead of investigating for twenty.
+
+  Never auto-resolve a suspected duplicate payment and never auto-resolve when
+  the remit-to party differs from the vendor of record. Both are escalations.
+
+# =============================================================================
+# OUTPUT — expected deliverables
+# =============================================================================
+output:
+  - name: exception_classification
+    type: structured_data
+    description: "Why the invoice failed STP, with supporting evidence"
+    schema:
+      exception_code: string
+      exception_severity: string
+      evidence: array
+      confidence: number
+
+  - name: resolution_decision
+    type: routing_decision
+    description: "Auto-resolve, route to human, or reject — with the policy rule that drove it"
+    schema:
+      disposition: string
+      policy_rule_applied: string
+      assignee_role: string
+      assignee_email: string
+      sla_hours: integer
+
+  - name: resolution_packet
+    type: document
+    description: "Everything a human needs to decide, assembled so no system hopping is required"
+    schema:
+      invoice_summary: object
+      po_comparison: object
+      receipt_comparison: object
+      duplicate_candidates: array
+      recommended_action: string
+      dollar_impact: number
+
+  - name: recovery_finding
+    type: structured_data
+    description: "Hard-dollar recovery identified — duplicate stopped, overbill caught, discount saved"
+    schema:
+      recovery_type: string
+      amount_recovered: number
+      would_have_paid: number
+
+# =============================================================================
+# CONTEXT — business rules the agent reasons with
+# =============================================================================
+context:
+  business_rules:
+    - "Three-way match is required for any invoice over $2,500 against a stock PO"
+    - "Two-way match (invoice to PO) is sufficient for services POs with no goods receipt"
+    - "A suspected duplicate payment is NEVER auto-resolved regardless of amount"
+    - "A remit-to party that differs from the vendor master is NEVER auto-resolved"
+    - "Price variance within tolerance may be auto-resolved and posted to the variance GL account"
+    - "Quantity over-delivery beyond tolerance requires the requisitioner to accept the overage"
+    - "Freight not present on the PO may be auto-accepted up to $250 or 3% of invoice value, whichever is lower"
+    - "Tax variance is auto-corrected when the vendor used the wrong jurisdiction rate and the delta is under $500"
+    - "An invoice past its early-payment discount date loses discount eligibility and must be flagged for lost-discount reporting"
+    - "Invoices older than 120 days require Controller approval regardless of amount"
+
+  tolerance_policy:
+    price_variance_percent: 5
+    price_variance_absolute_usd: 250
+    quantity_variance_percent: 3
+    freight_unmatched_max_usd: 250
+    freight_unmatched_max_percent: 3
+    tax_variance_max_usd: 500
+    total_auto_resolve_ceiling_usd: 25000
+
+  exception_codes:
+    PRICE_VAR: "Unit price on invoice exceeds PO price"
+    QTY_VAR: "Quantity billed exceeds quantity received"
+    NO_PO: "No purchase order referenced or PO not found"
+    PO_CLOSED: "Referenced PO is closed or fully consumed"
+    NO_RECEIPT: "Goods receipt missing for a stock PO"
+    DUP_SUSPECT: "Potential duplicate of a previously paid invoice"
+    TAX_VAR: "Tax amount inconsistent with jurisdiction rate"
+    FREIGHT_UNMATCHED: "Freight charge not present on the PO"
+    MATH_ERROR: "Invoice does not foot — subtotal, tax and total disagree"
+    REMIT_DRIFT: "Remit-to party differs from vendor master"
+    VENDOR_UNKNOWN: "Vendor not found in approved vendor master"
+    STALE_INVOICE: "Invoice older than 120 days"
+
+  routing_matrix:
+    ap_specialist:
+      email: ap-specialist@example.com
+      handles: ["PRICE_VAR", "TAX_VAR", "FREIGHT_UNMATCHED", "MATH_ERROR"]
+      sla_hours: 8
+    buyer:
+      email: procurement@example.com
+      handles: ["QTY_VAR", "NO_PO", "PO_CLOSED", "NO_RECEIPT"]
+      sla_hours: 24
+    ap_manager:
+      email: ap-manager@example.com
+      handles: ["DUP_SUSPECT", "STALE_INVOICE"]
+      sla_hours: 4
+    controls:
+      email: financial-controls@example.com
+      handles: ["REMIT_DRIFT", "VENDOR_UNKNOWN"]
+      sla_hours: 2
+
+  sla_requirements:
+    extraction_time: "20 seconds"
+    total_triage_time: "90 seconds"
+    escalation_notification_time: "1 minute"
+
+# =============================================================================
+# DATA SOURCES
+# =============================================================================
+data_sources:
+  - name: exception_document
+    type: s3_document
+    description: "The invoice that failed straight-through processing"
+    input_parameter: document_s3_uri
+
+  - name: purchase_orders
+    type: dynamodb
+    table: apex-ai-platform-purchase-orders
+    description: "Purchase order header and line detail for matching"
+
+  - name: goods_receipts
+    type: dynamodb
+    table: apex-ai-platform-goods-receipts
+    description: "Goods receipt records for three-way match"
+
+  - name: vendor_master
+    type: dynamodb
+    table: apex-ai-platform-approved-vendors
+    description: "Approved vendor master including remit-to of record"
+
+  - name: payment_history
+    type: dynamodb
+    table: apex-ai-platform-payment-history
+    description: "Previously paid invoices, used for duplicate fingerprinting"
+
+  - name: tolerance_policy
+    type: config
+    source: context.tolerance_policy
+    description: "Tolerance bands from this playbook's context block"
+
+# =============================================================================
+# ACTIONS
+# Three are NEW and built during this training module.
+# Two are EXISTING and already registered — reuse, do not rebuild.
+# =============================================================================
+actions:
+  - name: three_way_match
+    action_id: financial_services.three_way_match
+    description: "Compare invoice against purchase order and goods receipt, line by line, and return every variance"
+    required: true
+
+  - name: duplicate_fingerprint
+    action_id: financial_services.duplicate_fingerprint
+    description: "Fingerprint the invoice and search payment history for probable duplicate payments"
+    required: true
+
+  - name: tolerance_policy
+    action_id: financial_services.tolerance_policy
+    description: "Apply the tolerance bands and routing matrix to decide auto-resolve, route, or reject"
+    required: true
+
+  - name: vendor_lookup
+    action_id: financial_services.vendor_lookup
+    description: "Resolve the vendor against the approved vendor master and return remit-to of record"
+    required: true
+
+  - name: approval_route
+    action_id: financial_services.approval_route
+    description: "Assign the named approver and SLA once the disposition requires a human"
+    required: false
+
+# =============================================================================
+# RECIPE — the business rules, written as instructions the agent follows
+# =============================================================================
+recipe: |
+  ## AP Invoice Exception Triage
+
+  You are triaging an invoice that already failed straight-through processing.
+  Your job is to resolve it, not to re-process it. Work the steps in order and
+  stop early when a hard stop fires.
+
+  ### Step 1 — Read the exception packet
+  1. The extracted invoice arrives as the `ap_exception_packet` blueprint output.
+  2. Confirm you have `invoice_number`, `vendor_name`, `total_amount` and
+     `currency`. If any of the four is null or extraction confidence is below
+     0.85, stop and route to the AP specialist with exception code `MATH_ERROR`
+     and a note that extraction was not reliable. Do not guess.
+  3. If `math_is_internally_consistent` is false, record exception code
+     `MATH_ERROR` and carry it forward — it does not stop processing, but it
+     never auto-resolves.
+  4. If `document_kind` is not `invoice`, hand off: credit memos go to the
+     credit-application queue, statements are dropped with no action.
+
+  ### Step 2 — Hard stops, checked before any matching work
+  These two checks run first because they are unconditional escalations and
+  there is no value in doing match work if either fires.
+
+  1. Run `duplicate_fingerprint` with the invoice number, vendor, total amount,
+     invoice date and PO number. If `duplicate_probability` is at or above
+     0.80, record `DUP_SUSPECT`, set disposition to `route_to_human`, assign the
+     AP manager with a 4-hour SLA, attach the matching candidates, and record a
+     `recovery_finding` of type `duplicate_prevented` for the full invoice
+     amount. Stop here.
+  2. Run `vendor_lookup` on the vendor name and tax ID. Compare the returned
+     remit-to of record against `remit_to_name` from the document. If the
+     vendor is not found record `VENDOR_UNKNOWN`; if the vendor is found but the
+     remit-to differs record `REMIT_DRIFT`. Either way assign Financial Controls
+     with a 2-hour SLA and stop. Payment redirection fraud is caught here.
+
+  ### Step 3 — Establish the match basis
+  1. If `po_number` is null, record `NO_PO`, assign the buyer, and skip to
+     Step 6. An invoice with no PO cannot be matched.
+  2. Look up the PO. If it does not exist, record `NO_PO`. If its status is
+     closed or its remaining balance is zero, record `PO_CLOSED`. Both route to
+     the buyer.
+  3. Decide the match basis from the PO type. A stock PO requires a three-way
+     match. A services PO with no receipt expectation requires a two-way match
+     against the PO only.
+  4. If a three-way match is required and no goods receipt exists, record
+     `NO_RECEIPT` and route to the buyer — the buyer has to confirm receipt
+     before the invoice can be paid.
+
+  ### Step 4 — Run the match
+  1. Call `three_way_match` with the invoice lines, the PO lines and the receipt
+     lines. It returns a variance per line plus header-level variances for
+     freight and tax.
+  2. Collect every variance it reports. Do not stop at the first one — an
+     invoice frequently has a price variance on one line and a quantity
+     variance on another, and routing depends on the worst of them.
+  3. Map each variance to its exception code: unit-price deltas to `PRICE_VAR`,
+     quantity deltas to `QTY_VAR`, unmatched freight to `FREIGHT_UNMATCHED`,
+     tax deltas to `TAX_VAR`.
+  4. If the match returns no variances at all, the original STP failure was
+     transient. Set disposition to `auto_resolve` with policy rule
+     `clean_on_rematch` and release the invoice to the payment run.
+
+  ### Step 5 — Apply the tolerance policy
+  1. Call `tolerance_policy` with every variance and the invoice total.
+  2. It applies the bands from `context.tolerance_policy` and returns a
+     disposition. Trust it — do not second-guess the bands in your own
+     reasoning, because the bands are policy and the policy is auditable.
+  3. Respect the ceiling: nothing above `total_auto_resolve_ceiling_usd`
+     auto-resolves, no matter how small the variance is as a percentage.
+  4. When the policy auto-resolves a price variance, record which GL account
+     the variance posts to so the entry is traceable.
+  5. When the policy auto-resolves a tax variance, record the corrected tax
+     amount and the jurisdiction that should have applied.
+
+  ### Step 6 — Route, notify and account for the money
+  1. If disposition is `route_to_human`, use `approval_route` with the exception
+     code and the `context.routing_matrix` to assign the named role, email and
+     SLA. Assemble the `resolution_packet` — invoice summary, the PO comparison,
+     the receipt comparison, duplicate candidates if any, your recommended
+     action, and the dollar impact. The human should not have to open another
+     system.
+  2. If the invoice is older than 120 days add `STALE_INVOICE` and escalate to
+     the Controller regardless of what the tolerance policy returned.
+  3. If an early-payment discount was still available at intake but the invoice
+     will now miss the discount date, record a `recovery_finding` of type
+     `discount_at_risk` with the discount amount so lost discounts are
+     reportable.
+  4. Always emit the `exception_classification`, the `resolution_decision` and
+     the `resolution_packet`, even on auto-resolve. The audit trail is the
+     product.
+
+  ### Exception handling
+  - Extraction confidence below 0.85 → AP specialist, never auto-resolve.
+  - PO system unreachable → hold the invoice, retry three times with backoff,
+    then route to the buyer with a note that matching could not be completed.
+  - Vendor master unreachable → treat as `VENDOR_UNKNOWN` and escalate to
+    Financial Controls. Failing open on vendor identity is not acceptable.
+  - Two exception codes of equal severity → route to the role with the shorter
+    SLA.
+
+# =============================================================================
+# TRIGGERS
+# NOTE: as of this writing the `triggers` block is DECLARATIVE METADATA.
+# The platform stores and displays it but does not yet subscribe to it.
+# See Module 9 of the training guide for how to wire it for real.
+# =============================================================================
+triggers:
+  - type: s3_event
+    bucket: apex-documents-incoming
+    prefix: ap-exceptions/
+    events: ["s3:ObjectCreated:*"]
+    description: "Fires when the AP system drops a failed invoice for triage"
+
+  - type: azure_blob
+    container: apex-documents-incoming
+    prefix: ap-exceptions/
+    events: ["Microsoft.Storage.BlobCreated"]
+    description: "Azure equivalent of the S3 drop, for the Azure deployment"
+
+  - type: api
+    endpoint: /api/v1/actions/registry/invoke/financial_services.tolerance_policy
+    method: POST
+    description: "Manual trigger used during training and demos"
+
+  - type: schedule
+    cron: "0 */4 * * *"
+    description: "Sweep any exception that has been sitting untriaged for 4 hours"
+
+# =============================================================================
+# WORKER CONFIGURATION
+# =============================================================================
+worker:
+  queue: apex-ap-exception-triage-queue
+  concurrency: 20
+  timeout_seconds: 180
+  retry_policy:
+    max_attempts: 3
+    backoff_multiplier: 2
+
+# =============================================================================
+# METADATA
+# =============================================================================
+metadata:
+  created_by: apex-training
+  training_module: "Use Case 1 — Financial Services"
+  tags:
+    - accounts-payable
+    - exception-management
+    - three-way-match
+    - duplicate-prevention
+    - financial-services

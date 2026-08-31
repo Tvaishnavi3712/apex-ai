@@ -1,0 +1,82 @@
+====================================================================================================
+           COMMERCIAL PROPERTY SUBMISSION  ·  ACORD 140 PROPERTY SECTION
+====================================================================================================
+
+  Submission No.    : SUB-2026-0417
+  Submitted         : 2026-05-02
+  Effective         : 2026-07-01  to  2027-07-01
+  Line of Business  : Commercial Property
+
+----------------------------------------------------------------------------------------------------
+  NAMED INSURED
+----------------------------------------------------------------------------------------------------
+  Cedar Ridge Logistics LLC
+    Additional Named Insured: Cedar Ridge Transport LLC
+  FEIN              : 47-3319008
+  Mailing Address   : 1420 N Industrial Blvd, Fort Worth, TX 76106
+  Years in Business : 14
+  Annual Revenue    : $62,000,000
+  Primary Occupancy : Warehouse and distribution — dry goods
+  Class Code        : NAICS 493110
+
+----------------------------------------------------------------------------------------------------
+  PRODUCING BROKER
+----------------------------------------------------------------------------------------------------
+  Agency            : Harborline Risk Advisors
+  Contact           : D. Whitfield   dwhitfield@harborline.example.com
+  Licence           : TX-2291884
+
+====================================================================================================
+  STATEMENT OF VALUES                             4 LOCATION(S) SCHEDULED
+====================================================================================================
+
+  #   LOCATION                                 CONSTRUCTION               YR     SPK   PPC     FLD              TIV
+----------------------------------------------------------------------------------------------------
+  1   1420 N Industrial Blvd, Fort Worth, TX   Masonry Non-Combustible    2008   Y     PPC 3   X     $    4,900,000
+                                               Bldg $  3,200,000   Contents $ 1,400,000   BI $  300,000
+                                               Warehouse and distribution — dry goods  (roof updated 2019; 85,000 sq ft)
+
+  2   880 Commerce Park Dr, Tulsa, OK 74107    Masonry Non-Combustible    2011   Y     PPC 3   X     $    4,400,000
+                                               Bldg $  2,900,000   Contents $ 1,250,000   BI $  250,000
+                                               Warehouse and distribution — dry goods  (roof updated 2021; 72,000 sq ft)
+
+  3   305 Frontier Way, Amarillo, TX 79118     Non-Combustible            2006   Y     PPC 4   X     $    3,920,000
+                                               Bldg $  2,600,000   Contents $ 1,100,000   BI $  220,000
+                                               Warehouse and distribution — dry goods  (roof updated 2018; 64,000 sq ft)
+
+  4   7712 Meridian Ct, Oklahoma City, OK 731  Masonry Non-Combustible    2014   Y     PPC 3   X     $    5,220,000
+                                               Bldg $  3,400,000   Contents $ 1,500,000   BI $  320,000
+                                               Warehouse and distribution — dry goods  (roof updated 2020; 91,000 sq ft)
+
+----------------------------------------------------------------------------------------------------
+  TOTAL INSURED VALUE                                                                      $   18,440,000
+----------------------------------------------------------------------------------------------------
+
+====================================================================================================
+  LOSS RUNS                    3 YEAR(S) PROVIDED        VALUED AS OF 2026-04-30
+====================================================================================================
+
+  DATE          POLICY YR    CLAIM NO        LOC   CAUSE                          PAID     RESERVE     INCURRED  STATUS
+----------------------------------------------------------------------------------------------------
+  2024-11-08    2024-2025    CLM-4471120     2     theft                  $     18,500 $         0 $     18,500  closed
+                Forced entry, palletised stock removed
+----------------------------------------------------------------------------------------------------
+  TOTAL INCURRED                                                                   $       18,500
+
+====================================================================================================
+  CURRENT PROGRAMME
+====================================================================================================
+  Expiring Carrier  : Continental Mutual
+  Expiring Premium  : $96,000
+  Target Premium    : $92,000
+  Reason Marketing  : Rate increase at renewal
+  Prior Declination : No
+  Coverages Wanted  : Equipment Breakdown, Ordinance or Law, Business Income
+
+====================================================================================================
+  TRAINING SCENARIO : Clean, in-appetite warehouse account
+  EXPECTED OUTCOME  : route_to_underwriter   (clearance: clear, appetite: target)
+====================================================================================================
+
+  All entities, addresses, identifiers and figures in this document are
+  fictional and exist only for developer training.

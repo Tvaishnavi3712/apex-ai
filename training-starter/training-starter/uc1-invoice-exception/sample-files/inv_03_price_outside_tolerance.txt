@@ -1,0 +1,42 @@
+═══════════════════════════════════════════════════════════════════════════════
+                            INVOICE
+═══════════════════════════════════════════════════════════════════════════════
+
+VENDOR:                                      BILL TO:
+---------------------------------           ---------------------------------
+Hooli Inc.                                  Cascade Ridge Manufacturing, Inc.
+1600 Amphitheatre Pkwy                      2200 Innovation Way
+Mountain View, CA 94043                     Plano, TX 75024
+Tax ID: 94-2404110                          Attn: M. Okafor
+Email: ap@hooli.com                         Cost Center: IT-230-DESKTOP
+
+═══════════════════════════════════════════════════════════════════════════════
+Invoice Number:    HLI-330871
+Invoice Date:      May 11, 2026
+Due Date:          June 10, 2026
+PO Number:         PO-7231
+Receipt/GRN:       GRN-91004
+Payment Terms:     NET30
+Currency:          USD
+═══════════════════════════════════════════════════════════════════════════════
+
+LN  SKU               DESCRIPTION                             QTY  UOM  UNIT PRICE    AMOUNT
+-------------------------------------------------------------------------------------------
+1   HLI-MON27          27in LED Monitor, 1440p                 10   EA    $201.60      $2,016.00
+2   HLI-DOC-STATION    USB-C Docking Station, 100W PD           10   EA     $89.00        $890.00
+-------------------------------------------------------------------------------------------
+
+                                              Subtotal:      $2,906.00
+                                              Tax (CA State + Local Sales Tax, 8.75%): $254.27
+                                              ─────────────────────────
+                                              TOTAL DUE:     $3,160.27
+
+═══════════════════════════════════════════════════════════════════════════════
+                    Thank you for your business!
+          Payment can be made via ACH, wire transfer, or check.
+═══════════════════════════════════════════════════════════════════════════════
+
+TRAINING SCENARIO: inv_03_price_outside_tolerance
+PO-7231 was issued at $180.00/unit for the HLI-MON27 monitor. Hooli billed
+$201.60/unit — a 12.0% increase, which blows through the 5% / $250 tolerance
+band and must be routed to a human for a pricing decision.

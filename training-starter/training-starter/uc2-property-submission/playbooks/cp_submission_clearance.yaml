@@ -1,0 +1,405 @@
+# =============================================================================
+# CBTS Apex AI Platform — Commercial Property Submission Clearance & Appetite Triage
+# TRAINING USE CASE 2 (Insurance Underwriting)
+#
+# FLAT FORMAT — no `playbook:` wrapper. See CLAUDE.md.
+#
+# NOTE ON action_id PREFIXES: the two pre-existing insurance playbooks in this
+# repo use `insurance.` and `cre.` prefixes, which do NOT match the registry's
+# industry key. The registry builds every action_id as
+# f"{industry}.{action_name}", so the only correct prefix is
+# `insurance_underwriting.`. This playbook uses the correct form. Do not copy
+# the older files' prefixes.
+# =============================================================================
+
+name: cp_submission_clearance
+version: "1.0.0"
+description: "Clear and appetite-triage inbound commercial property broker submissions before an underwriter opens them"
+industry: insurance_underwriting
+category: underwriting
+
+# =============================================================================
+# INTENT
+# =============================================================================
+intent: |
+  Take an inbound commercial property submission from a broker and decide, in
+  minutes rather than days, whether it is worth an underwriter's time.
+
+  Clear the submission against in-force policies and open submissions so the
+  same account is not worked twice by two underwriters. Score it against the
+  written appetite guide. Aggregate the schedule's catastrophe exposure by peril
+  zone and test it against remaining treaty capacity. Then return one of three
+  answers: decline it now with a specific reason the broker can act on, refer it
+  back for the specific documents that are missing, or hand the underwriter a
+  pre-underwritten packet with the analysis already done.
+
+  The value is not in the accept decision. It is in returning the 60 percent of
+  submissions that will never be written back to the broker within minutes, so
+  underwriter capacity moves to the 40 percent that will.
+
+# =============================================================================
+# OUTPUT
+# =============================================================================
+output:
+  - name: clearance_result
+    type: structured_data
+    description: "Whether this account is already known to us, and under what identity"
+    schema:
+      clearance_status: string
+      matched_records: array
+      blocking_conflict: boolean
+      controlling_broker: string
+
+  - name: appetite_assessment
+    type: assessment
+    description: "Score against the written appetite guide with the specific rules that fired"
+    schema:
+      appetite_score: number
+      appetite_band: string
+      disqualifiers: array
+      concerns: array
+      positives: array
+
+  - name: cat_exposure_summary
+    type: assessment
+    description: "Catastrophe exposure aggregated by peril and zone against remaining capacity"
+    schema:
+      total_insured_value: number
+      zone_aggregations: array
+      capacity_breaches: array
+      max_foreseeable_loss: number
+
+  - name: triage_decision
+    type: decision
+    description: "Decline, refer to broker, or route to underwriter with a priority"
+    schema:
+      disposition: string
+      reason_code: string
+      broker_response: string
+      assigned_queue: string
+      underwriter_priority: string
+      sla_hours: integer
+
+  - name: underwriting_packet
+    type: document
+    description: "The pre-underwritten analysis handed to the underwriter when the submission survives triage"
+    schema:
+      account_summary: object
+      schedule_summary: object
+      loss_analysis: object
+      cat_summary: object
+      open_questions: array
+
+# =============================================================================
+# CONTEXT
+# =============================================================================
+context:
+  business_rules:
+    - "A submission matching an in-force policy by FEIN is a renewal, not new business, and must route to the renewal underwriter"
+    - "A submission matching an open submission from a different broker is a broker conflict and must go to the broker-of-record desk, never to an underwriter"
+    - "Fewer than three years of loss runs is a completeness referral back to the broker, never a decline"
+    - "A submission with no statement of values cannot be underwritten and is referred back the same day"
+    - "Total insured value above $75M exceeds single-risk authority and requires facultative reinsurance review"
+    - "Any location in flood zone V or VE is outside appetite regardless of every other factor"
+    - "Coastal exposure within 5 miles requires a named-storm deductible and reduces the appetite score"
+    - "A three-year loss ratio above 60 percent is a decline unless the losses were a single catastrophe event"
+    - "Frame construction above 25 percent of total insured value is outside appetite for this programme"
+    - "An account disclosed as previously declined or non-renewed requires a written explanation before quoting"
+
+  appetite_guide:
+    target_occupancies:
+      - warehouse_distribution
+      - light_manufacturing
+      - office
+      - strip_retail
+      - self_storage
+    restricted_occupancies:
+      - cold_storage
+      - woodworking
+      - plastics_manufacturing
+      - recycling
+      - hospitality
+    prohibited_occupancies:
+      - fireworks_manufacturing
+      - explosives
+      - refining
+      - waste_to_energy
+      - tire_storage
+    tiv_min_usd: 2000000
+    tiv_max_usd: 75000000
+    min_year_built: 1955
+    max_roof_age_years: 20
+    min_protection_class: 6
+    required_loss_run_years: 3
+    max_three_year_loss_ratio: 0.60
+    max_frame_construction_percent: 25
+
+  cat_capacity:
+    tier_1_wind_max_usd: 40000000
+    tier_2_wind_max_usd: 90000000
+    flood_zone_ae_max_usd: 15000000
+    flood_zone_v_max_usd: 0
+    earthquake_zone_max_usd: 25000000
+    single_zip_aggregate_max_usd: 30000000
+    single_location_max_usd: 25000000
+
+  routing_queues:
+    decline_desk:
+      queue: cp-decline-auto
+      sla_hours: 2
+    broker_referral:
+      queue: cp-broker-referral
+      email: submissions@example.com
+      sla_hours: 4
+    broker_of_record:
+      queue: cp-bor-conflict
+      email: bor-desk@example.com
+      sla_hours: 8
+    renewal_underwriter:
+      queue: cp-renewals
+      sla_hours: 24
+    fac_reinsurance:
+      queue: cp-facultative
+      sla_hours: 48
+    underwriter_standard:
+      queue: cp-new-business
+      sla_hours: 48
+
+  sla_requirements:
+    extraction_time: "45 seconds"
+    clearance_time: "15 seconds"
+    total_triage_time: "3 minutes"
+    broker_response_time: "same business day"
+
+# =============================================================================
+# DATA SOURCES
+# =============================================================================
+data_sources:
+  - name: submission_packet
+    type: s3_document
+    description: "Broker submission: ACORD 140, statement of values and loss runs"
+    input_parameter: document_s3_uri
+
+  - name: policy_register
+    type: dynamodb
+    table: apex-ai-platform-policy-register
+    description: "In-force policies, used to detect renewals and existing relationships"
+
+  - name: open_submissions
+    type: dynamodb
+    table: apex-ai-platform-open-submissions
+    description: "Submissions already in the pipeline, used to detect broker conflicts"
+
+  - name: appetite_guide
+    type: config
+    source: context.appetite_guide
+    description: "Written appetite guide from this playbook's context block"
+
+  - name: cat_capacity
+    type: config
+    source: context.cat_capacity
+    description: "Remaining treaty capacity by peril and zone"
+
+# =============================================================================
+# ACTIONS
+# Three are NEW and built during this training module.
+# Three are EXISTING and already registered — reuse them.
+# =============================================================================
+actions:
+  - name: submission_clear
+    action_id: insurance_underwriting.submission_clear
+    description: "Clear the submission against in-force policies and open submissions by FEIN, name and address"
+    required: true
+
+  - name: appetite_score
+    action_id: insurance_underwriting.appetite_score
+    description: "Score the submission against the written appetite guide and return disqualifiers"
+    required: true
+
+  - name: cat_exposure_aggregate
+    action_id: insurance_underwriting.cat_exposure_aggregate
+    description: "Aggregate insured values by peril zone and test against remaining treaty capacity"
+    required: true
+
+  - name: risk_score
+    action_id: insurance_underwriting.risk_score
+    description: "Score the underlying risk once the submission has cleared appetite"
+    required: false
+
+  - name: premium_calculate
+    action_id: insurance_underwriting.premium_calculate
+    description: "Produce an indicative premium for the underwriting packet"
+    required: false
+
+  - name: auto_decision
+    action_id: insurance_underwriting.auto_decision
+    description: "Apply the auto-decline and auto-refer rules and record the decision"
+    required: true
+
+# =============================================================================
+# RECIPE
+# =============================================================================
+recipe: |
+  ## Commercial Property Submission Clearance and Appetite Triage
+
+  You are the first thing that touches an inbound submission. An underwriter has
+  not seen it and should not see it unless it survives every gate below. Work
+  the gates in order and stop at the first one that resolves the submission —
+  there is no value in scoring appetite on a submission that is a duplicate.
+
+  ### Step 1 — Completeness, before anything else
+  1. The submission arrives as `cp_submission_packet` blueprint output.
+  2. Check `submission_completeness`. If it is `missing_sov` or `missing_both`,
+     stop immediately. Refer to the broker with reason code `INCOMPLETE_SOV`.
+     A submission with no statement of values cannot be cleared, scored or
+     rated. Ask for the specific document, not for "more information".
+  3. Check `loss_run_years_provided`. If it is fewer than three, stop and refer
+     with reason code `INSUFFICIENT_LOSS_HISTORY`, naming how many years are
+     missing. This is a referral, never a decline — the account may be perfectly
+     good and the broker simply sent a partial packet.
+  4. Verify the schedule was fully extracted. If `location_count_stated` is
+     present and does not equal the length of `locations`, the extraction
+     truncated. Stop and refer with reason code `SCHEDULE_TRUNCATED` rather than
+     scoring a partial schedule. A partial schedule produces a wrong total
+     insured value and a wrong catastrophe assessment, which is worse than no
+     answer.
+  5. If `legibility` is `partially_illegible`, refer with reason code
+     `ILLEGIBLE_SUBMISSION` and ask for a clean copy.
+
+  ### Step 2 — Clearance, before appetite
+  1. Call `submission_clear` with the FEIN, named insured, all additional named
+     insureds, all doing-business-as names, and the first location address.
+  2. Read `clearance_status`:
+     - `clear` — nobody has seen this account. Continue to Step 3.
+     - `renewal` — it matches an in-force policy. Stop. Route to the renewal
+       underwriter queue. This is not new business and must not be quoted as
+       new business.
+     - `broker_conflict` — it matches an open submission from a different
+       broker. Stop. Route to the broker-of-record desk. Never let two
+       underwriters quote the same account through two brokers; that is how a
+       carrier ends up bidding against itself.
+     - `same_broker_resubmission` — the same broker sent it again. Merge it into
+       the existing submission and stop. Do not create a second record.
+  3. Clearance matches on FEIN are conclusive. Matches on name or address alone
+     are probable and must be reported with their confidence so the human can
+     see why the match fired.
+
+  ### Step 3 — Appetite, before any rating work
+  1. Call `appetite_score` with the full location schedule, occupancy, prior
+     losses, years in business and the `context.appetite_guide`.
+  2. If it returns any entry in `disqualifiers`, the submission is out of
+     appetite. Stop. Decline with the first disqualifier as the reason code and
+     write a broker response that names the specific reason. "Outside appetite"
+     is not an acceptable broker response; "prohibited occupancy — tire storage
+     at location 3" is.
+  3. If `appetite_band` is `marginal`, do not decline. Continue, but carry every
+     entry in `concerns` into the underwriting packet so the underwriter starts
+     with the issues already surfaced.
+
+  ### Step 4 — Catastrophe aggregation
+  1. Call `cat_exposure_aggregate` with the location schedule and
+     `context.cat_capacity`.
+  2. It aggregates insured values by wind tier, flood zone, earthquake zone and
+     ZIP, and tests each against remaining capacity.
+  3. Any entry in `capacity_breaches` is a decline with reason code
+     `CAT_CAPACITY_EXCEEDED`. Name the specific zone and the amount over.
+     Capacity is a hard constraint, not a judgement call — writing past it is
+     how a carrier discovers its treaty does not respond.
+  4. If total insured value exceeds the single-risk authority in the appetite
+     guide, do not decline. Route to the facultative reinsurance queue instead —
+     the account may be perfectly writable with fac support.
+
+  ### Step 5 — Loss analysis
+  1. Compute the three-year loss ratio as total incurred divided by total
+     expiring premium across the same period.
+  2. If the ratio exceeds `max_three_year_loss_ratio`, check whether the losses
+     are concentrated in a single catastrophe event using the `is_catastrophe`
+     flag. A single hurricane does not describe an account's ongoing quality;
+     four separate water-damage claims do.
+     - Concentrated in one CAT event: continue, and note it in the packet.
+     - Spread across separate non-CAT events: decline with reason code
+       `ADVERSE_LOSS_HISTORY`.
+  3. Flag any claim still open with a material reserve — an open reserve can
+     develop and changes the picture the loss ratio paints.
+
+  ### Step 6 — Decide, and hand off cleanly
+  1. Call `auto_decision` with the clearance result, the appetite assessment,
+     the catastrophe summary and the loss analysis.
+  2. On decline: write the broker response naming the specific reason and the
+     specific locations involved. Send it the same day. A fast, specific decline
+     preserves the broker relationship; a slow, vague one destroys it.
+  3. On referral: name the exact documents needed and nothing else. Do not send
+     a generic checklist.
+  4. On route to underwriter: build the `underwriting_packet`. Optionally call
+     `risk_score` and `premium_calculate` to add an indicative technical price.
+     Include the account summary, the schedule summary rolled up by state and
+     occupancy, the loss analysis, the catastrophe summary and an explicit list
+     of open questions. The underwriter should be making a judgement on their
+     first read, not assembling facts.
+  5. Set the priority from the appetite band and the target premium — a clean,
+     in-appetite account with a large target premium goes to the top of the
+     queue.
+  6. Always emit all five outputs, including on decline. The audit trail is the
+     product, and declines are the decisions most likely to be questioned later.
+
+  ### Exception handling
+  - Policy register unreachable → do NOT assume the submission is clear.
+    Refer to the broker-of-record desk for manual clearance. Failing open on
+    clearance causes broker conflicts, which are relationship-damaging.
+  - Appetite guide missing a class code → treat as `marginal`, not as target,
+    and note the unmapped class code in the packet.
+  - Location missing a postal code → exclude it from ZIP aggregation but include
+    it in the total insured value, and flag it. Silently dropping a location
+    from catastrophe aggregation understates exposure.
+  - Conflicting FEINs across the packet → treat as a data-quality referral, not
+    a clearance match.
+
+# =============================================================================
+# TRIGGERS
+# NOTE: declarative metadata only in the current platform. See Module 9.
+# =============================================================================
+triggers:
+  - type: s3_event
+    bucket: apex-documents-incoming
+    prefix: cp-submissions/
+    events: ["s3:ObjectCreated:*"]
+    description: "Fires when a broker submission lands in the intake bucket"
+
+  - type: azure_blob
+    container: apex-documents-incoming
+    prefix: cp-submissions/
+    events: ["Microsoft.Storage.BlobCreated"]
+    description: "Azure equivalent for the Azure deployment"
+
+  - type: api
+    endpoint: /api/v1/actions/registry/invoke/insurance_underwriting.submission_clear
+    method: POST
+    description: "Manual trigger used during training and demos"
+
+  - type: schedule
+    cron: "0 7 * * 1-5"
+    description: "Weekday morning sweep of anything that arrived overnight"
+
+# =============================================================================
+# WORKER CONFIGURATION
+# =============================================================================
+worker:
+  queue: apex-cp-submission-clearance-queue
+  concurrency: 15
+  timeout_seconds: 300
+  retry_policy:
+    max_attempts: 3
+    backoff_multiplier: 2
+
+# =============================================================================
+# METADATA
+# =============================================================================
+metadata:
+  created_by: apex-training
+  training_module: "Use Case 2 — Insurance Underwriting"
+  tags:
+    - underwriting
+    - commercial-property
+    - submission-clearance
+    - appetite
+    - catastrophe-aggregation

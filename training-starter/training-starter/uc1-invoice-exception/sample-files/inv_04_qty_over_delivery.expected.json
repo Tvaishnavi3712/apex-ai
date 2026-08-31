@@ -1,0 +1,73 @@
+{
+  "invoice_number": "UMB-51290",
+  "invoice_date": "2026-06-20",
+  "due_date": "2026-07-20",
+  "po_number": "PO-8340",
+  "receipt_number": "GRN-63390",
+  "payment_terms": "NET30",
+  "currency": "USD",
+  "document_kind": "invoice",
+  "vendor_name": "Umbrella Corporation",
+  "vendor_dba": null,
+  "vendor_address": "1725 Slater Road, Ferndale, MI 48220",
+  "vendor_country": "US",
+  "vendor_tax_id": "38-1665521",
+  "vendor_email": "accounts@umbrellacorp-industrial.com",
+  "remit_to_name": null,
+  "remit_to_address": null,
+  "remit_bank_name": null,
+  "remit_account_last_four": null,
+  "bill_to_name": "Cascade Ridge Manufacturing, Inc.",
+  "bill_to_cost_center": "OPS-410-FACILITIES",
+  "requisitioner": "D. Whitfield",
+  "line_items": [
+    {
+      "line_number": 1,
+      "description": "Industrial Degreaser Concentrate, 5 Gallon Pail",
+      "sku": "UMB-CLN-5G",
+      "quantity": 120,
+      "uom": "EA",
+      "unit_price": 38.75,
+      "amount": 4650.00,
+      "gl_code": null,
+      "po_line_reference": null
+    },
+    {
+      "line_number": 2,
+      "description": "Citrus Degreaser Wipes (Case of 12)",
+      "sku": "UMB-DEGREASE-CS",
+      "quantity": 15,
+      "uom": "CS",
+      "unit_price": 32.00,
+      "amount": 480.00,
+      "gl_code": null,
+      "po_line_reference": null
+    }
+  ],
+  "subtotal": 5130.00,
+  "freight_amount": 0.00,
+  "other_charges": 0.00,
+  "discount_amount": 0.00,
+  "tax_jurisdiction": "MI State Sales Tax",
+  "tax_rate": "6.00%",
+  "tax_amount": 307.80,
+  "total_amount": 5437.80,
+  "prior_invoice_reference": null,
+  "annotations": [
+    {
+      "annotation_type": "handwritten_note",
+      "text": "Rcvd only 100 pails on GRN-63390 6/19 -- confirm OK to pay for 120? - D.W.",
+      "location": "near line 1"
+    }
+  ],
+  "is_duplicate_suspect": false,
+  "math_is_internally_consistent": true,
+  "legibility": "clean_digital",
+  "_training": {
+    "scenario_name": "inv_04_qty_over_delivery",
+    "expected_exception_codes": ["QTY_VAR"],
+    "expected_disposition": "route_to_human",
+    "expected_assignee_role": "buyer",
+    "teaching_point": "Goods receipt GRN-63390 confirms only 100 EA received against PO-8340, but line 1 bills 120 EA of UMB-CLN-5G -- a 20% over-delivery, above the quantity_variance_percent band of 3%. Per business_rules, 'Quantity over-delivery beyond tolerance requires the requisitioner to accept the overage,' so tolerance_policy returns route_to_human and the routing_matrix assigns QTY_VAR to buyer with a 24-hour SLA. The handwritten annotation is itself evidence of a prior manual touch and should surface in the resolution packet."
+  }
+}

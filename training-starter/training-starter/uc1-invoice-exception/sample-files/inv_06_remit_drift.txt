@@ -1,0 +1,55 @@
+═══════════════════════════════════════════════════════════════════════════════
+                            INVOICE
+═══════════════════════════════════════════════════════════════════════════════
+
+VENDOR:                                      BILL TO:
+---------------------------------           ---------------------------------
+Globex Corp                                 Cascade Ridge Manufacturing, Inc.
+1200 Corporate Center Drive                 2200 Innovation Way
+Monroe, OH 45050                            Plano, TX 75024
+Tax ID: 31-1774502                          Attn: S. Patel
+Email: billing@globexcorp.com               Cost Center: ENG-310-CONTROLS
+
+═══════════════════════════════════════════════════════════════════════════════
+Invoice Number:    GLX-77021
+Invoice Date:      April 18, 2026
+Due Date:          May 18, 2026
+PO Number:         PO-6650
+Receipt/GRN:       GRN-40217
+Payment Terms:     NET30
+Currency:          USD
+═══════════════════════════════════════════════════════════════════════════════
+
+*** REMIT PAYMENT TO ***
+Meridian Capital Funding LLC
+PO Box 88420
+Charlotte, NC 28202
+Bank: Piedmont Trust Bank
+ACH/Wire Account ending: 8842
+(This factoring remittance block supersedes any address in the vendor
+letterhead above.)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+LN  SKU                 DESCRIPTION                            QTY  UOM  UNIT PRICE    AMOUNT
+-------------------------------------------------------------------------------------------
+1   GLX-PSU-24V          24V DC Power Supply Unit, 10A          25   EA     $68.00      $1,700.00
+2   GLX-CTRL-PLC         Compact PLC Controller Module           5   EA    $312.00      $1,560.00
+-------------------------------------------------------------------------------------------
+
+                                              Subtotal:      $3,260.00
+                                              Tax (OH State Sales Tax, 7.25%): $236.35
+                                              ─────────────────────────
+                                              TOTAL DUE:     $3,496.35
+
+═══════════════════════════════════════════════════════════════════════════════
+                    Thank you for your business!
+          Payment can be made via ACH, wire transfer, or check.
+═══════════════════════════════════════════════════════════════════════════════
+
+TRAINING SCENARIO: inv_06_remit_drift
+Price and quantity both match PO-6650 exactly — the only exception is that
+payment is being redirected to "Meridian Capital Funding LLC" at a Charlotte,
+NC lockbox, which does not match Globex Corp's vendor-master remit-to of
+record. This is the classic payment-redirection fraud pattern and is a hard
+stop regardless of match quality.

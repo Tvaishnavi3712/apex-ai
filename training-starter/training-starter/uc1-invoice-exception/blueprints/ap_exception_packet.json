@@ -1,0 +1,299 @@
+{
+  "blueprintName": "apex-ap-exception-packet-v1",
+  "blueprintVersion": "1.0.0",
+  "name": "ap_exception_packet",
+  "description": "Extract the full AP exception packet from a vendor invoice so the exception can be triaged without a human opening the document",
+  "industry": "financial_services",
+  "documentType": "ap_exception_packet",
+  "document_type": "ap_exception_packet",
+  "extractionInstructions": "This is a vendor invoice that FAILED straight-through processing in the AP system. Extract every field needed to triage the exception. Pay special attention to: (1) the PO number, which may be printed anywhere on the page including in the header, footer, or a reference block, and may be prefixed 'PO', 'P.O.', 'Order', or 'Ref'; (2) remittance instructions, which may differ from the vendor's address of record and are a common fraud vector; (3) any handwritten or stamped annotations, which usually indicate a prior manual touch; (4) whether the invoice references a credit memo or is itself a credit. If a field is genuinely absent from the document, return null rather than guessing.",
+  "bdaSchema": {
+    "class": "ApexAPExceptionPacket",
+    "documentClass": "ap_exception_packet",
+    "description": "Accounts-payable exception triage packet extracted from a vendor invoice",
+    "extractionInstructions": "Extract the invoice header, vendor identity, remittance instructions, line items, tax detail and any prior-touch annotations. Return null for absent fields. Never infer a PO number that is not printed on the document.",
+    "definitions": {
+      "LINEITEM": {
+        "properties": {
+          "line_number": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Sequential position of this line on the invoice, starting at 1"
+          },
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Full description of the product or service on this line"
+          },
+          "sku": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Vendor part number, SKU, catalogue number, or item code for this line"
+          },
+          "quantity": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Quantity billed on this line"
+          },
+          "uom": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Unit of measure, e.g. EA, CS, BOX, HR, LB"
+          },
+          "unit_price": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Price per unit for this line"
+          },
+          "amount": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Extended amount for this line, normally quantity multiplied by unit_price"
+          },
+          "gl_code": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "General ledger account code if coded on the invoice"
+          },
+          "po_line_reference": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Purchase order line number this invoice line refers to, if printed"
+          }
+        }
+      },
+      "ANNOTATION": {
+        "properties": {
+          "annotation_type": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "One of: handwritten_note, stamp, highlight, signature, correction"
+          },
+          "text": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Transcribed text of the annotation"
+          },
+          "location": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Where on the page the annotation appears, e.g. header, near total, margin left"
+          }
+        }
+      }
+    },
+    "properties": {
+      "invoice_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The vendor's unique invoice identifier exactly as printed, preserving any prefix, leading zeros, dashes or slashes"
+      },
+      "invoice_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date the invoice was issued, normalised to YYYY-MM-DD"
+      },
+      "due_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Payment due date, normalised to YYYY-MM-DD. If only terms are stated, leave null and rely on payment_terms"
+      },
+      "po_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Purchase order reference. Look in the header block, the reference block, the footer, and any 'Your Order' or 'Customer PO' field. Strip labels such as 'PO#' and return only the identifier. Return null if no PO is printed anywhere"
+      },
+      "receipt_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Goods receipt, delivery note, packing slip, or GRN number if referenced on the invoice"
+      },
+      "payment_terms": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Payment terms exactly as stated, e.g. NET30, NET45, 2/10 NET 30, Due on Receipt"
+      },
+      "currency": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Three letter ISO currency code for all amounts on this invoice, e.g. USD, CAD, EUR"
+      },
+      "document_kind": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "One of: invoice, credit_memo, debit_memo, statement, prepayment_request. Determine from the document title and whether amounts are negative"
+      },
+      "vendor_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Legal name of the vendor issuing the invoice, as printed in the letterhead"
+      },
+      "vendor_dba": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Trading name or 'doing business as' name if different from vendor_name"
+      },
+      "vendor_address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Complete vendor address on a single line"
+      },
+      "vendor_country": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Two letter ISO country code of the vendor address"
+      },
+      "vendor_tax_id": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Vendor tax identifier: EIN, TIN, VAT number, GST number or BN"
+      },
+      "vendor_email": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Vendor billing or accounts receivable email address"
+      },
+      "remit_to_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Payee name in the remittance instructions, which may be a factoring company and differ from vendor_name"
+      },
+      "remit_to_address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Remittance address, lockbox, or PO box for payment"
+      },
+      "remit_bank_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Bank name in the remittance instructions if wire or ACH details are printed"
+      },
+      "remit_account_last_four": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Last four digits only of any bank account number printed on the document. Never return the full account number"
+      },
+      "bill_to_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Legal entity being billed"
+      },
+      "bill_to_cost_center": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Cost centre, department, business unit, or site code the invoice is billed to"
+      },
+      "requisitioner": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Name of the person who requested the goods or services, often labelled Attn, Requested By, or Buyer"
+      },
+      "line_items": {
+        "type": "array",
+        "instruction": "Every billed line on the invoice in the order printed. Do not merge lines and do not include subtotal or tax rows",
+        "items": {
+          "$ref": "#/definitions/LINEITEM"
+        }
+      },
+      "subtotal": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Net amount before tax, freight and other charges"
+      },
+      "freight_amount": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Freight, shipping, delivery or handling charge stated separately from the line items"
+      },
+      "other_charges": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Any other separately stated charge such as fuel surcharge, pallet fee, or small order fee"
+      },
+      "discount_amount": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Discount or allowance applied on the face of the invoice, expressed as a positive number"
+      },
+      "tax_jurisdiction": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Taxing jurisdiction or tax type printed, e.g. TX State Sales Tax, ON HST, VAT"
+      },
+      "tax_rate": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Tax rate exactly as printed including the percent sign, e.g. 8.25%"
+      },
+      "tax_amount": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Total tax charged on the invoice"
+      },
+      "total_amount": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Grand total amount due on the invoice"
+      },
+      "prior_invoice_reference": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Any referenced earlier invoice number, common on credit memos, rebills and corrected invoices"
+      },
+      "annotations": {
+        "type": "array",
+        "instruction": "Handwritten notes, stamps, highlights and signatures visible on the document. These indicate a prior manual touch and are important triage evidence",
+        "items": {
+          "$ref": "#/definitions/ANNOTATION"
+        }
+      },
+      "is_duplicate_suspect": {
+        "type": "boolean",
+        "instruction": "True if the document itself carries any indication it is a resubmission, such as the words DUPLICATE, COPY, SECOND NOTICE, REMINDER, or PAST DUE"
+      },
+      "math_is_internally_consistent": {
+        "type": "boolean",
+        "instruction": "True if subtotal plus freight plus other charges minus discount plus tax equals total_amount within one cent"
+      },
+      "legibility": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "One of: clean_digital, good_scan, poor_scan, partially_illegible. Use poor_scan or partially_illegible when skew, noise or cropping is likely to have degraded extraction"
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "currencyFormat": "decimal",
+    "decimalPrecision": 2,
+    "confidenceThreshold": 0.85,
+    "redactionPolicy": "Never emit a full bank account number. Emit last four digits only."
+  },
+  "validationRules": [
+    {
+      "name": "line_extension_validation",
+      "description": "Each line amount must equal quantity multiplied by unit_price within one cent",
+      "expression": "line_items.each { |i| (i.quantity * i.unit_price - i.amount).abs < 0.01 }"
+    },
+    {
+      "name": "subtotal_validation",
+      "description": "Subtotal must equal the sum of all line amounts",
+      "expression": "(subtotal - line_items.sum { |i| i.amount }).abs < 0.01"
+    },
+    {
+      "name": "grand_total_validation",
+      "description": "Grand total must reconcile against subtotal, freight, other charges, discount and tax",
+      "expression": "(total_amount - (subtotal + freight_amount + other_charges - discount_amount + tax_amount)).abs < 0.01"
+    },
+    {
+      "name": "remit_party_drift",
+      "description": "Flag when the remit-to party differs from the vendor of record, a known payment redirection fraud pattern",
+      "expression": "remit_to_name.present? && remit_to_name.downcase != vendor_name.downcase"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  }
+}

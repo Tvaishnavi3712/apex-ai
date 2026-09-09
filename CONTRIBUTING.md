@@ -20,6 +20,15 @@ AI Platform (`aws/` reference implementation, `azure/` port — see
   check whether the other cloud build needs the matching port before closing
   the ticket.
 
+## Code review
+
+- Any PR containing AI-generated code is reviewed against
+  [`docs/code-review-rubric.md`](docs/code-review-rubric.md). The rubric covers
+  hallucinated API usage, swallowed exceptions, unexercised error paths,
+  cross-cloud duplication, fabricated defaults, and behaviour-asserting tests.
+- Reviewers must complete the rubric walkthrough (see the rubric's training
+  section) before picking up AWS review stories.
+
 ## Architecture Decision Records (ADRs)
 
 We record significant architecture decisions as ADRs in

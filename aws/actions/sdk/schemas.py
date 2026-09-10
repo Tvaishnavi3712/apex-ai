@@ -91,10 +91,10 @@ class ActionInputSchema:
     def add_boolean(self, name: str, description: str, required: bool = False, **kwargs) -> 'ActionInputSchema':
         return self.add_property(name, PropertyType.BOOLEAN, description, required, **kwargs)
 
-    def add_array(self, name: str, description: str, items: SchemaProperty, required: bool = False) -> 'ActionInputSchema':
+    def add_array(self, name: str, description: str, items: SchemaProperty = None, required: bool = False) -> 'ActionInputSchema':
         return self.add_property(name, PropertyType.ARRAY, description, required, items=items)
 
-    def add_object(self, name: str, description: str, properties: Dict[str, SchemaProperty], required: bool = False) -> 'ActionInputSchema':
+    def add_object(self, name: str, description: str, properties: Dict[str, SchemaProperty] = None, required: bool = False) -> 'ActionInputSchema':
         return self.add_property(name, PropertyType.OBJECT, description, required, properties=properties)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -149,7 +149,10 @@ class ActionOutputSchema:
     def add_boolean(self, name: str, description: str, **kwargs) -> 'ActionOutputSchema':
         return self.add_property(name, PropertyType.BOOLEAN, description, **kwargs)
 
-    def add_object(self, name: str, description: str, properties: Dict[str, SchemaProperty]) -> 'ActionOutputSchema':
+    def add_array(self, name: str, description: str, items: SchemaProperty = None, **kwargs) -> 'ActionOutputSchema':
+        return self.add_property(name, PropertyType.ARRAY, description, items=items, **kwargs)
+
+    def add_object(self, name: str, description: str, properties: Dict[str, SchemaProperty] = None) -> 'ActionOutputSchema':
         return self.add_property(name, PropertyType.OBJECT, description, properties=properties)
 
     def to_dict(self) -> Dict[str, Any]:

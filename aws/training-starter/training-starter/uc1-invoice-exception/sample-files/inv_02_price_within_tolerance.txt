@@ -1,0 +1,43 @@
+═══════════════════════════════════════════════════════════════════════════════
+                            INVOICE
+═══════════════════════════════════════════════════════════════════════════════
+
+VENDOR:                                      BILL TO:
+---------------------------------           ---------------------------------
+Initech LLC                                 Cascade Ridge Manufacturing, Inc.
+4120 Freidrich Lane, Building 3             2200 Innovation Way
+Austin, TX 78744                            Plano, TX 75024
+Tax ID: 74-3010556                          Attn: R. Chen
+Email: invoices@initech.com                 Cost Center: IT-220-AUSTIN
+
+═══════════════════════════════════════════════════════════════════════════════
+Invoice Number:    INI-20441
+Invoice Date:      June 2, 2026
+Due Date:          July 2, 2026
+PO Number:         PO-6112
+Receipt/GRN:       GRN-55210
+Payment Terms:     NET30
+Currency:          USD
+═══════════════════════════════════════════════════════════════════════════════
+
+LN  SKU              DESCRIPTION                              QTY  UOM  UNIT PRICE    AMOUNT
+-------------------------------------------------------------------------------------------
+1   INI-SW24          24-Port Managed Gigabit Switch            8   EA    $515.00      $4,120.00
+2   INI-CBL-CAT6       Cat6 Patch Cable 3ft (Pack of 25)         8   CS     $45.00        $360.00
+-------------------------------------------------------------------------------------------
+
+                                              Subtotal:      $4,480.00
+                                              Tax (TX State Sales Tax, 8.25%): $369.60
+                                              ─────────────────────────
+                                              TOTAL DUE:     $4,849.60
+
+═══════════════════════════════════════════════════════════════════════════════
+                    Thank you for your business!
+          Payment can be made via ACH, wire transfer, or check.
+═══════════════════════════════════════════════════════════════════════════════
+
+TRAINING SCENARIO: inv_02_price_within_tolerance
+PO-6112 was issued at $500.00/unit for the INI-SW24 switch. Initech billed
+$515.00/unit — a 3.0% increase, inside the 5% / $250 tolerance band, so the
+variance auto-posts to the price-variance GL account instead of routing to
+a human.

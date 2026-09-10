@@ -1,0 +1,47 @@
+═══════════════════════════════════════════════════════════════════════════════
+                            INVOICE
+═══════════════════════════════════════════════════════════════════════════════
+
+VENDOR:                                      BILL TO:
+---------------------------------           ---------------------------------
+Umbrella Corporation                        Cascade Ridge Manufacturing, Inc.
+1725 Slater Road                            2200 Innovation Way
+Ferndale, MI 48220                          Plano, TX 75024
+Tax ID: 38-1665521                          Attn: D. Whitfield
+Email: accounts@umbrellacorp-industrial.com Cost Center: OPS-410-FACILITIES
+
+═══════════════════════════════════════════════════════════════════════════════
+Invoice Number:    UMB-51290
+Invoice Date:      June 20, 2026
+Due Date:          July 20, 2026
+PO Number:         PO-8340
+Receipt/GRN:       GRN-63390
+Payment Terms:     NET30
+Currency:          USD
+═══════════════════════════════════════════════════════════════════════════════
+
+LN  SKU                 DESCRIPTION                           QTY  UOM  UNIT PRICE    AMOUNT
+-------------------------------------------------------------------------------------------
+1   UMB-CLN-5G           Industrial Degreaser Concentrate,     120   EA    $38.75      $4,650.00
+                          5 Gallon Pail
+2   UMB-DEGREASE-CS      Citrus Degreaser Wipes (Case of 12)    15   CS    $32.00        $480.00
+-------------------------------------------------------------------------------------------
+
+                                              Subtotal:      $5,130.00
+                                              Tax (MI State Sales Tax, 6.00%): $307.80
+                                              ─────────────────────────
+                                              TOTAL DUE:     $5,437.80
+
+═══════════════════════════════════════════════════════════════════════════════
+                    Thank you for your business!
+          Payment can be made via ACH, wire transfer, or check.
+═══════════════════════════════════════════════════════════════════════════════
+
+[Handwritten note, near line 1, blue ink:]
+"Rcvd only 100 pails on GRN-63390 6/19 — confirm OK to pay for 120? - D.W."
+
+TRAINING SCENARIO: inv_04_qty_over_delivery
+Goods receipt GRN-63390 confirms only 100 EA received against PO-8340, but
+Umbrella billed 120 EA of UMB-CLN-5G — a 20% over-delivery quantity variance,
+above the 3% tolerance band, requiring the requisitioner to accept the
+overage before payment.

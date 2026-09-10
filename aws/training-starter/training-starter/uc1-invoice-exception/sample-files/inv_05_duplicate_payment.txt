@@ -1,0 +1,49 @@
+═══════════════════════════════════════════════════════════════════════════════
+                            INVOICE
+═══════════════════════════════════════════════════════════════════════════════
+
+VENDOR:                                      BILL TO:
+---------------------------------           ---------------------------------
+Acme Corp                                   Cascade Ridge Manufacturing, Inc.
+8800 Freeport Parkway, Suite 200            2200 Innovation Way
+Irving, TX 75063                            Plano, TX 75024
+Tax ID: 74-2091883                          Attn: T. Alvarez
+Email: ar@acmecorp-supply.com               Cost Center: MFG-100-PLANO
+
+═══════════════════════════════════════════════════════════════════════════════
+Invoice Number:    INV-001042
+Invoice Date:      March 2, 2026
+Due Date:          April 1, 2026
+PO Number:         PO-5000
+Receipt/GRN:       GRN-77088
+Payment Terms:     NET30
+Currency:          USD
+═══════════════════════════════════════════════════════════════════════════════
+
+LN  SKU                 DESCRIPTION                            QTY  UOM  UNIT PRICE    AMOUNT
+-------------------------------------------------------------------------------------------
+1   ACM-TAPE-24          Industrial Packaging Tape 2in x 110yd  80   CS     $42.50      $3,400.00
+                          (36 rolls/case)
+2   ACM-STRAP-12         Poly Strapping Coil 1/2in x 3000ft     40   CS     $15.00        $600.00
+3   ACM-BUBBLE-WRAP      Bubble Wrap Roll 24in x 250ft          20   CS     $24.00        $480.00
+-------------------------------------------------------------------------------------------
+
+                                              Subtotal:      $4,480.00
+                                              Tax (TX State Sales Tax, 8.26%): $370.00
+                                              ─────────────────────────
+                                              TOTAL DUE:     $4,850.00
+
+═══════════════════════════════════════════════════════════════════════════════
+                    Thank you for your business!
+          Payment can be made via ACH, wire transfer, or check.
+═══════════════════════════════════════════════════════════════════════════════
+
+TRAINING SCENARIO: inv_05_duplicate_payment
+This invoice carries no self-declared DUPLICATE / COPY stamp — it reads as a
+fresh original. Payment history already shows invoice "inv 1042" for Acme
+Corp, PO-5000, $4,850.00, paid 2026-03-05. Normalizing "INV-001042" strips
+the INV prefix, punctuation and leading zeros to "1042" — an exact match
+against the prior payment's normalized "1042", with an identical amount and
+the same PO, invoiced within days of the prior payment. Document-level
+extraction alone cannot catch this; it is the duplicate_fingerprint action's
+job.

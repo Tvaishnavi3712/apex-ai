@@ -1,0 +1,80 @@
+====================================================================================================
+           COMMERCIAL PROPERTY SUBMISSION  ·  ACORD 140 PROPERTY SECTION
+====================================================================================================
+
+  Submission No.    : SUB-2026-0508
+  Submitted         : 2026-05-08
+  Effective         : 2026-06-15  to  2027-06-15
+  Line of Business  : Commercial Property
+
+----------------------------------------------------------------------------------------------------
+  NAMED INSURED
+----------------------------------------------------------------------------------------------------
+  Gulfstream Cold Storage Inc
+    DBA: Gulfstream Freezer Services
+  FEIN              : 65-1140277
+  Mailing Address   : 2200 Harborside Dr, Galveston, TX 77550
+  Years in Business : 22
+  Annual Revenue    : $48,000,000
+  Primary Occupancy : Cold storage warehouse — refrigerated
+  Class Code        : NAICS 493120
+
+----------------------------------------------------------------------------------------------------
+  PRODUCING BROKER
+----------------------------------------------------------------------------------------------------
+  Agency            : Keystone Commercial Brokers
+  Contact           : M. Alvarez   malvarez@keystonecb.example.com
+  Licence           : TX-1180773
+
+====================================================================================================
+  STATEMENT OF VALUES                             3 LOCATION(S) SCHEDULED
+====================================================================================================
+
+  #   LOCATION                                 CONSTRUCTION               YR     SPK   PPC     FLD              TIV
+----------------------------------------------------------------------------------------------------
+  1   2200 Harborside Dr, Galveston, TX 77550  Non-Combustible            1994   Y     PPC 4   AE    $   14,700,000
+                                               Bldg $  9,000,000   Contents $ 4,500,000   BI $1,200,000
+                                               Cold storage warehouse — refrigerated and blast freezing  (roof updated 1998; 120,000 sq ft; 0.8 mi to coast)
+
+  2   4400 Port Ave, Corpus Christi, TX 78405  Non-Combustible            1991   Y     PPC 5   VE    $   13,800,000
+                                               Bldg $  8,500,000   Contents $ 4,200,000   BI $1,100,000
+                                               Cold storage warehouse — refrigerated  (roof updated 1998; 108,000 sq ft; 1.4 mi to coast)
+
+  3   118 Wharf Rd, Galveston, TX 77551        Non-Combustible            1996   Y     PPC 4   AE    $   12,800,000
+                                               Bldg $  7,800,000   Contents $ 4,000,000   BI $1,000,000
+                                               Cold storage warehouse — refrigerated  (roof updated 1999; 96,000 sq ft; 0.5 mi to coast)
+
+----------------------------------------------------------------------------------------------------
+  TOTAL INSURED VALUE                                                                      $   41,300,000
+----------------------------------------------------------------------------------------------------
+
+====================================================================================================
+  LOSS RUNS                    3 YEAR(S) PROVIDED        VALUED AS OF 2026-04-30
+====================================================================================================
+
+  DATE          POLICY YR    CLAIM NO        LOC   CAUSE                          PAID     RESERVE     INCURRED  STATUS
+----------------------------------------------------------------------------------------------------
+  2024-09-14    2024-2025    CLM-8890021     1     wind                   $    680,000 $         0 $    680,000  closed [CAT]
+                Named storm — roof and envelope damage
+  2025-03-02    2025-2026    CLM-9012477     3     equipment breakdown    $     74,000 $         0 $     74,000  closed
+                Compressor failure, product spoilage
+----------------------------------------------------------------------------------------------------
+  TOTAL INCURRED                                                                   $      754,000
+
+====================================================================================================
+  CURRENT PROGRAMME
+====================================================================================================
+  Expiring Carrier  : Gulf Coast Specialty
+  Expiring Premium  : $310,000
+  Target Premium    : $295,000
+  Reason Marketing  : Incumbent exiting coastal cold storage
+  Prior Declination : No
+  Coverages Wanted  : Equipment Breakdown, Spoilage, Business Income, Named Storm
+
+====================================================================================================
+  TRAINING SCENARIO : Coastal cold storage — declined on capacity, not appetite
+  EXPECTED OUTCOME  : decline   (clearance: clear, appetite: acceptable)
+====================================================================================================
+
+  All entities, addresses, identifiers and figures in this document are
+  fictional and exist only for developer training.

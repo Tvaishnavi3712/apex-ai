@@ -1,0 +1,100 @@
+====================================================================================================
+           COMMERCIAL PROPERTY SUBMISSION  ·  ACORD 140 PROPERTY SECTION
+====================================================================================================
+
+  Submission No.    : SUB-2026-0519
+  Submitted         : 2026-05-19
+  Effective         : 2026-08-01  to  2027-08-01
+  Line of Business  : Commercial Property
+
+----------------------------------------------------------------------------------------------------
+  NAMED INSURED
+----------------------------------------------------------------------------------------------------
+  Brightwater Retail Partners LP
+    Additional Named Insured: Brightwater Property Management LLC
+  FEIN              : 82-4471905
+  Mailing Address   : 775 Waterview Pkwy, Richardson, TX 75080
+  Years in Business : 11
+  Annual Revenue    : $21,000,000
+  Primary Occupancy : Strip retail center — inline tenants
+  Class Code        : NAICS 531120
+
+----------------------------------------------------------------------------------------------------
+  PRODUCING BROKER
+----------------------------------------------------------------------------------------------------
+  Agency            : Vantage Point Insurance Group
+  Contact           : S. Okafor   sokafor@vantagepoint.example.com
+  Licence           : TX-2740119
+
+====================================================================================================
+  STATEMENT OF VALUES                             7 LOCATION(S) SCHEDULED
+====================================================================================================
+
+  #   LOCATION                                 CONSTRUCTION               YR     SPK   PPC     FLD              TIV
+----------------------------------------------------------------------------------------------------
+  1   775 Waterview Pkwy, Richardson, TX 7508  Joisted Masonry            2003   Y     PPC 3   X     $    5,260,000
+                                               Bldg $  4,100,000   Contents $   900,000   BI $  260,000
+                                               Strip retail center — inline tenants  (roof updated 2016; 42,000 sq ft)
+
+  2   1290 Belt Line Rd, Garland, TX 75040     Joisted Masonry            1999   Y     PPC 3   X     $    4,760,000
+                                               Bldg $  3,700,000   Contents $   820,000   BI $  240,000
+                                               Strip retail center — inline tenants  (roof updated 2014; 38,000 sq ft)
+
+  3   640 Custer Rd, Plano, TX 75075           Joisted Masonry            2005   Y     PPC 3   X     $    5,640,000
+                                               Bldg $  4,400,000   Contents $   960,000   BI $  280,000
+                                               Strip retail center — inline tenants  (roof updated 2018; 45,000 sq ft)
+
+  4   2201 Coit Rd, Plano, TX 75075            Joisted Masonry            2001   Y     PPC 3   X     $    4,500,000
+                                               Bldg $  3,500,000   Contents $   780,000   BI $  220,000
+                                               Strip retail center — inline tenants  (roof updated 2015; 36,000 sq ft)
+
+  5   980 Josey Ln, Carrollton, TX 75007       Joisted Masonry            1998   Y     PPC 3   X     $    4,110,000
+                                               Bldg $  3,200,000   Contents $   710,000   BI $  200,000
+                                               Strip retail center — inline tenants  (roof updated 2013; 33,000 sq ft)
+
+  6   415 Trinity Mills Rd, Carrollton, TX 75  Joisted Masonry            2007   Y     PPC 3   X     $    5,010,000
+                                               Bldg $  3,900,000   Contents $   860,000   BI $  250,000
+                                               Strip retail center — inline tenants  (roof updated 2019; 40,000 sq ft)
+
+  7   1855 Marsh Ln, Farmers Branch, TX 75234  Joisted Masonry            2000   Y     PPC 3   X     $    4,365,000
+                                               Bldg $  3,400,000   Contents $   750,000   BI $  215,000
+                                               Strip retail center — inline tenants  (roof updated 2017; 35,000 sq ft)
+
+----------------------------------------------------------------------------------------------------
+  TOTAL INSURED VALUE                                                                      $   33,645,000
+----------------------------------------------------------------------------------------------------
+
+====================================================================================================
+  LOSS RUNS                    1 YEAR(S) PROVIDED        VALUED AS OF 2026-04-30
+====================================================================================================
+
+  DATE          POLICY YR    CLAIM NO        LOC   CAUSE                          PAID     RESERVE     INCURRED  STATUS
+----------------------------------------------------------------------------------------------------
+  2025-08-22    2025-2026    CLM-7712004     3     hail                   $    142,000 $         0 $    142,000  closed
+                Hail — roof membrane and HVAC units
+  2025-12-04    2025-2026    CLM-7719880     5     water damage           $     38,000 $    12,000 $     50,000  open
+                Sprinkler line failure, tenant space
+----------------------------------------------------------------------------------------------------
+  TOTAL INCURRED                                                                   $      192,000
+
+====================================================================================================
+  ** SUBMISSION FLAGGED INCOMPLETE: missing_loss_runs **
+====================================================================================================
+
+====================================================================================================
+  CURRENT PROGRAMME
+====================================================================================================
+  Expiring Carrier  : Lone Star Underwriters
+  Expiring Premium  : $148,000
+  Target Premium    : $140,000
+  Reason Marketing  : Service issues with incumbent
+  Prior Declination : No
+  Coverages Wanted  : Ordinance or Law, Business Income, Equipment Breakdown
+
+====================================================================================================
+  TRAINING SCENARIO : Incomplete packet — refer, do not decline
+  EXPECTED OUTCOME  : refer_to_broker   (clearance: clear, appetite: marginal)
+====================================================================================================
+
+  All entities, addresses, identifiers and figures in this document are
+  fictional and exist only for developer training.

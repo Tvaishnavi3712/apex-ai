@@ -1,0 +1,10 @@
+version: 1.0
+runtime: python3
+build:
+  commands:
+    build:
+      - pip install -r aws/backend/requirements.txt
+run:
+  command: cd aws/backend && uvicorn main:app --host 0.0.0.0 --port 8000
+  network:
+    port: 8000

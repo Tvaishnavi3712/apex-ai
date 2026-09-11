@@ -8,3 +8,8 @@ run:
   command: cd aws/backend && uvicorn main:app --host 0.0.0.0 --port 8000
   network:
     port: 8000
+  env:
+    - name: USE_LOCAL_MOCK
+      value: "true"
+    - name: CORS_ORIGINS
+      value: '["*"]'

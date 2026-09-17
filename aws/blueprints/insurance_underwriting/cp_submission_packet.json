@@ -1,0 +1,437 @@
+{
+  "blueprintName": "apex-cp-submission-packet-v1",
+  "blueprintVersion": "1.0.0",
+  "name": "cp_submission_packet",
+  "description": "Extract the full commercial property submission packet — ACORD 140 property section, statement of values and loss runs — so the submission can be cleared, appetite-scored and catastrophe-aggregated before an underwriter opens it",
+  "industry": "insurance_underwriting",
+  "documentType": "cp_submission_packet",
+  "document_type": "cp_submission_packet",
+  "extractionInstructions": "This is an inbound commercial property broker submission. It contains up to three sections: an ACORD 140 property section with the named insured, FEIN, broker and current programme; a STATEMENT OF VALUES scheduling every insured location with construction, protection, values and flood zone; and LOSS RUNS listing prior claims. Extract every field exactly as printed. Record printed totals and counts as printed — never recompute them, because a schedule whose rows do not sum to its printed total is a data-quality signal the validation rules must see. Return null for any field not present rather than inferring it. Return every location row and every claim row; a truncated schedule produces a wrong total insured value and a wrong catastrophe assessment. Never infer a FEIN, a flood zone or a distance to coast that is not printed.",
+  "bdaSchema": {
+    "class": "ApexCPSubmissionPacket",
+    "documentClass": "cp_submission_packet",
+    "description": "Commercial property submission clearance packet extracted from a broker submission (ACORD 140, statement of values, loss runs)",
+    "extractionInstructions": "Extract the submission header, named insured and affiliates, producing broker, every statement-of-values location, every loss-run claim, the current programme and the packet-quality flags. Return null for absent fields. Record printed totals and counts as printed; do not recompute them.",
+    "definitions": {
+      "LOCATION": {
+        "properties": {
+          "location_number": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "The row number printed in the '#' column of the statement of values, as a string, e.g. '1'"
+          },
+          "street_address": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Street address of this location only — everything before the city in the LOCATION column If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "city": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "City of this location If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "state": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Two-letter US state code of this location If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "postal_code": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Five-digit postal code of this location. Catastrophe aggregation keys on this field, so take it from the LOCATION column exactly If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "occupancy_description": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "This location's occupancy as written on the indented description line beneath the row, before any parenthesis If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "construction_type": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "ISO construction class from the CONSTRUCTION column as printed, e.g. 'Masonry Non-Combustible', 'Joisted Masonry', 'Frame' If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "year_built": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Year the building was built, from the YR column, as a four-digit number If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "stories": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Number of stories, as a whole number If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "square_footage": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Building area in square feet from the parenthetical note, e.g. the 120000 in '120,000 sq ft', as a plain number If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "roof_year_updated": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Year the roof was last replaced, from 'roof updated NNNN' in the parenthetical note. Appetite compares this against the maximum roof age, so a missing value must be null, not the year built If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "sprinklered": {
+            "type": "boolean",
+            "inferenceType": "explicit",
+            "instruction": "True when the SPK column shows Y, false when N If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "central_station_alarm": {
+            "type": "boolean",
+            "inferenceType": "explicit",
+            "instruction": "True when a central-station alarm is indicated for this location If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "protection_class": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "ISO public protection class from the PPC column as printed, e.g. 'PPC 4' If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "distance_to_hydrant_ft": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Distance to the nearest hydrant in feet If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "distance_to_fire_station_mi": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Distance to the responding fire station in miles If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "distance_to_coast_mi": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Distance to the coast in miles from 'N mi to coast' in the parenthetical note. Only coastal locations print it — when absent return null, do not assume zero or inland If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "building_value": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Building value from 'Bldg $' on the values line, as a plain number If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "contents_value": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Contents value from 'Contents $' on the values line, as a plain number If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "business_income_value": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Business income value from 'BI $' on the values line, as a plain number If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "equipment_value": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Separately scheduled equipment value when printed, as a plain number. Return 0 when the values line has no equipment component"
+          },
+          "total_insured_value": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "This location's TIV from the TIV column, as a plain number. Record the printed figure; do not sum the components If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "valuation_basis": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Valuation basis, e.g. 'Replacement Cost' or 'Actual Cash Value' If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "coinsurance_percent": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Coinsurance percentage as a number without the percent sign If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "deductible": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "All-other-perils deductible in dollars as a plain number If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "wind_hail_deductible": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Wind/hail deductible exactly as printed — it may be a dollar amount ('$25,000') or a percentage of TIV ('2% of TIV'), so keep it as a string If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "flood_zone": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "FEMA flood zone from the FLD column as printed, e.g. 'X', 'AE', 'VE'. Capacity for zone V/VE is zero, so this must never be inferred from the address If it is not printed anywhere in the packet, return null rather than guessing."
+          }
+        }
+      },
+      "PRIOR_LOSS": {
+        "properties": {
+          "loss_date": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Date of loss from the DATE column, normalised to YYYY-MM-DD If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "policy_year": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Policy year from the POLICY YR column as printed, e.g. '2024-2025' If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "claim_number": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Claim number from the CLAIM NO column as printed If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "location_number": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Scheduled location number from the LOC column, as a string, matching a LOCATION.location_number If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "cause_of_loss": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Cause of loss from the CAUSE column in lower case, e.g. 'wind', 'theft', 'water damage' If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "description": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "Free-text description from the indented line beneath the claim row If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "paid_amount": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Amount paid from the PAID column, as a plain number If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "reserve_amount": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Outstanding reserve from the RESERVE column, as a plain number. Return 0 when the column shows $0"
+          },
+          "incurred_amount": {
+            "type": "number",
+            "inferenceType": "explicit",
+            "instruction": "Total incurred from the INCURRED column, as a plain number. Record the printed figure If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "claim_status": {
+            "type": "string",
+            "inferenceType": "explicit",
+            "instruction": "'open' or 'closed' from the STATUS column, lower case If it is not printed anywhere in the packet, return null rather than guessing."
+          },
+          "is_catastrophe": {
+            "type": "boolean",
+            "inferenceType": "inferred",
+            "instruction": "True when the STATUS column carries a [CAT] marker or the description names a hurricane, named storm or other declared catastrophe event. False otherwise. The loss-ratio rule forgives CAT-driven losses, so do not mark a claim CAT on cause of loss alone — 'wind' without [CAT] is false"
+          }
+        }
+      }
+    },
+    "properties": {
+      "submission_id": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "The broker's submission reference exactly as printed after 'Submission No.', preserving prefix, dashes and leading zeros"
+      },
+      "submission_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date the broker submitted the packet, normalised to YYYY-MM-DD If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "requested_effective_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Requested policy effective date, normalised to YYYY-MM-DD. On the ACORD 140 this is the first date in the 'Effective … to …' line If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "requested_expiration_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Requested policy expiration date, normalised to YYYY-MM-DD. The second date in the 'Effective … to …' line If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "line_of_business": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Line of business as printed, e.g. 'Commercial Property' If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "named_insured": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Full legal name of the first named insured exactly as printed, including punctuation and corporate suffix (LLC, L.L.C., Inc, LP). Do not normalise — clearance normalises it downstream"
+      },
+      "additional_named_insureds": {
+        "type": "array",
+        "instruction": "Every entity listed under 'Additional Named Insured' in the NAMED INSURED section, one string per entity, as printed. Return an empty array when none are listed; never invent affiliates.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "dba_names": {
+        "type": "array",
+        "instruction": "Every trading name listed after 'DBA' or 'Doing Business As', one string per name, as printed. Return an empty array when none are listed.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "fein": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Federal employer identification number in NN-NNNNNNN form as printed after 'FEIN'. Preserve the dash. This is the conclusive identifier for clearance — never infer it from a class code or licence number If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "mailing_address": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Complete mailing address of the named insured on one line: street, city, state, postal code If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "years_in_business": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Years the insured has operated, as a whole number If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "annual_revenue": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Annual revenue in US dollars as a plain number with no currency symbol or thousands separators If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "primary_occupancy": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Dominant occupancy as written by the broker after 'Primary Occupancy', e.g. 'Cold storage warehouse — refrigerated'. Keep the broker's free text; do not map it to a class If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "primary_class_code": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Class code exactly as printed, including the scheme prefix, e.g. 'NAICS 493120' If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "broker_agency_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Producing broker or agency name after 'Agency' in the PRODUCING BROKER section If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "broker_contact_name": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Broker contact's name after 'Contact', without the email address If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "broker_email": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Broker contact's email address, lower-cased If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "broker_license_number": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Broker licence number as printed after 'Licence' or 'License', preserving the state prefix If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "is_wholesale_broker": {
+        "type": "boolean",
+        "inferenceType": "inferred",
+        "instruction": "True when the packet identifies the producer as a wholesaler, MGA or surplus-lines broker, or the agency name contains 'Wholesale'. False when clearly a retail agent. If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "location_count_stated": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "The number of locations the STATEMENT OF VALUES header claims, e.g. the 3 in '3 LOCATION(S) SCHEDULED'. This is the broker's count, used to detect a truncated extraction — record it even if the rows you extracted disagree If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "locations": {
+        "type": "array",
+        "instruction": "Every scheduled location in the STATEMENT OF VALUES in the order printed, one object per numbered row. Include every row even when the schedule runs across pages. Do not include the TOTAL INSURED VALUE row as a location. Return an empty array when the packet has no STATEMENT OF VALUES section, and set submission_completeness accordingly.",
+        "items": {
+          "$ref": "#/definitions/LOCATION"
+        }
+      },
+      "schedule_total_insured_value": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "The TOTAL INSURED VALUE printed at the foot of the statement of values, as a plain number. Record the printed figure — do not recompute it from the rows; a mismatch is a data-quality signal the validation rules detect If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "loss_run_years_provided": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Number of years of loss experience the LOSS RUNS header says were provided, e.g. the 1 in '1 YEAR(S) PROVIDED'. Take the header's figure, not a count of claims or policy years you can see If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "loss_run_valuation_date": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Date the loss runs were valued, from 'VALUED AS OF', normalised to YYYY-MM-DD If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "prior_losses": {
+        "type": "array",
+        "instruction": "Every claim row in the LOSS RUNS table, one object per claim, in the order printed. A claim's description is on the indented line beneath its row. Return an empty array when the loss runs show no claims; return an empty array, not null, when the LOSS RUNS section is absent.",
+        "items": {
+          "$ref": "#/definitions/PRIOR_LOSS"
+        }
+      },
+      "expiring_carrier": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Name of the incumbent carrier after 'Expiring Carrier' If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "expiring_premium": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Expiring annual premium in US dollars as a plain number If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "target_premium": {
+        "type": "number",
+        "inferenceType": "explicit",
+        "instruction": "Premium the broker is targeting for the new term, as a plain number If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "reason_for_marketing": {
+        "type": "string",
+        "inferenceType": "explicit",
+        "instruction": "Broker's stated reason the account is being marketed, as printed after 'Reason Marketing' If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "has_prior_declination": {
+        "type": "boolean",
+        "inferenceType": "inferred",
+        "instruction": "True when 'Prior Declination' is Yes or the packet discloses a prior declination or non-renewal. False when it says No. If it is not printed anywhere in the packet, return null rather than guessing."
+      },
+      "requested_coverages": {
+        "type": "array",
+        "instruction": "Each coverage listed after 'Coverages Wanted', split on commas, one string per coverage. Return an empty array when none are listed.",
+        "items": {
+          "type": "string"
+        }
+      },
+      "submission_completeness": {
+        "type": "string",
+        "inferenceType": "inferred",
+        "instruction": "One of: complete, missing_sov, missing_loss_runs, missing_both. Use the value printed after 'SUBMISSION FLAGGED INCOMPLETE:' when that banner is present. Otherwise: missing_sov when there is no STATEMENT OF VALUES section, missing_loss_runs when there is no LOSS RUNS section, missing_both when neither is present, else complete."
+      },
+      "legibility": {
+        "type": "string",
+        "inferenceType": "inferred",
+        "instruction": "One of: clean_digital, scanned_clean, partially_illegible. clean_digital for a machine-generated packet, scanned_clean for a scan that is fully readable, partially_illegible when any field or schedule row could not be read with confidence."
+      }
+    }
+  },
+  "extractionRules": {
+    "dateFormat": "ISO8601",
+    "currencyFormat": "decimal",
+    "decimalPrecision": 2,
+    "confidenceThreshold": 0.85,
+    "redactionPolicy": "The FEIN is required for clearance and must be emitted in full. Do not emit any bank account or payment card number that appears in the packet."
+  },
+  "validationRules": [
+    {
+      "name": "location_tiv_components",
+      "description": "Each location's printed TIV must equal building + contents + business income + equipment within one dollar; a mismatch is a data-quality flag for the packet",
+      "expression": "locations.each { |l| (l.total_insured_value - (l.building_value + l.contents_value + l.business_income_value + l.equipment_value)).abs < 1.0 }"
+    },
+    {
+      "name": "schedule_total_reconciles",
+      "description": "The printed schedule total must equal the sum of every location's TIV within one dollar; appetite banding and capacity testing both depend on it",
+      "expression": "(schedule_total_insured_value - locations.sum { |l| l.total_insured_value }).abs < 1.0"
+    },
+    {
+      "name": "schedule_not_truncated",
+      "description": "The number of extracted locations must equal the count the statement-of-values header claims; a shortfall means the extraction truncated and the playbook refers with SCHEDULE_TRUNCATED",
+      "expression": "location_count_stated.nil? || locations.length == location_count_stated"
+    },
+    {
+      "name": "loss_incurred_reconciles",
+      "description": "Each claim's incurred must equal paid plus reserve within one dollar",
+      "expression": "prior_losses.each { |c| (c.incurred_amount - (c.paid_amount + c.reserve_amount)).abs < 1.0 }"
+    },
+    {
+      "name": "loss_runs_sufficient",
+      "description": "Three years of loss experience are required to judge the loss ratio; fewer is a completeness referral (INSUFFICIENT_LOSS_HISTORY), never a decline",
+      "expression": "loss_run_years_provided >= 3"
+    },
+    {
+      "name": "flood_zone_v_disclosed",
+      "description": "Flag any location in flood zone V or VE — treaty capacity for that zone is zero and the account cannot proceed on capacity regardless of appetite",
+      "expression": "locations.none? { |l| l.flood_zone.to_s.upcase.start_with?('V') }"
+    }
+  ],
+  "outputConfiguration": {
+    "includeConfidenceScores": true,
+    "includeBoundingBoxes": false,
+    "includeRawText": false
+  }
+}

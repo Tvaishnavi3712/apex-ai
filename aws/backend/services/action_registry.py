@@ -87,6 +87,10 @@ class ActionRegistry:
             "cat_model",
             "generate_referral",
             "coverage_validate",
+            # UC2 - CP Submission Clearance
+            "submission_clear",
+            "appetite_score",
+            "cat_exposure_aggregate",
         ],
         "contact_center": [
             "sentiment_analyze",
@@ -127,6 +131,10 @@ class ActionRegistry:
             "approval_route",
             "compliance_check",
             "human_review",
+            # UC1 - AP Invoice Exception Triage
+            "duplicate_fingerprint",
+            "three_way_match",
+            "tolerance_policy",
         ],
         "core": [
             "bda_extract",

@@ -1,0 +1,17 @@
+{
+  "submission_id": "SUB-2026-0417",
+  "locations": [
+    {"location_number": "1", "street_address": "1420 N Industrial Blvd", "city": "Fort Worth", "state": "TX", "postal_code": "76106", "occupancy_description": "Warehouse and distribution - dry goods", "construction_type": "Masonry Non-Combustible", "year_built": 2008, "roof_year_updated": 2019, "sprinklered": true, "protection_class": "PPC 3", "flood_zone": "X", "total_insured_value": 4900000},
+    {"location_number": "2", "street_address": "880 Commerce Park Dr", "city": "Tulsa", "state": "OK", "postal_code": "74107", "occupancy_description": "Warehouse and distribution - dry goods", "construction_type": "Masonry Non-Combustible", "year_built": 2011, "roof_year_updated": 2021, "sprinklered": true, "protection_class": "PPC 3", "flood_zone": "X", "total_insured_value": 4400000},
+    {"location_number": "3", "street_address": "305 Frontier Way", "city": "Amarillo", "state": "TX", "postal_code": "79118", "occupancy_description": "Warehouse and distribution - dry goods", "construction_type": "Non-Combustible", "year_built": 2006, "roof_year_updated": 2018, "sprinklered": true, "protection_class": "PPC 4", "flood_zone": "X", "total_insured_value": 3920000},
+    {"location_number": "4", "street_address": "7712 Meridian Ct", "city": "Oklahoma City", "state": "OK", "postal_code": "73139", "occupancy_description": "Warehouse and distribution - dry goods", "construction_type": "Masonry Non-Combustible", "year_built": 2014, "roof_year_updated": 2020, "sprinklered": true, "protection_class": "PPC 3", "flood_zone": "X", "total_insured_value": 5220000}
+  ],
+  "primary_occupancy": "Warehouse and distribution - dry goods",
+  "prior_losses": [
+    {"loss_date": "2024-11-08", "policy_year": "2024-2025", "claim_number": "CLM-4471120", "location_number": "2", "cause_of_loss": "theft", "paid_amount": 18500, "reserve_amount": 0, "incurred_amount": 18500, "claim_status": "closed", "is_catastrophe": false}
+  ],
+  "loss_run_years_provided": 3,
+  "expiring_premium": 96000,
+  "years_in_business": 14,
+  "has_prior_declination": false
+}
